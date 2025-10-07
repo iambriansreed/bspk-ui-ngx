@@ -7,8 +7,23 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<main class="main">
+<main class="main" style="display: flex; flex-direction: column; gap: 20px;">
   <ui-button></ui-button>
+  <div style="width: 300px;">
+    <ui-card [showPadding]="true" variant="outlined">
+      <p>Card works! <br>(variant="outlined") <br>(showPadding="true")</p>
+    </ui-card>
+  </div>
+  <div style="width: 300px;">
+    <ui-card [showPadding]="true" variant="elevated">
+      <p>Card works! <br>(variant="elevated") <br>(showPadding="true")</p>
+    </ui-card>
+  </div>
+  <div style="width: 300px;">
+    <ui-card [showPadding]="false" variant="outlined">
+      <p>Card works! <br>(variant="outlined") <br>(showPadding="false")</p>
+    </ui-card>
+  </div>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
