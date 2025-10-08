@@ -11,6 +11,5 @@ export type CardVariant = 'outlined' | 'elevated';
 })
 
 export class Card {
-  @Input() showPadding: boolean | undefined;
   @Input() variant: CardVariant | undefined;
 }
