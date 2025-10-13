@@ -1,1 +1,73 @@
-<p>button works!</p>
+<!-- Button template that matches the React DOM structure -->
+<button
+  #buttonElement
+  [type]="type"
+  [attr.aria-label]="label"
+  [attr.data-bspk]="'button'"
+  [attr.data-bspk-owner]="owner || null"
+  [attr.data-destructive]="destructive || null"
+  [attr.data-size]="size"
+  [attr.data-touch-target-parent]="true"
+  [attr.data-variant]="variant"
+  [attr.data-width]="width"
+  [disabled]="disabled || null"
+  [class]="buttonClasses"
+  (click)="handleClick($event)"
+  (focus)="handleFocus($event)"
+  (blur)="handleBlur($event)"
+  (mouseover)="handleMouseOver($event)"
+  (mouseleave)="handleMouseLeave($event)"
+>
+  @if(!label) {
+  <ng-content></ng-content>
+  } @else {
+  <!-- Default button content -->
+  <!-- Icon (if provided) -->
+  @if (shouldShowIcon) {
+  <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
+    <!-- Template-based icon -->
+    @if (isIconTemplate && icon) {
+    <ng-container *ngTemplateOutlet="icon"></ng-container>
+    }
+
+    <!-- String-based icon (assuming it's a CSS class or similar) -->
+    @if (isIconString && icon) {
+    <i [class]="icon"></i>
+    }
+  </span>
+  }
+
+  <!-- Label (shown unless iconOnly is true) -->
+  @if (shouldShowLabel) {
+  <span [attr.data-button-label]="true">
+    {{ label }}
+  </span>
+  } }
+
+  <!-- Touch target for accessibility -->
+  <span [attr.data-touch-target]="true"></span>
+</button>
+
+<!-- Tooltip wrapper (if tooltip is provided) -->
+<!-- Note: This assumes you have a tooltip component or directive -->
+<!-- You may need to adapt this based on your tooltip implementation -->
+@if (effectiveTooltip) {
+<div class="tooltip-wrapper" [attr.title]="effectiveTooltip">
+  <!-- Tooltip content would go here if using a custom tooltip component -->
+</div>
+}
+
+<!-- 
+Alternative approach if using Angular Material or another tooltip library:
+
+<button
+  [matTooltip]="effectiveTooltip"
+  [matTooltipDisabled]="!effectiveTooltip"
+  matTooltipPosition="above"
+  ... rest of attributes
+>
+  ... button content
+</button>
+-->
+
+<!-- Copyright 2025 Anywhere Real Estate - CC BY 4.0 -->

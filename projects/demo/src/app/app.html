@@ -7,16 +7,22 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<main class="main" style="display: flex; flex-direction: column; gap: 20px;">
-  <ui-button></ui-button>
-  <div style="width: 300px;">
+<main class="main" style="display: flex; flex-direction: column; gap: 20px">
+  <ng-template #addIcon>
+    <icon-add></icon-add>
+  </ng-template>
+  <ui-button label="Label test" size="large" [icon]="addIcon" />
+
+  <ui-button><icon-add width="24" />Custom Content Example</ui-button>
+
+  <div style="width: 300px">
     <ui-card variant="outlined">
-      <p>Card works! <br>(variant="outlined")</p>
+      <p>Card works! <br />(variant="outlined")</p>
     </ui-card>
   </div>
-  <div style="width: 300px;">
+  <div style="width: 300px">
     <ui-card variant="elevated">
-      <p>Card works! <br>(variant="elevated")</p>
+      <p>Card works! <br />(variant="elevated")</p>
     </ui-card>
   </div>
 </main>

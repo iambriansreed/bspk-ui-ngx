@@ -1,0 +1,23 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'icon-drafts-fill',
+  template: `<svg
+    data-bspk-name="DraftsFill"
+    data-filled="true"
+    data-type="material"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 -960 960 960"
+  >
+    <path
+      d="m521-896 321 192q18 11 28 30t10 40v434q0 33-23.5 56.5T800-120H160q-33 0-56.5-23.5T80-200v-434q0-21 10-40t28-30l321-192q19-11 41-11t41 11Zm-41 442 312-186-312-186-312 186 312 186Z"
+    />
+  </svg>`,
+  styles: [':host { display: contents; }'],
+})
+export class IconDraftsFill {
+  @Input() size?: string;
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

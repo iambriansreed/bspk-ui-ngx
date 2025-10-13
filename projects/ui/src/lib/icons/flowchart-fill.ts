@@ -1,0 +1,23 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'icon-flowchart-fill',
+  template: `<svg
+    data-bspk-name="FlowchartFill"
+    data-filled="true"
+    data-type="material"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 -960 960 960"
+  >
+    <path
+      d="M600-160v-80H440v-200h-80v80H80v-240h280v80h80v-200h160v-80h280v240H600v-80h-80v320h80v-80h280v240H600Z"
+    />
+  </svg>`,
+  styles: [':host { display: contents; }'],
+})
+export class IconFlowchartFill {
+  @Input() size?: string;
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

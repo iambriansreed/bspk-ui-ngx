@@ -1,0 +1,31 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'icon-flag-guyana',
+  template: `<svg
+    data-bspk-name="FlagGuyana"
+    data-type="country"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <g clip-path="url(#SvgFlagGuyana__a)">
+      <path d="M1.5 5H22.5V19H1.5V5Z" fill="#009E49" />
+      <path d="M1.5 5L23.5967 12L1.5 19V5Z" fill="white" />
+      <path d="M1.5 5.60889L21.8 11.9999L1.5 18.3909V5.60889Z" fill="#FFD00D" />
+      <path d="M1.5 5L12 12L1.5 19V5Z" fill="black" />
+      <path d="M1.5 5.81665L10.775 12L1.5 18.1833V5.81665Z" fill="#D80027" />
+    </g>
+    <defs>
+      <clipPath id="SvgFlagGuyana__a">
+        <rect width="21" height="14" fill="white" transform="translate(1.5 5)" />
+      </clipPath>
+    </defs>
+  </svg>`,
+  styles: [':host { display: contents; }'],
+})
+export class IconFlagGuyana {
+  @Input() size?: string;
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
