@@ -1,0 +1,22 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'icon-align-start',
+  template: `<svg
+    data-bspk-name="AlignStart"
+    data-type="material"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 -960 960 960"
+  >
+    <path
+      d="M120-800q-17 0-28.5-11.5T80-840q0-17 11.5-28.5T120-880h720q17 0 28.5 11.5T880-840q0 17-11.5 28.5T840-800H120Zm200 240q-17 0-28.5-11.5T280-600v-40q0-17 11.5-28.5T320-680h320q17 0 28.5 11.5T680-640v40q0 17-11.5 28.5T640-560H320Zm0 240q-17 0-28.5-11.5T280-360v-40q0-17 11.5-28.5T320-440h320q17 0 28.5 11.5T680-400v40q0 17-11.5 28.5T640-320H320Z"
+    />
+  </svg>`,
+  styles: [':host { display: contents; }'],
+})
+export class IconAlignStart {
+  @Input() size?: string;
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

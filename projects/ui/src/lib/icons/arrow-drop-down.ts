@@ -1,0 +1,22 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'icon-arrow-drop-down',
+  template: `<svg
+    data-bspk-name="ArrowDropDown"
+    data-type="material"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 -960 960 960"
+  >
+    <path
+      d="M459-381 314-526q-3-3-4.5-6.5T308-540q0-8 5.5-14t14.5-6h304q9 0 14.5 6t5.5 14q0 2-6 14L501-381q-5 5-10 7t-11 2q-6 0-11-2t-10-7Z"
+    />
+  </svg>`,
+  styles: [':host { display: contents; }'],
+})
+export class IconArrowDropDown {
+  @Input() size?: string;
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
