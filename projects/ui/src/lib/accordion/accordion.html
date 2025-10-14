@@ -1,0 +1,70 @@
+<div data-bspk="accordion">
+  <ng-container *ngFor="let item of items; let i = index; trackBy: trackById">
+    <section [attr.data-disabled]="item.disabled ? true : null" [id]="item.id">
+      <button
+        type="button"
+        [attr.aria-controls]="item.id + '-content'"
+        [attr.aria-expanded]="isOpen(item.id)"
+        data-header
+        [disabled]="item.disabled ? true : null"
+        (click)="!item.disabled && toggleOpen(item.id!)"
+      >
+        @if (item.leading) {
+          <span data-leading>
+            @if (isTemplateRef(item.leading)) {
+              <ng-container>
+                <ng-container *ngTemplateOutlet="item.leading as TemplateRef"></ng-container>
+              </ng-container>
+            } @else {
+              leadingText
+            }
+            <ng-template #leadingText>{{ item.leading }}</ng-template>
+          </span>
+        }
+
+        <span data-title-subtitle>
+          <span data-title>{{ item.title }}</span>
+
+          @if (item.subtitle) {
+            <span data-subtitle>{{ item.subtitle }}</span>
+          }
+        </span>
+
+        @if (item.trailing) {
+          <span data-trailing>
+            @if (isTemplateRef(item.trailing)) {
+              <ng-container>
+                <ng-container *ngTemplateOutlet="item.trailing as TemplateRef"></ng-container>
+              </ng-container>
+            } @else {
+              trailingText
+            }
+            <ng-template #trailingText>{{ item.trailing }}</ng-template>
+          </span>
+        }
+
+        <span data-arrow>
+          @if (isOpen(item.id)) {
+            <icon-keyboard-arrow-down />
+          } @else {
+            <icon-keyboard-arrow-up />
+          }
+        </span>
+      </button>
+
+      @if (isOpen(item.id)) {
+        <div data-content [attr.data-hidden]="!isOpen(item.id) ? true : null" [id]="item.id + '-content'">
+          @if (isTemplateRef(item.children)) {
+            <ng-container>
+              <ng-container *ngTemplateOutlet="item.children as TemplateRef"></ng-container>
+            </ng-container>
+          } @else {
+            childrenText
+          }
+          <ng-template #childrenText>{{ item.children }}</ng-template>
+        </div>
+      }
+      <span data-divider></span>
+    </section>
+  </ng-container>
+</div>
