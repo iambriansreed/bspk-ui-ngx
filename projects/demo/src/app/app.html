@@ -11,10 +11,15 @@
   <ng-template #addIcon>
     <icon-add></icon-add>
   </ng-template>
+
+  <!-- * * * * * * * Button * * * * * * * -->
   <ui-button label="Label test" size="large" [icon]="addIcon" />
+  <ui-button label="Label test" size="medium" variant="secondary" [icon]="addIcon" />
+  <ui-button label="Label test" size="small" variant="tertiary" [icon]="addIcon" />
 
   <ui-button><icon-add width="24" />Custom Content Example</ui-button>
 
+  <!-- * * * * * * * Card * * * * * * * -->
   <div style="width: 300px">
     <ui-card variant="outlined">
       <p>Card works! <br />(variant="outlined")</p>
@@ -25,9 +30,15 @@
       <p>Card works! <br />(variant="elevated")</p>
     </ui-card>
   </div>
-<main class="main">
-  <ui-button></ui-button>
-  <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+
+  <!-- * * * * * * * Accordion * * * * * * * -->
+  <div style="margin:16px; width: 300px;">
+    <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+  </div>
+  <div style="margin:16px; width: 300px;">
+    <ui-accordion [singleOpen]="true" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+  </div>
+  
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
