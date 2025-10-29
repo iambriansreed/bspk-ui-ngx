@@ -1,21 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'home-route',
   standalone: true,
-  imports: [RouterLink],
   template: `
-    <h2>Component Library</h2>
-    <p>Select a component from the navigation to view examples.</p>
-    <div class="quick-links">
-      <h3>Available Components:</h3>
-      <ul>
-        <li><a routerLink="/button">Button</a></li>
-        <li><a routerLink="/card">Card</a></li>
-        <li><a routerLink="/accordion">Accordion</a></li>
-      </ul>
-    </div>
+    <section
+      style="display:flex; flex-direction:column; align-items:center; padding:var(--spacing-sizing-10); text-align:center;"
+    >
+      <h1>BSPK: The Foundation for Your Next Project</h1>
+      <p>
+        A set of custom designed components that you can extend and build on. BSPK makes following
+        the Bespoke Design System easier than ever. Open Source. Open Code.
+      </p>
+    </section>
   `,
   styles: [
     `
