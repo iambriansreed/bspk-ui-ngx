@@ -12,6 +12,14 @@
     <icon-add></icon-add>
   </ng-template>
 
+  <!-- * * * * * * * Accordion * * * * * * * -->
+  <div style="margin:16px; width: 300px;">
+    <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+  </div>
+  <div style="margin:16px; width: 300px;">
+    <ui-accordion [singleOpen]="true" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+  </div>
+
   <!-- * * * * * * * Badge * * * * * * * -->
   <ui-badge [count]="44" />
   <ui-badge [count]="100" />
@@ -36,14 +44,6 @@
     <ui-card variant="elevated">
       <p>Card works! <br />(variant="elevated")</p>
     </ui-card>
-  </div>
-
-  <!-- * * * * * * * Accordion * * * * * * * -->
-  <div style="margin:16px; width: 300px;">
-    <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
-  </div>
-  <div style="margin:16px; width: 300px;">
-    <ui-accordion [singleOpen]="true" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
   </div>
   
 </main>
