@@ -7,6 +7,7 @@ import { TooltipRouteComponent } from './routes/tooltip';
 import { ModalRouteComponent } from './routes/modal';
 import { DialogRouteComponent } from './routes/dialog';
 import { DrawerRouteComponent } from './routes/drawer';
+import { BadgeRouteComponent } from './routes/badge';
 
 type NavRoute = Route & { hide?: boolean; title: string; children?: NavRoute[]; section?: boolean };
 
@@ -21,6 +22,8 @@ export const navigationItems: NavRoute[] = [
   { path: 'modal', component: ModalRouteComponent, title: 'Modal' },
   { path: 'dialog', component: DialogRouteComponent, title: 'Dialog' },
   { path: 'drawer', component: DrawerRouteComponent, title: 'Drawer' },
+  { path: 'badge', component: BadgeRouteComponent, title: 'Badge' },
+
 
   { path: '**', redirectTo: '', title: "404'd", hide: true },
 ];
