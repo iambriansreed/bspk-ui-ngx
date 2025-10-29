@@ -7,9 +7,8 @@ export type CardVariant = 'outlined' | 'elevated';
   standalone: true,
   imports: [],
   templateUrl: './card.html',
-  styleUrl: './card.scss'
+  styleUrl: './card.scss',
 })
-
 export class Card {
   @Input() variant: CardVariant | undefined;
 }

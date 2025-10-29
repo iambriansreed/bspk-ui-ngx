@@ -1,4 +1,11 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 @Component({
   selector: 'ui-badge',
@@ -11,7 +18,7 @@ export class Badge implements AfterViewInit {
   @Input() size: 'small' | 'x-small' = 'small';
   @Input() color: 'primary' | 'secondary' = 'primary';
   @Input() surfaceBorder: boolean = false;
-  
+
   hasProjectedContent = false;
 
   @ViewChild('contentWrapper', { static: false }) contentWrapper!: ElementRef<HTMLSpanElement>;
@@ -19,12 +26,12 @@ export class Badge implements AfterViewInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-  const nodes = this.contentWrapper.nativeElement.childNodes;
-  this.hasProjectedContent = Array.from(nodes).some(
-    node =>
-      node.nodeType === Node.ELEMENT_NODE ||
-      (node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
-  );
-  this.cdr.detectChanges();
-}
+    const nodes = this.contentWrapper.nativeElement.childNodes;
+    this.hasProjectedContent = Array.from(nodes).some(
+      (node) =>
+        node.nodeType === Node.ELEMENT_NODE ||
+        (node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
+    );
+    this.cdr.detectChanges();
+  }
 }
