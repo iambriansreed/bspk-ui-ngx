@@ -1,0 +1,330 @@
+/* Dialog overlay/backdrop and box layout ------------------------------------------------- */
+
+.cdk-overlay-backdrop[data-bspk-overlay-backdrop],
+[data-bspk-overlay-backdrop] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  z-index: var(--z-index-scrim, 900);
+}
+
+/* The overlay pane that hosts the dialog. We give this a stacking context above the scrim. */
+.cdk-overlay-pane[data-bspk='dialog'],
+[data-bspk='dialog'] {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-dialog, 1000);
+  display: flex;
+  pointer-events: none; /* makes scrim clickable */
+  justify-content: center;
+  align-items: center;
+}
+
+/* The actual dialog box inside the pane. Make it a flex column so children can stretch/scroll. */
+.cdk-overlay-pane[data-bspk='dialog'] [data-dialog-box],
+[data-bspk='dialog'] [data-dialog-box] {
+  pointer-events: all; /* allow pointer events on the dialog box */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* allow children to use min-height:0 for scrolling */
+  text-align: start;
+  position: relative;
+  box-shadow: var(--drop-shadow-float);
+  background: var(--surface-neutral-t1-base, #ffffff);
+  color: var(--foreground-neutral-on-surface, #111827);
+  max-height: calc(100vh - 48px);
+  z-index: 2;
+  width: calc(100% - 32px);
+  animation-name: var(--box-animation-name);
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+
+  > :first-of-type { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+
+  /* Responsive sizing */
+  @media (min-width: 640px) { width: 90%; }
+  @media (min-width: 768px) { width: 80%; }
+  @media (min-width: 1024px) { width: 60%; }
+  @media (min-width: 1280px) { width: 50%; }
+}
+
+/* Ensure the modal surface (consumer markup) stretches to fill the dialog box. */
+.cdk-overlay-pane[data-bspk='dialog'] [data-dialog-box] > [data-bspk='modal'],
+[data-bspk='dialog'] [data-dialog-box] > [data-bspk='modal'] {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-self: stretch;
+}
+
+/* Placement modifiers --------------------------------------------------------------- */
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='center'],
+[data-bspk='dialog'][data-placement='center'] {
+  justify-content: center;
+  align-items: center;
+}
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='bottom'],
+[data-bspk='dialog'][data-placement='bottom'] {
+  justify-content: center;
+  align-items: end;
+}
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='top'],
+[data-bspk='dialog'][data-placement='top'] {
+  justify-content: center;
+  align-items: start;
+}
+
+/* For left/right drawers we want the dialog box to stretch vertically so content aligns to the top */
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='left'],
+[data-bspk='dialog'][data-placement='left'] {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='right'],
+[data-bspk='dialog'][data-placement='right'] {
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+/* Specific sizing for side placements */
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='left'] [data-dialog-box],
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='right'] [data-dialog-box],
+[data-bspk='dialog'][data-placement='left'] [data-dialog-box],
+[data-bspk='dialog'][data-placement='right'] [data-dialog-box] {
+  max-height: unset;
+  width: 320px;
+  height: 100vh;
+}
+
+/* Small helper: allow full-width dialog when requested */
+[data-width-full='true'] {
+  width: 100% !important;
+}
+
+/* End dialog styles */
+/* Dialog overlay/backdrop and box layout ------------------------------------------------- */
+
+/* Backdrop / scrim element created by CDK overlay when backdropClass or backdrop is enabled. */
+.cdk-overlay-backdrop[data-bspk-overlay-backdrop],
+[data-bspk-overlay-backdrop] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  z-index: var(--z-index-scrim, 900);
+}
+
+/* The overlay pane that hosts the dialog. We give this a stacking context above the scrim. */
+.cdk-overlay-pane[data-bspk='dialog'],
+[data-bspk='dialog'] {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-dialog, 1000);
+  display: flex;
+  pointer-events: none; /* makes scrim clickable */
+  justify-content: center;
+  align-items: center;
+}
+
+/* The actual dialog box inside the pane. Make it a flex column so children can stretch/scroll. */
+.cdk-overlay-pane[data-bspk='dialog'] [data-dialog-box],
+[data-bspk='dialog'] [data-dialog-box] {
+  pointer-events: all; /* allow pointer events on the dialog box */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* allow children to use min-height:0 for scrolling */
+  text-align: start;
+  position: relative;
+  box-shadow: var(--drop-shadow-float);
+  background: var(--surface-neutral-t1-base, #ffffff);
+  color: var(--foreground-neutral-on-surface, #111827);
+  max-height: calc(100vh - 48px);
+  z-index: 2;
+  width: calc(100% - 32px);
+  animation-name: var(--box-animation-name);
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+
+  > :first-of-type { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+
+  /* Responsive sizing */
+  @media (min-width: 640px) { width: 90%; }
+  @media (min-width: 768px) { width: 80%; }
+  @media (min-width: 1024px) { width: 60%; }
+  @media (min-width: 1280px) { width: 50%; }
+}
+
+/* Ensure the modal surface (consumer markup) stretches to fill the dialog box. */
+.cdk-overlay-pane[data-bspk='dialog'] [data-dialog-box] > [data-bspk='modal'],
+[data-bspk='dialog'] [data-dialog-box] > [data-bspk='modal'] {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-self: stretch;
+}
+
+/* Placement modifiers */
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='center'],
+[data-bspk='dialog'][data-placement='center'] { justify-content: center; align-items: center; }
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='bottom'],
+[data-bspk='dialog'][data-placement='bottom'] { justify-content: center; align-items: end; }
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='top'],
+[data-bspk='dialog'][data-placement='top'] { justify-content: center; align-items: start; }
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='left'],
+[data-bspk='dialog'][data-placement='left'] { justify-content: flex-start; }
+
+.cdk-overlay-pane[data-bspk='dialog'][data-placement='right'],
+[data-bspk='dialog'][data-placement='right'] { justify-content: flex-end; }
+
+/* Small helper: allow full-width dialog when requested */
+[data-width-full='true'] {
+  width: 100% !important;
+}
+
+/* End dialog styles */
+.cdk-overlay-backdrop[data-bspk-overlay-backdrop] {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+    z-index: var(--z-index-scrim);
+}
+
+.cdk-overlay-pane[data-bspk='dialog'],
+[data-bspk='dialog'] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-index-dialog);
+    display: flex;
+    pointer-events: none; 
+    justify-content: center;
+    align-items: center;
+
+    [data-dialog-box] {
+        pointer-events: all;
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+        position: relative;
+        box-shadow: var(--drop-shadow-float);
+        background: var(--surface-neutral-t1-base);
+        color: var(--foreground-neutral-on-surface);
+        max-height: calc(100vh - var(--spacing-sizing-24));
+        z-index: 2;
+        width: calc(100% - var(--spacing-sizing-08));
+        animation-name: var(--box-animation-name);
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+
+        > :first-of-type {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+
+        /* we make the width responsive to the viewport */
+        @media (min-width: 640px) {
+            width: 90%;
+        }
+
+        @media (min-width: 768px) {
+            width: 80%;
+        }
+
+        @media (min-width: 1024px) {
+            width: 60%;
+        }
+
+        @media (min-width: 1280px) {
+            width: 50%;
+        }
+    }
+
+    &[data-placement='center'] {
+        --box-animation-name: fade-in;
+
+        justify-content: center;
+        align-items: center;
+
+        [data-dialog-box] {
+            border-radius: var(--radius-lg);
+        }
+    }
+
+    &[data-placement='bottom'] {
+        --box-animation-name: placement-bottom;
+
+        justify-content: center;
+        align-items: end;
+
+        [data-dialog-box] {
+            border-top-left-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+        }
+    }
+
+    &[data-placement='top'] {
+        --box-animation-name: placement-top;
+
+        justify-content: center;
+        align-items: start;
+
+        [data-dialog-box] {
+            border-bottom-left-radius: var(--radius-lg);
+            border-bottom-right-radius: var(--radius-lg);
+        }
+    }
+
+    &[data-placement='left'] {
+        --box-animation-name: placement-left;
+
+        justify-content: flex-start;
+
+        [data-dialog-box] {
+            max-height: unset;
+            width: 280px;
+            height: 100vh;
+            border-bottom-right-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+        }
+    }
+
+    &[data-placement='right'] {
+        --box-animation-name: placement-right;
+
+        justify-content: flex-end;
+
+        [data-dialog-box] {
+            max-height: unset;
+            width: 280px;
+            height: 100vh;
+            border-bottom-left-radius: var(--radius-lg);
+            border-top-left-radius: var(--radius-lg);
+        }
+    }
+
+    [data-width-full='true'] {
+        width: 100%;
+    }
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

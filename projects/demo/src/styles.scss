@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@bspk/styles/anywhere.css';
-@import '../../../projects/ui/src/lib/styles/base.scss';
-@import '../../../projects/ui/src/lib/styles/colors.scss';
+@use '@bspk/styles/anywhere.css';
+@use '../../../projects/ui/src/lib/styles/base.scss';
+@use '../../../projects/ui/src/lib/styles/colors.scss';
 
 router-outlet {
   display: contents;

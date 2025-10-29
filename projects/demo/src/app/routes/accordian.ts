@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Accordion } from '../../../../../projects/ui/src/lib/accordion/accordion';
+import { Accordion } from '../../../../ui/src/lib/accordion/accordion';
 
 @Component({
   selector: 'accordion-route',

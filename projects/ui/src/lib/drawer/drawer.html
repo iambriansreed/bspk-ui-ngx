@@ -1,0 +1,36 @@
+<ng-container *ngIf="modal; else persistent">
+  <ui-dialog
+    [open]="open"
+    [placement]="placement"
+    [showScrim]="true"
+    [disableFocusTrap]="disableFocusTrap"
+    (onClose)="emitClose()"
+    [widthFull]="placement === 'bottom' || placement === 'top'"
+  >
+    <div data-bspk="drawer">
+      <div data-drawer-header [attr.data-drawer-close-only]="!header ? 'true' : null">
+        <div *ngIf="header" data-drawer-title>{{ header }}</div>
+
+        <ui-button *ngIf="closeButton" variant="tertiary" (onClick)="emitClose()">
+          <icon-close></icon-close>
+        </ui-button>
+      </div>
+
+      <ng-content></ng-content>
+    </div>
+  </ui-dialog>
+</ng-container>
+
+<ng-template #persistent>
+  <section *ngIf="open" data-bspk="drawer" data-no-portal [attr.data-persistent-placement]="placement" role="complementary">
+    <div data-drawer-header [attr.data-drawer-close-only]="!header ? 'true' : null">
+      <div *ngIf="header" data-drawer-title>{{ header }}</div>
+
+      <ui-button *ngIf="closeButton" variant="tertiary" (onClick)="emitClose()">
+        <icon-close></icon-close>
+      </ui-button>
+    </div>
+
+    <ng-content></ng-content>
+  </section>
+</ng-template>
