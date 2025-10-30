@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-thumb-up',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="ThumbUp"
     data-type="material"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +17,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconThumbUp {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

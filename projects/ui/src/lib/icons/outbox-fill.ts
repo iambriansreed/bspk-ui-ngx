@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-outbox-fill',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="OutboxFill"
     data-filled="true"
     data-type="material"
@@ -17,7 +18,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconOutboxFill {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-receipt-fill',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="ReceiptFill"
     data-filled="true"
     data-type="material"
@@ -17,7 +18,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconReceiptFill {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

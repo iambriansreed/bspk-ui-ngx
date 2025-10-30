@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-license-fill',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="LicenseFill"
     data-filled="true"
     data-type="material"
@@ -17,7 +18,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconLicenseFill {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

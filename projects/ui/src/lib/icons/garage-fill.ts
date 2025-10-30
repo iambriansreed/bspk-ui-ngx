@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-garage-fill',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="GarageFill"
     data-filled="true"
     data-type="anywhere"
@@ -24,7 +25,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconGarageFill {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

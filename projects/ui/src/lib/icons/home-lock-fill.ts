@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-home-lock-fill',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="HomeLockFill"
     data-filled="true"
     data-type="anywhere"
@@ -24,7 +25,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconHomeLockFill {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

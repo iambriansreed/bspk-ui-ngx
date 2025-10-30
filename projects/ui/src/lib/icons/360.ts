@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'icon-360',
   template: `<svg
+    style.width="{{ width }}"
     data-bspk-name="360"
     data-type="material"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +17,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class Icon360 {
-  @Input() size?: string;
+  @Input() width?: string = '24px';
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

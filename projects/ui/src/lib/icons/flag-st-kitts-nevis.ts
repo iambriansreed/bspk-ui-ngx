@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-flag-st-kitts-nevis',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="FlagStKittsNevis"
     data-type="country"
     xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +29,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconFlagStKittsNevis {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

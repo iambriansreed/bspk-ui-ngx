@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-discover',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="Discover"
     data-type="brand"
     xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +37,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconDiscover {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

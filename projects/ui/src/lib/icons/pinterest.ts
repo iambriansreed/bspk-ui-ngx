@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-pinterest',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="Pinterest"
     data-type="brand"
     xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +29,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconPinterest {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

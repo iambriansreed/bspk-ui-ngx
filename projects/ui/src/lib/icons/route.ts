@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'icon-route',
   template: `<svg
+    [style.width]="width"
     data-bspk-name="Route"
     data-type="material"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +17,7 @@ import { Component, Input } from '@angular/core';
   styles: [':host { display: contents; }'],
 })
 export class IconRoute {
-  @Input() size?: string;
+  @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
