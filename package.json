@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev": "npm-run-all --parallel start watch:other",
     "watch:other": "watch 'npx tsx .scripts/generate-component-routes.ts' projects/demo/examples",
-    "gh-build": "ng build --project demo --configuration production --base-href '/bspk-ui-ngx/' && cp -r ./dist/browser/index.html ./dist/browser/404.html"
+    "gh-build": "ng build --project demo --configuration production && cp -r ./dist/browser/index.html ./dist/browser/404.html"
   },
   "prettier": {
     "printWidth": 100,
