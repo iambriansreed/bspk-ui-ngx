@@ -15,11 +15,11 @@ import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directi
   selector: 'accordion-route',
   standalone: true,
   imports: [Accordion],
-  template: `<h1>Accordion</h1>
+  template: `<h2>Accordion</h2>
 
     <p>An accordion component that allows for expandable and collapsible content sections.</p>
 
-    <h2>Default (multiple open)</h2>
+    <h3>Default (multiple open)</h3>
 
     <ui-accordion
       [singleOpen]="false"
@@ -30,7 +30,7 @@ import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directi
       ]"
     ></ui-accordion>
 
-    <h2>Single Open</h2>
+    <h3>Single Open</h3>
 
     <ui-accordion
       [singleOpen]="true"
@@ -54,9 +54,9 @@ export class AccordionRouteComponent {}
   selector: 'badge-route',
   standalone: true,
   imports: [Badge, Badge, Badge, Button, Badge, Button, Badge],
-  template: `<h1>Badge</h1>
+  template: `<h2>Badge</h2>
 
-    <h2>Basic Usage</h2>
+    <h3>Basic Usage</h3>
 
     <div>
       <ui-badge [count]="5" />
@@ -65,13 +65,13 @@ export class AccordionRouteComponent {}
       <ui-badge [count]="100" />
     </div>
 
-    <h2>Badge with Button</h2>
+    <h3>Badge with Button</h3>
 
     <ui-badge [count]="44">
       <ui-button label="Label test" size="large" variant="secondary" icon="Add"></ui-button>
     </ui-badge>
 
-    <h2>Badge with Border Surface</h2>
+    <h3>Badge with Border Surface</h3>
 
     <ui-badge [count]="101" [surfaceBorder]="true">
       <ui-button label="Label test" size="large" variant="primary" icon="Add"></ui-button>
@@ -90,21 +90,21 @@ export class BadgeRouteComponent {}
   selector: 'button-route',
   standalone: true,
   imports: [Button, Button, Button, Button, IconAdd, Button],
-  template: `<h1>Button</h1>
+  template: `<h2>Button</h2>
 
-    <h2>Primary</h2>
+    <h3>Primary</h3>
 
     <ui-button label="Label test" size="large" icon="Add" />
 
-    <h2>Secondary</h2>
+    <h3>Secondary</h3>
 
     <ui-button label="Label test" size="medium" variant="secondary" icon="Add" />
 
-    <h2>Tertiary</h2>
+    <h3>Tertiary</h3>
 
     <ui-button label="Label test" size="small" variant="tertiary" icon="Add" />
 
-    <h2>Custom Content</h2>
+    <h3>Custom Content</h3>
 
     <ui-button><icon-add width="24" />Custom Content Example</ui-button>`,
   styles: [
@@ -121,9 +121,9 @@ export class ButtonRouteComponent {}
   selector: 'card-route',
   standalone: true,
   imports: [Card, Card, Card],
-  template: `<h1>Card</h1>
+  template: `<h2>Card</h2>
 
-    <h2>Outlined Variant</h2>
+    <h3>Outlined Variant</h3>
 
     <div style="width: 300px">
       <ui-card variant="outlined">
@@ -131,7 +131,7 @@ export class ButtonRouteComponent {}
       </ui-card>
     </div>
 
-    <h2>Elevated Variant</h2>
+    <h3>Elevated Variant</h3>
 
     <div style="width: 300px">
       <ui-card variant="elevated">
@@ -152,7 +152,7 @@ export class CardRouteComponent {}
   selector: 'dialog-route',
   standalone: true,
   imports: [Button, Button, Dialog],
-  template: `<h1>Dialog</h1>
+  template: `<h2>Dialog</h2>
 
     <ui-button label="Open Dialog" (click)="open = true"></ui-button>
 
@@ -183,7 +183,7 @@ export class DialogRouteComponent {
   selector: 'drawer-route',
   standalone: true,
   imports: [Button, Drawer],
-  template: `<h1>Drawer</h1>
+  template: `<h2>Drawer</h2>
 
     <ui-button label="Open Drawer" (click)="open = true"></ui-button>
 
@@ -213,7 +213,7 @@ export class DrawerRouteComponent {
   selector: 'modal-route',
   standalone: true,
   imports: [Button, Modal],
-  template: `<h1>Modal</h1>
+  template: `<h2>Modal</h2>
 
     <ui-button label="Open Modal" (click)="open = true"></ui-button>
 
@@ -240,7 +240,7 @@ export class ModalRouteComponent {
 @Component({
   selector: 'tooltip-route',
   imports: [TooltipDirective],
-  template: `<h1>Tooltip Directive</h1>
+  template: `<h2>Tooltip Directive</h2>
 
     <div style="margin: 16px; width: 300px">
       <span [tooltip]="{ label: 'Told ya!', showTail: true, placement: 'bottom' }"
@@ -260,7 +260,7 @@ export class TooltipRouteComponent {}
 @Component({
   selector: 'txt-route',
   imports: [TxtDirective],
-  template: `<h1>Txt Directive</h1>
+  template: `<h2>Txt Directive</h2>
 
     <div txt="body-base">body-base</div>
     <div txt="body-large">body-large</div>
@@ -272,7 +272,7 @@ export class TooltipRouteComponent {}
     <div txt="display-semibold-large">display-semibold-large</div>
     <div txt="display-semibold-medium">display-semibold-medium</div>
     <div txt="display-semibold-small">display-semibold-small</div>
-    <div txt="heading-h1">heading-h1</div>
+    <div txt="heading-h2">heading-h2</div>
     <div txt="heading-h2">heading-h2</div>
     <div txt="heading-h3">heading-h3</div>
     <div txt="heading-h4">heading-h4</div>
