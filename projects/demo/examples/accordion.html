@@ -1,18 +1,24 @@
-<div style="margin: 16px; width: 300px">
-  <ui-accordion
-    [singleOpen]="false"
-    [items]="[
-      { title: 'Foo', children: 'Foo Children' },
-      { title: 'Bar', children: 'Bar Children' },
-      { title: 'Car', children: 'Car Children' }
-    ]"
-  ></ui-accordion>
-  <ui-accordion
-    [singleOpen]="true"
-    [items]="[
-      { title: 'Foo', children: 'Foo Children' },
-      { title: 'Bar', children: 'Bar Children' },
-      { title: 'Car', children: 'Car Children' }
-    ]"
-  ></ui-accordion>
-</div>
+<h1>Accordion</h1>
+<p>An accordion component that allows for expandable and collapsible content sections.</p>
+
+<h2>Default (multiple open)</h2>
+
+<ui-accordion
+  [singleOpen]="false"
+  [items]="[
+    { title: 'Foo', children: 'Foo Children' },
+    { title: 'Bar', children: 'Bar Children' },
+    { title: 'Car', children: 'Car Children' }
+  ]"
+></ui-accordion>
+
+<h2>Single Open</h2>
+\
+<ui-accordion
+  [singleOpen]="true"
+  [items]="[
+    { title: 'Foo', children: 'Foo Children' },
+    { title: 'Bar', children: 'Bar Children' },
+    { title: 'Car', children: 'Car Children' }
+  ]"
+></ui-accordion>

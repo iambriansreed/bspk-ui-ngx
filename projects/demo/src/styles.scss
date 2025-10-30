@@ -780,7 +780,4 @@ body[data-bspk-code-demo] {
 
 /** any overrides to bspk styles can go here **/
 [data-component-page] {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sizing-10);
 }

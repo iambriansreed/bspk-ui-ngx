@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { Icon } from '../icon/icon.component';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
@@ -26,7 +27,7 @@ export type ButtonWidth = 'fill' | 'hug';
  *   size="medium"
  *   variant="primary"
  *   (onClick)="handleClick($event)"
- *   [icon]="iconTemplate">
+ *   icon="iconTemplate">
  * </bspk-button>
  * ```
  *
@@ -38,7 +39,7 @@ export type ButtonWidth = 'fill' | 'hug';
   templateUrl: './button.html',
   styleUrls: ['./button.scss', '../styles/base.scss', '../styles/colors.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, Icon],
 })
 export class Button implements OnInit {
   @ViewChild('buttonElement', { static: true }) buttonElement!: ElementRef<HTMLButtonElement>;
@@ -54,7 +55,7 @@ export class Button implements OnInit {
    *
    * Should be a SVG from the BSPK icon library.
    */
-  @Input() icon?: TemplateRef<any>;
+  @Input() icon?: string;
 
   /**
    * When true the button label is hidden and only the icon is shown.
@@ -164,7 +165,7 @@ export class Button implements OnInit {
   }
 
   get isIconTemplate(): boolean {
-    return this.icon instanceof TemplateRef;
+    return !!this.icon;
   }
 
   get buttonClasses(): string {
