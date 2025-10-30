@@ -220,7 +220,7 @@ protected open = false;
   selector: 'input-route',
   standalone: true,
   imports: [Input, Input],
-  template: `<h1>Input</h1>
+  template: `<h2>Input</h2>
 <ui-input label="Input Label">Text Here</ui-input>`,
   styles: [
     `
