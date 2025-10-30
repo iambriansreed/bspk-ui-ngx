@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { Icon } from '../icon/icon.component';
+import { Icon } from '../icon/icon';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';

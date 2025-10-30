@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/angular';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { BspkIcon } from './icon.component';
+import { BspkIcon } from './icon';
 
 describe('BspkIcon', () => {
   it('should render', async () => {

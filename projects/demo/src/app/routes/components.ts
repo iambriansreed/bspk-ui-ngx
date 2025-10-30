@@ -7,6 +7,7 @@ import { IconAdd } from '../../../../../projects/ui/src/lib/icons/add';
 import { Card } from '../../../../../projects/ui/src/lib/card/card';
 import { Dialog } from '../../../../../projects/ui/src/lib/dialog/dialog';
 import { Drawer } from '../../../../../projects/ui/src/lib/drawer/drawer';
+import { Input } from '../../../../../projects/ui/src/lib/input/input';
 import { Modal } from '../../../../../projects/ui/src/lib/modal/modal';
 import { TooltipDirective } from '../../../../../projects/ui/src/lib/tooltip/tooltip.directive';
 import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directive';
@@ -17,29 +18,29 @@ import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directi
   imports: [Accordion],
   template: `<h2>Accordion</h2>
 
-    <p>An accordion component that allows for expandable and collapsible content sections.</p>
+<p>An accordion component that allows for expandable and collapsible content sections.</p>
 
-    <h3>Default (multiple open)</h3>
+<h3>Default (multiple open)</h3>
 
-    <ui-accordion
-      [singleOpen]="false"
-      [items]="[
-        { title: 'Foo', children: 'Foo Children' },
-        { title: 'Bar', children: 'Bar Children' },
-        { title: 'Car', children: 'Car Children' }
-      ]"
-    ></ui-accordion>
+<ui-accordion
+  [singleOpen]="false"
+  [items]="[
+    { title: 'Foo', children: 'Foo Children' },
+    { title: 'Bar', children: 'Bar Children' },
+    { title: 'Car', children: 'Car Children' }
+  ]"
+></ui-accordion>
 
-    <h3>Single Open</h3>
+<h3>Single Open</h3>
 
-    <ui-accordion
-      [singleOpen]="true"
-      [items]="[
-        { title: 'Foo', children: 'Foo Children' },
-        { title: 'Bar', children: 'Bar Children' },
-        { title: 'Car', children: 'Car Children' }
-      ]"
-    ></ui-accordion>`,
+<ui-accordion
+  [singleOpen]="true"
+  [items]="[
+    { title: 'Foo', children: 'Foo Children' },
+    { title: 'Bar', children: 'Bar Children' },
+    { title: 'Car', children: 'Car Children' }
+  ]"
+></ui-accordion>`,
   styles: [
     `
       :host {
@@ -48,7 +49,8 @@ import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directi
     `,
   ],
 })
-export class AccordionRouteComponent {}
+export class AccordionRouteComponent { }
+
 
 @Component({
   selector: 'badge-route',
@@ -56,26 +58,26 @@ export class AccordionRouteComponent {}
   imports: [Badge, Badge, Badge, Button, Badge, Button, Badge],
   template: `<h2>Badge</h2>
 
-    <h3>Basic Usage</h3>
+<h3>Basic Usage</h3>
 
-    <div>
-      <ui-badge [count]="5" />
-    </div>
-    <div>
-      <ui-badge [count]="100" />
-    </div>
+<div>
+  <ui-badge [count]="5" />
+</div>
+<div>
+  <ui-badge [count]="100" />
+</div>
 
-    <h3>Badge with Button</h3>
+<h3>Badge with Button</h3>
 
-    <ui-badge [count]="44">
-      <ui-button label="Label test" size="large" variant="secondary" icon="Add"></ui-button>
-    </ui-badge>
+<ui-badge [count]="44">
+  <ui-button label="Label test" size="large" variant="secondary" icon="Add"></ui-button>
+</ui-badge>
 
-    <h3>Badge with Border Surface</h3>
+<h3>Badge with Border Surface</h3>
 
-    <ui-badge [count]="101" [surfaceBorder]="true">
-      <ui-button label="Label test" size="large" variant="primary" icon="Add"></ui-button>
-    </ui-badge>`,
+<ui-badge [count]="101" [surfaceBorder]="true">
+  <ui-button label="Label test" size="large" variant="primary" icon="Add"></ui-button>
+</ui-badge>`,
   styles: [
     `
       :host {
@@ -84,7 +86,8 @@ export class AccordionRouteComponent {}
     `,
   ],
 })
-export class BadgeRouteComponent {}
+export class BadgeRouteComponent { }
+
 
 @Component({
   selector: 'button-route',
@@ -92,21 +95,21 @@ export class BadgeRouteComponent {}
   imports: [Button, Button, Button, Button, IconAdd, Button],
   template: `<h2>Button</h2>
 
-    <h3>Primary</h3>
+<h3>Primary</h3>
 
-    <ui-button label="Label test" size="large" icon="Add" />
+<ui-button label="Label test" size="large" icon="Add" />
 
-    <h3>Secondary</h3>
+<h3>Secondary</h3>
 
-    <ui-button label="Label test" size="medium" variant="secondary" icon="Add" />
+<ui-button label="Label test" size="medium" variant="secondary" icon="Add" />
 
-    <h3>Tertiary</h3>
+<h3>Tertiary</h3>
 
-    <ui-button label="Label test" size="small" variant="tertiary" icon="Add" />
+<ui-button label="Label test" size="small" variant="tertiary" icon="Add" />
 
-    <h3>Custom Content</h3>
+<h3>Custom Content</h3>
 
-    <ui-button><icon-add width="24" />Custom Content Example</ui-button>`,
+<ui-button><icon-add width="24" />Custom Content Example</ui-button>`,
   styles: [
     `
       :host {
@@ -115,7 +118,8 @@ export class BadgeRouteComponent {}
     `,
   ],
 })
-export class ButtonRouteComponent {}
+export class ButtonRouteComponent { }
+
 
 @Component({
   selector: 'card-route',
@@ -123,21 +127,21 @@ export class ButtonRouteComponent {}
   imports: [Card, Card, Card],
   template: `<h2>Card</h2>
 
-    <h3>Outlined Variant</h3>
+<h3>Outlined Variant</h3>
 
-    <div style="width: 300px">
-      <ui-card variant="outlined">
-        <p>Card works! <br />(variant="outlined")</p>
-      </ui-card>
-    </div>
+<div style="width: 300px">
+  <ui-card variant="outlined">
+    <p>Card works! <br />(variant="outlined")</p>
+  </ui-card>
+</div>
 
-    <h3>Elevated Variant</h3>
+<h3>Elevated Variant</h3>
 
-    <div style="width: 300px">
-      <ui-card variant="elevated">
-        <p>Card works! <br />(variant="elevated")</p>
-      </ui-card>
-    </div>`,
+<div style="width: 300px">
+  <ui-card variant="elevated">
+    <p>Card works! <br />(variant="elevated")</p>
+  </ui-card>
+</div>`,
   styles: [
     `
       :host {
@@ -146,7 +150,8 @@ export class ButtonRouteComponent {}
     `,
   ],
 })
-export class CardRouteComponent {}
+export class CardRouteComponent { }
+
 
 @Component({
   selector: 'dialog-route',
@@ -154,19 +159,19 @@ export class CardRouteComponent {}
   imports: [Button, Button, Dialog],
   template: `<h2>Dialog</h2>
 
-    <ui-button label="Open Dialog" (click)="open = true"></ui-button>
+<ui-button label="Open Dialog" (click)="open = true"></ui-button>
 
-    <ui-dialog
-      [open]="open"
-      (onClose)="open = false"
-      header="Example dialog"
-      description="This is a demo dialog"
-    >
-      <div style="padding: 20px">
-        <p>This is demo dialog content.</p>
-        <ui-button label="Close" (click)="open = false"></ui-button>
-      </div>
-    </ui-dialog>`,
+<ui-dialog
+  [open]="open"
+  (onClose)="open = false"
+  header="Example dialog"
+  description="This is a demo dialog"
+>
+  <div style="padding: 20px">
+    <p>This is demo dialog content.</p>
+    <ui-button label="Close" (click)="open = false"></ui-button>
+  </div>
+</ui-dialog>`,
   styles: [
     `
       :host {
@@ -175,9 +180,10 @@ export class CardRouteComponent {}
     `,
   ],
 })
-export class DialogRouteComponent {
-  protected open = false;
+export class DialogRouteComponent { 
+protected open = false;
 }
+
 
 @Component({
   selector: 'drawer-route',
@@ -185,18 +191,18 @@ export class DialogRouteComponent {
   imports: [Button, Drawer],
   template: `<h2>Drawer</h2>
 
-    <ui-button label="Open Drawer" (click)="open = true"></ui-button>
+<ui-button label="Open Drawer" (click)="open = true"></ui-button>
 
-    <ui-drawer
-      [open]="open"
-      (onClose)="open = false"
-      header="Example drawer"
-      description="This is a demo drawer"
-    >
-      <div style="padding: 20px; width: 320px">
-        <p>This is demo drawer content.</p>
-      </div>
-    </ui-drawer>`,
+<ui-drawer
+  [open]="open"
+  (onClose)="open = false"
+  header="Example drawer"
+  description="This is a demo drawer"
+>
+  <div style="padding: 20px; width: 320px">
+    <p>This is demo drawer content.</p>
+  </div>
+</ui-drawer>`,
   styles: [
     `
       :host {
@@ -205,9 +211,27 @@ export class DialogRouteComponent {
     `,
   ],
 })
-export class DrawerRouteComponent {
-  protected open = false;
+export class DrawerRouteComponent { 
+protected open = false;
 }
+
+
+@Component({
+  selector: 'input-route',
+  standalone: true,
+  imports: [Input, Input],
+  template: `<h1>Input</h1>
+<ui-input label="Input Label">Text Here</ui-input>`,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
+})
+export class InputRouteComponent { }
+
 
 @Component({
   selector: 'modal-route',
@@ -215,16 +239,16 @@ export class DrawerRouteComponent {
   imports: [Button, Modal],
   template: `<h2>Modal</h2>
 
-    <ui-button label="Open Modal" (click)="open = true"></ui-button>
+<ui-button label="Open Modal" (click)="open = true"></ui-button>
 
-    <ui-modal
-      [open]="open"
-      (onClose)="open = false"
-      header="Example modal"
-      description="This is a demo modal"
-    >
-      <p>Modal content — Add any content here.</p>
-    </ui-modal>`,
+<ui-modal
+  [open]="open"
+  (onClose)="open = false"
+  header="Example modal"
+  description="This is a demo modal"
+>
+  <p>Modal content — Add any content here.</p>
+</ui-modal>`,
   styles: [
     `
       :host {
@@ -233,20 +257,21 @@ export class DrawerRouteComponent {
     `,
   ],
 })
-export class ModalRouteComponent {
-  protected open = false;
+export class ModalRouteComponent { 
+protected open = false;
 }
+
 
 @Component({
   selector: 'tooltip-route',
   imports: [TooltipDirective],
   template: `<h2>Tooltip Directive</h2>
 
-    <div style="margin: 16px; width: 300px">
-      <span [tooltip]="{ label: 'Told ya!', showTail: true, placement: 'bottom' }"
-        >Hover me for tooltip!</span
-      >
-    </div>`,
+<div style="margin: 16px; width: 300px">
+  <span [tooltip]="{ label: 'Told ya!', showTail: true, placement: 'bottom' }"
+    >Hover me for tooltip!</span
+  >
+</div>`,
   styles: [
     `
       :host {
@@ -257,36 +282,37 @@ export class ModalRouteComponent {
 })
 export class TooltipRouteComponent {}
 
+
 @Component({
   selector: 'txt-route',
   imports: [TxtDirective],
   template: `<h2>Txt Directive</h2>
 
-    <div txt="body-base">body-base</div>
-    <div txt="body-large">body-large</div>
-    <div txt="body-small">body-small</div>
-    <div txt="body-x-small">body-x-small</div>
-    <div txt="display-regular-large">display-regular-large</div>
-    <div txt="display-regular-medium">display-regular-medium</div>
-    <div txt="display-regular-small">display-regular-small</div>
-    <div txt="display-semibold-large">display-semibold-large</div>
-    <div txt="display-semibold-medium">display-semibold-medium</div>
-    <div txt="display-semibold-small">display-semibold-small</div>
-    <div txt="heading-h2">heading-h2</div>
-    <div txt="heading-h2">heading-h2</div>
-    <div txt="heading-h3">heading-h3</div>
-    <div txt="heading-h4">heading-h4</div>
-    <div txt="heading-h5">heading-h5</div>
-    <div txt="heading-h6">heading-h6</div>
-    <div txt="labels-base">labels-base</div>
-    <div txt="labels-large">labels-large</div>
-    <div txt="labels-small">labels-small</div>
-    <div txt="labels-x-small">labels-x-small</div>
-    <div txt="subheader-large">subheader-large</div>
-    <div txt="subheader-medium">subheader-medium</div>
-    <div txt="subheader-x-large">subheader-x-large</div>
-    <div txt="subheader-xx-large">subheader-xx-large</div>
-    <div txt="subheader-xxx-large">subheader-xxx-large</div>`,
+<div txt="body-base">body-base</div>
+<div txt="body-large">body-large</div>
+<div txt="body-small">body-small</div>
+<div txt="body-x-small">body-x-small</div>
+<div txt="display-regular-large">display-regular-large</div>
+<div txt="display-regular-medium">display-regular-medium</div>
+<div txt="display-regular-small">display-regular-small</div>
+<div txt="display-semibold-large">display-semibold-large</div>
+<div txt="display-semibold-medium">display-semibold-medium</div>
+<div txt="display-semibold-small">display-semibold-small</div>
+<div txt="heading-h2">heading-h2</div>
+<div txt="heading-h2">heading-h2</div>
+<div txt="heading-h3">heading-h3</div>
+<div txt="heading-h4">heading-h4</div>
+<div txt="heading-h5">heading-h5</div>
+<div txt="heading-h6">heading-h6</div>
+<div txt="labels-base">labels-base</div>
+<div txt="labels-large">labels-large</div>
+<div txt="labels-small">labels-small</div>
+<div txt="labels-x-small">labels-x-small</div>
+<div txt="subheader-large">subheader-large</div>
+<div txt="subheader-medium">subheader-medium</div>
+<div txt="subheader-x-large">subheader-x-large</div>
+<div txt="subheader-xx-large">subheader-xx-large</div>
+<div txt="subheader-xxx-large">subheader-xxx-large</div>`,
   styles: [
     `
       :host {

@@ -6,7 +6,7 @@ import { IconRegistry } from './icon-registry.service';
   selector: 'bspk-icon',
   imports: [],
   template: '',
-  styleUrl: './icon.component.scss',
+  styleUrl: './icon.scss',
   host: {
     'data-bspk': 'icon',
     role: 'img',

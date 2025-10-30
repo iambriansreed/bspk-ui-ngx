@@ -1,0 +1,27 @@
+<ng-content select="[data-leading]">
+  @if (leading()) {
+  <span data-leading>{{ leading() }}</span>
+  }
+</ng-content>
+
+<input
+  data-main-input
+  [attr.aria-invalid]="invalid()"
+  [attr.aria-label]="label()"
+  [attr.data-invalid]="invalid()"
+  [disabled]="disabled() || disabledState()"
+  [id]="controlId()"
+  [placeholder]="placeholder() || ''"
+  [readOnly]="readOnly() || null"
+  [required]="required() || null"
+  [type]="type()"
+  [value]="value()"
+  (blur)="handleBlur($event)"
+  (input)="handleInput($event)"
+/>
+
+<ng-content select="[data-trailing]">
+  @if (trailing()) {
+  <span data-trailing>{{ trailing() }}</span>
+  }
+</ng-content>
