@@ -106,5 +106,8 @@ export function getErrors(
     const error = formControl.getError('customDirty');
     return sanitizer.bypassSecurityTrustHtml(error);
   }
+  if (formControl.hasError('mask')) {
+    return 'The value does not match the required format';
+  }
   return '';
 }

@@ -64,9 +64,7 @@ const fileImports = [`import { Component } from '@angular/core';`];
 
 componentMeta.forEach(({ name, slug, type, classContent, template }) => {
   if (type === 'component') {
-    fileImports.push(
-      `import { ${name} } from '../../../../../projects/ui/src/lib/${slug}/${slug}';`
-    );
+    fileImports.push(`import { ${name} } from '../../../../../projects/ui/src/lib/${slug}';`);
   }
 
   if (type === 'directive') {

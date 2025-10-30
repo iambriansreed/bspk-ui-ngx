@@ -20,8 +20,10 @@ import {
   Validator,
 } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NgxMaskDirective, NgxMaskService } from 'ngx-mask';
 import { noop } from './util';
 import { getErrors } from './error-formatter';
+import { Mask } from './mask';
 
 export const textInputSizes = ['small', 'medium', 'large'];
 export type TextInputSize = (typeof textInputSizes)[number];
@@ -42,6 +44,7 @@ export class TextInputControlValueAccessor
   readonly placeholder = input<string>();
   readonly leading = input<string>();
   readonly trailing = input<string>();
+  readonly mask = input<Mask>();
   readonly blur = output<FocusEvent>();
   readonly focusin = output<FocusEvent>();
 
@@ -51,6 +54,8 @@ export class TextInputControlValueAccessor
 
   private readonly injector = inject(Injector);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly maskDirective = viewChild(NgxMaskDirective);
+  private readonly maskService = inject(NgxMaskService);
 
   constructor() {
     let first = true;
@@ -63,10 +68,16 @@ export class TextInputControlValueAccessor
       }
       this.onChange(value);
     });
+
+    effect(() => {
+      this.maskDirective()?.writeValue(this.value());
+    });
   }
 
   ngOnInit() {
     this.ngControl = this.injector.get(NgControl, null, { self: true, optional: true });
+
+    this.maskDirective()?.writeValue(this.value());
   }
 
   ngDoCheck() {
@@ -129,7 +140,8 @@ export class TextInputControlValueAccessor
   }
 
   handleInput(event: Event) {
-    const out = (event.target as HTMLInputElement).value;
+    const raw = (event.target as HTMLInputElement).value;
+    const out = this.mask()?.dropSpecialCharacters ? this.maskService.removeMask(raw) : raw;
     this.value.set(out);
     this.onChange(out);
   }

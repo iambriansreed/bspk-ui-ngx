@@ -1,14 +1,19 @@
 import { Component, input, ViewEncapsulation } from '@angular/core';
 
-import { provideValidator, provideValueAccessor, TextInputControlValueAccessor } from '../../utils';
-import { randomString } from '../../utils/randomString';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import {
+  provideValidator,
+  provideValueAccessor,
+  TextInputControlValueAccessor,
+  randomString,
+} from '../../utils';
 
 @Component({
   selector: 'ui-input',
-  imports: [],
+  imports: [NgxMaskDirective],
   templateUrl: './input.html',
   styleUrl: './input.scss',
-  providers: [provideValueAccessor(Input), provideValidator(Input)],
+  providers: [provideValueAccessor(Input), provideValidator(Input), provideNgxMask()],
   host: {
     'data-bspk': 'input',
     '[attr.data-size]': 'size()',

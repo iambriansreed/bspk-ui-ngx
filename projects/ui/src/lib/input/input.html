@@ -4,6 +4,24 @@
   }
 </ng-content>
 
+@if (mask()) {
+<input
+  data-main-input
+  [attr.aria-label]="label()"
+  [disabled]="disabled() || disabledState()"
+  [dropSpecialCharacters]="mask()?.dropSpecialCharacters"
+  [id]="id"
+  [mask]="mask()?.mask"
+  [patterns]="mask()?.patterns"
+  [placeholder]="placeholder() || ''"
+  [readOnly]="readOnly() || null"
+  [required]="required() || null"
+  [type]="type()"
+  [value]="value()"
+  (blur)="handleBlur($event)"
+  (input)="handleInput($event)"
+/>
+} @else {
 <input
   data-main-input
   [attr.aria-invalid]="invalid()"
@@ -19,6 +37,7 @@
   (blur)="handleBlur($event)"
   (input)="handleInput($event)"
 />
+}
 
 <ng-content select="[data-trailing]">
   @if (trailing()) {
