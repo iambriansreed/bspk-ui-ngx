@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-symbol-sri-lanka',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="SymbolSriLanka"
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolSriLanka {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

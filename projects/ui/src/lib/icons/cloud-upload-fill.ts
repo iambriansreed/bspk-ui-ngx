@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-cloud-upload-fill',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="CloudUploadFill"
         data-filled="true"
         data-type="material"
@@ -19,7 +19,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconCloudUploadFill {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-home-check',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="HomeCheck"
         data-type="anywhere"
         xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconHomeCheck {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

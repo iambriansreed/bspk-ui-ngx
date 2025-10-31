@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-flag-curacao',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="FlagCuracao"
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagCuracao {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

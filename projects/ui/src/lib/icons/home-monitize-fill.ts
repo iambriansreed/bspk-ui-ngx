@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-home-monitize-fill',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="HomeMonitizeFill"
         data-filled="true"
         data-type="anywhere"
@@ -24,7 +24,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconHomeMonitizeFill {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

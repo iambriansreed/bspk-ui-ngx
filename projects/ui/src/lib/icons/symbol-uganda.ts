@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-symbol-uganda',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="SymbolUganda"
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolUganda {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

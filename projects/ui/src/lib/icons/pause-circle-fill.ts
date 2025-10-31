@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-pause-circle-fill',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="PauseCircleFill"
         data-filled="true"
         data-type="material"
@@ -19,7 +19,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconPauseCircleFill {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

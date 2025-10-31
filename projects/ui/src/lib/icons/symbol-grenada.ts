@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-symbol-grenada',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="SymbolGrenada"
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolGrenada {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

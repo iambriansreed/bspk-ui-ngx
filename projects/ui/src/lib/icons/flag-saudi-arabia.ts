@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-flag-saudi-arabia',
     template: `<svg
-        [style.width]="width"
+        [attr.width]="width"
         data-bspk-name="FlagSaudiArabia"
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagSaudiArabia {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

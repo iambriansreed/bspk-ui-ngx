@@ -14,7 +14,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class Icon${name} {
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
@@ -38,7 +38,7 @@ svgFiles.forEach((file) => {
         .readFileSync(filePath, 'utf-8')
         .trim()
         .replace('<!--Copyright 2025 Anywhere Real Estate - CC BY 4.0-->', '')
-        .replace('<svg', '<svg [style.width]="width"'); // remove copyright comment;
+        .replace('<svg', '<svg [attr.width]="width"'); // remove copyright comment;
     const name = path.basename(file, '.svg'); // e.g., 'add'
     // from PascalCase to kebab-case
     const slug = name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();

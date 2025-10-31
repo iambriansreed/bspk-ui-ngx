@@ -12,7 +12,7 @@ import { IconRegistry } from './icon-registry.service';
 export class Icon {
     /** @see https://bspk.anywhere.re/icons */
     readonly name = input.required<string>();
-    @Input() width?: string = '24px';
+    @Input() width?: string;
 
     constructor() {
         const elementRef = inject(ElementRef);
@@ -24,10 +24,10 @@ export class Icon {
                 canceled = true;
             });
             const res = await iconRegistry.getIcon(this.name());
-            if (!canceled) {
-                elementRef.nativeElement.innerHTML = res;
-            }
-            elementRef.nativeElement.children[0]?.setAttribute('style', 'width: ' + this.width);
+            if (canceled) return;
+
+            elementRef.nativeElement.innerHTML = res;
+            if (this.width) elementRef.nativeElement.children[0]?.setAttribute('width', this.width);
         });
     }
 }
