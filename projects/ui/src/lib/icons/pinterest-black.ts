@@ -22,7 +22,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-pinterest-black { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconPinterestBlack {

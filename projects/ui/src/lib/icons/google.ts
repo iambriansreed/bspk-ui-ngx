@@ -35,7 +35,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#EA4335"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-google { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconGoogle {

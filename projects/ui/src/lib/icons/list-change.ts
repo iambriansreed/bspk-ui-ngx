@@ -23,7 +23,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="currentColor"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-list-change { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconListChange {

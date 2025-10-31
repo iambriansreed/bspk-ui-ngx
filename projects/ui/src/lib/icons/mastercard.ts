@@ -26,7 +26,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#F79E1B"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-mastercard { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconMastercard {

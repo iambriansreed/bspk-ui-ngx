@@ -28,7 +28,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-flag-papua-new-guinea { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagPapuaNewGuinea {

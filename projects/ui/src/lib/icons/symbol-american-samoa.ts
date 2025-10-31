@@ -39,7 +39,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-symbol-american-samoa { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolAmericanSamoa {

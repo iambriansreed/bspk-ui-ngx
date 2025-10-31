@@ -29,7 +29,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-flag-lesotho { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagLesotho {

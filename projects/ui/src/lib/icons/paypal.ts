@@ -77,7 +77,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#298FC2"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-paypal { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconPaypal {

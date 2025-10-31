@@ -27,7 +27,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#0072C6"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-outlook { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconOutlook {

@@ -15,7 +15,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             d="M680-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM280-240q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm160-320q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-scatter-plot-fill { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconScatterPlotFill {

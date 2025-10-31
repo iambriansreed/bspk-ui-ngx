@@ -15,7 +15,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             d="M120-160q-33 0-56.5-23.5T40-240v-480q0-33 23.5-56.5T120-800h720q33 0 56.5 23.5T920-720v480q0 33-23.5 56.5T840-160H120Zm120-80h480v-480H240v480Z"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-tablet-fill { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconTabletFill {

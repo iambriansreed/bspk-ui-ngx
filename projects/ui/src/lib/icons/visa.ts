@@ -34,7 +34,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#15195A"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-visa { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconVisa {

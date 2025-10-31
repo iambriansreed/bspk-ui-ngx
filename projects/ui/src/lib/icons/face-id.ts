@@ -43,7 +43,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="currentColor"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-face-id { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFaceId {

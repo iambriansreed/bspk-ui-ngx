@@ -20,7 +20,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             <clipPath id="SvgApplepay__a"><rect width="24" height="24" fill="white" /></clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-applepay { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconApplepay {

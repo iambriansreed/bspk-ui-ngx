@@ -15,7 +15,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="currentColor"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-diamond { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconDiamond {

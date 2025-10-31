@@ -12,7 +12,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     >
         <path d="M200-312v-336l240 168-240 168Zm320-8v-320h80v320h-80Zm160 0v-320h80v320h-80Z" />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-play-pause { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconPlayPause {

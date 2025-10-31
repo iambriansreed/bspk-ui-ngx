@@ -19,7 +19,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="black"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-apple-black { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconAppleBlack {

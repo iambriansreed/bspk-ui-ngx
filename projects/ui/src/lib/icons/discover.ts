@@ -34,7 +34,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             <clipPath id="SvgDiscover__a"><rect width="24" height="24" fill="white" /></clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-discover { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconDiscover {

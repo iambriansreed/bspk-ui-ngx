@@ -89,7 +89,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </linearGradient>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-google-play { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconGooglePlay {

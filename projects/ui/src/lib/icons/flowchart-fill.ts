@@ -15,7 +15,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             d="M600-160v-80H440v-200h-80v80H80v-240h280v80h80v-200h160v-80h280v240H600v-80h-80v320h80v-80h280v240H600Z"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-flowchart-fill { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlowchartFill {

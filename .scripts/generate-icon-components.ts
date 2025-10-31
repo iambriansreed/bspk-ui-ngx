@@ -10,7 +10,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-${slug}',
     template: \`${svg}\`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-${slug} { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class Icon${name} {

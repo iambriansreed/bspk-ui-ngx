@@ -23,7 +23,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-flag-norfolk-island { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagNorfolkIsland {

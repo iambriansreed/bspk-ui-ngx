@@ -38,7 +38,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-symbol-democratic-republic-of-the-congo { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolDemocraticRepublicOfTheCongo {

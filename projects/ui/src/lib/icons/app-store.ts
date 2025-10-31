@@ -30,7 +30,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </linearGradient>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-app-store { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconAppStore {

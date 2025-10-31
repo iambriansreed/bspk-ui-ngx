@@ -25,7 +25,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="currentColor"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-barn { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconBarn {

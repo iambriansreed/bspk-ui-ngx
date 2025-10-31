@@ -33,7 +33,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-flag-vanuatu { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconFlagVanuatu {

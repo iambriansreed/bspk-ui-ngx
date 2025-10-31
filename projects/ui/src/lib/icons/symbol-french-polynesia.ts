@@ -41,7 +41,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-symbol-french-polynesia { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolFrenchPolynesia {

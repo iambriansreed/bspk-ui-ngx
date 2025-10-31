@@ -59,7 +59,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             fill="#EA4335"
         />
     </svg>`,
-    styles: [':host { display: contents; }'],
+    styles: ['icon-googlepay { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconGooglepay {
