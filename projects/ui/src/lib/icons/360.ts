@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'icon-360',
     template: `<svg
-        style.width="{{ width }}"
+        [style.width]="width"
         data-bspk-name="360"
         data-type="material"
         xmlns="http://www.w3.org/2000/svg"
@@ -15,6 +15,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         />
     </svg>`,
     styles: [':host { display: contents; }'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class Icon360 {
     @Input() width?: string = '24px';

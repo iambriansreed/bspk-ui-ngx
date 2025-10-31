@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'icon-symbol-burundi',
@@ -61,9 +61,10 @@ import { Component, Input } from '@angular/core';
         </defs>
     </svg>`,
     styles: [':host { display: contents; }'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class IconSymbolBurundi {
-    @Input() width?: string;
+    @Input() width?: string = '24px';
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

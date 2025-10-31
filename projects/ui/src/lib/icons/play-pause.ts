@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'icon-play-pause',
@@ -13,9 +13,10 @@ import { Component, Input } from '@angular/core';
         <path d="M200-312v-336l240 168-240 168Zm320-8v-320h80v320h-80Zm160 0v-320h80v320h-80Z" />
     </svg>`,
     styles: [':host { display: contents; }'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class IconPlayPause {
-    @Input() width?: string;
+    @Input() width?: string = '24px';
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
