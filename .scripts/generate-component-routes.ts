@@ -11,6 +11,10 @@
 
 import fs from 'fs';
 
+const uniqueStr = (value: string, index: number, arr: string[]) => {
+  return arr.indexOf(value) === index;
+};
+
 type ComponentMeta = {
   name: string;
   slug: string;
@@ -139,7 +143,7 @@ function componentTemplate({ name, slug, template, classContent, imports }: Temp
 @Component({
   selector: '${slug}-route',
   standalone: true,
-  imports: [${[...(imports || []), name].join(', ')}],
+  imports: [${[...(imports || []), name].filter(uniqueStr).join(', ')}],
   template: \`${template}\`,
   styles: [
     \`

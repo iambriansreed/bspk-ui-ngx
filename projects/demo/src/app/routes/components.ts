@@ -40,7 +40,7 @@ import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directi
         { title: 'Bar', children: 'Bar Children' },
         { title: 'Car', children: 'Car Children' }
       ]"
-    ></ui-accordion> `,
+    ></ui-accordion>`,
   styles: [
     `
       :host {
@@ -54,7 +54,7 @@ export class AccordionRouteComponent {}
 @Component({
   selector: 'badge-route',
   standalone: true,
-  imports: [Badge, Badge, Badge, Button, Badge, Button, Badge],
+  imports: [Badge, Button],
   template: `<h2>Badge</h2>
 
     <h3>Basic Usage</h3>
@@ -90,7 +90,7 @@ export class BadgeRouteComponent {}
 @Component({
   selector: 'button-route',
   standalone: true,
-  imports: [Button, Button, Button, Button, IconAdd, Button],
+  imports: [Button, IconAdd],
   template: `<h2>Button</h2>
 
     <h3>Primary</h3>
@@ -121,7 +121,7 @@ export class ButtonRouteComponent {}
 @Component({
   selector: 'card-route',
   standalone: true,
-  imports: [Card, Card, Card],
+  imports: [Card],
   template: `<h2>Card</h2>
 
     <h3>Outlined Variant</h3>
@@ -152,7 +152,7 @@ export class CardRouteComponent {}
 @Component({
   selector: 'dialog-route',
   standalone: true,
-  imports: [Button, Button, Dialog],
+  imports: [Button, Dialog],
   template: `<h2>Dialog</h2>
 
     <ui-button label="Open Dialog" (click)="open = true"></ui-button>
@@ -213,7 +213,7 @@ export class DrawerRouteComponent {
 @Component({
   selector: 'input-route',
   standalone: true,
-  imports: [Input, Input],
+  imports: [Input],
   template: `<h2>Input</h2>
     <ui-input label="Input Label">Text Here</ui-input>`,
   styles: [
