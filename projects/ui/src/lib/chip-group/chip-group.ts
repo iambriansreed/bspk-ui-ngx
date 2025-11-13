@@ -20,9 +20,13 @@ export type ChipGroupItem = {
     styleUrl: './chip-group.scss',
 })
 export class ChipGroup {
-    /** To allow chips to wrap. If set to false chips will scroll. */
-    @Input() wrap: boolean = true;
+    /** To allow chips to scroll. If set to false chips will wrap. */
+    @Input() scroll: boolean = false;
 
     /** Only Chip components should be used as children. */
     @Input() items?: ChipGroupItem[];
+
+    get anyFlatFalse(): boolean {
+        return !!this.items?.some((item) => item.flat === false || item.flat == null);
+    }
 }

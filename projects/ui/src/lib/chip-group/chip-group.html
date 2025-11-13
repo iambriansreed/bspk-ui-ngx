@@ -1,4 +1,8 @@
-<div data-bspk="chip-group" [attr.data-wrap]="wrap ? true : null">
+<div
+    data-bspk="chip-group"
+    [attr.data-scroll]="scroll ? true : null"
+    [attr.data-elevated-chips]="anyFlatFalse ? true : null"
+>
     @if (items?.length) {
         @for (item of items; track item) {
             <ui-chip
@@ -12,7 +16,5 @@
                 (chipClick)="item.onClick?.($event)"
             ></ui-chip>
         }
-    } @else {
-        <ng-content></ng-content>
     }
 </div>

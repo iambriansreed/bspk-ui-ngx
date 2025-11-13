@@ -246,22 +246,10 @@ export class CardRouteComponent { }
     </ui-chip-group>
 </div>
 
-<h3>wrap = false</h3>
-<div style="width: 500px">
-    <ui-chip-group [wrap]="false">
-        <ui-chip label="Hello I'm Chip" />
-        <ui-chip label="Hello I'm Chip" />
-        <ui-chip label="Hello I'm Chip" />
-        <ui-chip label="Hello I'm Chip" />
-        <ui-chip label="Hello I'm Chip" />
-        <ui-chip label="Hello I'm Chip" />
-    </ui-chip-group>
-</div>
-
-<h3>wrap = false, items=[...]</h3>
+<h3>scroll = true, items=[...]</h3>
 <div style="width: 500px">
     <ui-chip-group
-        [wrap]="false"
+        [scroll]="true"
         [items]="[
             { label: 'Chip 1' },
             { label: 'Chip 2', trailingIcon: 'Add' },
@@ -269,6 +257,22 @@ export class CardRouteComponent { }
             { label: 'Chip 4, flat = true', flat: true },
             { label: 'Chip 5 selected = true', selected: true },
             { label: 'Chip 6 disabled = true', disabled: true },
+        ]"
+    >
+    </ui-chip-group>
+</div>
+
+<h3>scroll = true, items=[...] all items have flat = true</h3>
+<div style="width: 500px">
+    <ui-chip-group
+        [scroll]="true"
+        [items]="[
+            { label: 'Chip 1', flat: true },
+            { label: 'Chip 2', trailingIcon: 'Add', flat: true },
+            { label: 'Chip 3', leadingIcon: 'Add', trailingBadge: { count: 2 }, flat: true },
+            { label: 'Chip 4, flat = true', flat: true },
+            { label: 'Chip 5 selected = true', selected: true, flat: true },
+            { label: 'Chip 6 disabled = true', disabled: true, flat: true },
         ]"
     >
     </ui-chip-group>

@@ -6,10 +6,15 @@ ui-chip-group {
     display: flex;
     gap: var(--spacing-sizing-02);
     width: 100%;
-    overflow: auto;
+    flex-flow: row wrap;
 
-    &[data-wrap] {
-        flex-flow: row wrap;
+    &[data-scroll] {
+        overflow: auto;
+        flex-wrap: nowrap;
+    }
+
+    &[data-elevated-chips] {
+        padding: 1px 2px 2px 1px;
     }
 }
 
