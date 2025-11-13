@@ -11,6 +11,7 @@ import { Dialog } from '../../../../../projects/ui/src/lib/dialog';
 import { Drawer } from '../../../../../projects/ui/src/lib/drawer';
 import { Input } from '../../../../../projects/ui/src/lib/input';
 import { Modal } from '../../../../../projects/ui/src/lib/modal';
+import { Tag } from '../../../../../projects/ui/src/lib/tag';
 import { TooltipDirective } from '../../../../../projects/ui/src/lib/tooltip/tooltip.directive';
 import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directive';
 
@@ -317,6 +318,85 @@ export class InputRouteComponent { }
 export class ModalRouteComponent { 
 protected open = false;
 }
+
+
+@Component({
+  selector: 'tag-route',
+  standalone: true,
+  imports: [Tag],
+  template: `<h2>Tag</h2>
+
+<h3>Default</h3>
+<ui-tag label="basic tag" />
+
+<h3>variant = corner-wrap</h3>
+<ui-tag label="basic tag" variant="corner-wrap" />
+
+<h3>variant = pill</h3>
+<ui-tag label="basic tag" variant="pill" />
+
+<h3>size = x-small</h3>
+<ui-tag label="basic tag" size="x-small" />
+
+<h3>size = x-small; variant = corner-wrap</h3>
+<ui-tag label="basic tag" size="x-small" variant="corner-wrap" />
+
+<h3>size = x-small; variant = pill</h3>
+<ui-tag label="basic tag" size="x-small" variant="pill" />
+
+<h3>Color: blue</h3>
+<ui-tag color="blue" label="basic tag" />
+
+<h3>Color: green</h3>
+<ui-tag color="green" label="basic tag" />
+
+<h3>Color: lime</h3>
+<ui-tag color="lime" label="basic tag" />
+
+<h3>Color: magenta</h3>
+<ui-tag color="magenta" label="basic tag" />
+
+<h3>Color: orange</h3>
+<ui-tag color="orange" label="basic tag" />
+
+<h3>Color: pink</h3>
+<ui-tag color="pink" label="basic tag" />
+
+<h3>Color: purple</h3>
+<ui-tag color="purple" label="basic tag" />
+
+<h3>Color: red</h3>
+<ui-tag color="red" label="basic tag" />
+
+<h3>Color: teal</h3>
+<ui-tag color="teal" label="basic tag" />
+
+<h3>Color: yellow</h3>
+<ui-tag color="yellow" label="basic tag" />
+
+<h3>Color: grey</h3>
+<ui-tag color="grey" label="basic tag" />
+
+<h3>Color: white</h3>
+<ui-tag color="white" label="basic tag" />
+
+<h3>Color: primary</h3>
+<ui-tag color="primary" label="basic tag" />
+
+<h3>Color: secondary</h3>
+<ui-tag color="secondary" label="basic tag" />
+
+<!-- | 'primary' | 'secondary' | 'grey' | 'white' | 'blue' | 'green' | 'lime' | 'magenta' | 'orange' | 'pink' | 'purple' |
+'red' | 'teal' | 'yellow'; -->`,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
+})
+export class TagRouteComponent { }
 
 
 @Component({
