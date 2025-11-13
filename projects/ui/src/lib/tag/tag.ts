@@ -18,6 +18,7 @@ export type ColorVariant =
 
 @Component({
     selector: 'ui-tag',
+    standalone: true,
     imports: [],
     templateUrl: './tag.html',
     styleUrls: ['./tag.scss', '../styles/base.scss', '../styles/colors.scss'],
