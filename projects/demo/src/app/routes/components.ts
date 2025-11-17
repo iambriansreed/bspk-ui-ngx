@@ -17,504 +17,500 @@ import { TooltipDirective } from '../../../../../projects/ui/src/lib/tooltip/too
 import { TxtDirective } from '../../../../../projects/ui/src/lib/txt/txt.directive';
 
 @Component({
-  selector: 'accordion-route',
-  standalone: true,
-  imports: [Accordion],
-  template: `<h2>Accordion</h2>
+    selector: 'accordion-route',
+    standalone: true,
+    imports: [Accordion],
+    template: `<h2>Accordion</h2>
 
-<p>An accordion component that allows for expandable and collapsible content sections.</p>
+        <p>An accordion component that allows for expandable and collapsible content sections.</p>
 
-<h3>Default (multiple open)</h3>
+        <h3>Default (multiple open)</h3>
 
-<ui-accordion
-    [singleOpen]="false"
-    [items]="[
-        { title: 'Foo', children: 'Foo Children' },
-        { title: 'Bar', children: 'Bar Children' },
-        { title: 'Car', children: 'Car Children' },
-    ]"
-></ui-accordion>
+        <ui-accordion
+            [singleOpen]="false"
+            [items]="[
+                { title: 'Foo', children: 'Foo Children' },
+                { title: 'Bar', children: 'Bar Children' },
+                { title: 'Car', children: 'Car Children' },
+            ]"
+        ></ui-accordion>
 
-<h3>Single Open</h3>
+        <h3>Single Open</h3>
 
-<ui-accordion
-    [singleOpen]="true"
-    [items]="[
-        { title: 'Foo', children: 'Foo Children' },
-        { title: 'Bar', children: 'Bar Children' },
-        { title: 'Car', children: 'Car Children' },
-    ]"
-></ui-accordion>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <ui-accordion
+            [singleOpen]="true"
+            [items]="[
+                { title: 'Foo', children: 'Foo Children' },
+                { title: 'Bar', children: 'Bar Children' },
+                { title: 'Car', children: 'Car Children' },
+            ]"
+        ></ui-accordion>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class AccordionRouteComponent { }
-
+export class AccordionRouteComponent {}
 
 @Component({
-  selector: 'avatar-route',
-  standalone: true,
-  imports: [Avatar],
-  template: `<h2>Avatar</h2>
+    selector: 'avatar-route',
+    standalone: true,
+    imports: [Avatar],
+    template: `<h2>Avatar</h2>
 
-<h3>Basic Usage with color</h3>
-<ui-avatar color="blue" initials="JD" name="John Doe" size="xxxxx-large" />
-<ui-avatar color="teal" initials="KA" name="Kate Anders" size="xxxxx-large" />
-<ui-avatar color="green" initials="AB" name="Ali Bogs" size="xxxx-large" />
-<ui-avatar color="lime" initials="BH" name="Bea Hopkins" size="xxxx-large" />
-<ui-avatar color="yellow" initials="TM" name="Tim Meadows" size="xxx-large" />
-<ui-avatar color="orange" name="Andre Giant" size="xxx-large" />
-<ui-avatar color="red" name="Megan Jett" size="xx-large" />
-<ui-avatar color="pink" name="Tom South" size="xx-large" />
-<ui-avatar color="magenta" name="Cal North" size="x-large" />
-<ui-avatar color="purple" name="Dan West" size="large" />
-<ui-avatar color="grey" name="Kel East" size="medium" />
-<ui-avatar color="primary" name="Sasha Lee" size="small" />
-<ui-avatar color="secondary" name="Nan Polo" size="x-small" />
+        <h3>Basic Usage with color</h3>
+        <ui-avatar color="blue" initials="JD" name="John Doe" size="xxxxx-large" />
+        <ui-avatar color="teal" initials="KA" name="Kate Anders" size="xxxxx-large" />
+        <ui-avatar color="green" initials="AB" name="Ali Bogs" size="xxxx-large" />
+        <ui-avatar color="lime" initials="BH" name="Bea Hopkins" size="xxxx-large" />
+        <ui-avatar color="yellow" initials="TM" name="Tim Meadows" size="xxx-large" />
+        <ui-avatar color="orange" name="Andre Giant" size="xxx-large" />
+        <ui-avatar color="red" name="Megan Jett" size="xx-large" />
+        <ui-avatar color="pink" name="Tom South" size="xx-large" />
+        <ui-avatar color="magenta" name="Cal North" size="x-large" />
+        <ui-avatar color="purple" name="Dan West" size="large" />
+        <ui-avatar color="grey" name="Kel East" size="medium" />
+        <ui-avatar color="primary" name="Sasha Lee" size="small" />
+        <ui-avatar color="secondary" name="Nan Polo" size="x-small" />
 
-<h3>[showIcon]="false" with color</h3>
-<ui-avatar color="blue" [showIcon]="false" name="John Doe" size="xxxxx-large" />
-<ui-avatar color="teal" [showIcon]="false" name="Kate Anders" size="xxxxx-large" />
-<ui-avatar color="green" [showIcon]="false" name="Ali Bogs" size="xxxx-large" />
-<ui-avatar color="lime" [showIcon]="false" name="Bea Hopkins" size="xxxx-large" />
-<ui-avatar color="yellow" [showIcon]="false" name="Tim Meadows" size="xxx-large" />
-<ui-avatar color="orange" [showIcon]="false" name="Andre Giant" size="xxx-large" />
-<ui-avatar color="red" [showIcon]="false" name="Megan Jett" size="xx-large" />
-<ui-avatar color="pink" [showIcon]="false" name="Tom South" size="xx-large" />
-<ui-avatar color="magenta" [showIcon]="false" name="Cal North" size="x-large" />
-<ui-avatar color="purple" [showIcon]="false" name="Dan West" size="large" />
-<ui-avatar color="grey" [showIcon]="false" name="Kel East" size="medium" />
-<ui-avatar color="primary" [showIcon]="false" name="Sasha Lee" size="small" />
-<ui-avatar color="secondary" [showIcon]="false" name="Nan Polo" size="x-small" />
+        <h3>[showIcon]="false" with color</h3>
+        <ui-avatar color="blue" [showIcon]="false" name="John Doe" size="xxxxx-large" />
+        <ui-avatar color="teal" [showIcon]="false" name="Kate Anders" size="xxxxx-large" />
+        <ui-avatar color="green" [showIcon]="false" name="Ali Bogs" size="xxxx-large" />
+        <ui-avatar color="lime" [showIcon]="false" name="Bea Hopkins" size="xxxx-large" />
+        <ui-avatar color="yellow" [showIcon]="false" name="Tim Meadows" size="xxx-large" />
+        <ui-avatar color="orange" [showIcon]="false" name="Andre Giant" size="xxx-large" />
+        <ui-avatar color="red" [showIcon]="false" name="Megan Jett" size="xx-large" />
+        <ui-avatar color="pink" [showIcon]="false" name="Tom South" size="xx-large" />
+        <ui-avatar color="magenta" [showIcon]="false" name="Cal North" size="x-large" />
+        <ui-avatar color="purple" [showIcon]="false" name="Dan West" size="large" />
+        <ui-avatar color="grey" [showIcon]="false" name="Kel East" size="medium" />
+        <ui-avatar color="primary" [showIcon]="false" name="Sasha Lee" size="small" />
+        <ui-avatar color="secondary" [showIcon]="false" name="Nan Polo" size="x-small" />
 
-<h3>with image</h3>
-<ui-avatar image="./avatar-01.png" name="Tim Meadows" size="xxxxx-large" />
-<ui-avatar image="./avatar-02.png" name="Andre Giant" size="xxxx-large" />
-<ui-avatar image="./avatar-03.png" name="Megan Jett" size="xxx-large" />
-<ui-avatar image="./avatar-04.png" name="Tom South" size="xx-large" />
-<ui-avatar image="./avatar-05.png" name="Cal North" size="x-large" />
-<ui-avatar image="./avatar-06.png" name="Dan West" size="large" />
-<ui-avatar image="./avatar-07.png" name="Kel East" size="medium" />
-<ui-avatar image="./avatar-08.png" name="Sasha Lee" size="small" />
-<ui-avatar image="./avatar-09.png" name="Nan Polo" size="x-small" />
+        <h3>with image</h3>
+        <ui-avatar image="./avatar-01.png" name="Tim Meadows" size="xxxxx-large" />
+        <ui-avatar image="./avatar-02.png" name="Andre Giant" size="xxxx-large" />
+        <ui-avatar image="./avatar-03.png" name="Megan Jett" size="xxx-large" />
+        <ui-avatar image="./avatar-04.png" name="Tom South" size="xx-large" />
+        <ui-avatar image="./avatar-05.png" name="Cal North" size="x-large" />
+        <ui-avatar image="./avatar-06.png" name="Dan West" size="large" />
+        <ui-avatar image="./avatar-07.png" name="Kel East" size="medium" />
+        <ui-avatar image="./avatar-08.png" name="Sasha Lee" size="small" />
+        <ui-avatar image="./avatar-09.png" name="Nan Polo" size="x-small" />
 
-<h3>with different initials and [showIcon]="false"</h3>
-<ui-avatar initials="TM" name="Tim Meadows" initials="MM" [showIcon]="false" size="xxxxx-large" />
+        <h3>with different initials and [showIcon]="false"</h3>
+        <ui-avatar initials="TM" name="Tim Meadows" initials="MM" [showIcon]="false" size="xxxxx-large" />
 
-<h3>[hideTooltip]="true"</h3>
-<ui-avatar initials="TM" name="Tim Meadows" [hideTooltip]="true" size="xxxxx-large" />
+        <h3>[hideTooltip]="true"</h3>
+        <ui-avatar initials="TM" name="Tim Meadows" [hideTooltip]="true" size="xxxxx-large" />
 
-<h3>[disabled]="true"</h3>
-<ui-avatar name="Andre Giant" [disabled]="true" size="xxxx-large" />`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <h3>[disabled]="true"</h3>
+        <ui-avatar name="Andre Giant" [disabled]="true" size="xxxx-large" />`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class AvatarRouteComponent { }
-
+export class AvatarRouteComponent {}
 
 @Component({
-  selector: 'badge-route',
-  standalone: true,
-  imports: [Badge, Button],
-  template: `<h2>Badge</h2>
+    selector: 'badge-route',
+    standalone: true,
+    imports: [Badge, Button],
+    template: `<h2>Badge</h2>
 
-<h3>Basic Usage</h3>
+        <h3>Basic Usage</h3>
 
-<div>
-    <ui-badge [count]="5" />
-</div>
-<div>
-    <ui-badge [count]="100" />
-</div>
+        <div>
+            <ui-badge [count]="5" />
+        </div>
+        <div>
+            <ui-badge [count]="100" />
+        </div>
 
-<h3>Badge with Button</h3>
+        <h3>Badge with Button</h3>
 
-<ui-badge [count]="44">
-    <ui-button label="Label test" size="large" variant="secondary" icon="Add"></ui-button>
-</ui-badge>
+        <ui-badge [count]="44">
+            <ui-button label="Label test" size="large" variant="secondary" icon="Add"></ui-button>
+        </ui-badge>
 
-<h3>Badge with Border Surface</h3>
+        <h3>Badge with Border Surface</h3>
 
-<ui-badge [count]="101" [surfaceBorder]="true">
-    <ui-button label="Label test" size="large" variant="primary" icon="Add"></ui-button>
-</ui-badge>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <ui-badge [count]="101" [surfaceBorder]="true">
+            <ui-button label="Label test" size="large" variant="primary" icon="Add"></ui-button>
+        </ui-badge>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class BadgeRouteComponent { }
-
+export class BadgeRouteComponent {}
 
 @Component({
-  selector: 'button-route',
-  standalone: true,
-  imports: [Button, IconAdd],
-  template: `<h2>Button</h2>
+    selector: 'button-route',
+    standalone: true,
+    imports: [Button, IconAdd],
+    template: `<h2>Button</h2>
 
-<h3>Primary</h3>
+        <h3>Primary</h3>
 
-<ui-button label="Label test" size="large" icon="Add" />
+        <ui-button (click)="handleClick()" label="Label test" size="large" icon="Add" />
 
-<h3>Secondary</h3>
+        <h3>Secondary</h3>
 
-<ui-button label="Label test" size="medium" variant="secondary" icon="Add" />
+        <ui-button (click)="handleClick()" label="Label test" size="medium" variant="secondary" icon="Add" />
 
-<h3>Tertiary</h3>
+        <h3>Tertiary</h3>
 
-<ui-button label="Label test" size="small" variant="tertiary" icon="Add" />
+        <ui-button (click)="handleClick()" label="Label test" size="small" variant="tertiary" icon="Add" />
 
-<h3>Primary with Tooltip</h3>
+        <h3>Primary with Tooltip</h3>
 
-<ui-button label="Label test" size="large" icon="Add" toolTip="Hello" />
+        <ui-button (click)="handleClick()" label="Label test" size="large" icon="Add" toolTip="Hello" />
 
-<h3>Custom Content</h3>
+        <h3>Custom Content</h3>
 
-<ui-button><icon-add width="24" />Custom Content Example</ui-button>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <ui-button (click)="handleClick()"><icon-add width="24" />Custom Content Example</ui-button>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class ButtonRouteComponent { }
-
-
-@Component({
-  selector: 'card-route',
-  standalone: true,
-  imports: [Card],
-  template: `<h2>Card</h2>
-
-<h3>Outlined Variant</h3>
-
-<div style="width: 300px">
-    <ui-card variant="outlined">
-        <p>Card works! <br />(variant="outlined")</p>
-    </ui-card>
-</div>
-
-<h3>Elevated Variant</h3>
-
-<div style="width: 300px">
-    <ui-card variant="elevated">
-        <p>Card works! <br />(variant="elevated")</p>
-    </ui-card>
-</div>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-})
-export class CardRouteComponent { }
-
-
-@Component({
-  selector: 'chip-route',
-  standalone: true,
-  imports: [Chip],
-  template: `<h2>Chip</h2>
-
-<h3>Outlined Variant</h3>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" />
-</div>
-
-<h3>Leading Icon</h3>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" leadingIcon="Add" />
-</div>
-
-<h3>Trailing Icon</h3>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" trailingIcon="Add" />
-</div>
-
-<h3>Both Icons</h3>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" />
-</div>
-
-<h3>Badge</h3>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" />
-</div>
-
-<h3>Badge & Trailing Icon</h3>
-<p>When both are provided the icon will be visible. You cannot have both trailing items.</p>
-<div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" />
-</div>
-
-<h3>Flat = true</h3>
-<div style="width: 300px">
-    <ui-chip [flat]="true" label="Hello I'm Chip" />
-</div>
-
-<h3>Disabled = true</h3>
-<div style="width: 300px">
-    <ui-chip [disabled]="true" label="Hello I'm Chip" />
-</div>
-
-<h3>Selected = true</h3>
-<div style="width: 300px">
-    <ui-chip [selected]="true" label="Hello I'm Chip" />
-</div>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-})
-export class ChipRouteComponent { }
-
-
-@Component({
-  selector: 'dialog-route',
-  standalone: true,
-  imports: [Dialog, Button],
-  template: `<h2>Dialog</h2>
-
-<ui-button label="Open Dialog" (click)="open = true"></ui-button>
-
-<ui-dialog [open]="open" (onClose)="open = false" header="Example dialog" description="This is a demo dialog">
-    <div style="padding: 20px">
-        <p>This is demo dialog content.</p>
-        <ui-button label="Close" (click)="open = false"></ui-button>
-    </div>
-</ui-dialog>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-})
-export class DialogRouteComponent { 
-protected open = false;
+export class ButtonRouteComponent {
+    handleClick() {
+        console.log('Button clicked!');
+    }
 }
 
+@Component({
+    selector: 'card-route',
+    standalone: true,
+    imports: [Card],
+    template: `<h2>Card</h2>
+
+        <h3>Outlined Variant</h3>
+
+        <div style="width: 300px">
+            <ui-card variant="outlined">
+                <p>Card works! <br />(variant="outlined")</p>
+            </ui-card>
+        </div>
+
+        <h3>Elevated Variant</h3>
+
+        <div style="width: 300px">
+            <ui-card variant="elevated">
+                <p>Card works! <br />(variant="elevated")</p>
+            </ui-card>
+        </div>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
+})
+export class CardRouteComponent {}
 
 @Component({
-  selector: 'drawer-route',
-  standalone: true,
-  imports: [Drawer, Button],
-  template: `<h2>Drawer</h2>
+    selector: 'chip-route',
+    standalone: true,
+    imports: [Chip],
+    template: `<h2>Chip</h2>
 
-<ui-button label="Open Drawer" (click)="open = true"></ui-button>
+        <h3>Outlined Variant</h3>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" (click)="handleClick()" />
+        </div>
 
-<ui-drawer [open]="open" (onClose)="open = false" header="Example drawer" description="This is a demo drawer">
-    <div style="padding: 20px; width: 320px">
-        <p>This is demo drawer content.</p>
-    </div>
-</ui-drawer>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <h3>Leading Icon</h3>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" leadingIcon="Add" (click)="handleClick()" />
+        </div>
+
+        <h3>Trailing Icon</h3>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" trailingIcon="Add" (click)="handleClick()" />
+        </div>
+
+        <h3>Both Icons</h3>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" (click)="handleClick()" />
+        </div>
+
+        <h3>Badge</h3>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" (click)="handleClick()" />
+        </div>
+
+        <h3>Badge & Trailing Icon</h3>
+        <p>When both are provided the icon will be visible. You cannot have both trailing items.</p>
+        <div style="width: 300px">
+            <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" (click)="handleClick()" />
+        </div>
+
+        <h3>Flat = true</h3>
+        <div style="width: 300px">
+            <ui-chip [flat]="true" label="Hello I'm Chip" (click)="handleClick()" />
+        </div>
+
+        <h3>Disabled = true</h3>
+        <div style="width: 300px">
+            <ui-chip [disabled]="true" label="Hello I'm Chip" />
+        </div>
+
+        <h3>Selected = true</h3>
+        <div style="width: 300px">
+            <ui-chip [selected]="true" label="Hello I'm Chip" />
+        </div>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class DrawerRouteComponent { 
-protected open = false;
+export class ChipRouteComponent {
+    handleClick() {
+        console.log('Chip clicked!');
+    }
 }
 
-
 @Component({
-  selector: 'input-route',
-  standalone: true,
-  imports: [Input],
-  template: `<h2>Input</h2>
-<ui-input label="Input Label">Text Here</ui-input>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+    selector: 'dialog-route',
+    standalone: true,
+    imports: [Dialog, Button],
+    template: `<h2>Dialog</h2>
+
+        <ui-button label="Open Dialog" (click)="open = true"></ui-button>
+
+        <ui-dialog [open]="open" (onClose)="open = false" header="Example dialog" description="This is a demo dialog">
+            <div style="padding: 20px">
+                <p>This is demo dialog content.</p>
+                <ui-button label="Close" (click)="open = false"></ui-button>
+            </div>
+        </ui-dialog>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class InputRouteComponent { }
-
-
-@Component({
-  selector: 'modal-route',
-  standalone: true,
-  imports: [Modal, Button],
-  template: `<h2>Modal</h2>
-
-<ui-button label="Open Modal" (click)="open = true"></ui-button>
-
-<ui-modal [open]="open" (onClose)="open = false" header="Example modal" description="This is a demo modal">
-    <p>Modal content — Add any content here.</p>
-</ui-modal>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-})
-export class ModalRouteComponent { 
-protected open = false;
+export class DialogRouteComponent {
+    protected open = false;
 }
 
+@Component({
+    selector: 'drawer-route',
+    standalone: true,
+    imports: [Drawer, Button],
+    template: `<h2>Drawer</h2>
+
+        <ui-button label="Open Drawer" (click)="open = true"></ui-button>
+
+        <ui-drawer [open]="open" (onClose)="open = false" header="Example drawer" description="This is a demo drawer">
+            <div style="padding: 20px; width: 320px">
+                <p>This is demo drawer content.</p>
+            </div>
+        </ui-drawer>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
+})
+export class DrawerRouteComponent {
+    protected open = false;
+}
 
 @Component({
-  selector: 'tag-route',
-  standalone: true,
-  imports: [Tag],
-  template: `<h2>Tag</h2>
+    selector: 'input-route',
+    standalone: true,
+    imports: [Input],
+    template: `<h2>Input</h2>
+        <ui-input label="Input Label">Text Here</ui-input>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
+})
+export class InputRouteComponent {}
 
-<h3>Default</h3>
-<ui-tag label="basic tag" />
+@Component({
+    selector: 'modal-route',
+    standalone: true,
+    imports: [Modal, Button],
+    template: `<h2>Modal</h2>
 
-<h3>variant = corner-wrap</h3>
-<ui-tag label="basic tag" variant="corner-wrap" />
+        <ui-button label="Open Modal" (click)="open = true"></ui-button>
 
-<h3>variant = pill</h3>
-<ui-tag label="basic tag" variant="pill" />
+        <ui-modal [open]="open" (onClose)="open = false" header="Example modal" description="This is a demo modal">
+            <p>Modal content — Add any content here.</p>
+        </ui-modal>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
+})
+export class ModalRouteComponent {
+    protected open = false;
+}
 
-<h3>size = x-small</h3>
-<ui-tag label="basic tag" size="x-small" />
+@Component({
+    selector: 'tag-route',
+    standalone: true,
+    imports: [Tag],
+    template: `<h2>Tag</h2>
 
-<h3>size = x-small; variant = corner-wrap</h3>
-<ui-tag label="basic tag" size="x-small" variant="corner-wrap" />
+        <h3>Default</h3>
+        <ui-tag label="basic tag" />
 
-<h3>size = x-small; variant = pill</h3>
-<ui-tag label="basic tag" size="x-small" variant="pill" />
+        <h3>variant = corner-wrap</h3>
+        <ui-tag label="basic tag" variant="corner-wrap" />
 
-<h3>Color: blue</h3>
-<ui-tag color="blue" label="basic tag" />
+        <h3>variant = pill</h3>
+        <ui-tag label="basic tag" variant="pill" />
 
-<h3>Color: green</h3>
-<ui-tag color="green" label="basic tag" />
+        <h3>size = x-small</h3>
+        <ui-tag label="basic tag" size="x-small" />
 
-<h3>Color: lime</h3>
-<ui-tag color="lime" label="basic tag" />
+        <h3>size = x-small; variant = corner-wrap</h3>
+        <ui-tag label="basic tag" size="x-small" variant="corner-wrap" />
 
-<h3>Color: magenta</h3>
-<ui-tag color="magenta" label="basic tag" />
+        <h3>size = x-small; variant = pill</h3>
+        <ui-tag label="basic tag" size="x-small" variant="pill" />
 
-<h3>Color: orange</h3>
-<ui-tag color="orange" label="basic tag" />
+        <h3>Color: blue</h3>
+        <ui-tag color="blue" label="basic tag" />
 
-<h3>Color: pink</h3>
-<ui-tag color="pink" label="basic tag" />
+        <h3>Color: green</h3>
+        <ui-tag color="green" label="basic tag" />
 
-<h3>Color: purple</h3>
-<ui-tag color="purple" label="basic tag" />
+        <h3>Color: lime</h3>
+        <ui-tag color="lime" label="basic tag" />
 
-<h3>Color: red</h3>
-<ui-tag color="red" label="basic tag" />
+        <h3>Color: magenta</h3>
+        <ui-tag color="magenta" label="basic tag" />
 
-<h3>Color: teal</h3>
-<ui-tag color="teal" label="basic tag" />
+        <h3>Color: orange</h3>
+        <ui-tag color="orange" label="basic tag" />
 
-<h3>Color: yellow</h3>
-<ui-tag color="yellow" label="basic tag" />
+        <h3>Color: pink</h3>
+        <ui-tag color="pink" label="basic tag" />
 
-<h3>Color: grey</h3>
-<ui-tag color="grey" label="basic tag" />
+        <h3>Color: purple</h3>
+        <ui-tag color="purple" label="basic tag" />
 
-<h3>Color: white</h3>
-<ui-tag color="white" label="basic tag" />
+        <h3>Color: red</h3>
+        <ui-tag color="red" label="basic tag" />
 
-<h3>Color: primary</h3>
-<ui-tag color="primary" label="basic tag" />
+        <h3>Color: teal</h3>
+        <ui-tag color="teal" label="basic tag" />
 
-<h3>Color: secondary</h3>
-<ui-tag color="secondary" label="basic tag" />
+        <h3>Color: yellow</h3>
+        <ui-tag color="yellow" label="basic tag" />
 
-<!-- | 'primary' | 'secondary' | 'grey' | 'white' | 'blue' | 'green' | 'lime' | 'magenta' | 'orange' | 'pink' | 'purple' |
+        <h3>Color: grey</h3>
+        <ui-tag color="grey" label="basic tag" />
+
+        <h3>Color: white</h3>
+        <ui-tag color="white" label="basic tag" />
+
+        <h3>Color: primary</h3>
+        <ui-tag color="primary" label="basic tag" />
+
+        <h3>Color: secondary</h3>
+        <ui-tag color="secondary" label="basic tag" />
+
+        <!-- | 'primary' | 'secondary' | 'grey' | 'white' | 'blue' | 'green' | 'lime' | 'magenta' | 'orange' | 'pink' | 'purple' |
 'red' | 'teal' | 'yellow'; -->`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
-export class TagRouteComponent { }
-
+export class TagRouteComponent {}
 
 @Component({
-  selector: 'tooltip-route',
-  imports: [TooltipDirective],
-  template: `<h2>Tooltip Directive</h2>
+    selector: 'tooltip-route',
+    imports: [TooltipDirective],
+    template: `<h2>Tooltip Directive</h2>
 
-<span [tooltip]="{ label: 'Told ya!', showTail: true, placement: 'bottom' }">Hover me for tooltip!</span>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <span [tooltip]="{ label: 'Told ya!', showTail: true, placement: 'bottom' }">Hover me for tooltip!</span>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
 export class TooltipRouteComponent {}
 
-
 @Component({
-  selector: 'txt-route',
-  imports: [TxtDirective],
-  template: `<h2>Txt Directive</h2>
+    selector: 'txt-route',
+    imports: [TxtDirective],
+    template: `<h2>Txt Directive</h2>
 
-<div txt="body-base">body-base</div>
-<div txt="body-large">body-large</div>
-<div txt="body-small">body-small</div>
-<div txt="body-x-small">body-x-small</div>
-<div txt="display-regular-large">display-regular-large</div>
-<div txt="display-regular-medium">display-regular-medium</div>
-<div txt="display-regular-small">display-regular-small</div>
-<div txt="display-semibold-large">display-semibold-large</div>
-<div txt="display-semibold-medium">display-semibold-medium</div>
-<div txt="display-semibold-small">display-semibold-small</div>
-<div txt="heading-h2">heading-h2</div>
-<div txt="heading-h2">heading-h2</div>
-<div txt="heading-h3">heading-h3</div>
-<div txt="heading-h4">heading-h4</div>
-<div txt="heading-h5">heading-h5</div>
-<div txt="heading-h6">heading-h6</div>
-<div txt="labels-base">labels-base</div>
-<div txt="labels-large">labels-large</div>
-<div txt="labels-small">labels-small</div>
-<div txt="labels-x-small">labels-x-small</div>
-<div txt="subheader-large">subheader-large</div>
-<div txt="subheader-medium">subheader-medium</div>
-<div txt="subheader-x-large">subheader-x-large</div>
-<div txt="subheader-xx-large">subheader-xx-large</div>
-<div txt="subheader-xxx-large">subheader-xxx-large</div>`,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+        <div txt="body-base">body-base</div>
+        <div txt="body-large">body-large</div>
+        <div txt="body-small">body-small</div>
+        <div txt="body-x-small">body-x-small</div>
+        <div txt="display-regular-large">display-regular-large</div>
+        <div txt="display-regular-medium">display-regular-medium</div>
+        <div txt="display-regular-small">display-regular-small</div>
+        <div txt="display-semibold-large">display-semibold-large</div>
+        <div txt="display-semibold-medium">display-semibold-medium</div>
+        <div txt="display-semibold-small">display-semibold-small</div>
+        <div txt="heading-h2">heading-h2</div>
+        <div txt="heading-h2">heading-h2</div>
+        <div txt="heading-h3">heading-h3</div>
+        <div txt="heading-h4">heading-h4</div>
+        <div txt="heading-h5">heading-h5</div>
+        <div txt="heading-h6">heading-h6</div>
+        <div txt="labels-base">labels-base</div>
+        <div txt="labels-large">labels-large</div>
+        <div txt="labels-small">labels-small</div>
+        <div txt="labels-x-small">labels-x-small</div>
+        <div txt="subheader-large">subheader-large</div>
+        <div txt="subheader-medium">subheader-medium</div>
+        <div txt="subheader-x-large">subheader-x-large</div>
+        <div txt="subheader-xx-large">subheader-xx-large</div>
+        <div txt="subheader-xxx-large">subheader-xxx-large</div>`,
+    styles: [
+        `
+            :host {
+                display: contents;
+            }
+        `,
+    ],
 })
 export class TxtRouteComponent {}

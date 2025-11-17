@@ -2,38 +2,38 @@
 
 <h3>Outlined Variant</h3>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" />
+    <ui-chip label="Hello I'm Chip" (click)="handleClick()" />
 </div>
 
 <h3>Leading Icon</h3>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" leadingIcon="Add" />
+    <ui-chip label="Hello I'm Chip" leadingIcon="Add" (click)="handleClick()" />
 </div>
 
 <h3>Trailing Icon</h3>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" trailingIcon="Add" />
+    <ui-chip label="Hello I'm Chip" trailingIcon="Add" (click)="handleClick()" />
 </div>
 
 <h3>Both Icons</h3>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" />
+    <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" (click)="handleClick()" />
 </div>
 
 <h3>Badge</h3>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" />
+    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" (click)="handleClick()" />
 </div>
 
 <h3>Badge & Trailing Icon</h3>
 <p>When both are provided the icon will be visible. You cannot have both trailing items.</p>
 <div style="width: 300px">
-    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" />
+    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" (click)="handleClick()" />
 </div>
 
 <h3>Flat = true</h3>
 <div style="width: 300px">
-    <ui-chip [flat]="true" label="Hello I'm Chip" />
+    <ui-chip [flat]="true" label="Hello I'm Chip" (click)="handleClick()" />
 </div>
 
 <h3>Disabled = true</h3>

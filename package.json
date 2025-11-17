@@ -16,8 +16,11 @@
     "gh-build": "ng build --project demo --configuration production --base-href '/bspk-ui-ngx/' && cp -r ./dist/browser/index.html ./dist/browser/404.html"
   },
   "prettier": {
-    "printWidth": 100,
     "singleQuote": true,
+    "trailingComma": "all",
+    "semi": true,
+    "tabWidth": 4,
+    "printWidth": 120,
     "overrides": [
       {
         "files": "*.html",

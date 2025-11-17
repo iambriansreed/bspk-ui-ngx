@@ -2,20 +2,20 @@
 
 <h3>Primary</h3>
 
-<ui-button label="Label test" size="large" icon="Add" />
+<ui-button (click)="handleClick()" label="Label test" size="large" icon="Add" />
 
 <h3>Secondary</h3>
 
-<ui-button label="Label test" size="medium" variant="secondary" icon="Add" />
+<ui-button (click)="handleClick()" label="Label test" size="medium" variant="secondary" icon="Add" />
 
 <h3>Tertiary</h3>
 
-<ui-button label="Label test" size="small" variant="tertiary" icon="Add" />
+<ui-button (click)="handleClick()" label="Label test" size="small" variant="tertiary" icon="Add" />
 
 <h3>Primary with Tooltip</h3>
 
-<ui-button label="Label test" size="large" icon="Add" toolTip="Hello" />
+<ui-button (click)="handleClick()" label="Label test" size="large" icon="Add" toolTip="Hello" />
 
 <h3>Custom Content</h3>
 
-<ui-button><icon-add width="24" />Custom Content Example</ui-button>
+<ui-button (click)="handleClick()"><icon-add width="24" />Custom Content Example</ui-button>
