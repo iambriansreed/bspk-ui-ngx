@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "newc": "ng generate component --project=ui",
     "watch": "ng build --watch --configuration development",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev": "npm-run-all --parallel start watch:other",
