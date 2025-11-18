@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeRouteComponent } from './routes/home';
-import { componentItems } from './component.routes';
+import { componentItems } from './routes/generated';
 import { NavRoute } from './types';
 
 export const navigationItems: NavRoute[] = [

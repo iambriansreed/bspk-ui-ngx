@@ -44,3 +44,6 @@ Thumbs.db
 
 # Nathaniel's work
 nj-bspk-ui
+
+# Generated files
+projects/demo/src/app/routes/generated.ts

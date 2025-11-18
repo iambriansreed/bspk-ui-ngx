@@ -6,14 +6,15 @@
     "lint:css": "npx stylelint '**/*.scss'",
     "lint:css:fix": "npx stylelint '**/*.scss' --fix",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run prebuild && ng serve",
+    "build": "npm run prebuild && ng build",
     "newc": "ng generate component --project=ui",
     "watch": "ng build --watch --configuration development",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dev": "npm-run-all --parallel start watch:other",
-    "watch:other": "watch 'npx tsx .scripts/generate-component-routes.ts' projects/demo/examples",
-    "gh-build": "ng build --project demo --configuration production --base-href '/bspk-ui-ngx/' && cp -r ./dist/browser/index.html ./dist/browser/404.html"
+    "dev": "npm run prebuild && npm-run-all --parallel watch:other start",
+    "prebuild": "npx tsx .scripts/pre-build.ts",
+    "watch:other": "watch 'npm run prebuild' projects/demo/examples",
+    "gh-build": "npm run prebuild && ng build --project demo --configuration production --base-href '/bspk-ui-ngx/' && cp -r ./dist/browser/index.html ./dist/browser/404.html"
   },
   "prettier": {
     "singleQuote": true,
@@ -69,6 +70,9 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.2",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
+  },
+  "overrides": {
+    "glob": "^11.0.1"
   }
 }
