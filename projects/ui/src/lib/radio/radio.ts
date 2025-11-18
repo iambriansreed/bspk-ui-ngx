@@ -1,4 +1,23 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+
+/**
+ * A round control that allows user to choose one option from a set. This is the base element and if used directly you
+ * must wrap it with a label. This will more often be used in the RadioOption or RadioGroup component.
+ *
+ * <ui-radio
+    name="example"
+    [value]="'option1'"
+    [checked]="selected === 'option1'"
+    (checkedChange)="selected = $event ? 'option1' : selected"
+    [disabled]="false"
+    [invalid]="false"
+    [required]="true"
+    aria-label="Option 1"
+  ></ui-radio>
+ *
+ * @name Radio
+ * @phase Utility
+ */
 
 @Component({
     selector: 'ui-radio',
@@ -6,6 +25,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     imports: [],
     templateUrl: './radio.html',
     styleUrl: './radio.scss',
+    encapsulation: ViewEncapsulation.None,
 })
 export class Radio {
     /**
@@ -29,7 +49,7 @@ export class Radio {
      *
      * Ensure this is provided when using the element in isolation to maintain accessibility.
      */
-    @Input('aria-label') ariaLabel?: string;
+    @Input() ariaLabel?: string;
 
     /**
      * Marks the radio as checked.
@@ -64,17 +84,15 @@ export class Radio {
      */
     @Input() required?: boolean;
 
-    @Input('aria-describedby') ariaDescribedby?: string;
-
-    @Input('aria-labelledby') ariaLabelledby?: string;
-
-    @Output() checkedChange = new EventEmitter<boolean>();
     /**
      * The function to call when the radio is checked.
      *
      * @required
      */
     @Output() change = new EventEmitter<Event>();
+
+    /** Emits the new checked state (true or false) */
+    @Output() checkedChange = new EventEmitter<boolean>();
 
     onInputChange(event: Event) {
         const input = event.target as HTMLInputElement;
