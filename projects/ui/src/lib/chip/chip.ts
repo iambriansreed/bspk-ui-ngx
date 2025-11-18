@@ -1,11 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Icon } from '../icon';
-import { Badge } from '../badge';
+import { Badge, BadgeProps } from '../badge';
 
-export type BadgeItem = {
-    count?: number;
-    size?: string;
-    surfaceBorder?: boolean;
+export type ChipProps = {
+    disabled?: boolean;
+    flat?: boolean;
+    label: string;
+    selected?: boolean;
+    leadingIcon?: string;
+    trailingIcon?: string;
+    trailingBadge?: BadgeProps;
+    onClick?: (event: Event) => void;
 };
 
 @Component({
@@ -38,7 +43,7 @@ export class Chip {
     @Input() trailingIcon?: string;
 
     /** The trailing Badge for use in the ChipFilter. If a trailingIcon is provided the Badge will **not** be visible. */
-    @Input() trailingBadge?: BadgeItem;
+    @Input() trailingBadge?: BadgeProps;
 
     /** The function to call when the chip is clicked. */
     @Output() chipClick = new EventEmitter<Event>();

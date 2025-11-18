@@ -7,6 +7,7 @@ import { Badge } from '../../../../../projects/ui/src/lib/badge';
 import { Button } from '../../../../../projects/ui/src/lib/button';
 import { IconAdd } from '../../../../../projects/ui/src/lib/icons/add';
 import { Card } from '../../../../../projects/ui/src/lib/card';
+import { ChipGroup } from '../../../../../projects/ui/src/lib/chip-group';
 import { Chip } from '../../../../../projects/ui/src/lib/chip';
 import { Dialog } from '../../../../../projects/ui/src/lib/dialog';
 import { Drawer } from '../../../../../projects/ui/src/lib/drawer';
@@ -227,63 +228,125 @@ export class ButtonRouteComponent {
 export class CardRouteComponent {}
 
 @Component({
-    selector: 'chip-route',
-    standalone: true,
-    imports: [Chip],
-    template: `<h2>Chip</h2>
+  selector: 'chip-group-route',
+  standalone: true,
+  imports: [ChipGroup],
+  template: `<h2>Chip Group</h2>
 
-        <h3>Outlined Variant</h3>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" (click)="handleClick()" />
-        </div>
+<h3>Basic</h3>
+<div style="width: 500px">
+    <ui-chip-group
+        [items]="[
+            { label: 'Chip 1' },
+            { label: 'Chip 2', trailingIcon: 'Add' },
+            { label: 'Chip 3', leadingIcon: 'Add', trailingBadge: { count: 2 } },
+            { label: 'Chip 4, flat = true' },
+            { label: 'Chip 5 selected = true', selected: true },
+            { label: 'Chip 6 disabled = true', disabled: true },
+        ]"
+    />
+</div>
 
-        <h3>Leading Icon</h3>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" leadingIcon="Add" (click)="handleClick()" />
-        </div>
+<h3>Scroll</h3>
+<div style="width: 500px">
+    <ui-chip-group
+        overflow="scroll"
+        [items]="[
+            { label: 'Chip 1' },
+            { label: 'Chip 2', trailingIcon: 'Add' },
+            { label: 'Chip 3', leadingIcon: 'Add', trailingBadge: { count: 2 } },
+            { label: 'Chip 4, flat = true' },
+            { label: 'Chip 5 selected = true', selected: true },
+            { label: 'Chip 6 disabled = true', disabled: true },
+        ]"
+    >
+    </ui-chip-group>
+</div>
 
-        <h3>Trailing Icon</h3>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" trailingIcon="Add" (click)="handleClick()" />
-        </div>
+<h3>Scroll & Flat</h3>
+<div style="width: 500px">
+    <ui-chip-group
+        overflow="scroll"
+        [items]="[
+            { label: 'Chip 1', flat: true },
+            { label: 'Chip 2', trailingIcon: 'Add', flat: true },
+            { label: 'Chip 3', leadingIcon: 'Add', trailingBadge: { count: 2 }, flat: true },
+            { label: 'Chip 4, flat = true', flat: true },
+            { label: 'Chip 5 selected = true', selected: true, flat: true },
+            { label: 'Chip 6 disabled = true', disabled: true, flat: true },
+        ]"
+    >
+    </ui-chip-group>
+</div>`,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
+})
+export class ChipGroupRouteComponent { }
 
-        <h3>Both Icons</h3>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" (click)="handleClick()" />
-        </div>
 
-        <h3>Badge</h3>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" (click)="handleClick()" />
-        </div>
+@Component({
+  selector: 'chip-route',
+  standalone: true,
+  imports: [Chip],
+  template: `<h2>Chip</h2>
 
-        <h3>Badge & Trailing Icon</h3>
-        <p>When both are provided the icon will be visible. You cannot have both trailing items.</p>
-        <div style="width: 300px">
-            <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" (click)="handleClick()" />
-        </div>
+<h3>Outlined Variant</h3>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" />
+</div>
 
-        <h3>Flat = true</h3>
-        <div style="width: 300px">
-            <ui-chip [flat]="true" label="Hello I'm Chip" (click)="handleClick()" />
-        </div>
+<h3>Leading Icon</h3>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" leadingIcon="Add" />
+</div>
 
-        <h3>Disabled = true</h3>
-        <div style="width: 300px">
-            <ui-chip [disabled]="true" label="Hello I'm Chip" />
-        </div>
+<h3>Trailing Icon</h3>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" trailingIcon="Add" />
+</div>
 
-        <h3>Selected = true</h3>
-        <div style="width: 300px">
-            <ui-chip [selected]="true" label="Hello I'm Chip" />
-        </div>`,
-    styles: [
-        `
-            :host {
-                display: contents;
-            }
-        `,
-    ],
+<h3>Both Icons</h3>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" leadingIcon="Add" trailingIcon="Add" />
+</div>
+
+<h3>Badge</h3>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" />
+</div>
+
+<h3>Badge & Trailing Icon</h3>
+<p>When both are provided the icon will be visible. You cannot have both trailing items.</p>
+<div style="width: 300px">
+    <ui-chip label="Hello I'm Chip" [trailingBadge]="{ count: 3 }" trailingIcon="Add" />
+</div>
+
+<h3>Flat = true</h3>
+<div style="width: 300px">
+    <ui-chip [flat]="true" label="Hello I'm Chip" />
+</div>
+
+<h3>Disabled = true</h3>
+<div style="width: 300px">
+    <ui-chip [disabled]="true" label="Hello I'm Chip" />
+</div>
+
+<h3>Selected = true</h3>
+<div style="width: 300px">
+    <ui-chip [selected]="true" label="Hello I'm Chip" />
+</div>`,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class ChipRouteComponent {
     handleClick() {

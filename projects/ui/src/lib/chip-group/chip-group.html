@@ -1,0 +1,16 @@
+<div data-bspk="chip-group" [attr.data-scroll]="overflow === 'scroll' ? true : null">
+    @if (items?.length) {
+        @for (item of items; track item) {
+            <ui-chip
+                [label]="item.label"
+                [disabled]="item.disabled ?? false"
+                [flat]="item.flat ?? false"
+                [selected]="item.selected ?? false"
+                [leadingIcon]="item.leadingIcon"
+                [trailingIcon]="item.trailingIcon"
+                [trailingBadge]="item.trailingBadge"
+                (chipClick)="item.onClick?.($event)"
+            />
+        }
+    }
+</div>

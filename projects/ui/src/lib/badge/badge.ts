@@ -8,6 +8,13 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 
+export type BadgeProps = {
+    count?: number;
+    size?: string;
+    color?: string;
+    surfaceBorder?: boolean;
+};
+
 @Component({
     selector: 'ui-badge',
     standalone: true,

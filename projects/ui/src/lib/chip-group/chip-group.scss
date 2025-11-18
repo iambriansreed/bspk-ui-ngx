@@ -1,0 +1,18 @@
+ui-chip-group {
+    display: contents;
+}
+
+[data-bspk='chip-group'] {
+    display: flex;
+    gap: var(--spacing-sizing-02);
+    width: 100%;
+    flex-flow: row wrap;
+    padding-bottom: var(--spacing-sizing-01);
+
+    &[data-scroll] {
+        overflow: auto;
+        flex-wrap: nowrap;
+    }
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
