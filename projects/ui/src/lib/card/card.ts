@@ -11,5 +11,10 @@ export type CardVariant = 'elevated' | 'outlined';
     encapsulation: ViewEncapsulation.None,
 })
 export class Card {
-    @Input() variant: CardVariant | undefined;
+     /**
+     * Determines how the card border will appear.
+     *
+     * @default elevated
+     */
+     @Input() variant: CardVariant = 'elevated';
 }
