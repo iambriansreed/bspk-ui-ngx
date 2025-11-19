@@ -121,7 +121,7 @@ export class Avatar {
      *
      * @type () => void
      */
-    @Output() avatarClick = new EventEmitter<void>();
+    @Output() click = new EventEmitter<MouseEvent>();
 
     get computedInitials(): string | undefined {
         if (this.initials) return this.initials.slice(0, 2).toUpperCase();
@@ -136,9 +136,9 @@ export class Avatar {
         return undefined;
     }
 
-    onClick(event: Event) {
+    onClick(event: MouseEvent) {
         if (!this.disabled) {
-            this.avatarClick.emit();
+          this.click.emit(event);
         }
-    }
+      }
 }
