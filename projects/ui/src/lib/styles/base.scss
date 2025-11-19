@@ -13,357 +13,357 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 ol {
-  list-style-position: inside;
+    list-style-position: inside;
 }
 
 :root {
-  --z-index-snackbar: 1200;
-  --z-index-focus: 9999;
-  --z-index-button-dock: 1150;
-  --z-index-tooltip-popover: 1100;
-  --z-index-dialog: 1000;
-  --z-index-dropdown: 1000;
-  --z-index-scrim: 900;
-  --z-index-fab: 800;
-  --z-index-navbar: 700;
-  --z-index-footer: 600;
-  --list-item-height: var(--spacing-sizing-13);
-  --button-border-width: 1px;
-  --button-border-type: solid;
-  --button-border-radius: var(--radius-sm);
+    --z-index-snackbar: 1200;
+    --z-index-focus: 9999;
+    --z-index-button-dock: 1150;
+    --z-index-tooltip-popover: 1100;
+    --z-index-dialog: 1000;
+    --z-index-dropdown: 1000;
+    --z-index-scrim: 900;
+    --z-index-fab: 800;
+    --z-index-navbar: 700;
+    --z-index-footer: 600;
+    --list-item-height: var(--spacing-sizing-13);
+    --button-border-width: 1px;
+    --button-border-type: solid;
+    --button-border-radius: var(--radius-sm);
 }
 
 @media (prefers-reduced-motion) {
-  [data-animated] {
-    animation: none !important;
-  }
+    [data-animated] {
+        animation: none !important;
+    }
 }
 
 html:has(body[data-bspk]) {
-  height: 100%;
-  scrollbar-gutter: stable;
-  overflow: hidden auto;
-  scroll-behavior: smooth;
+    height: 100%;
+    scrollbar-gutter: stable;
+    overflow: hidden auto;
+    scroll-behavior: smooth;
 }
 
 /* --scrollbar-width: defined inline in UIProvider */
 html:has([data-bspk='scrim']) {
-  overflow: hidden;
-  padding-right: var(--scrollbar-width);
+    overflow: hidden;
+    padding-right: var(--scrollbar-width);
 }
 
 body[data-bspk] {
-  height: 100%;
-  font: var(--body-base);
-  background-color: var(--background-base);
-  color: var(--foreground-neutral-on-surface);
-  min-width: 343px;
+    height: 100%;
+    font: var(--body-base);
+    background-color: var(--background-base);
+    color: var(--foreground-neutral-on-surface);
+    min-width: 343px;
 
-  a,
-  [data-bspk='link'] {
-    &:not([data-bspk='button'], [data-bspk='list-item']) {
-      color: var(--foreground-link-text-default);
+    a,
+    [data-bspk='link'] {
+        &:not([data-bspk='button'], [data-bspk='list-item']) {
+            color: var(--foreground-link-text-default);
 
-      &:not([disabled]) {
-        &:hover,
-        &[data-pseudo='hover'] {
-          color: var(--foreground-link-text-default-hovered);
+            &:not([disabled]) {
+                &:hover,
+                &[data-pseudo='hover'] {
+                    color: var(--foreground-link-text-default-hovered);
+                }
+
+                &:active,
+                &[data-pseudo='active'] {
+                    color: var(--foreground-link-text-default);
+                    filter: brightness(80%);
+                }
+
+                &:visited,
+                &[data-pseudo='visited'] {
+                    color: var(--foreground-link-text-default-visited);
+                }
+            }
+
+            &[disabled] {
+                pointer-events: none;
+                cursor: text;
+                color: var(--foreground-link-text-default-disabled);
+            }
         }
 
-        &:active,
-        &[data-pseudo='active'] {
-          color: var(--foreground-link-text-default);
-          filter: brightness(80%);
+        &[data-subtle] {
+            text-decoration: none;
+            color: var(--foreground-neutral-on-surface);
+
+            &:not([disabled]) {
+                &:hover,
+                &[data-pseudo='hover'] {
+                    text-decoration: underline;
+                    color: var(--foreground-link-text-subtle-hovered);
+                }
+
+                &:active,
+                &[data-pseudo='active'] {
+                    text-decoration: underline;
+                    color: var(--foreground-link-text-subtle-pressed);
+                }
+
+                &:visited,
+                &[data-pseudo='visited'] {
+                    color: var(--foreground-neutral-on-surface);
+                }
+            }
+
+            &[disabled] {
+                pointer-events: none;
+                color: var(--foreground-link-text-subtle-disabled);
+            }
         }
 
-        &:visited,
-        &[data-pseudo='visited'] {
-          color: var(--foreground-link-text-default-visited);
-        }
-      }
+        &[data-subtle-inverse] {
+            text-decoration: none;
+            color: var(--foreground-neutral-inverse-on-surface);
 
-      &[disabled] {
-        pointer-events: none;
-        cursor: text;
-        color: var(--foreground-link-text-default-disabled);
-      }
+            &:not([disabled]) {
+                &:hover,
+                &[data-pseudo='hover'] {
+                    text-decoration: underline;
+                    color: var(--foreground-link-text-subtle-inverse-hovered);
+                }
+
+                &:active,
+                &[data-pseudo='active'] {
+                    text-decoration: underline;
+                    color: var(--foreground-link-text-subtle-inverse-pressed);
+                }
+
+                &:visited,
+                &[data-pseudo='visited'] {
+                    color: var(--foreground-neutral-on-inverse-surface);
+                }
+            }
+
+            &[disabled] {
+                pointer-events: none;
+                color: var(--foreground-link-text-subtle-inversed-disabled);
+            }
+        }
     }
-
-    &[data-subtle] {
-      text-decoration: none;
-      color: var(--foreground-neutral-on-surface);
-
-      &:not([disabled]) {
-        &:hover,
-        &[data-pseudo='hover'] {
-          text-decoration: underline;
-          color: var(--foreground-link-text-subtle-hovered);
-        }
-
-        &:active,
-        &[data-pseudo='active'] {
-          text-decoration: underline;
-          color: var(--foreground-link-text-subtle-pressed);
-        }
-
-        &:visited,
-        &[data-pseudo='visited'] {
-          color: var(--foreground-neutral-on-surface);
-        }
-      }
-
-      &[disabled] {
-        pointer-events: none;
-        color: var(--foreground-link-text-subtle-disabled);
-      }
-    }
-
-    &[data-subtle-inverse] {
-      text-decoration: none;
-      color: var(--foreground-neutral-inverse-on-surface);
-
-      &:not([disabled]) {
-        &:hover,
-        &[data-pseudo='hover'] {
-          text-decoration: underline;
-          color: var(--foreground-link-text-subtle-inverse-hovered);
-        }
-
-        &:active,
-        &[data-pseudo='active'] {
-          text-decoration: underline;
-          color: var(--foreground-link-text-subtle-inverse-pressed);
-        }
-
-        &:visited,
-        &[data-pseudo='visited'] {
-          color: var(--foreground-neutral-on-inverse-surface);
-        }
-      }
-
-      &[disabled] {
-        pointer-events: none;
-        color: var(--foreground-link-text-subtle-inversed-disabled);
-      }
-    }
-  }
 }
 
 [data-touch-target-parent] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 [data-touch-target] {
-  display: none;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  user-select: none;
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 100%;
-  top: auto;
-  left: auto;
+    display: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    top: auto;
+    left: auto;
 }
 
 [data-truncated] {
-  max-width: inherit;
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background-color: transparent;
+    max-width: inherit;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
 }
 
 [data-sr-only] {
-  height: 1px;
-  overflow: hidden;
-  position: absolute !important;
-  width: 1px;
-  clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute !important;
+    width: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 [data-touch-target] ~ * {
-  position: relative;
-  z-index: 2;
+    position: relative;
+    z-index: 2;
 }
 
 /* if touchscreen */
 @media (any-pointer: coarse) {
-  [data-touch-target] {
-    display: block;
-  }
+    [data-touch-target] {
+        display: block;
+    }
 }
 
 @keyframes skeleton-pulse {
-  0% {
-    opacity: 0.8;
-  }
+    0% {
+        opacity: 0.8;
+    }
 
-  50% {
-    opacity: 0.4;
-  }
+    50% {
+        opacity: 0.4;
+    }
 
-  100% {
-    opacity: 0.8;
-  }
+    100% {
+        opacity: 0.8;
+    }
 }
 
 [data-bspk='skeleton-text'] {
-  /*! 
+    /*! 
     --text-margin: is set via inline style
     --text-height: is set via inline style
     */
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--text-margin);
-  animation: skeleton-pulse 1.5s infinite;
-  width: 100%;
-  height: fit-content;
-
-  [data-line] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--text-margin);
+    animation: skeleton-pulse 1.5s infinite;
     width: 100%;
-    background: var(--foreground-neutral-skeleton-element);
-    border-radius: var(--radius-sm);
-    height: var(--text-height);
-  }
+    height: fit-content;
 
-  // if there are 2 lines or more, make the last line 80% width
-  &:has([data-line]:nth-child(2)) {
-    [data-line]:last-child {
-      width: 80%;
+    [data-line] {
+        width: 100%;
+        background: var(--foreground-neutral-skeleton-element);
+        border-radius: var(--radius-sm);
+        height: var(--text-height);
     }
-  }
+
+    // if there are 2 lines or more, make the last line 80% width
+    &:has([data-line]:nth-child(2)) {
+        [data-line]:last-child {
+            width: 80%;
+        }
+    }
 }
 
 [data-bspk='skeleton'] {
-  /*! 
+    /*! 
     --height: is set via inline style
     --width: is set via inline style
     */
 
-  animation: skeleton-pulse 1.5s infinite;
-  background: var(--foreground-neutral-skeleton-element);
+    animation: skeleton-pulse 1.5s infinite;
+    background: var(--foreground-neutral-skeleton-element);
 
-  &[data-variant='rectangular'],
-  &[data-variant='photo'] {
-    min-width: var(--spacing-sizing-08);
-    min-height: var(--spacing-sizing-08);
-    height: var(--height, var(--width));
-    width: var(--width, var(--height));
-    border-radius: var(--radius-sm);
-  }
+    &[data-variant='rectangular'],
+    &[data-variant='photo'] {
+        min-width: var(--spacing-sizing-08);
+        min-height: var(--spacing-sizing-08);
+        height: var(--height, var(--width));
+        width: var(--width, var(--height));
+        border-radius: var(--radius-sm);
+    }
 
-  &[data-variant='photo'] {
-    border-radius: var(--radius-md);
-  }
+    &[data-variant='photo'] {
+        border-radius: var(--radius-md);
+    }
 
-  &[data-variant='circular'] {
-    border-radius: 100%;
-    width: var(--width);
-    aspect-ratio: 1/1;
-  }
+    &[data-variant='circular'] {
+        border-radius: 100%;
+        width: var(--width);
+        aspect-ratio: 1/1;
+    }
 
-  &[data-variant='profile'] {
-    border-radius: 100%;
-    width: var(--spacing-sizing-10);
-    aspect-ratio: 1/1;
-  }
+    &[data-variant='profile'] {
+        border-radius: 100%;
+        width: var(--spacing-sizing-10);
+        aspect-ratio: 1/1;
+    }
 
-  &[data-variant='thumbnail'] {
-    width: var(--spacing-sizing-12);
-    height: var(--spacing-sizing-12);
-    border-radius: var(--radius-sm);
-  }
+    &[data-variant='thumbnail'] {
+        width: var(--spacing-sizing-12);
+        height: var(--spacing-sizing-12);
+        border-radius: var(--radius-sm);
+    }
 }
 
 [data-attachment-wrapper] {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-  flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    flex-shrink: 0;
 
-  [data-attachment] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: scale(1) translate(50%, -50%);
-    transform-origin: 100% 0%;
-    z-index: 2;
-  }
+    [data-attachment] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: scale(1) translate(50%, -50%);
+        transform-origin: 100% 0%;
+        z-index: 2;
+    }
 }
 
 @keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translate(var(--spacing-sizing-01), var(--spacing-sizing-01));
-  }
+    0% {
+        opacity: 0;
+        transform: translate(var(--spacing-sizing-01), var(--spacing-sizing-01));
+    }
 
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
 }
 
 @keyframes placement-left {
-  0% {
-    transform: translateX(-100vw);
-  }
+    0% {
+        transform: translateX(-100vw);
+    }
 
-  100% {
-    transform: translateX(0);
-  }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 @keyframes placement-right {
-  0% {
-    transform: translateX(100vw);
-  }
+    0% {
+        transform: translateX(100vw);
+    }
 
-  100% {
-    transform: translateX(0);
-  }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 @keyframes placement-top {
-  0% {
-    transform: translateY(-100vh);
-  }
+    0% {
+        transform: translateY(-100vh);
+    }
 
-  100% {
-    transform: translateY(0);
-  }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 @keyframes placement-bottom {
-  0% {
-    transform: translateY(100vh);
-  }
+    0% {
+        transform: translateY(100vh);
+    }
 
-  100% {
-    transform: translateY(0);
-  }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 [data-hidden] {
-  display: none !important;
+    display: none !important;
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

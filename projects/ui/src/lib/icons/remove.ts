@@ -8,11 +8,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="material"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
-        viewBox="0 -960 960 960"
-    >
+        viewBox="0 -960 960 960">
         <path
-            d="M240-440q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h480q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H240Z"
-        />
+            d="M240-440q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h480q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H240Z" />
     </svg>`,
     styles: ['icon-remove { display: contents; }'],
     encapsulation: ViewEncapsulation.None,

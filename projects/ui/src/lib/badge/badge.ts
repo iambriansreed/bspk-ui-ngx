@@ -44,7 +44,6 @@ export class Badge implements AfterViewInit {
      *     5;
      *
      * @default 1
-     *
      */
     @Input() count: number | undefined = 1;
 
@@ -72,9 +71,9 @@ export class Badge implements AfterViewInit {
     /**
      * Indicates whether the badge has projected (custom) content.
      *
-     * This is set to `true` if any content is projected into the badge component
-     * (for example, <ui-badge>New</ui-badge>), and `false` if only the `count` input is used.
-     * Used internally to determine whether to display the projected content or the count.
+     * This is set to `true` if any content is projected into the badge component (for example,
+     * <ui-badge>New</ui-badge>), and `false` if only the `count` input is used. Used internally to determine whether to
+     * display the projected content or the count.
      *
      * @internal
      */

@@ -8,18 +8,15 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgFlagAruba__a)">
             <path d="M1.5 5H22.5V19H1.5V5Z" fill="#338AF3" />
             <path
                 d="M4.79751 10.606L2.3504 9.52419L4.79751 8.44816L5.87354 6.00684L6.94958 8.44816L9.39668 9.52419L6.94958 10.606L5.87354 13.0473L4.79751 10.606Z"
-                fill="white"
-            />
+                fill="white" />
             <path
                 d="M5.87357 7.34863L6.53886 8.85855L8.04878 9.52384L6.53886 10.1891L5.87357 11.699L5.20828 10.1891L3.69836 9.52384L5.20828 8.85855L5.87357 7.34863Z"
-                fill="#D80027"
-            />
+                fill="#D80027" />
             <path d="M1.5 13.8052H22.5V14.7134H1.5V13.8052ZM1.5 15.6217H22.5V16.53H1.5V15.6217Z" fill="#FFDA44" />
         </g>
         <defs>

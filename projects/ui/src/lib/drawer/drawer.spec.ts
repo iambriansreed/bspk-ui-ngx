@@ -4,22 +4,22 @@ import { Drawer } from './drawer';
 import { hasNoBasicA11yIssues } from '../../testutils/hasNoBasicA11yIssues';
 
 describe('Drawer', () => {
-  let component: Drawer;
-  let fixture: ComponentFixture<Drawer>;
+    let component: Drawer;
+    let fixture: ComponentFixture<Drawer>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Drawer],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [Drawer],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(Drawer);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(Drawer);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
-  it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

@@ -5,22 +5,22 @@ import { Accordion } from './accordion';
 import { hasNoBasicA11yIssues } from '../../testutils/hasNoBasicA11yIssues';
 
 describe('Accordion', () => {
-  let component: Accordion;
-  let fixture: ComponentFixture<Accordion>;
+    let component: Accordion;
+    let fixture: ComponentFixture<Accordion>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Accordion],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [Accordion],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(Accordion);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(Accordion);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
-  it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

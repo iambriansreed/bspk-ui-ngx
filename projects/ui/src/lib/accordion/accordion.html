@@ -7,8 +7,7 @@
                 [attr.aria-expanded]="isOpen(item.id)"
                 data-header
                 [disabled]="item.disabled ? true : null"
-                (click)="!item.disabled && toggleOpen(item.id!)"
-            >
+                (click)="!item.disabled && toggleOpen(item.id!)">
                 @if (item.leading) {
                     <span data-leading>
                         @if (isTemplateRef(item.leading)) {

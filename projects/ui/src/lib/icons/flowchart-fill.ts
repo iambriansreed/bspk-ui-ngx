@@ -9,11 +9,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="material"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
-        viewBox="0 -960 960 960"
-    >
+        viewBox="0 -960 960 960">
         <path
-            d="M600-160v-80H440v-200h-80v80H80v-240h280v80h80v-200h160v-80h280v240H600v-80h-80v320h80v-80h280v240H600Z"
-        />
+            d="M600-160v-80H440v-200h-80v80H80v-240h280v80h80v-200h160v-80h280v240H600v-80h-80v320h80v-80h280v240H600Z" />
     </svg>`,
     styles: ['icon-flowchart-fill { display: contents; }'],
     encapsulation: ViewEncapsulation.None,

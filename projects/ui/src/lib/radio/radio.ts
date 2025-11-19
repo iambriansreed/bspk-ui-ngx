@@ -4,15 +4,10 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you
  * must wrap it with a label. This will more often be used in the RadioOption or RadioGroup component.
  *
- * <ui-radio
-    name="example"
-    [value]="'option1'"
-    (checkedChange)="selected = $event ? 'option1' : selected"
-    [disabled]="false"
-    [invalid]="false"
-    [required]="true"
-    aria-label="Option 1"
-  ></ui-radio>
+ * <ui-radio name="example" [value]="'option1'" (checkedChange)="selected = $event ? 'option1' : selected"
+ * [disabled]="false" [invalid]="false" [required]="true" aria-label="Option 1"
+ *
+ * > </ui-radio>
  *
  * @name Radio
  * @phase Utility

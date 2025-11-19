@@ -8,8 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgFlagBelgium__a)">
             <path d="M1.5 5H22.5V19H1.5V5Z" fill="#FDDA25" />
             <path d="M1.5 5H8.5V19H1.5V5Z" fill="black" />

@@ -5,8 +5,7 @@
         [showScrim]="true"
         [disableFocusTrap]="disableFocusTrap"
         (onClose)="emitClose()"
-        [widthFull]="placement === 'bottom' || placement === 'top'"
-    >
+        [widthFull]="placement === 'bottom' || placement === 'top'">
         <div data-bspk="drawer">
             <div data-drawer-header [attr.data-drawer-close-only]="!header ? 'true' : null">
                 <div *ngIf="header" data-drawer-title>{{ header }}</div>
@@ -27,8 +26,7 @@
         data-bspk="drawer"
         data-no-portal
         [attr.data-persistent-placement]="placement"
-        role="complementary"
-    >
+        role="complementary">
         <div data-drawer-header [attr.data-drawer-close-only]="!header ? 'true' : null">
             <div *ngIf="header" data-drawer-title>{{ header }}</div>
 

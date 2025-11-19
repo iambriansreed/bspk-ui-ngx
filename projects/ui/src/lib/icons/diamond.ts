@@ -8,12 +8,10 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="anywhere"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <path
             d="M13.0698 20.5587C12.7756 20.8529 12.419 21 12 21C11.581 21 11.2244 20.8529 10.9302 20.5587L3.44131 13.0698C3.1471 12.7756 3 12.419 3 12C3 11.581 3.1471 11.2244 3.44131 10.9302L10.9302 3.44131C11.2244 3.1471 11.581 3 12 3C12.419 3 12.7756 3.1471 13.0698 3.44131L20.5587 10.9302C20.8529 11.2244 21 11.581 21 12C21 12.419 20.8529 12.7756 20.5587 13.0698L13.0698 20.5587ZM12 18.5966L18.5966 12L12 5.40347L5.40345 12L12 18.5966Z"
-            fill="currentColor"
-        />
+            fill="currentColor" />
     </svg>`,
     styles: ['icon-diamond { display: contents; }'],
     encapsulation: ViewEncapsulation.None,

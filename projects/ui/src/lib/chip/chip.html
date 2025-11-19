@@ -5,8 +5,7 @@
     [attr.data-selected]="selected || undefined"
     data-touch-target-parent
     [disabled]="disabled"
-    (click)="onClick($event)"
->
+    (click)="onClick($event)">
     @if (leadingIcon) {
         <span [attr.aria-hidden]="true" data-chip-icon>
             <ui-icon [name]="leadingIcon"></ui-icon>
@@ -25,8 +24,7 @@
         <ui-badge
             [count]="trailingBadge.count"
             [size]="trailingBadge.size === 'small' || trailingBadge.size === 'x-small' ? trailingBadge.size : 'small'"
-            [surfaceBorder]="trailingBadge.surfaceBorder ?? false"
-        ></ui-badge>
+            [surfaceBorder]="trailingBadge.surfaceBorder ?? false"></ui-badge>
     }
     <span data-touch-target></span>
 </button>

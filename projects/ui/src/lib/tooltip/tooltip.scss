@@ -1,84 +1,84 @@
 ui-tooltip {
-  display: contents;
+    display: contents;
 }
 
 [data-bspk='tooltip'] {
-  pointer-events: none;
-  z-index: var(--z-index-tooltip-popover);
+    pointer-events: none;
+    z-index: var(--z-index-tooltip-popover);
 
-  [data-text] {
-    display: block;
-    z-index: 2;
-    position: relative;
-    background-color: var(--surface-neutral-inverse);
-    border-radius: var(--radius-sm);
-    color: var(--foreground-neutral-on-inverse-surface);
-    box-shadow: var(--drop-shadow-float);
-    font: var(--labels-small);
-    padding: var(--spacing-sizing-01) var(--spacing-sizing-02);
-    border: none;
-    transition: opacity 0.2s ease-in-out;
-    max-width: 300px;
-    word-wrap: break-word;
-  }
-
-  --arrow-size: var(--spacing-sizing-01);
-  --arrow-offset: calc(var(--arrow-size) * -2);
-  --arrow-color: var(--surface-neutral-inverse);
-
-  [data-arrow] {
-    display: block;
-    z-index: 1;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: var(--arrow-size);
-    border-color: transparent;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  &[data-show-tail='false'] {
-    [data-arrow] {
-      opacity: 0;
+    [data-text] {
+        display: block;
+        z-index: 2;
+        position: relative;
+        background-color: var(--surface-neutral-inverse);
+        border-radius: var(--radius-sm);
+        color: var(--foreground-neutral-on-inverse-surface);
+        box-shadow: var(--drop-shadow-float);
+        font: var(--labels-small);
+        padding: var(--spacing-sizing-01) var(--spacing-sizing-02);
+        border: none;
+        transition: opacity 0.2s ease-in-out;
+        max-width: 300px;
+        word-wrap: break-word;
     }
-  }
 
-  &[data-placement='bottom'] {
-    [data-arrow] {
-      top: var(--arrow-offset);
-      border-bottom-color: var(--arrow-color);
-    }
-  }
+    --arrow-size: var(--spacing-sizing-01);
+    --arrow-offset: calc(var(--arrow-size) * -2);
+    --arrow-color: var(--surface-neutral-inverse);
 
-  &[data-placement='top'] {
     [data-arrow] {
-      bottom: var(--arrow-offset);
-      border-top-color: var(--arrow-color);
-      left: 50%;
-      transform: translateX(-50%);
+        display: block;
+        z-index: 1;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: var(--arrow-size);
+        border-color: transparent;
+        left: 50%;
+        transform: translateX(-50%);
     }
-  }
 
-  &[data-placement='right'] {
-    [data-arrow] {
-      left: auto;
-      right: var(--arrow-offset);
-      top: 50%;
-      transform: translateY(-50%);
-      border-right-color: var(--arrow-color);
+    &[data-show-tail='false'] {
+        [data-arrow] {
+            opacity: 0;
+        }
     }
-  }
 
-  &[data-placement='left'] {
-    [data-arrow] {
-      left: var(--arrow-offset);
-      top: 50%;
-      transform: translateY(-50%);
-      border-left-color: var(--arrow-color);
+    &[data-placement='bottom'] {
+        [data-arrow] {
+            top: var(--arrow-offset);
+            border-bottom-color: var(--arrow-color);
+        }
     }
-  }
+
+    &[data-placement='top'] {
+        [data-arrow] {
+            bottom: var(--arrow-offset);
+            border-top-color: var(--arrow-color);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &[data-placement='right'] {
+        [data-arrow] {
+            left: auto;
+            right: var(--arrow-offset);
+            top: 50%;
+            transform: translateY(-50%);
+            border-right-color: var(--arrow-color);
+        }
+    }
+
+    &[data-placement='left'] {
+        [data-arrow] {
+            left: var(--arrow-offset);
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color: var(--arrow-color);
+        }
+    }
 }
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

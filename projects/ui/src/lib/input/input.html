@@ -17,8 +17,7 @@
     [type]="type()"
     [value]="value()"
     (blur)="handleBlur($event)"
-    (input)="handleInput($event)"
-/>
+    (input)="handleInput($event)" />
 
 <ng-content select="[data-trailing]">
     @if (trailing()) {

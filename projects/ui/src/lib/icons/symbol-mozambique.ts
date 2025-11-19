@@ -8,8 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgSymbolMozambique__a)">
             <g clip-path="url(#SvgSymbolMozambique__b)">
                 <path d="M2 2H32V22H2V2Z" fill="white" />
@@ -19,8 +18,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
                 <path d="M16.9708 11.981L2 21.9612V2L16.9708 11.981Z" fill="#CB0F31" />
                 <path
                     d="M6.88173 8.4209L7.76518 11.1401H10.6245L8.31138 12.8207L9.19483 15.54L6.88173 13.8594L4.56857 15.54L5.4522 12.8207L3.1391 11.1401H5.99828L6.88173 8.4209Z"
-                    fill="#F4D900"
-                />
+                    fill="#F4D900" />
             </g>
         </g>
         <defs>

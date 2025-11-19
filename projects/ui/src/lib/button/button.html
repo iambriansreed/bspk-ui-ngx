@@ -1,5 +1,5 @@
 <button
-    [tooltip]="{ label: toolTip, showTail: true, disabled: !toolTip }"
+    [tooltip]="{ label: tooltipLabel, showTail: true }"
     #buttonElement
     [type]="type"
     [attr.aria-label]="label"
@@ -16,8 +16,7 @@
     (focus)="handleFocus($event)"
     (blur)="handleBlur($event)"
     (mouseover)="handleMouseOver($event)"
-    (mouseleave)="handleMouseLeave($event)"
->
+    (mouseleave)="handleMouseLeave($event)">
     @if (!label) {
         <ng-content></ng-content>
     } @else {

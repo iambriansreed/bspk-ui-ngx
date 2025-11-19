@@ -8,21 +8,17 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgSymbolIreland__a)">
             <path
                 d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                fill="white"
-            />
+                fill="white" />
             <path
                 d="M21.9997 11.9993C21.9997 7.6997 19.2859 4.03423 15.4779 2.62134V21.3774C19.2859 19.9644 21.9997 16.299 21.9997 11.9993Z"
-                fill="#F77F00"
-            />
+                fill="#F77F00" />
             <path
                 d="M2 11.9998C2 16.2995 4.71375 19.9649 8.52176 21.3778V2.62183C4.71375 4.03472 2 7.70019 2 11.9998Z"
-                fill="#009E60"
-            />
+                fill="#009E60" />
         </g>
         <defs>
             <clipPath id="SvgSymbolIreland__a">

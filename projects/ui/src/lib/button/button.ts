@@ -143,7 +143,7 @@ export class Button implements OnInit {
         return !this.iconOnly;
     }
 
-    get effectiveTooltip(): string | undefined {
+    get tooltipLabel(): string | undefined {
         return this.toolTip || (this.iconOnly ? this.label : undefined);
     }
 

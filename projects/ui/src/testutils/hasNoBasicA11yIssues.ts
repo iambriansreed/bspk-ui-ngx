@@ -10,7 +10,7 @@ import { axe } from 'jest-axe';
  * @returns An async function that performs the accessibility test.
  */
 export const hasNoBasicA11yIssues = async (fixture: ComponentFixture<unknown>) => {
-  const results = await axe(fixture.nativeElement);
+    const results = await axe(fixture.nativeElement);
 
-  return expect(results).toHaveNoViolations();
+    return expect(results).toHaveNoViolations();
 };

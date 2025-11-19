@@ -8,15 +8,13 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgFlagCameroon__a)">
             <path d="M1.5 5H22.5V19H1.5V5Z" fill="#CE1126" />
             <path d="M1.5 5H8.5V19H1.5V5Z" fill="#007A5E" />
             <path
                 d="M15.5 5H22.5V19H15.5V5ZM11.9795 9.18363L12.6836 11.3532H14.9678L13.1216 12.6959L13.8257 14.8655L11.9795 13.5269L10.1333 14.8655L10.8374 12.6959L8.99121 11.3532H11.2754L11.9795 9.18363Z"
-                fill="#FCD116"
-            />
+                fill="#FCD116" />
         </g>
         <defs>
             <clipPath id="SvgFlagCameroon__a">

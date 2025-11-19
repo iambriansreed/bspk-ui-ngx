@@ -8,14 +8,12 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
         data-type="country"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-    >
+        fill="none">
         <g clip-path="url(#SvgFlagTrinidadAndTobago__a)">
             <path d="M1.5 5.00024H22.5V19H1.5V5.00024Z" fill="#D80027" />
             <path
                 d="M1.74878 5.00024L10.2784 13.7217L15.6754 19H22.2512L13.7215 10.2786L8.32453 5.00024H1.74878Z"
-                fill="white"
-            />
+                fill="white" />
             <path d="M3.27863 5.00024L17.2783 19H20.7214L6.72173 5.00024H3.27863Z" fill="black" />
         </g>
         <defs>
