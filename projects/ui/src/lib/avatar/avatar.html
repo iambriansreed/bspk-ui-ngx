@@ -1,5 +1,5 @@
 <span
-    [tooltip]="{ label: name, showTail: true, disabled: !!hideTooltip }"
+    [tooltip]="{ label: name, showTail: true, disabled: disabled || hideTooltip }"
     data-bspk="avatar"
     [attr.aria-label]="name"
     aria-roledescription="person"
