@@ -7,7 +7,6 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
  * <ui-radio
     name="example"
     [value]="'option1'"
-    [checked]="selected === 'option1'"
     (checkedChange)="selected = $event ? 'option1' : selected"
     [disabled]="false"
     [invalid]="false"
