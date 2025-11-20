@@ -5,7 +5,7 @@
     [attr.data-selected]="selected || undefined"
     data-touch-target-parent
     [disabled]="disabled"
-    (click)="onClick($event)">
+    (click)="handleOnClick($event)">
     @if (leadingIcon) {
         <span [attr.aria-hidden]="true" data-chip-icon>
             <ui-icon [name]="leadingIcon"></ui-icon>
