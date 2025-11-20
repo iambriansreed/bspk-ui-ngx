@@ -4,11 +4,11 @@
     [attr.aria-label]="name"
     aria-roledescription="person"
     [attr.aria-disabled]="disabled || undefined"
-    [attr.tabindex]="!disabled && click.observers.length ? 0 : undefined"
-    [attr.role]="click.observers.length ? 'button' : 'img'"
+    [attr.tabindex]="!disabled && onClick.observers.length ? 0 : undefined"
+    [attr.role]="onClick.observers.length ? 'button' : 'img'"
     [attr.data-color]="color"
     [attr.data-size]="size"
-    (click)="onClick($event)"
+    (click)="handleOnClick($event)"
 >
     @if (image) {
         <img [src]="image" [alt]="name" aria-hidden="true" />
