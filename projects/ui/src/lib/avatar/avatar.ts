@@ -26,7 +26,6 @@ export type SizeVariant =
  *         image="/avatar-01.png"
  *         initials="AR"
  *         name="Andre Giant"
- *         hideTooltip
  *         size="large"
  *         disabled={false}
  *         onClick={() => action('Launch avatar popover')}
