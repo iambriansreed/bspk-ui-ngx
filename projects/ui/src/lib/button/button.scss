@@ -149,11 +149,9 @@ ui-button {
         }
 
         &[data-destructive] {
-            &:not([disabled]) {
-                --primary-background: var(--status-error);
+            --primary-background: var(--status-error);
 
-                color: var(--foreground-brand-on-primary);
-            }
+            color: var(--foreground-brand-on-primary);
         }
     }
 
@@ -185,11 +183,9 @@ ui-button {
         }
 
         &[data-destructive] {
-            &:not([disabled]) {
-                background: transparent;
-                color: var(--status-error);
-                border: solid 1px var(--status-error);
-            }
+            background: transparent;
+            color: var(--status-error);
+            border: solid 1px var(--status-error);
         }
     }
 
@@ -219,9 +215,7 @@ ui-button {
         }
 
         &[data-destructive] {
-            &:not([disabled]) {
-                color: var(--status-error);
-            }
+            color: var(--status-error);
         }
     }
 }
