@@ -49,3 +49,12 @@
 
 <h3>[disabled]="true"</h3>
 <ui-avatar name="Andre Giant" [disabled]="true" size="xxxx-large" />
+
+<h3>with click prop set</h3>
+<p>when inspecting the element role should be button, not img</p>
+<ui-avatar name="Jane Smith" size="xxxxx-large" (click)="handleClick()" />
+
+<h3>with click prop set, disabled = true</h3>
+<p>when inspecting the element role should be button, not img</p>
+<ui-avatar name="Jane Smith" size="xxxxx-large" (click)="handleClick()" [disabled]="true" />
+

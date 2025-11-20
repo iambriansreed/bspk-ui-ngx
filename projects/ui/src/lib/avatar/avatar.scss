@@ -122,16 +122,19 @@ ui-avatar {
         background: var(--state-background);
     }
 
-    &:hover {
-        --state-background: var(--interactions-neutral-hover-opacity);
+    &:not([aria-disabled]) {
+        &:hover {
+            --state-background: var(--interactions-neutral-hover-opacity);
+        }
+
+        &:active {
+            --state-background: var(--interactions-neutral-press-opacity);
+        }
     }
 
-    &:active {
-        --state-background: var(--interactions-neutral-press-opacity);
-    }
-
-    &[disabled] {
+    &[aria-disabled] {
         opacity: 0.5;
+        cursor: not-allowed;
     }
 
     &:focus:not(:active) {
