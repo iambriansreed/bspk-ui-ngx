@@ -151,7 +151,9 @@ ui-button {
         &[data-destructive] {
             --primary-background: var(--status-error);
 
-            color: var(--foreground-brand-on-primary);
+            &:not([disabled]) {
+                color: var(--foreground-brand-on-primary);
+            }
         }
     }
 
@@ -183,9 +185,11 @@ ui-button {
         }
 
         &[data-destructive] {
-            background: transparent;
-            color: var(--status-error);
-            border: solid 1px var(--status-error);
+            &:not([disabled]) {
+                background: transparent;
+                color: var(--status-error);
+                border: solid 1px var(--status-error);
+            }
         }
     }
 
@@ -215,7 +219,9 @@ ui-button {
         }
 
         &[data-destructive] {
-            color: var(--status-error);
+            &:not([disabled]) {
+                color: var(--status-error);
+            }
         }
     }
 }
