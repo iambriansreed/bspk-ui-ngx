@@ -10,7 +10,15 @@ import { TooltipDirective, TooltipProps } from '../tooltip/tooltip.directive';
 })
 export class Truncated implements AfterViewInit {
     tooltip: TooltipProps | string = '';
-
+    /**
+     * The content to render.
+     *
+     * @example
+     *     Some really long text that might be truncated when displayed in a small container.
+     *
+     * @type string
+     * @required
+     */
     @ViewChild('el', { static: false }) elRef!: ElementRef<HTMLElement>;
 
     constructor(private cdr: ChangeDetectorRef) {}
