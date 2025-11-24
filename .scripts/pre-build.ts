@@ -19,7 +19,14 @@ type ComponentMeta = {
     type: 'component' | 'directive';
     classContent: string;
     template: string;
+    classNameExport?: string;
 };
+
+function getExportedClassName(filePath: string): string {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const match = fileContent.match(/export\s+class\s+([A-Za-z0-9_]+)/);
+    return match ? match[1] : '';
+}
 
 // GENERATE COMPONENT META
 
@@ -38,10 +45,15 @@ const EXAMPLES_DIR = 'projects/demo/examples';
 fs.readdirSync(EXAMPLES_DIR).forEach((file) => {
     const [slug, _ext] = file.split('.');
     const content = fs.readFileSync(`${EXAMPLES_DIR}/${file}`).toString().trim();
+    const componentFilePath = `projects/ui/src/lib/${slug}/${slug}.ts`;
+    const classNameExport = fs.existsSync(componentFilePath)
+        ? getExportedClassName(componentFilePath)
+        : '';
     componentMeta.push({
         slug,
         name: `UI${slugToName(slug)}`,
         ...parseHtml(content),
+        classNameExport,
     });
 });
 
@@ -53,9 +65,14 @@ const componentsContent: string[] = [];
 
 const fileImports = [`import { Component } from '@angular/core';`];
 
-componentMeta.forEach(({ name, slug, type, classContent, template }) => {
-    if (type === 'component') {
+componentMeta.forEach(({ name, slug, type, classContent, template, classNameExport }) => {
+    // console.log(`Generating route for ${name} (${classNameExport})`);
+    if (type === 'component' && name === classNameExport) {
         fileImports.push(`import { ${name} } from '../../../../../projects/ui/src/lib/${slug}';`);
+    }
+
+    if (type === 'component' && slug !== 'icon' && name !== classNameExport) {
+        fileImports.push(`import { ${classNameExport} as ${name} } from '../../../../../projects/ui/src/lib/${slug}';`);
     }
 
     if (type === 'directive') {

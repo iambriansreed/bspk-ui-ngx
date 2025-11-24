@@ -7,19 +7,33 @@
 <input
     data-main-input
     [attr.aria-invalid]="invalid()"
-    [attr.aria-label]="label()"
+    [attr.aria-label]="ariaLabel() || label()"
     [attr.data-invalid]="invalid()"
     [disabled]="disabled() || disabledState()"
-    [id]="controlId()"
+    [id]="id() || controlId()"
     [placeholder]="placeholder() || ''"
+    [name]="name() || null"
+    [attr.autocomplete]="autoComplete() || null "
     [readOnly]="readOnly() || null"
     [required]="required() || null"
     [type]="type()"
     [value]="value()"
     (blur)="handleBlur($event)"
-    (input)="handleInput($event)" />
+    (input)="handleInput($event)"
+     />
 
 <ng-content select="[data-trailing]">
+    @if (showClearButton && !readOnly() && !disabled() && value()) {
+        <ui-button
+        label="Clear"
+        [iconOnly]="true"
+        variant="tertiary"
+        [size]="getButtonSize()"
+        (click)="clearInput()"
+        >
+            <icon-cancel></icon-cancel>
+        </ui-button>
+    }
     @if (trailing()) {
         <span data-trailing>{{ trailing() }}</span>
     }

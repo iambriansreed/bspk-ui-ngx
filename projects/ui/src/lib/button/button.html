@@ -17,7 +17,7 @@
     (blur)="handleBlur($event)"
     (mouseover)="handleMouseOver($event)"
     (mouseleave)="handleMouseLeave($event)">
-    @if (!label) {
+    @if (!label && !icon) {
     <ng-content></ng-content>
     } @else { @if (icon) {
     <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
@@ -27,6 +27,8 @@
     <span [attr.data-button-label]="true">
         {{ label }}
     </span>
+    } @if (label && !icon && iconOnly) {
+        <ng-content></ng-content>
     } }
     <span [attr.data-touch-target]="true"></span>
 </button>
