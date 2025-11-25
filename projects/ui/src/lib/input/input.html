@@ -7,13 +7,13 @@
 <input
     data-main-input
     [attr.aria-invalid]="invalid()"
-    [attr.aria-label]="ariaLabel() || label()"
+    [attr.aria-label]="inputAriaLabel"
     [attr.data-invalid]="invalid()"
     [disabled]="disabled() || disabledState()"
-    [id]="id() || controlId()"
+    [id]="inputId"
     [placeholder]="placeholder() || ''"
-    [name]="name() || null"
-    [attr.autocomplete]="autoComplete() || null "
+    [name]="inputName"
+    [attr.autocomplete]="inputAutocomplete"
     [readOnly]="readOnly() || null"
     [required]="required() || null"
     [type]="type()"

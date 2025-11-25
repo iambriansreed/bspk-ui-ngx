@@ -47,7 +47,21 @@ export class UIInput extends TextInputControlValueAccessor {
         return validSizes.includes(sizeValue as ButtonSize) ? sizeValue as ButtonSize : 'medium';
     }
 
-    readonly controlId = input(randomString());
+    get inputAriaLabel(): string | undefined {
+        return this.ariaLabel() || this.label();
+    }
 
-    public IconClose = IconCancel;
+    get inputId(): string {
+        return this.id() || this.controlId();
+    }
+
+    get inputName(): string | null {
+        return this.name() || null;
+    }
+
+    get inputAutocomplete(): string | null {
+        return this.autoComplete() || null;
+    }
+
+    readonly controlId = input(randomString());
 }
