@@ -28,8 +28,8 @@
     }
     @if (getShowClearButton()) {
         <ui-button
-        label="Clear"
-        [iconOnly]="true"
+        tooltip="Clear input"
+        aria-label="Clear input"
         variant="tertiary"
         [size]="getButtonSize()"
         (click)="clearInput()"

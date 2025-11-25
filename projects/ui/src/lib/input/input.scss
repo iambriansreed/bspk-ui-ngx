@@ -107,6 +107,12 @@ ui-input {
         }
     }
 
+    icon-cancel {
+        svg {
+            width: var(--field-clear-width);
+        }
+    }
+
     label {
         font: var(--labels-small);
         color: var(--foreground-neutral-on-surface-variant-01);
