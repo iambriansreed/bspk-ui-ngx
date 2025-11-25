@@ -100,7 +100,7 @@ export class UIButton implements OnInit {
     @Input() width: ButtonWidth = 'hug';
 
     /** The tool tip text that appears when hovered. */
-    @Input() toolTip?: string;
+    @Input() tooltip?: string;
 
     /**
      * Whether the button is disabled.
@@ -144,7 +144,7 @@ export class UIButton implements OnInit {
     }
 
     get tooltipLabel(): string | undefined {
-        return this.toolTip || (this.iconOnly ? this.label : undefined);
+        return this.tooltip || (this.iconOnly ? this.label : undefined);
     }
 
     get buttonClasses(): string {
