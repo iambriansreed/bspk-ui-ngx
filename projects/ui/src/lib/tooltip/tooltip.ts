@@ -6,7 +6,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     templateUrl: './tooltip.html',
     encapsulation: ViewEncapsulation.None,
 })
-export class Tooltip {
+export class UITooltip {
     /** The tooltip content. */
     @Input() label?: string = '';
     /**

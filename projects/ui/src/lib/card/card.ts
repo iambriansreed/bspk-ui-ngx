@@ -13,8 +13,8 @@ export type CardVariant = 'elevated' | 'outlined';
  *     import { Card } from '@bspk/ui/card';
  *
  *     <Card variant="elevated" style={{ padding: 'var(--spacing-sizing-04)', maxWidth: '100%', width: '400px' }}>
- *         <h3>Card Title</h3>
- *         <p>This is some content inside the card.</p>
+ *     <h3>Card Title</h3>
+ *     <p>This is some content inside the card.</p>
  *     </Card>;
  *
  * @name Card
@@ -28,11 +28,11 @@ export type CardVariant = 'elevated' | 'outlined';
     styleUrl: './card.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class Card {
-     /**
+export class UICard {
+    /**
      * Determines how the card border will appear.
      *
      * @default elevated
      */
-     @Input() variant: CardVariant = 'elevated';
+    @Input() variant: CardVariant = 'elevated';
 }

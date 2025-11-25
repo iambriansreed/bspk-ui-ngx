@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconPerson } from '../icons/person';
-import { TooltipDirective } from '../tooltip';
+import { UITooltipDirective } from '../tooltip';
 
 export type SizeVariant =
     | 'large'
@@ -13,7 +13,7 @@ export type SizeVariant =
     | 'xxx-large'
     | 'xxxx-large'
     | 'xxxxx-large';
-    
+
 /**
  * An avatar is a visual representation of a user or entity. It can be used to display an initials, icon, or image.
  *
@@ -21,16 +21,16 @@ export type SizeVariant =
  *     import { Avatar } from '@bspk/ui/Avatar';
  *
  *     <Avatar
- *         color="blue"
- *         showIcon
- *         image="/avatar-01.png"
- *         initials="AR"
- *         name="Andre Giant"
- *         size="large"
- *         disabled={false}
- *         onClick={() => action('Launch avatar popover')}
- *         showIcon={false}
- *         hideTooltip={true}
+ *     color="blue"
+ *     showIcon
+ *     image="/avatar-01.png"
+ *     initials="AR"
+ *     name="Andre Giant"
+ *     size="large"
+ *     disabled={false}
+ *     onClick={() => action('Launch avatar popover')}
+ *     showIcon={false}
+ *     hideTooltip={true}
  *     />;
  *
  * @exampleDescription The image if provided is displayed first, followed by the icon if provided, and finally the initials. If no initials are provided, the first two letters of the name will be used as initials.
@@ -41,12 +41,12 @@ export type SizeVariant =
 @Component({
     selector: 'ui-avatar',
     standalone: true,
-    imports: [CommonModule, IconPerson, TooltipDirective],
+    imports: [CommonModule, IconPerson, UITooltipDirective],
     templateUrl: './avatar.html',
     styleUrls: ['./avatar.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Avatar {
+export class UIAvatar {
     /**
      * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
      *
@@ -137,7 +137,7 @@ export class Avatar {
 
     handleOnClick(event: MouseEvent) {
         if (!this.disabled) {
-          this.onClick.emit(event);
+            this.onClick.emit(event);
         }
-      }
+    }
 }

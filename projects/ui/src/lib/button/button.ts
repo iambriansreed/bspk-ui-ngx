@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { Icon } from '../icon';
-import { TooltipDirective } from '../tooltip';
+import { UIIcon } from '../icon';
+import { UITooltipDirective } from '../tooltip';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
@@ -41,10 +41,10 @@ export type ButtonWidth = 'fill' | 'hug';
     templateUrl: './button.html',
     styleUrls: ['./button.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, Icon, TooltipDirective],
+    imports: [CommonModule, UIIcon, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
 })
-export class Button implements OnInit {
+export class UIButton implements OnInit {
     @ViewChild('buttonElement', { static: true }) buttonElement!: ElementRef<HTMLButtonElement>;
 
     /**

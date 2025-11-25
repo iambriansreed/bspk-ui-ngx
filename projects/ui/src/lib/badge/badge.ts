@@ -36,7 +36,7 @@ export type BadgeProps = {
     styleUrls: ['./badge.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Badge implements AfterViewInit {
+export class UIBadge implements AfterViewInit {
     /**
      * The content of the badge. If larger than 99, the badge will display '99+'.
      *

@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
-import { Dialog } from '../dialog/dialog';
-import { Button } from '../button/button';
+import { UIDialog } from '../dialog/dialog';
+import { UIButton } from '../button/button';
 import { IconClose } from '../icons/close';
 
 @Component({
     selector: 'ui-drawer',
     standalone: true,
-    imports: [CommonModule, Dialog, Button, IconClose],
+    imports: [CommonModule, UIDialog, UIButton, IconClose],
     templateUrl: './drawer.html',
     styleUrls: ['./drawer.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Drawer implements OnDestroy {
+export class UIDrawer implements OnDestroy {
     /** Drawer header. */
     @Input() header = '';
 

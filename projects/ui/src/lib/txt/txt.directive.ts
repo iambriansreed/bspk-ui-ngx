@@ -34,7 +34,7 @@ export type TxtVariant =
         '[style.font]': 'font()',
     },
 })
-export class TxtDirective {
+export class UITxtDirective {
     readonly variant = input<TxtVariant | ''>('body-base', { alias: 'txt' });
     readonly font = computed(() => `var(--${this.variant() || 'body-base'})`);
 }

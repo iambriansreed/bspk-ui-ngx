@@ -24,13 +24,13 @@ type ComponentMeta = {
 // GENERATE COMPONENT META
 
 const componentMeta: ComponentMeta[] = [
-    {
-        slug: 'icon',
-        name: 'Icon',
-        type: 'component',
-        classContent: '',
-        template: '<ui-icon name="add"></ui-icon>',
-    },
+    // {
+    //     slug: 'icon',
+    //     name: 'Icon',
+    //     type: 'component',
+    //     classContent: '',
+    //     template: '<ui-icon name="add"></ui-icon>',
+    // },
 ];
 
 const EXAMPLES_DIR = 'projects/demo/examples';
@@ -40,7 +40,7 @@ fs.readdirSync(EXAMPLES_DIR).forEach((file) => {
     const content = fs.readFileSync(`${EXAMPLES_DIR}/${file}`).toString().trim();
     componentMeta.push({
         slug,
-        name: slugToName(slug),
+        name: `UI${slugToName(slug)}`,
         ...parseHtml(content),
     });
 });
@@ -69,7 +69,7 @@ componentMeta.forEach(({ name, slug, type, classContent, template }) => {
 
     const componentImports = Array.from(template.matchAll(/<ui-([a-z0-9-]+)( [^>]*)?>/g))
         .flatMap((m) => m[1])
-        .map((slug) => slugToName(slug));
+        .map((slug) => `UI${slugToName(slug)}`);
 
     const icons = Array.from(template.matchAll(/<icon-([a-z0-9-]+)( [^>]*)?>/g))
         .flatMap((m) => m[1])
@@ -107,7 +107,10 @@ fs.writeFileSync(
   { title: 'Components', section: true },
   ${componentMeta
       .filter(({ slug }) => slug !== 'icon')
-      .map(({ name, slug }) => `{ path: '${slug}', component: ${name}RouteComponent, title: '${name}' },`)
+      .map(
+          ({ name, slug }) =>
+              `{ path: '${slug}', component: ${name}RouteComponent, title: '${name.replace(/^UI/, '')}' },`,
+      )
       .join('\n  ')}
 ];`,
     ].join('\n'),

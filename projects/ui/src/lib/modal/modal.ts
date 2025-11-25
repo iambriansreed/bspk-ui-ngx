@@ -14,20 +14,20 @@ import {
 } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
 import { IconClose } from '../icons/close';
-import { Dialog } from '../dialog/dialog';
-import { Button } from '../button/button';
+import { UIDialog } from '../dialog/dialog';
+import { UIButton } from '../button/button';
 
 export type ModalCallToAction = { label: string; onClick?: () => void; destructive?: boolean };
 
 @Component({
     selector: 'ui-modal',
     standalone: true,
-    imports: [CommonModule, PortalModule, IconClose, Dialog, Button],
+    imports: [CommonModule, PortalModule, IconClose, UIDialog, UIButton],
     templateUrl: './modal.html',
     styleUrls: ['./modal.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Modal implements OnChanges, OnDestroy {
+export class UIModal implements OnChanges, OnDestroy {
     /**
      * Modal header.
      *

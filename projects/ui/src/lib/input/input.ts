@@ -1,4 +1,4 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation, Input as InputAngular } from '@angular/core';
 
 import { provideNgxMask } from 'ngx-mask';
 import { provideValidator, provideValueAccessor, TextInputControlValueAccessor, randomString } from '../../utils';
@@ -8,7 +8,7 @@ import { provideValidator, provideValueAccessor, TextInputControlValueAccessor, 
     imports: [],
     templateUrl: './input.html',
     styleUrl: './input.scss',
-    providers: [provideValueAccessor(Input), provideValidator(Input), provideNgxMask()],
+    providers: [provideValueAccessor(UIInput), provideValidator(UIInput), provideNgxMask()],
     host: {
         'data-bspk': 'input',
         '[attr.data-size]': 'size()',
@@ -16,6 +16,8 @@ import { provideValidator, provideValueAccessor, TextInputControlValueAccessor, 
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class Input extends TextInputControlValueAccessor {
+export class UIInput extends TextInputControlValueAccessor {
     readonly controlId = input(randomString());
+
+    @InputAngular() showClearButton?: boolean = true;
 }

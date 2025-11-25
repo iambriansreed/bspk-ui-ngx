@@ -24,7 +24,7 @@ export type ColorVariant =
     styleUrls: ['./tag.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Tag {
+export class UITag {
     /**
      * The label of the tag.
      *

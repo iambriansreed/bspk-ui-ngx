@@ -9,7 +9,7 @@ import { IconRegistry } from './icon-registry.service';
     styles: 'ui-icon { display: contents; }',
     encapsulation: ViewEncapsulation.None,
 })
-export class Icon {
+export class UIIcon {
     /** @see https://bspk.anywhere.re/icons */
     name = input.required<string>();
     @Input() width?: string;

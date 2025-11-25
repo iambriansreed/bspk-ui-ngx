@@ -1,17 +1,17 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Chip, ChipProps } from '../chip/chip';
+import { UIChip, ChipProps } from '../chip/chip';
 
 export type Overflow = 'wrap' | 'scroll';
 
 @Component({
     selector: 'ui-chip-group',
     standalone: true,
-    imports: [Chip],
+    imports: [UIChip],
     templateUrl: './chip-group.html',
     styleUrl: './chip-group.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class ChipGroup {
+export class UIChipGroup {
     /** To allow chips to scroll. If set to false chips will wrap. */
     @Input() overflow: Overflow = 'wrap';
 

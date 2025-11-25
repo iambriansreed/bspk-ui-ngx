@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Icon } from '../icon';
-import { Badge, BadgeProps } from '../badge';
+import { UIIcon } from '../icon';
+import { BadgeProps, UIBadge } from '../badge';
 
 export type ChipProps = {
     disabled?: boolean;
@@ -20,7 +20,7 @@ export type ChipProps = {
  *     import { Chip } from '@bspk/ui/Chip';
  *
  *     <Chip label="Label" click={() => sendSnackbar('Chip clicked!')}>
- *         Example Chip
+ *     Example Chip
  *     </Chip>;
  *
  * @name Chip
@@ -29,11 +29,11 @@ export type ChipProps = {
 @Component({
     selector: 'ui-chip',
     standalone: true,
-    imports: [Badge, Icon],
+    imports: [UIBadge, UIIcon],
     templateUrl: './chip.html',
     styleUrls: ['./chip.scss'],
 })
-export class Chip {
+export class UIChip {
     /**
      * Is the chip disabled.
      *

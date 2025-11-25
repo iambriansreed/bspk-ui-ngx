@@ -21,7 +21,7 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
     styleUrl: './radio.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class Radio {
+export class UIRadio {
     /**
      * The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control.
      *

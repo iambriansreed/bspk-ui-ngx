@@ -67,7 +67,7 @@ export interface AccordionSection {
     styleUrls: ['./accordion.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class Accordion implements OnChanges {
+export class UIAccordion implements OnChanges {
     /**
      * Array of accordion sections
      *

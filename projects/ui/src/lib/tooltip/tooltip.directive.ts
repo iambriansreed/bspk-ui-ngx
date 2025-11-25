@@ -1,7 +1,7 @@
 import { ComponentRef, Directive, ElementRef, HostListener, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Tooltip } from './tooltip';
+import { UITooltip } from './tooltip';
 
 export type TooltipProps = {
     /** The tooltip content. */
@@ -23,12 +23,12 @@ export type TooltipProps = {
 };
 
 @Directive({ selector: '[tooltip]' })
-export class TooltipDirective implements OnDestroy {
+export class UITooltipDirective implements OnDestroy {
     /** Accepts a string (tooltip label) or a config object { label, placement, showTail, disabled } */
     @Input('tooltip') tooltip: TooltipProps | string = '';
 
     private overlayRef?: OverlayRef;
-    private attached?: ComponentRef<Tooltip>;
+    private attached?: ComponentRef<UITooltip>;
     private posSub: any;
 
     constructor(
@@ -87,7 +87,7 @@ export class TooltipDirective implements OnDestroy {
         const cfg = this.normalizedConfig();
         if (cfg.disabled) return;
         this.createOverlayForPlacement(cfg.placement);
-        const tooltipRef: ComponentRef<Tooltip> | undefined = this.overlayRef?.attach(new ComponentPortal(Tooltip));
+        const tooltipRef: ComponentRef<UITooltip> | undefined = this.overlayRef?.attach(new ComponentPortal(UITooltip));
 
         if (tooltipRef) {
             this.attached = tooltipRef;
