@@ -8,6 +8,8 @@ const iconDir = path.join(process.cwd(), 'projects/ui/src/lib/icon');
 // Find all .ts files (icon components) in the icons directory
 const iconFiles = fs.readdirSync(iconsDir).filter(file => file.endsWith('.ts'));
 
+const iconFileNames = iconFiles.map(file => file.replace(/\.ts$/, ''));
+
 function toPascalCase(str: string) {
     return str
         .replace(/(^\w|-\w)/g, m => m.replace(/-/, '').toUpperCase())
