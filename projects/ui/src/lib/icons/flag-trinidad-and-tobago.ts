@@ -1,27 +1,9 @@
+
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'icon-flag-trinidad-and-tobago',
-    template: `<svg
-        [attr.width]="width"
-        data-bspk-name="FlagTrinidadAndTobago"
-        data-type="country"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none">
-        <g clip-path="url(#SvgFlagTrinidadAndTobago__a)">
-            <path d="M1.5 5.00024H22.5V19H1.5V5.00024Z" fill="#D80027" />
-            <path
-                d="M1.74878 5.00024L10.2784 13.7217L15.6754 19H22.2512L13.7215 10.2786L8.32453 5.00024H1.74878Z"
-                fill="white" />
-            <path d="M3.27863 5.00024L17.2783 19H20.7214L6.72173 5.00024H3.27863Z" fill="black" />
-        </g>
-        <defs>
-            <clipPath id="SvgFlagTrinidadAndTobago__a">
-                <rect width="21" height="14" fill="white" transform="translate(1.5 5)" />
-            </clipPath>
-        </defs>
-    </svg>`,
+    template: `<svg [attr.width]="width" data-bspk-name="FlagTrinidadAndTobago" data-type="country" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><g clip-path="url(#SvgFlagTrinidadAndTobago__a)"><path d="M1.5 5.00024H22.5V19H1.5V5.00024Z" fill="#D80027"/><path d="M1.74878 5.00024L10.2784 13.7217L15.6754 19H22.2512L13.7215 10.2786L8.32453 5.00024H1.74878Z" fill="white"/><path d="M3.27863 5.00024L17.2783 19H20.7214L6.72173 5.00024H3.27863Z" fill="black"/></g><defs><clipPath id="SvgFlagTrinidadAndTobago__a"><rect width="21" height="14" fill="white" transform="translate(1.5 5)"/></clipPath></defs></svg>`,
     styles: ['icon-flag-trinidad-and-tobago { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })

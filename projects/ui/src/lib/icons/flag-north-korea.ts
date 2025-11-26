@@ -1,32 +1,9 @@
+
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'icon-flag-north-korea',
-    template: `<svg
-        [attr.width]="width"
-        data-bspk-name="FlagNorthKorea"
-        data-type="country"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none">
-        <g clip-path="url(#SvgFlagNorthKorea__a)">
-            <path d="M1.5 5H22.5V19.0002H1.5V5Z" fill="#91DC5A" />
-            <path d="M1.5 5H22.5V19.0002H1.5V5Z" fill="white" />
-            <path d="M1.5 5H22.5V7.3456H1.5V5ZM1.5 16.6546H22.5V18.9997H1.5V16.6546Z" fill="#0052B4" />
-            <path d="M1.5 8.27637H22.5V15.7241H1.5V8.27637Z" fill="#D80027" />
-            <path
-                d="M9.30651 14.6932C10.794 14.6932 11.9999 13.4873 11.9999 11.9998C11.9999 10.5123 10.794 9.3064 9.30651 9.3064C7.81898 9.3064 6.6131 10.5123 6.6131 11.9998C6.6131 13.4873 7.81898 14.6932 9.30651 14.6932Z"
-                fill="white" />
-            <path
-                d="M9.30659 9.30664L9.91091 11.1665H11.8697L10.2844 12.3161L10.8935 14.1816L9.30659 13.0266L7.72211 14.1794L8.32873 12.3161L6.74487 11.1665H8.70222L9.30659 9.30664Z"
-                fill="#D80027" />
-        </g>
-        <defs>
-            <clipPath id="SvgFlagNorthKorea__a">
-                <rect width="21" height="14" fill="white" transform="translate(1.5 5)" />
-            </clipPath>
-        </defs>
-    </svg>`,
+    template: `<svg [attr.width]="width" data-bspk-name="FlagNorthKorea" data-type="country" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><g clip-path="url(#SvgFlagNorthKorea__a)"><path d="M1.5 5H22.5V19.0002H1.5V5Z" fill="#91DC5A"/><path d="M1.5 5H22.5V19.0002H1.5V5Z" fill="white"/><path d="M1.5 5H22.5V7.3456H1.5V5ZM1.5 16.6546H22.5V18.9997H1.5V16.6546Z" fill="#0052B4"/><path d="M1.5 8.27637H22.5V15.7241H1.5V8.27637Z" fill="#D80027"/><path d="M9.30651 14.6932C10.794 14.6932 11.9999 13.4873 11.9999 11.9998C11.9999 10.5123 10.794 9.3064 9.30651 9.3064C7.81898 9.3064 6.6131 10.5123 6.6131 11.9998C6.6131 13.4873 7.81898 14.6932 9.30651 14.6932Z" fill="white"/><path d="M9.30659 9.30664L9.91091 11.1665H11.8697L10.2844 12.3161L10.8935 14.1816L9.30659 13.0266L7.72211 14.1794L8.32873 12.3161L6.74487 11.1665H8.70222L9.30659 9.30664Z" fill="#D80027"/></g><defs><clipPath id="SvgFlagNorthKorea__a"><rect width="21" height="14" fill="white" transform="translate(1.5 5)"/></clipPath></defs></svg>`,
     styles: ['icon-flag-north-korea { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })

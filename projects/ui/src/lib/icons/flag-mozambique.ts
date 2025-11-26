@@ -1,30 +1,9 @@
+
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'icon-flag-mozambique',
-    template: `<svg
-        [attr.width]="width"
-        data-bspk-name="FlagMozambique"
-        data-type="country"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none">
-        <g clip-path="url(#SvgFlagMozambique__a)">
-            <path d="M1.5 5H22.5V19H1.5V5Z" fill="white" />
-            <path d="M1.5 14.7427H22.5V19H1.5V14.7427Z" fill="#F4D900" />
-            <path d="M1.5 5H22.5V9.25731H1.5V5Z" fill="#006D66" />
-            <path d="M1.5 9.87134H22.5V14.1286H1.5V9.87134Z" fill="black" />
-            <path d="M11.9795 11.9867L1.5 18.9729V5L11.9795 11.9867Z" fill="#CB0F31" />
-            <path
-                d="M4.91721 9.49463L5.53562 11.3981H7.53713L5.91796 12.5745L6.53637 14.478L4.91721 13.3016L3.29799 14.478L3.91653 12.5745L2.29736 11.3981H4.29879L4.91721 9.49463Z"
-                fill="#F4D900" />
-        </g>
-        <defs>
-            <clipPath id="SvgFlagMozambique__a">
-                <rect width="21" height="14" fill="white" transform="translate(1.5 5)" />
-            </clipPath>
-        </defs>
-    </svg>`,
+    template: `<svg [attr.width]="width" data-bspk-name="FlagMozambique" data-type="country" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><g clip-path="url(#SvgFlagMozambique__a)"><path d="M1.5 5H22.5V19H1.5V5Z" fill="white"/><path d="M1.5 14.7427H22.5V19H1.5V14.7427Z" fill="#F4D900"/><path d="M1.5 5H22.5V9.25731H1.5V5Z" fill="#006D66"/><path d="M1.5 9.87134H22.5V14.1286H1.5V9.87134Z" fill="black"/><path d="M11.9795 11.9867L1.5 18.9729V5L11.9795 11.9867Z" fill="#CB0F31"/><path d="M4.91721 9.49463L5.53562 11.3981H7.53713L5.91796 12.5745L6.53637 14.478L4.91721 13.3016L3.29799 14.478L3.91653 12.5745L2.29736 11.3981H4.29879L4.91721 9.49463Z" fill="#F4D900"/></g><defs><clipPath id="SvgFlagMozambique__a"><rect width="21" height="14" fill="white" transform="translate(1.5 5)"/></clipPath></defs></svg>`,
     styles: ['icon-flag-mozambique { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })

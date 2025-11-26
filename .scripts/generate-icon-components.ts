@@ -26,6 +26,9 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Add this line:
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 const iconsDir = path.join(__dirname, '../node_modules/@bspk/icons');
 
 // get list of svg files from the @bspk/icons package
