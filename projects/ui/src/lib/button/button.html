@@ -19,10 +19,10 @@
     (mouseleave)="handleMouseLeave($event)">
     @if (!label) {
     <ng-content></ng-content>
-    } @else { @if (icon) {
+    } @else { @if (icon) { @if (typeof icon === 'string') {
     <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
         <ui-icon [name]="icon"></ui-icon>
-    </span>
+    </span>} @else {<span [attr.aria-hidden]="true" [attr.data-button-icon]="true"><ng-container *ngComponentOutlet="icon" ></ng-container></span>}
     } @if (shouldShowLabel) {
     <span [attr.data-button-label]="true">
         {{ label }}

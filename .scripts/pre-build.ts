@@ -85,12 +85,24 @@ componentMeta.forEach(({ name, slug, type, classContent, template }) => {
     // look for used components
     const imports = [...componentImports, ...icons.map(({ name }) => `Icon${name}`)];
 
+    const iconComponentMatches = Array.from(template.matchAll(/\[icon\]="([\w]+)"/g))
+    .map(m => m[1]);
+
+// Add imports for detected icon components
+iconComponentMatches.forEach(iconComp => {
+    fileImports.push(
+        `import { ${iconComp} } from '../../../../../projects/ui/src/lib/icons/${iconComp.replace(/^Icon/, '').replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '')}';`
+    );
+});
+
     if (slug !== 'icon')
         componentsContent.push(
             type === 'directive'
                 ? directiveTemplate({ name, slug, template, imports })
                 : componentTemplate({ name, slug, template, classContent, imports }),
         );
+
+    
 });
 
 fs.writeFileSync(
@@ -144,6 +156,8 @@ type TemplateParams = {
 
 function componentTemplate({ name, slug, template, classContent, imports }: TemplateParams) {
     const hasHandleClick = template.includes('handleClick');
+    const iconComponentMatches = Array.from(template.matchAll(/\[icon\]="([\w]+)"/g)).map(m => m[1]);
+    const iconPublicProps = iconComponentMatches.map(iconComp => `public ${iconComp} = ${iconComp};`).join('\n  ');
 
     return `
 @Component({
@@ -159,7 +173,8 @@ function componentTemplate({ name, slug, template, classContent, imports }: Temp
     \`,
   ],
 })
-export class ${name}RouteComponent { ${
+export class ${name}RouteComponent {${iconPublicProps}
+${
         hasHandleClick
             ? `  handleClick() {
     console.log('${name} clicked!');

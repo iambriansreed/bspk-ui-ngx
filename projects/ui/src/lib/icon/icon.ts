@@ -1,6 +1,6 @@
 import { Component, effect, ElementRef, input, ViewEncapsulation, inject, Input } from '@angular/core';
 
-import { ICON_REGISTRY } from './icon-registry';
+import { IconRegistry } from './icon-registry.service';
 
 @Component({
     selector: 'ui-icon',
@@ -16,20 +16,18 @@ export class UIIcon {
 
     constructor() {
         const elementRef = inject(ElementRef);
-        const iconRegistry = ICON_REGISTRY;
+        const iconRegistry = inject(IconRegistry);
 
-        effect(() => {
-            // option 1
-            // const name = this.name() as keyof typeof ICON_REGISTRY;
-            // const svg = ICON_REGISTRY[name];
+        effect(async (onCleanup) => {
+            let canceled = false;
+            onCleanup(() => {
+                canceled = true;
+            });
+            const res = await iconRegistry.getIcon(this.name());
+            if (canceled) return;
 
-            // option 2
-            const name = this.name();
-            const svg = ICON_REGISTRY[name as keyof typeof ICON_REGISTRY] ?? '';
-            elementRef.nativeElement.innerHTML = svg || '';
-            if (this.width && elementRef.nativeElement.children[0]) {
-                elementRef.nativeElement.children[0].setAttribute('width', this.width);
-            }
+            elementRef.nativeElement.innerHTML = res;
+            if (this.width) elementRef.nativeElement.children[0]?.setAttribute('width', this.width);
         });
     }
 }
