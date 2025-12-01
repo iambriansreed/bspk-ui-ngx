@@ -6,16 +6,18 @@
 
 <input
     data-main-input
-    [attr.aria-invalid]="invalid()"
-    [attr.aria-label]="label()"
-    [attr.data-invalid]="invalid()"
-    [disabled]="disabled() || disabledState()"
-    [id]="controlId()"
-    [placeholder]="placeholder() || ''"
-    [readOnly]="readOnly() || null"
-    [required]="required() || null"
-    [type]="type()"
-    [value]="value()"
+    [attr.aria-label]="inputAriaLabel"
+    [attr.aria-invalid]="inputInvalid"
+    [attr.data-invalid]="inputInvalid"
+    [disabled]="inputDisabled"
+    [id]="inputId"
+    [attr.placeholder]="inputPlaceholder"
+    [attr.name]="inputName"
+    [attr.autocomplete]="inputAutocomplete"
+    [readOnly]="inputReadOnly"
+    [required]="inputRequired"
+    [type]="inputType"
+    [value]="inputValue"
     (blur)="handleBlur($event)"
     (input)="handleInput($event)" />
 
@@ -24,3 +26,13 @@
         <span data-trailing>{{ trailing() }}</span>
     }
 </ng-content>
+
+@if (getShowClearButton()) {
+    <ui-button
+        label="Clear input"
+        variant="tertiary"
+        [size]="buttonSize"
+        (click)="clearInput()"
+        icon="Cancel"
+        [iconOnly]="true" />
+}

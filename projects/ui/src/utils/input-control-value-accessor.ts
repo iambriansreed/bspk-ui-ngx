@@ -21,7 +21,9 @@ import { Mask } from './mask';
 
 export const textInputSizes = ['small', 'medium', 'large'];
 export type TextInputSize = (typeof textInputSizes)[number];
-export type TextInputType = 'number' | 'text';
+export type TextInputType = 'number' | 'text' | 'password';
+export const autoCompleteOptions = ['on', 'off'];
+export type AutoCompleteOptions = (typeof autoCompleteOptions)[number];
 
 @Directive()
 export class TextInputControlValueAccessor implements ControlValueAccessor, Validator, OnInit, DoCheck {
@@ -33,7 +35,11 @@ export class TextInputControlValueAccessor implements ControlValueAccessor, Vali
     readonly invalid = input(false, { transform: booleanAttribute });
     readonly disabled = input(false, { transform: booleanAttribute });
     readonly readOnly = input(false, { transform: booleanAttribute });
-    readonly placeholder = input<string>();
+    readonly placeholder = input<string | undefined>(undefined);
+    readonly name = input<string | undefined>(undefined);
+    readonly autoComplete = input<AutoCompleteOptions>('off');
+    readonly ariaLabel = input<string | undefined>(undefined);
+    readonly id = input<string | undefined>(undefined);
     readonly leading = input<string>();
     readonly trailing = input<string>();
     readonly mask = input<Mask>();
