@@ -22,7 +22,6 @@
     } @else { @if (icon) {
     <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
         <ui-icon [icon]="icon"></ui-icon>
-        <ng-container *ngComponentOutlet="icon" ></ng-container>
     </span>
     } @if (shouldShowLabel) {
     <span [attr.data-button-label]="true">

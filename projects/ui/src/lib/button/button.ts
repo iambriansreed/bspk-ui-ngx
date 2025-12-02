@@ -14,8 +14,6 @@ import {
 
 import { BspkIcon } from '../../types/bspk-icon';
 
-import { IconWarningFill } from '../icons/warning-fill';
-
 import { CommonModule } from '@angular/common';
 import { UIIcon } from '../icon';
 import { UITooltipDirective } from '../tooltip';
@@ -129,8 +127,6 @@ export class UIButton implements OnInit {
     @Input() class?: string;
     /** Custom content template to override default button content. Not recommended - use for special cases only. */
     @Input() customContent?: TemplateRef<any>;
-
-    public IconWarningFill = IconWarningFill;
 
     /** Event emitted when the button is clicked. */
     @Output() onClick = new EventEmitter<MouseEvent>();
