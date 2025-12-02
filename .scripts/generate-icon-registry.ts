@@ -1,3 +1,9 @@
+/** generates icon registry used in the UI project.
+ *  This registry maps icon names to their SVG string representations.
+ * 
+ * $ npx tsx .scripts/generate-icon-component-type.ts 
+ */
+
 import * as fs from 'fs';
 import * as path from 'path';
 

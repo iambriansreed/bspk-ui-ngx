@@ -12,7 +12,7 @@ import {
     Type,
 } from '@angular/core';
 
-import { BspkIcon } from '../../types/common';
+import { BspkIcon } from '../../types/bspk-icon';
 
 import { IconWarningFill } from '../icons/warning-fill';
 
@@ -23,7 +23,7 @@ import { UITooltipDirective } from '../tooltip';
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
 export type ButtonWidth = 'fill' | 'hug';
-export type IconType = string | Type<any>;
+export type IconType = string | BspkIcon;
 
 /**
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.
