@@ -53,6 +53,17 @@ const componentsContent: string[] = [];
 
 const fileImports = [`import { Component } from '@angular/core';`];
 
+// Find all icon usages for [icon], [leadingIcon], [trailingIcon], leadingIcon:, trailingIcon:
+function findIconComponentMatches(template: string): string[] {
+    return [
+        ...Array.from(template.matchAll(/\[icon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/\[leadingIcon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/\[trailingIcon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/leadingIcon:\s*([\w]+)/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/trailingIcon:\s*([\w]+)/g)).map(m => m[1]),
+    ];
+}
+
 componentMeta.forEach(({ name, slug, type, classContent, template }) => {
     if (type === 'component') {
         fileImports.push(`import { ${name} } from '../../../../../projects/ui/src/lib/${slug}';`);
@@ -86,13 +97,7 @@ componentMeta.forEach(({ name, slug, type, classContent, template }) => {
     const imports = [...componentImports, ...icons.map(({ name }) => `Icon${name}`)];
 
     // Find all icon usages for [icon], [leadingIcon], [trailingIcon]
-const iconComponentMatches = [
-    ...Array.from(template.matchAll(/\[icon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/\[leadingIcon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/\[trailingIcon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/leadingIcon:\s*([\w]+)/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/trailingIcon:\s*([\w]+)/g)).map(m => m[1]),
-];
+    const iconComponentMatches = findIconComponentMatches(template);
 
 // Add imports for detected icon components
 iconComponentMatches.forEach(iconComp => {
@@ -163,13 +168,7 @@ type TemplateParams = {
 function componentTemplate({ name, slug, template, classContent, imports }: TemplateParams) {
     const hasHandleClick = template.includes('handleClick');
     // Find all icon usages for [icon], [leadingIcon], [trailingIcon]
-const iconComponentMatches = [
-    ...Array.from(template.matchAll(/\[icon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/\[leadingIcon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/\[trailingIcon\]="([\w]+)"/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/leadingIcon:\s*([\w]+)/g)).map(m => m[1]),
-    ...Array.from(template.matchAll(/trailingIcon:\s*([\w]+)/g)).map(m => m[1]),
-];
+    const iconComponentMatches = findIconComponentMatches(template);
 
     // Get existing public properties from classContent
     const existingProps = new Set<string>();
