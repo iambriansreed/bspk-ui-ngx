@@ -111,10 +111,11 @@ fs.writeFileSync(
         .map((slug) => `export * from './${slug}';`)
         .join('\n'),
 );
+execSync('npx prettier --write "projects/ui/src/lib/icons/*.ts"');
 
 // Write the BspkIcon type file (union of all icon component classes)
 fs.writeFileSync(outputPath, lines.join('\n'));
+execSync('npx prettier --write "projects/ui/src/types/*.ts"');
 console.log('Generated BspkIcon type at', outputPath);
 
-execSync('npx prettier --write "projects/ui/src/lib/icons/*.ts"');
 console.log('Icon components and type generated successfully.');
