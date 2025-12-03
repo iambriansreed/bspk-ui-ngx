@@ -4,12 +4,12 @@
 <div style="width: 500px">
     <ui-chip-group
         [items]="[
-            { label: 'Chip 1' },
-            { label: 'Chip 2', trailingIcon: IconAdd },
+            { label: 'Chip 1', leadingIcon: IconIcecream },
+            { label: 'Chip 2', leadingIcon: IconAccessible },
             { label: 'Chip 3', leadingIcon: IconAdd, trailingBadge: { count: 2 } },
-            { label: 'Chip 4, flat = true' },
-            { label: 'Chip 5 selected = true', selected: true },
-            { label: 'Chip 6 disabled = true', disabled: true },
+            { label: 'Chip 4', leadingIcon: IconGarage },
+            { label: 'Chip 5 selected = true', leadingIcon: IconBakeryDining, selected: true },
+            { label: 'Chip 6 disabled = true', leadingIcon: IconPets, disabled: true },
         ]" />
 </div>
 
@@ -18,12 +18,12 @@
     <ui-chip-group
         overflow="scroll"
         [items]="[
-            { label: 'Chip 1' },
+            { label: 'Chip 1', trailingIcon: IconRemove },
             { label: 'Chip 2', trailingIcon: IconAdd },
-            { label: 'Chip 3', leadingIcon: IconAdd, trailingBadge: { count: 2 } },
-            { label: 'Chip 4, flat = true' },
-            { label: 'Chip 5 selected = true', selected: true },
-            { label: 'Chip 6 disabled = true', disabled: true },
+            { label: 'Chip 3', trailingBadge: { count: 2 } },
+            { label: 'Chip 4', trailingIcon: IconReplay },
+            { label: 'Chip 5 selected = true', trailingIcon: IconPlayPause, selected: true },
+            { label: 'Chip 6 disabled = true', trailingIcon: IconBlock, disabled: true },
         ]">
     </ui-chip-group>
 </div>
@@ -33,12 +33,12 @@
     <ui-chip-group
         overflow="scroll"
         [items]="[
-            { label: 'Chip 1', flat: true },
-            { label: 'Chip 2', trailingIcon: IconAdd, flat: true },
-            { label: 'Chip 3', leadingIcon: IconAdd, trailingBadge: { count: 2 }, flat: true },
-            { label: 'Chip 4, flat = true', flat: true },
-            { label: 'Chip 5 selected = true', selected: true, flat: true },
-            { label: 'Chip 6 disabled = true', disabled: true, flat: true },
+            { label: 'Chip 1', leadingIcon: IconModeCool, flat: true },
+            { label: 'Chip 2', leadingIcon: IconLightMode, flat: true },
+            { label: 'Chip 3', leadingIcon: IconCloud, trailingBadge: { count: 2 }, flat: true },
+            { label: 'Chip 4', leadingIcon: IconAdd, flat: true },
+            { label: 'Chip 5 selected = true', leadingIcon: IconDarkMode, selected: true, flat: true },
+            { label: 'Chip 6 disabled = true', leadingIcon: IconEgg, disabled: true, flat: true },
         ]">
     </ui-chip-group>
 </div>
