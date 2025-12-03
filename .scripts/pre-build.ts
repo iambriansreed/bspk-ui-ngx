@@ -53,6 +53,17 @@ const componentsContent: string[] = [];
 
 const fileImports = [`import { Component } from '@angular/core';`];
 
+// Find all icon usages for [icon], [leadingIcon], [trailingIcon], leadingIcon:, trailingIcon:
+function findIconComponentMatches(template: string): string[] {
+    return [
+        ...Array.from(template.matchAll(/\[icon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/\[leadingIcon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/\[trailingIcon\]="([\w]+)"/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/leadingIcon:\s*([\w]+)/g)).map(m => m[1]),
+        ...Array.from(template.matchAll(/trailingIcon:\s*([\w]+)/g)).map(m => m[1]),
+    ];
+}
+
 componentMeta.forEach(({ name, slug, type, classContent, template }) => {
     if (type === 'component') {
         fileImports.push(`import { ${name} } from '../../../../../projects/ui/src/lib/${slug}';`);
@@ -85,12 +96,24 @@ componentMeta.forEach(({ name, slug, type, classContent, template }) => {
     // look for used components
     const imports = [...componentImports, ...icons.map(({ name }) => `Icon${name}`)];
 
-    if (slug !== 'icon')
+    // Find all icon usages for [icon], [leadingIcon], [trailingIcon]
+    const iconComponentMatches = findIconComponentMatches(template);
+
+// Add imports for detected icon components
+iconComponentMatches.forEach(iconComp => {
+    fileImports.push(
+        `import { ${iconComp} } from '../../../../../projects/ui/src/lib/icons/${iconComp.replace(/^Icon/, '').replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '')}';`
+    );
+});
+
+    if (slug)
         componentsContent.push(
             type === 'directive'
                 ? directiveTemplate({ name, slug, template, imports })
                 : componentTemplate({ name, slug, template, classContent, imports }),
         );
+
+    
 });
 
 fs.writeFileSync(
@@ -106,7 +129,6 @@ fs.writeFileSync(
         `export const componentItems: NavRoute[] = [
   { title: 'Components', section: true },
   ${componentMeta
-      .filter(({ slug }) => slug !== 'icon')
       .map(
           ({ name, slug }) =>
               `{ path: '${slug}', component: ${name}RouteComponent, title: '${name.replace(/^UI/, '')}' },`,
@@ -144,6 +166,22 @@ type TemplateParams = {
 
 function componentTemplate({ name, slug, template, classContent, imports }: TemplateParams) {
     const hasHandleClick = template.includes('handleClick');
+    // Find all icon usages for [icon], [leadingIcon], [trailingIcon]
+    const iconComponentMatches = findIconComponentMatches(template);
+
+    // Get existing public properties from classContent
+    const existingProps = new Set<string>();
+    if (classContent) {
+        const matches = Array.from(classContent.matchAll(/public\s+(\w+)\s*=/g));
+        matches.forEach(m => existingProps.add(m[1]));
+    }
+
+    // Only add public property if it doesn't already exist
+    const uniqueIconComponentMatches = Array.from(new Set(iconComponentMatches));
+const iconPublicProps = uniqueIconComponentMatches
+    .filter(iconComp => !existingProps.has(iconComp))
+    .map(iconComp => `public ${iconComp} = ${iconComp};`)
+    .join('\n  ');
 
     return `
 @Component({
@@ -159,7 +197,8 @@ function componentTemplate({ name, slug, template, classContent, imports }: Temp
     \`,
   ],
 })
-export class ${name}RouteComponent { ${
+export class ${name}RouteComponent {${iconPublicProps}
+${
         hasHandleClick
             ? `  handleClick() {
     console.log('${name} clicked!');

@@ -9,7 +9,10 @@ import {
     OnInit,
     ChangeDetectionStrategy,
     ViewEncapsulation,
+    Type,
 } from '@angular/core';
+
+import { BspkIcon } from '../../types/bspk-icon';
 
 import { CommonModule } from '@angular/common';
 import { UIIcon } from '../icon';
@@ -18,6 +21,7 @@ import { UITooltipDirective } from '../tooltip';
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
 export type ButtonWidth = 'fill' | 'hug';
+export type IconType = BspkIcon;
 
 /**
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.
@@ -59,7 +63,7 @@ export class UIButton implements OnInit {
      *
      * Should be a SVG from the BSPK icon library.
      */
-    @Input() icon?: string;
+    @Input() icon?: IconType;
 
     /**
      * When true the button label is hidden and only the icon is shown. When label isn't showing it is used in a tooltip

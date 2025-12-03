@@ -127,19 +127,15 @@ ui-button {
         &:not([disabled]) {
             [data-pseudo='hover'] > &,
             &:hover {
-                background: linear-gradient(
-                        var(--interactions-brand-hover-opacity),
-                        var(--interactions-brand-hover-opacity)
-                    ),
+                background:
+                    linear-gradient(var(--interactions-brand-hover-opacity), var(--interactions-brand-hover-opacity)),
                     linear-gradient(var(--primary-background), var(--primary-background));
             }
 
             [data-pseudo='active'] > &,
             &:active {
-                background: linear-gradient(
-                        var(--interactions-brand-press-opacity),
-                        var(--interactions-brand-press-opacity)
-                    ),
+                background:
+                    linear-gradient(var(--interactions-brand-press-opacity), var(--interactions-brand-press-opacity)),
                     linear-gradient(var(--primary-background), var(--primary-background));
             }
 

@@ -18,15 +18,18 @@
     (mouseover)="handleMouseOver($event)"
     (mouseleave)="handleMouseLeave($event)">
     @if (!label) {
-    <ng-content></ng-content>
-    } @else { @if (icon) {
-    <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
-        <ui-icon [name]="icon"></ui-icon>
-    </span>
-    } @if (shouldShowLabel) {
-    <span [attr.data-button-label]="true">
-        {{ label }}
-    </span>
-    } }
+        <ng-content></ng-content>
+    } @else {
+        @if (icon) {
+            <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
+                <ui-icon [icon]="icon"></ui-icon>
+            </span>
+        }
+        @if (shouldShowLabel) {
+            <span [attr.data-button-label]="true">
+                {{ label }}
+            </span>
+        }
+    }
     <span [attr.data-touch-target]="true"></span>
 </button>

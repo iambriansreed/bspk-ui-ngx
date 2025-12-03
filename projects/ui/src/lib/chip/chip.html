@@ -8,7 +8,7 @@
     (click)="handleOnClick($event)">
     @if (leadingIcon) {
         <span [attr.aria-hidden]="true" data-chip-icon>
-            <ui-icon [name]="leadingIcon"></ui-icon>
+            <ui-icon [icon]="leadingIcon"></ui-icon>
         </span>
     }
 
@@ -16,7 +16,7 @@
 
     @if (trailingIcon) {
         <span [attr.aria-hidden]="true" data-chip-icon>
-            <ui-icon [name]="trailingIcon"></ui-icon>
+            <ui-icon [icon]="trailingIcon"></ui-icon>
         </span>
     }
 

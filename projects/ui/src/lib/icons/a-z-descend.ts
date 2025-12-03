@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'icon-azdescend',
+    selector: 'icon-a-z-descend',
     template: `<svg
         [attr.width]="width"
         data-bspk-name="AZDescend"
@@ -21,7 +21,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             d="M17.0235 21.9999C16.9219 21.9999 16.8267 21.9839 16.7379 21.9519C16.649 21.9199 16.5665 21.8655 16.4903 21.7887L12.2251 17.4867C12.0855 17.3459 12.0156 17.1666 12.0156 16.949C12.0156 16.7313 12.0855 16.552 12.2251 16.4112C12.3774 16.2576 12.5583 16.184 12.7678 16.1904C12.9772 16.1968 13.1518 16.2704 13.2914 16.4112L16.2618 19.388L16.2199 2.76821C16.2199 2.55055 16.2929 2.3681 16.4389 2.22086C16.5849 2.07362 16.7658 2 16.9816 2C17.1974 2 17.3783 2.07362 17.5243 2.22086C17.6702 2.3681 17.7432 2.55055 17.7432 2.76821L17.7851 19.388L20.7365 16.4112C20.8889 16.2576 21.0697 16.1807 21.2792 16.1807C21.4887 16.1807 21.6695 16.2576 21.8219 16.4112C21.9615 16.5649 22.0313 16.7473 22.0313 16.9586C22.0313 17.1698 21.9615 17.3459 21.8219 17.4867L17.5566 21.7887C17.4805 21.8655 17.398 21.9199 17.3091 21.9519C17.2202 21.9839 17.125 21.9999 17.0235 21.9999Z"
             fill="currentColor" />
     </svg>`,
-    styles: ['icon-azdescend { display: contents; }'],
+    styles: ['icon-a-z-descend { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconAZDescend {

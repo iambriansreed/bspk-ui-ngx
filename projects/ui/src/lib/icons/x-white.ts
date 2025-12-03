@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'icon-xwhite',
+    selector: 'icon-x-white',
     template: `<svg
         [attr.width]="width"
         data-bspk-name="XWhite"
@@ -20,7 +20,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
             </clipPath>
         </defs>
     </svg>`,
-    styles: ['icon-xwhite { display: contents; }'],
+    styles: ['icon-x-white { display: contents; }'],
     encapsulation: ViewEncapsulation.None,
 })
 export class IconXWhite {

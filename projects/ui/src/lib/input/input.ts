@@ -1,5 +1,6 @@
 import { Component, input, Input, ViewEncapsulation } from '@angular/core';
 import { UIButton, ButtonSize } from '../button/button';
+import { IconCancel } from '../icons/cancel';
 import { provideNgxMask } from 'ngx-mask';
 import { provideValidator, provideValueAccessor, TextInputControlValueAccessor, randomString } from '../../utils';
 
@@ -24,6 +25,8 @@ export class UIInput extends TextInputControlValueAccessor {
      * @default true
      */
     @Input() showClearButton?: boolean = true;
+
+    public IconCancel = IconCancel;
 
     getShowClearButton(): boolean | null {
         return (

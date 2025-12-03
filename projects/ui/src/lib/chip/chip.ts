@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UIIcon } from '../icon';
+import { BspkIcon } from '../../types/bspk-icon';
 import { BadgeProps, UIBadge } from '../badge';
 
 export type ChipProps = {
@@ -7,8 +8,8 @@ export type ChipProps = {
     flat?: boolean;
     label: string;
     selected?: boolean;
-    leadingIcon?: string;
-    trailingIcon?: string;
+    leadingIcon?: BspkIcon;
+    trailingIcon?: BspkIcon;
     trailingBadge?: BadgeProps;
     click?: (event: Event) => void;
 };
@@ -70,7 +71,7 @@ export class UIChip {
      *
      * @type BspkIcon
      */
-    @Input() leadingIcon?: string;
+    @Input() leadingIcon?: BspkIcon;
 
     /**
      * The trailing icon of the chip.
@@ -80,7 +81,7 @@ export class UIChip {
      *
      * @type BspkIcon
      */
-    @Input() trailingIcon?: string;
+    @Input() trailingIcon?: BspkIcon;
 
     /**
      * The trailing Badge for use in the ChipFilter.

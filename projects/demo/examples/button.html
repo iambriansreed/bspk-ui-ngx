@@ -5,41 +5,41 @@
 <ui-button (click)="handleClick()" label="Default" />
 
 <h3>Primary</h3>
-<ui-button (click)="handleClick()" label="Example Label" size="large" variant="primary" icon="Add" />
+<ui-button (click)="handleClick()" label="Example Label" size="large" variant="primary" [icon]="IconGTranslate" />
 
 <h3>Secondary</h3>
-<ui-button (click)="handleClick()" label="Example Label" size="medium" variant="secondary" icon="Add" />
+<ui-button (click)="handleClick()" label="Example Label" size="medium" variant="secondary" [icon]="IconBrail" />
 
 <h3>Tertiary</h3>
-<ui-button (click)="handleClick()" label="Example Label" size="small" variant="tertiary" icon="Add" />
+<ui-button (click)="handleClick()" label="Example Label" size="small" variant="tertiary" [icon]="IconBarn" />
 
 <h3>Primary with Tooltip</h3>
-<ui-button (click)="handleClick()" label="Example Label" size="large" icon="Add" tooltip="Hello" />
+<ui-button (click)="handleClick()" label="Example Label" size="large" [icon]="IconCloud" tooltip="Hello" />
 
 <h3>Destructive with Tooltip</h3>
 <ui-button
     (click)="handleClick()"
     label="Destructive test"
-    icon="WarningFill"
+    [icon]="IconWarningFill"
     [destructive]="true"
     tooltip="Destructive" />
 
 <h3>Destructive iconOnly = true</h3>
 
-<ui-button (click)="handleClick()" label="Destructive test" icon="WarningFill" [iconOnly]="true" [destructive]="true" />
+<ui-button (click)="handleClick()" label="Destructive test" [icon]="IconWarningFill" [iconOnly]="true" [destructive]="true" />
 
 <h3>Disabled</h3>
-<ui-button (click)="handleClick()" label="Disabled test" icon="WarningFill" [disabled]="true" />
+<ui-button (click)="handleClick()" label="Disabled test" [icon]="IconWarningFill" [disabled]="true" />
 
 <h3>Disabled iconOnly = true</h3>
-<ui-button (click)="handleClick()" label="Destructive test" icon="WarningFill" [iconOnly]="true" [disabled]="true" />
+<ui-button (click)="handleClick()" label="Destructive test" [icon]="IconWarningFill" [iconOnly]="true" [disabled]="true" />
 
 <h3>Disabled & destructive = true</h3>
 <p>should visually see disabled and not destructive</p>
 <ui-button
     (click)="handleClick()"
     label="Disabled & Destructive Test"
-    icon="WarningFill"
+    [icon]="IconWarningFill"
     [disabled]="true"
     [destructive]="true" />
 
@@ -49,7 +49,7 @@
     (click)="handleClick()"
     label="Disabled & Destructive Test"
     variant="primary"
-    icon="WarningFill"
+    [icon]="IconWarningFill"
     [disabled]="true"
     [destructive]="true" />
 
@@ -59,7 +59,7 @@
     (click)="handleClick()"
     label="Disabled & Destructive Test"
     variant="secondary"
-    icon="WarningFill"
+    [icon]="IconWarningFill"
     [disabled]="true"
     [destructive]="true" />
 
@@ -69,14 +69,14 @@
     (click)="handleClick()"
     label="Disabled & Destructive Test"
     variant="tertiary"
-    icon="WarningFill"
+    [icon]="IconWarningFill"
     [disabled]="true"
     [destructive]="true" />
 
 <h3>width = fill</h3>
 <p>should visually see button fill the width of 500px parent width</p>
 <div style="width: 500px">
-    <ui-button (click)="handleClick()" label="Example Label" icon="Add" width="fill" />
+    <ui-button (click)="handleClick()" label="Example Label" [icon]="IconBox" width="fill" />
 </div>
 
 <h3>Custom Content</h3>
