@@ -1,13 +1,4 @@
-import {
-    Component,
-    effect,
-    ElementRef,
-    input,
-    ViewEncapsulation,
-    inject,
-    Input,
-    ViewContainerRef,
-} from '@angular/core';
+import { Component, effect, ViewEncapsulation, inject, Input, ViewContainerRef } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
 
 @Component({
@@ -23,16 +14,9 @@ export class UIIcon {
     @Input() width?: string;
 
     constructor() {
-        const elementRef = inject(ElementRef);
         const viewContainerRef = inject(ViewContainerRef);
 
         effect(async (onCleanup) => {
-            let canceled = false;
-            onCleanup(() => {
-                canceled = true;
-            });
-
-            // If icon is a component (BspkIcon), render it dynamically
             if (typeof this.icon === 'function') {
                 viewContainerRef.clear();
                 const ref = viewContainerRef.createComponent(this.icon);

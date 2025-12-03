@@ -129,7 +129,6 @@ fs.writeFileSync(
         `export const componentItems: NavRoute[] = [
   { title: 'Components', section: true },
   ${componentMeta
-    //   .filter(({ slug }) => slug !== 'icon')
       .map(
           ({ name, slug }) =>
               `{ path: '${slug}', component: ${name}RouteComponent, title: '${name.replace(/^UI/, '')}' },`,
