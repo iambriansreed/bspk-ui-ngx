@@ -58,6 +58,9 @@ export class UIButton implements OnInit {
      */
     @Input() label!: string;
 
+    /** Use only for custom buttons. The aria-label of the button for accessibility purposes. */
+    @Input() ariaLabel?: string;
+
     /**
      * The icon of the button.
      *

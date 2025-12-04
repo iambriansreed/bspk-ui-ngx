@@ -2,7 +2,7 @@
     [tooltip]="{ label: tooltipLabel, showTail: true }"
     #buttonElement
     [type]="type"
-    [attr.aria-label]="label"
+    [attr.aria-label]="ariaLabel || label"
     [attr.data-bspk]="'button'"
     [attr.data-bspk-owner]="owner || null"
     [attr.data-destructive]="destructive || null"
