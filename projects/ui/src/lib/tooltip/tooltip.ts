@@ -15,4 +15,16 @@ export class UITooltip {
      * @default true
      */
     @Input() showTail?: boolean = true;
+    /**
+     * The placement of the tooltip.
+     *
+     * @default top
+     */
+    @Input() placement: 'top' | 'bottom' | 'left' | 'right' = 'top';
+    /**
+     * Determines if the tooltip is disabled.
+     *
+     * @default false
+     */
+    @Input() disabled?: boolean = false;
 }
