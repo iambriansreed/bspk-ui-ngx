@@ -37,15 +37,15 @@
     Hover me for tooltip!
 </p>
 
-<h3>disabled: false</h3>
+<h3>disabled: true</h3>
 <p [tooltip]="{ label: 'If you see me, something is wrong', disabled: true }" style="width: fit-content">
-    Hover me and no tooltip should show.
+    Hover me, no tooltip should show.
 </p>
 
-<h3>label: ''</h3>
-<p [tooltip]="{ label: '', showTail: true, placement: 'bottom' }">Empty tooltip label (no tooltip should show)</p>
+<h3>label is empty string</h3>
+<p [tooltip]="{ label: '', showTail: true, placement: 'bottom' }">Empty tooltip label, no tooltip should show</p>
 
 <h3>label: undefined</h3>
 <p [tooltip]="{ label: undefined, showTail: true, placement: 'bottom' }">
-    Undefined tooltip label (no tooltip should show)
+    Undefined tooltip label, no tooltip should show
 </p>

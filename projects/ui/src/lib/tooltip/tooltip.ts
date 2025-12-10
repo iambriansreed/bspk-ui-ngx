@@ -27,4 +27,8 @@ export class UITooltip {
      * @default false
      */
     @Input() disabled?: boolean = false;
+
+    get hideTailAttr(): true | null {
+        return this.showTail ? null : true;
+    }
 }

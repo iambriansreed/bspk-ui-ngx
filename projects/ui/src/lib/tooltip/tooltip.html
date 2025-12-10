@@ -1,10 +1,6 @@
 @if (label && !disabled) {
     <div data-bspk="tooltip" role="tooltip" [attr.data-placement]="placement">
         <span data-text>{{ label }}</span>
-        <span
-            aria-hidden
-            data-arrow
-            [attr.data-placement]="placement"
-            [attr.data-hide-tail]="showTail ? null : true"></span>
+        <span aria-hidden data-arrow [attr.data-hide-tail]="hideTailAttr"></span>
     </div>
 }

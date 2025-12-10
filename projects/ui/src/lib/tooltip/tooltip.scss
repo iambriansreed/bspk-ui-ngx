@@ -73,8 +73,7 @@ ui-tooltip {
         }
     }
 
-    &[data-hide-tail] {
-        opacity: 0;
+    [data-arrow][data-hide-tail] {
         display: none;
     }
 }
