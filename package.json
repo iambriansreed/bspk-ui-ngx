@@ -16,8 +16,8 @@
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "dev": "npm run start",
         "prebuild": "npx tsx .scripts/pre-build.ts",
-        "gh-build": "npm run prebuild && ng build --project demo --configuration production && cp -r ./dist/browser/index.html ./dist/browser/404.html",
-        "pr": "npm run lint && npm run build:all && git push --set-upstream origin $(git symbolic-ref --short HEAD)  && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/main...$(git symbolic-ref --short HEAD)\""
+        "gh-build": "npm run lint && npm run build:all && npm run test && cp -r ./dist/browser/index.html ./dist/browser/404.html",
+        "pr": "npm run lint && npm run build:all && npm run test && git push --set-upstream origin $(git symbolic-ref --short HEAD)  && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/main...$(git symbolic-ref --short HEAD)\""
     },
     "private": true,
     "peerDependencies": {
