@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { UIPagination } from '../pagination';
 import { UIIcon } from '../icon';
-import { sendAriaLiveMessage } from '../../utils';
+import { sendAriaLiveMessage } from '../../utils/sendAriaLiveMessage';
 import { IconArrowDownward, IconArrowUpward } from '../icons';
 import { BspkIcon } from '../../types/bspk-icon';
 

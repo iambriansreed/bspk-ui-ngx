@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UIButton } from '../button/button';
 import { UIInput } from '../input';
 import { IconChevronLeft, IconChevronRight } from '../icons';
-import { sendAriaLiveMessage } from '../../utils';
+import { sendAriaLiveMessage } from '../../utils/sendAriaLiveMessage';
 
 // After this point the manual input renders. With equal or fewer pages
 // the individual page buttons render instead (matches React implementation).
