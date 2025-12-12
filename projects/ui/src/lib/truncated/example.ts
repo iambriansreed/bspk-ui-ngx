@@ -1,0 +1,41 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { UITruncated } from './truncated';
+
+@Component({
+    selector: 'ui-truncated-example',
+    standalone: true,
+    imports: [CommonModule, UITruncated],
+    template: `
+        <h2>Truncated Directive</h2>
+
+        <h3>Truncated: data-truncated attribute</h3>
+        <div>
+            <div data-truncated style="max-width: 200px; height: 20px" txt="body-large">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo quasi placeat dolore architecto, eaque
+                nesciunt tempore neque iure dignissimos aliquam est voluptates atque? Tempore, cupiditate! Fuga minus
+                est deserunt fugiat?
+            </div>
+        </div>
+
+        <h3>Not Truncated: data-truncated attribute</h3>
+        <div>
+            <div data-truncated style="max-width: 200px" txt="body-large">Lorem ipsum</div>
+        </div>
+
+        <h3>Truncated Component: when truncated tooltip shows</h3>
+        <div>
+            <ui-truncated style="max-width: 200px" txt="body-large" tooltip>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo quasi placeat dolore architecto, eaque
+                nesciunt tempore neque iure dignissimos aliquam est voluptates atque? Tempore, cupiditate! Fuga minus
+                est deserunt fugiat?
+            </ui-truncated>
+        </div>
+
+        <h3>Truncated Component: no tooltip when no truncation is needed</h3>
+        <div>
+            <ui-truncated style="max-width: 250px" txt="body-large" tooltip> No truncation here </ui-truncated>
+        </div>
+    `,
+})
+export class UITruncatedExample {}

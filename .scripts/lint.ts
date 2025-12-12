@@ -7,6 +7,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+import { getPublicApiFileContent } from './update-public-api.js';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -28,11 +29,6 @@ files.forEach((dirent) => {
             .split('-')
             .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
             .join('');
-
-        const classNameComponentPattern = /^UI[A-Z][a-zA-Z0-9]+$/;
-        const classNameDirectivePattern = /^UI[A-Z][a-zA-Z0-9]+Directive$/;
-        const componentSelectorPattern = /^ui-[a-z0-9-]+$/;
-        const directiveSelectorPattern = /^\[(?!ui)[a-z0-9-]+\]$/;
 
         const filesToCheck: {
             filePath: string;
@@ -78,9 +74,7 @@ files.forEach((dirent) => {
 console.log('\x1b[32mAll components and directives follow naming conventions 🎉✅\x1b[0m\n');
 
 // ensure public api is up to date
-
 // compare existing public api content to generated content
-import { getPublicApiFileContent } from './update-public-api.js';
 
 const { publicApiPath, publicApiContent } = getPublicApiFileContent();
 

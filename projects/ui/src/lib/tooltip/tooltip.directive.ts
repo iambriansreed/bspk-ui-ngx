@@ -32,9 +32,14 @@ export type TooltipProps = {
     disabled?: boolean;
 };
 
+/** Directive to add a tooltip to any element. */
 @Directive({ selector: '[tooltip]' })
 export class UITooltipDirective implements OnDestroy, OnChanges {
-    /** Accepts a string (tooltip label) or a config object { label, placement, showTail, disabled } */
+    /**
+     * Accepts a string (tooltip label) or a config object { label, placement, showTail, disabled }
+     *
+     * @important This directive should be added to inline or inline-block elements otherwise positioning may be incorrect.
+     */
     @Input('tooltip') tooltip: TooltipProps | string = '';
 
     private overlayRef?: OverlayRef;

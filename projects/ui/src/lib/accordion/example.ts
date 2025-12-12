@@ -1,0 +1,35 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { UIAccordion } from './accordion';
+
+@Component({
+    selector: 'ui-accordion-example',
+    standalone: true,
+    imports: [CommonModule, UIAccordion],
+    template: `
+        <h2>Accordion</h2>
+
+        <p>An accordion component that allows for expandable and collapsible content sections.</p>
+
+        <h3>Default (multiple open)</h3>
+
+        <ui-accordion
+            [singleOpen]="false"
+            [items]="[
+                { title: 'Foo', children: 'Foo Children' },
+                { title: 'Bar', children: 'Bar Children' },
+                { title: 'Car', children: 'Car Children' },
+            ]"></ui-accordion>
+
+        <h3>Single Open</h3>
+
+        <ui-accordion
+            [singleOpen]="true"
+            [items]="[
+                { title: 'Foo', children: 'Foo Children' },
+                { title: 'Bar', children: 'Bar Children' },
+                { title: 'Car', children: 'Car Children' },
+            ]"></ui-accordion>
+    `,
+})
+export class UIAccordionExample {}
