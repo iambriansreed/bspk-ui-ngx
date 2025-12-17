@@ -25,8 +25,8 @@ export default defineConfig([
                 'error',
                 {
                     type: 'attribute',
-                    prefix: '',
-                    style: 'camelCase',
+                    prefix: 'ui',
+                    style: 'kebab-case',
                 },
             ],
             '@angular-eslint/component-selector': [

@@ -1,7 +1,3 @@
-ui-modal {
-    display: contents;
-}
-
 [data-bspk='modal'] {
     max-height: 100%;
     display: flex;
@@ -19,6 +15,11 @@ ui-modal {
         justify-content: space-between;
         align-items: center;
         gap: var(--spacing-sizing-04);
+
+        [data-modal-title] {
+            font: var(--heading-h4);
+            flex: 1;
+        }
     }
 
     [data-modal-main] {
@@ -29,9 +30,21 @@ ui-modal {
 
     > [data-modal-footer] {
         display: flex;
+        gap: var(--spacing-sizing-04);
+    }
+
+    [data-button-format='horizontal'] {
         flex-direction: row-reverse;
         justify-content: flex-start;
-        gap: var(--spacing-sizing-04);
+    }
+
+    [data-button-format='vertical'] {
+        flex-direction: column;
+
+        @media (width >= 640px) {
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+        }
     }
 }
 

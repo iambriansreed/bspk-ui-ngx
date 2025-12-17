@@ -13,7 +13,9 @@ import { UITooltipDirective, TooltipProps } from '../tooltip/tooltip.directive';
     selector: 'ui-truncated',
     imports: [UITooltipDirective],
     styleUrls: ['./truncated.scss'],
-    templateUrl: './truncated.html',
+    template: `<span data-truncated [ui-tooltip]="tooltip" #el>
+        <ng-content></ng-content>
+    </span> `,
     encapsulation: ViewEncapsulation.None,
 })
 export class UITruncated implements AfterViewInit {

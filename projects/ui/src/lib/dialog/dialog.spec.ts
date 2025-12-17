@@ -4,7 +4,6 @@ import { hasNoBasicA11yIssues } from '../../testutils/hasNoBasicA11yIssues';
 import { UIDialog } from './dialog';
 
 describe('UIDialog', () => {
-    let component: UIDialog;
     let fixture: ComponentFixture<UIDialog>;
 
     beforeEach(async () => {
@@ -13,12 +12,9 @@ describe('UIDialog', () => {
         }).compileComponents();
 
         fixture = TestBed.createComponent(UIDialog);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+        fixture.componentRef.setInput('open', true);
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+        fixture.detectChanges();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

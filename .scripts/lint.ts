@@ -43,7 +43,7 @@ files.forEach((dirent) => {
             const content = fs.readFileSync(filePath, 'utf-8');
 
             const classNameExpected = `UI${pascalCaseName}${type === 'directive' ? 'Directive' : ''}`;
-            const selectorExpected = type === 'component' ? `ui-${dirent.name}` : `[${dirent.name}]`;
+            const selectorExpected = type === 'component' ? `ui-${dirent.name}` : `[ui-${dirent.name}]`;
 
             const classNameMatch = content.match(/export class (\w+)[<|\s]/)?.[1];
 

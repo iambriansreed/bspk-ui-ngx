@@ -1,0 +1,32 @@
+[data-bspk='scrim'] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-index-scrim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-scrim);
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+
+    &[data-contained] {
+        position: absolute;
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

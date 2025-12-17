@@ -28,13 +28,13 @@ export type TxtVariant =
     | 'subheader-xxx-large';
 
 @Directive({
-    selector: '[txt]',
+    selector: '[ui-txt]',
     host: {
         '[attr.data-txt]': 'variant()',
         '[style.font]': 'font()',
     },
 })
 export class UITxtDirective {
-    readonly variant = input<TxtVariant | ''>('body-base', { alias: 'txt' });
+    readonly variant = input<TxtVariant | ''>('body-base', { alias: 'ui-txt' });
     readonly font = computed(() => `var(--${this.variant() || 'body-base'})`);
 }

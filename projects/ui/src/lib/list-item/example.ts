@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { sendSnackbar } from '../../utils/sendSnackbar';
+import { UIAvatar } from '../avatar';
 import { UIButton } from '../button';
 import { IconChevronRight } from '../icons/chevron-right';
 import { IconDelete } from '../icons/delete';
@@ -11,7 +12,7 @@ import { UIListItem } from './list-item';
 @Component({
     selector: 'ui-list-item-example',
     standalone: true,
-    imports: [CommonModule, UIListItem, IconFolder, IconChevronRight, UIButton, IconMoreVert],
+    imports: [CommonModule, UIListItem, IconFolder, IconChevronRight, UIButton, IconMoreVert, UIAvatar],
     template: `
         <h2>List Item</h2>
 
@@ -32,21 +33,7 @@ import { UIListItem } from './list-item';
                 subText="Last modified: Jan 21, 2024"
                 (clicked)="onClick('Clicked Open Folder button')">
                 <span data-leading>
-                    <span
-                        style="
-                            width: 28px;
-                            height: 28px;
-                            border-radius: 50%;
-                            background: #4b6bfb;
-                            color: white;
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 12px;
-                            font-weight: 600;
-                        "
-                        >FR</span
-                    >
+                    <ui-avatar name="John Doe" />
                 </span>
                 <span data-trailing>
                     <ui-button
@@ -83,21 +70,7 @@ import { UIListItem } from './list-item';
                 subText="Edited: Nov 11, 2025"
                 (click)="onClick('Opening report options...')">
                 <span data-leading>
-                    <span
-                        style="
-                            width: 28px;
-                            height: 28px;
-                            border-radius: 50%;
-                            background: #10b981;
-                            color: white;
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 12px;
-                            font-weight: 600;
-                        "
-                        >PR</span
-                    >
+                    <ui-avatar name="Paul Revere" initials="PR" />
                 </span>
                 <span data-trailing>
                     <icon-more-vert />

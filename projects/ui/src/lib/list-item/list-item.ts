@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
  * navigation in most experiences.

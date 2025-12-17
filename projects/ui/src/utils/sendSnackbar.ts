@@ -16,6 +16,7 @@ export function sendSnackbar(message: string): void {
     snackbar.style.color = 'white';
     snackbar.style.padding = '8px 16px';
     snackbar.style.borderRadius = '4px';
+    snackbar.style.zIndex = 'var(--z-index-dialog)';
     snackbar.textContent = message;
 
     document.body.appendChild(snackbar);

@@ -42,7 +42,34 @@ export type SizeVariant =
     selector: 'ui-avatar',
     standalone: true,
     imports: [CommonModule, IconPerson, UITooltipDirective],
-    templateUrl: './avatar.html',
+    template: `<span
+        [ui-tooltip]="{ label: name, showTail: true, disabled: hideTooltip }"
+        data-bspk="avatar"
+        [attr.aria-label]="name"
+        aria-roledescription="person"
+        [attr.aria-disabled]="disabled || undefined"
+        [attr.tabindex]="!disabled && onClick.observers.length ? 0 : undefined"
+        [attr.role]="onClick.observers.length ? 'button' : 'img'"
+        [attr.data-color]="color"
+        [attr.data-size]="size"
+        (click)="handleOnClick($event)"
+        (keydown)="handleKeyDown($event)">
+        @if (image) {
+            <img [src]="image" [alt]="name" aria-hidden="true" />
+        } @else {
+            @if (showIcon) {
+                <span aria-hidden="true" data-icon>
+                    <icon-person></icon-person>
+                </span>
+            } @else {
+                @if (computedInitials) {
+                    <span aria-hidden="true" data-initials>
+                        {{ computedInitials }}
+                    </span>
+                }
+            }
+        }
+    </span>`,
     styleUrls: ['./avatar.scss'],
     encapsulation: ViewEncapsulation.None,
 })
@@ -87,9 +114,9 @@ export class UIAvatar {
      *
      * If an image is provided, the image will be shown instead of the icon.
      *
-     * @default true
+     * @default false
      */
-    @Input() showIcon = true;
+    @Input() showIcon = false;
 
     /**
      * The url to the image to display in the avatar.
