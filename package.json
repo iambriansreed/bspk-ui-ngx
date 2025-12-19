@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
+        "checks": "npm run lint:all && npm run test",
         "lint:css": "npx stylelint '**/*.scss'",
         "lint:css:fix": "npx stylelint '**/*.scss' --fix",
         "ng": "ng",
@@ -17,7 +18,7 @@
         "dev:serve": "ng serve",
         "prebuild": "npx tsx .scripts/pre-build.ts",
         "gh-build": "npm run lint && npm run build && npm run test && cp -r ./dist/browser/index.html ./dist/browser/404.html",
-        "pr": "npm run lint:all && npm run build && npm run test && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/main...$(git symbolic-ref --short HEAD)\"",
+        "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/main...$(git symbolic-ref --short HEAD)\"",
         "routes:watch": "npx tsx .scripts/generate-component-routes.ts --watch",
         "routes": "npx tsx .scripts/generate-component-routes.ts --write"
     },
