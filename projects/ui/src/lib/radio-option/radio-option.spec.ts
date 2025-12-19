@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UIRadio } from './radio';
+import { hasNoBasicA11yIssues } from '../../testutils/hasNoBasicA11yIssues';
+import { UIRadioOption } from './radio-option';
 
 @Component({
-    template: `<ui-radio name="Test Label" value="test-value" />`,
+    template: `<ui-radio-option label="Test Label" name="test-name" value="test-value" />`,
     standalone: true,
-    imports: [UIRadio],
+    imports: [UIRadioOption],
 })
 class TestHostComponent {}
 
-describe('UIRadio', () => {
-    let component: TestHostComponent;
+describe('UIRadioOption', () => {
     let fixture: ComponentFixture<TestHostComponent>;
 
     beforeEach(async () => {
@@ -19,11 +19,12 @@ describe('UIRadio', () => {
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);
-        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
     it('should create', () => {
-        expect(component).toBeTruthy();
+        expect(fixture.componentInstance).toBeTruthy();
     });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

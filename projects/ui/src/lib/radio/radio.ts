@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Output, EventEmitter, ViewEncapsulation, input, booleanAttribute } from '@angular/core';
+import { randomString } from '../../utils/randomString';
 
 /**
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you
@@ -17,24 +18,49 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
     selector: 'ui-radio',
     standalone: true,
     imports: [],
-    templateUrl: './radio.html',
+    template: `<input
+            [attr.name]="name()"
+            [attr.id]="id()"
+            [attr.aria-label]="ariaLabel()"
+            type="radio"
+            [attr.value]="value()"
+            [checked]="checked()"
+            [attr.checked]="checked() ? '' : null"
+            [required]="required()"
+            [attr.data-invalid]="invalid() ? true : null"
+            [disabled]="disabled()"
+            (change)="onInputChange($event)" />
+        <span aria-hidden="true"></span>`,
     styleUrl: './radio.scss',
     encapsulation: ViewEncapsulation.None,
+    host: {
+        'data-bspk': 'radio',
+    },
 })
 export class UIRadio {
+    /** Emits the new checked state (true or false) */
+    @Output() checkedChange = new EventEmitter<boolean>();
+
+    /**
+     * The function to call when the radio is checked.
+     *
+     * @required
+     */
+    change = input<((event: Event) => void) | undefined>(undefined);
+
     /**
      * The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control.
      *
      * @required
      */
-    @Input() name?: string;
+    name = input.required<string | undefined>();
 
     /**
      * The value of the field control.
      *
      * @required
      */
-    @Input() value?: string;
+    value = input.required<string | undefined>();
 
     /**
      * The aria-label for the element.
@@ -43,24 +69,24 @@ export class UIRadio {
      *
      * Ensure this is provided when using the element in isolation to maintain accessibility.
      */
-    @Input() ariaLabel?: string;
+    ariaLabel = input<string | undefined>(undefined);
 
     /**
      * Marks the radio as checked.
      *
      * @default false
      */
-    @Input() checked = false;
+    checked = input(false, { transform: booleanAttribute });
 
     /**
      * Determines if the element is [disabled](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled).
      *
      * @default false
      */
-    @Input() disabled?: boolean;
+    disabled = input(false, { transform: booleanAttribute });
 
     /** The id of the element. If not provided one will be generated. */
-    @Input() id?: string;
+    id = input<string>(randomString(8));
 
     /**
      * Indicates that the element is in an invalid state and displays the error theme.
@@ -69,27 +95,17 @@ export class UIRadio {
      *
      * @default false
      */
-    @Input() invalid?: boolean;
+    invalid = input(false, { transform: booleanAttribute });
 
     /**
      * Determines if the element is [required](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required).
      *
      * @default false
      */
-    @Input() required?: boolean;
-
-    /**
-     * The function to call when the radio is checked.
-     *
-     * @required
-     */
-    @Input() change = new EventEmitter<Event>();
-
-    /** Emits the new checked state (true or false) */
-    @Output() checkedChange = new EventEmitter<boolean>();
+    required = input(false, { transform: booleanAttribute });
 
     onInputChange(event: Event) {
-        const input = event.target as HTMLInputElement;
-        this.checkedChange.emit(input.checked);
+        const inputElement = event.target as HTMLInputElement;
+        this.checkedChange.emit(inputElement.checked);
     }
 }

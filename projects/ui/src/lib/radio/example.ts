@@ -9,6 +9,9 @@ import { UIRadio } from './radio';
     template: `
         <h2>Radio</h2>
 
+        <h3>Basic with id</h3>
+        <ui-radio id="test-id" name="radio-0" ariaLabel="Option 0" value="Option 0"></ui-radio>
+
         <h3>checked = true</h3>
         <ui-radio name="radio-1" ariaLabel="Option 1" value="Option 1" [checked]="true"></ui-radio>
 
