@@ -1,11 +1,10 @@
 import { Component, input, ViewEncapsulation } from '@angular/core';
-import { IconCheckCircleFill, IconErrorFill, IconInfoFill, IconWarningFill } from '../icons';
-
-export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
+import { AlertVariant } from '../../types/utils';
+import { IconCheckCircleFill, IconErrorFill, IconInfoFill } from '../icons';
 
 @Component({
     selector: 'ui-inline-alert',
-    imports: [IconCheckCircleFill, IconErrorFill, IconInfoFill, IconWarningFill],
+    imports: [IconCheckCircleFill, IconErrorFill, IconInfoFill],
     templateUrl: './inline-alert.html',
     styleUrl: './inline-alert.scss',
     host: {
