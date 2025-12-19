@@ -14,6 +14,7 @@ export * from './lib/dialog';
 export * from './lib/flex';
 export * from './lib/icon';
 export * from './lib/icons';
+export * from './lib/inline-alert';
 export * from './lib/input';
 export * from './lib/list-item';
 export * from './lib/modal';
