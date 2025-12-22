@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Output, ViewEncapsulation, input, computed } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, input, computed, inject } from '@angular/core';
+import { UIBreakpointService } from '../../utils/breakpoint.service';
 import { UIButton, ButtonSize, ButtonWidth } from '../button/button';
 import { UIDialog } from '../dialog/dialog';
 import { IconClose } from '../icons/close';
+import { UIMatchParentHeightDirective } from '../match-parent-height';
 
 export interface ModalCallToAction {
     label: string;
@@ -32,7 +34,7 @@ export type ButtonFormat = 'horizontal' | 'vertical';
 @Component({
     selector: 'ui-modal',
     standalone: true,
-    imports: [UIDialog, UIButton],
+    imports: [UIDialog, UIButton, UIMatchParentHeightDirective],
     template: `
         @if (open()) {
             <ui-dialog
@@ -46,12 +48,13 @@ export type ButtonFormat = 'horizontal' | 'vertical';
                 [ariaDescription]="description()"
                 placement="center"
                 [showScrim]="true">
-                <div data-bspk="modal" #innerRef>
+                <div data-bspk="modal" #innerRef ui-match-parent-height>
                     <div data-modal-header>
                         <div data-modal-title>{{ header() }}</div>
                         <ui-button
                             label="close"
                             variant="tertiary"
+                            [size]="buttonSize()"
                             (onClick)="onClose.emit()"
                             [icon]="iconClose"
                             [iconOnly]="true"></ui-button>
@@ -119,7 +122,7 @@ export class UIModal {
     disableFocusTrap = input<boolean>(false);
 
     // Defaults: Angular app likely desktop; keep small; width depends on format
-    buttonSize = computed<ButtonSize>(() => 'small');
+    buttonSize = computed<ButtonSize>(() => (this.isMobile() ? 'medium' : 'small'));
     buttonWidth = computed<ButtonWidth>(() => (this.buttonFormat() === 'vertical' ? 'fill' : 'hug'));
 
     cancelLabel = computed<string>(() =>
@@ -127,4 +130,12 @@ export class UIModal {
     );
 
     hasFooterButtons = computed<boolean>(() => !!this.callToAction());
+
+    breakpointService = inject(UIBreakpointService);
+
+    isMobile = computed(
+        () =>
+            this.breakpointService.currentBreakpointSignal() === 'small' ||
+            this.breakpointService.currentBreakpointSignal() === 'medium',
+    );
 }
