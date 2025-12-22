@@ -23,6 +23,7 @@ export * from './lib/modal';
 export * from './lib/pagination';
 export * from './lib/portal';
 export * from './lib/radio';
+export * from './lib/radio-group';
 export * from './lib/radio-option';
 export * from './lib/scrim';
 export * from './lib/table';
