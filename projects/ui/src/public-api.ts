@@ -9,6 +9,7 @@ export * from './lib/badge';
 export * from './lib/banner-alert';
 export * from './lib/button';
 export * from './lib/card';
+export * from './lib/checkbox';
 export * from './lib/chip';
 export * from './lib/chip-group';
 export * from './lib/dialog';

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { hasNoBasicA11yIssues } from '../../testutils/hasNoBasicA11yIssues';
-import { UIRadio } from './radio';
+import { UICheckbox } from './checkbox';
 
 @Component({
-    template: `<ui-radio label="Test Label" name="test-name" ariaLabel="Test label" value="test-value" />`,
+    template: `<ui-checkbox label="Test Label" name="test-name" value="test-value" ariaLabel="Test label" />`,
     standalone: true,
-    imports: [UIRadio],
+    imports: [UICheckbox],
 })
 class TestHostComponent {}
 
-describe('UIRadio', () => {
+describe('UICheckbox', () => {
     let fixture: ComponentFixture<TestHostComponent>;
 
     beforeEach(async () => {
