@@ -33,7 +33,7 @@ export type Placement = 'bottom' | 'center' | 'left' | 'right' | 'top';
  *     </ui-dialog>
  *
  * @name Dialog
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-dialog',

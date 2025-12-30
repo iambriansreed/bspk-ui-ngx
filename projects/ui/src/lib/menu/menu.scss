@@ -1,0 +1,17 @@
+[data-bspk-utility='menu'] {
+    --overflow-y: hidden;
+
+    width: 332px;
+    box-sizing: border-box;
+    border: 1px solid var(--stroke-neutral-low);
+    background-color: var(--surface-neutral-t1-base);
+    box-shadow: var(--drop-shadow-float);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden auto;
+    height: fit-content;
+    z-index: var(--z-index-dropdown);
+}
+
+/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

@@ -19,7 +19,7 @@ const INPUT_TYPE_THRESHOLD = 7;
  *     ```;
  *
  * @name Pagination
- * @phase UXReview
+ * @phase Dev
  */
 @Component({
     selector: 'ui-pagination',

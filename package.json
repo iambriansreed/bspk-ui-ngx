@@ -7,7 +7,7 @@
         "lint:css": "npx stylelint '**/*.scss'",
         "lint:css:fix": "npx stylelint '**/*.scss' --fix",
         "ng": "ng",
-        "lint": "eslint",
+        "lint": "eslint && tsc --noEmit ",
         "lint:ui": "npx tsx .scripts/lint.ts",
         "lint:all": "npm run lint && npm run lint:ui && npm run lint:css",
         "start": "npm run prebuild && ng serve",

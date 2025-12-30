@@ -22,7 +22,7 @@ export interface TabGroupProps {}
  *     </ui-tab-group>
  *
  * @name TabGroup
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-tab-group',

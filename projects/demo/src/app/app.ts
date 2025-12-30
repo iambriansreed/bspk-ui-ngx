@@ -1,8 +1,9 @@
-import { Component, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UIButton } from '../../../ui/src/lib/button';
 import { IconDarkMode } from '../../../ui/src/lib/icons/dark-mode';
 import { IconDarkModeFill } from '../../../ui/src/lib/icons/dark-mode-fill';
+import { ThemeService } from '../../../ui/src/services/theme';
 import { AppNavComponent } from './components/app-nav';
 
 @Component({
@@ -19,9 +20,9 @@ import { AppNavComponent } from './components/app-nav';
             </div>
             <div data-navbar-right>
                 <ui-button
-                    [icon]="toggleDarkModeIcon"
+                    [icon]="toggleDarkModeIcon()"
                     (click)="toggleDarkMode()"
-                    [label]="toggleDarkModeLabel"
+                    [label]="toggleDarkModeLabel()"
                     [iconOnly]="true" />
             </div>
         </div>
@@ -36,21 +37,19 @@ import { AppNavComponent } from './components/app-nav';
     encapsulation: ViewEncapsulation.None,
 })
 export class App {
-    theme = signal<'dark' | 'light'>('light');
+    toggleDarkModeLabel = computed(() => {
+        return this.themeService.value() === 'light' ? 'Enable dark mode' : 'Disable dark mode';
+    });
+
+    toggleDarkModeIcon = computed(() => {
+        return this.themeService.value() === 'light' ? IconDarkMode : IconDarkModeFill;
+    });
+
+    protected readonly themeService = inject(ThemeService);
 
     protected readonly title = signal('demo');
 
-    get toggleDarkModeIcon() {
-        return this.theme() === 'light' ? IconDarkMode : IconDarkModeFill;
-    }
-
-    get toggleDarkModeLabel() {
-        return this.theme() === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
-    }
-
     toggleDarkMode() {
-        const newTheme = this.theme() === 'light' ? 'dark' : 'light';
-        this.theme.set(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
+        this.themeService.toggle();
     }
 }

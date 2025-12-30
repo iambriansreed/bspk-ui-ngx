@@ -1,7 +1,8 @@
 import { Component, input, ViewEncapsulation } from '@angular/core';
 import { provideNgxMask } from 'ngx-mask';
+import { ButtonSize } from '../../types/common';
 import { provideValidator, provideValueAccessor, TextInputControlValueAccessor, randomString } from '../../utils';
-import { UIButton, ButtonSize } from '../button/button';
+import { UIButton } from '../button/button';
 import { IconCancel } from '../icons/cancel';
 
 @Component({

@@ -6,13 +6,24 @@ export function getPublicApiFileContent() {
     const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
     const libDir = path.join(__dirname, '../projects/ui/src/lib');
+    const servicesDir = path.join(__dirname, '../projects/ui/src/services');
     const publicApiPath = path.join(__dirname, '../projects/ui/src/public-api.ts');
 
-    const files = fs
+    const exportLines: string[] = [];
+
+    const libFiles = fs
         .readdirSync(libDir, { withFileTypes: true })
         .flatMap((dirent) => (dirent.isDirectory() ? [dirent.name] : []));
 
-    const exportLines = files.map((file) => `export * from './lib/${file}';`);
+    exportLines.push(...libFiles.map((file) => `export * from './lib/${file}';`));
+
+    const serviceFiles = fs
+        .readdirSync(servicesDir, { withFileTypes: true })
+        .map((dirent) => path.parse(dirent.name).name);
+
+    console.log('serviceFiles', serviceFiles);
+
+    exportLines.push(...serviceFiles.map((file) => `export * from './services/${file}';`));
 
     const publicApiContent = `/**
  * Public API Surface of UI library

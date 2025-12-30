@@ -17,7 +17,7 @@ import { UIPagination } from '../pagination';
  *     </ui-table>
  *
  * @name Table
- * @phase UXReview
+ * @phase Dev
  */
 
 export type TableSize = 'large' | 'medium' | 'small' | 'x-large';

@@ -30,7 +30,7 @@ import { uniqueId } from '../../utils/random';
  *
  * @element
  * @name Checkbox
- * @phase UXReview
+ * @phase Dev
  */
 @Component({
     selector: 'ui-checkbox',

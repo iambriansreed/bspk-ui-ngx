@@ -57,7 +57,7 @@ export interface AccordionSection {
  *     ```;
  *
  * @name Accordion
- * @phase UXReview
+ * @phase Dev
  */
 @Component({
     selector: 'ui-accordion',

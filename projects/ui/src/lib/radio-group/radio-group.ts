@@ -22,7 +22,7 @@ export interface RadioGroupOption {
  *     </ui-radio-group>
  *
  * @name RadioGroup
- * @phase UXReview
+ * @phase Dev
  */
 
 @Component({

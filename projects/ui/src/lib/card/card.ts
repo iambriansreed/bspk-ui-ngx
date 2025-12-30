@@ -18,7 +18,7 @@ export type CardVariant = 'elevated' | 'outlined';
  *     </Card>;
  *
  * @name Card
- * @phase UXReview
+ * @phase Dev
  */
 @Component({
     selector: 'ui-card',

@@ -25,7 +25,7 @@ export interface ChipProps {
  *     </Chip>;
  *
  * @name Chip
- * @phase UXReview
+ * @phase Dev
  */
 @Component({
     selector: 'ui-chip',

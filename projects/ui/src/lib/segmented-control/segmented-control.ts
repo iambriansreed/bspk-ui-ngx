@@ -18,7 +18,7 @@ import { UITabList } from '../tab-list/tab-list';
  *     </ui-segmented-control>
  *
  * @name SegmentedControl
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-segmented-control',
