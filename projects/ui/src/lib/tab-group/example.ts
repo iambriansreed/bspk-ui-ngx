@@ -8,11 +8,7 @@ import { UITabGroup } from './tab-group';
     imports: [CommonModule, UITabGroup],
     template: `
         <h3>TabGroup Basic</h3>
-        <ui-tab-group
-            [label]="'Group'"
-            [options]="options"
-            [value]="selected"
-            (valueChange)="selected = $event"></ui-tab-group>
+        <ui-tab-group [label]="'Group'" [options]="options" [value]="selected" (valueChange)="selected = $event" />
         <p style="margin-top: var(--spacing-sizing-04);">Selected: {{ selected }}</p>
 
         <h3>Show Trail (hug)</h3>
@@ -22,8 +18,16 @@ import { UITabGroup } from './tab-group';
             [value]="selectedTrail"
             [showTrail]="true"
             [width]="'hug'"
-            (valueChange)="selectedTrail = $event"></ui-tab-group>
+            (valueChange)="selectedTrail = $event" />
         <p style="margin-top: var(--spacing-sizing-04);">Selected: {{ selectedTrail }}</p>
+
+        <h3>With Disabled Option</h3>
+        <ui-tab-group
+            [label]="'Segments with Disabled'"
+            [options]="optionsWithDisabled"
+            [value]="selected"
+            (valueChange)="selected = $event" />
+        <p>Selected: {{ selected }}</p>
     `,
 })
 export class UITabGroupExample {
@@ -31,6 +35,13 @@ export class UITabGroupExample {
         { value: '1', label: 'Option 1' },
         { value: '2', label: 'Option 2' },
         { value: '3', label: 'Option 3' },
+    ];
+
+    optionsWithDisabled = [
+        { value: '1', label: 'Option 1' },
+        { value: '2', label: 'Option 2', disabled: true },
+        { value: '3', label: 'Option 3' },
+        { value: '4', label: 'Option 4' },
     ];
 
     selected = '1';

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { UITabList } from '../tab-list/tab-list';
+import { UITabList, UITabListUtility } from '../tab-list/tab-list';
 
 /**
  * Navigation tool that organizes content across different screens and views.
@@ -41,4 +41,4 @@ import { UITabList } from '../tab-list/tab-list';
         style: 'display: contents;',
     },
 })
-export class UISegmentedControl extends UITabList {}
+export class UISegmentedControl extends UITabListUtility {}

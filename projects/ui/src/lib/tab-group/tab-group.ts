@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
-import { UITabList } from '../tab-list/tab-list';
+import { UITabList, UITabListUtility } from '../tab-list/tab-list';
 
 export type TabGroupSize = 'large' | 'medium' | 'small';
 
@@ -39,11 +39,15 @@ export interface TabGroupProps {}
         [width]="width()"
         [iconsOnly]="iconsOnly()"
         [id]="id()"
-        [attr.data-show-trail]="showTrail() || undefined"></ul>`,
+        [attr.data-show-trail]="showTrail() || undefined"
+        [attr.data-bspk]="'tab-group'"></ul>`,
     styleUrl: './tab-group.scss',
     encapsulation: ViewEncapsulation.None,
+    host: {
+        style: 'display: contents;',
+    },
 })
-export class UITabGroup extends UITabList {
+export class UITabGroup extends UITabListUtility {
     /**
      * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
      * property isn't applicable.
