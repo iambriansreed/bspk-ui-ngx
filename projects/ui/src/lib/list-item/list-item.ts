@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { UITruncated } from '../truncated/truncated';
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
@@ -19,14 +20,16 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
 @Component({
     selector: 'ui-list-item',
     standalone: true,
-    imports: [NgTemplateOutlet],
+    imports: [NgTemplateOutlet, UITruncated],
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./list-item.scss'],
     template: `
         <ng-template #inner>
             <ng-content select="[data-leading]"></ng-content>
             <span data-item-label>
-                <span data-text>{{ label() }}</span>
+                <span data-text>
+                    <ui-truncated>{{ label() }}</ui-truncated>
+                </span>
                 @if (subText()) {
                     <span data-sub-text>{{ subText() }}</span>
                 }
