@@ -65,6 +65,13 @@ import { LinkProps, UILinkDirective } from './link.directive';
                 }
             }
         </div>
+
+        <h3>Without directive</h3>
+        <a href="https://bspk.dev">Default Link</a>
+        <p>
+            Anchor tags without the <code>ui-link</code> directive will have the link styles applied if the body has the
+            <code>data-bspk</code> attribute and the anchor itself does not have the <code>data-bspk</code> attribute.
+        </p>
     `,
 })
 export class UILinkExample {
