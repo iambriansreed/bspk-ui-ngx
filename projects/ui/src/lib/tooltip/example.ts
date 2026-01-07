@@ -22,6 +22,18 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             >
         }
 
+        <h3>Dynamic Placement</h3>
+        <div style="text-align: right;">
+            <span
+                [ui-tooltip]="{
+                    label: 'I change placement based on available space',
+                    placement: 'right',
+                }">
+                Hover me (placement: 'right)
+            </span>
+        </div>
+        <p>Placement is 'right' but the tooltip will adjusts as there is not enough space to the right.</p>
+
         <h3>No tail</h3>
         <span
             [ui-tooltip]="{
