@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } from '@angular/core';
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
@@ -38,7 +38,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
                 [attr.href]="href()"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
@@ -58,7 +58,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -75,7 +75,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -90,11 +90,11 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
             </label>
         } @else {
-            <div
+            <span
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -106,7 +106,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
-            </div>
+            </span>
         }
     `,
     host: {
@@ -160,6 +160,12 @@ export class UIListItem {
     /** Explicit tabIndex; defaults to 0 when actionable, otherwise -1. */
     readonly tabIndex = input<number | null>();
 
+    readonly actionable = computed(() => {
+        return (
+            !!((this.href() || this.clicked.observed) && !this.isReadonly && !this.isDisabled) || this.as() === 'button'
+        );
+    });
+
     id = `${Math.random().toString(36).slice(2)}`;
 
     get isReadonly() {
@@ -167,9 +173,6 @@ export class UIListItem {
     }
     get isDisabled() {
         return !!(this.disabled() || this.ariaDisabled());
-    }
-    get actionable() {
-        return !!(this.href() && !this.isReadonly && !this.isDisabled) || this.as() === 'button';
     }
 
     get As() {

@@ -1,38 +1,100 @@
 import { Renderer2 } from '@angular/core';
-import { arrow, computePosition, ComputePositionReturn, flip, offset, shift } from '@floating-ui/dom';
-import { TooltipPlacement } from '../public-api';
+import {
+    arrow,
+    computePosition,
+    ComputePositionReturn,
+    flip,
+    MiddlewareState,
+    offset,
+    OffsetOptions,
+    Placement,
+    size,
+    Strategy,
+} from '@floating-ui/dom';
+
+export interface FloatingProps {
+    /**
+     * The preferred placement of the floating element.
+     *
+     * This determines where the floating element will be positioned relative to the reference element.
+     *
+     * @default bottom-start
+     */
+    placement?: Placement;
+    /**
+     * The positioning strategy ('absolute' or 'fixed').
+     *
+     * When set to 'fixed', the floating element will be positioned relative to the viewport.
+     *
+     * When set to 'absolute', the floating element will be positioned relative to the nearest positioned ancestor.
+     *
+     * @default fixed
+     */
+    strategy?: Strategy;
+    /**
+     * The offset options for the floating element.
+     *
+     * @default 0
+     */
+    offsetOptions?: OffsetOptions;
+    /**
+     * When set to true, the width of the floating element will match the width of the reference element.
+     *
+     * @default false
+     */
+    refWidth?: boolean;
+    /** Whether to hide the floating element. */
+    hide?: boolean;
+    /** The reference element for positioning. */
+    reference?: HTMLElement | null;
+    /** The floating element to be positioned. */
+    floating?: HTMLElement | null;
+    /** The arrow element for the floating element. */
+    arrow?: HTMLElement | null;
+}
 
 export class Floating {
-    props: {
-        placement?: TooltipPlacement;
-        showTail?: boolean;
-        elements: {
-            reference: HTMLElement | null;
-            floating: HTMLElement | null;
-            arrow: HTMLElement | null;
+    private props: FloatingProps | null = null;
+
+    constructor(
+        private render: Renderer2,
+        defaultProps?: FloatingProps,
+    ) {
+        this.props = defaultProps || null;
+    }
+
+    setProps(props: FloatingProps) {
+        this.props = {
+            ...this.props,
+            ...props,
         };
-    } | null = null;
+    }
 
-    constructor(private render: Renderer2) {}
-
-    async compute(): Promise<ComputePositionReturn> {
+    async compute() {
         if (
             //
-            !this.props?.elements.floating ||
-            !this.props?.elements.reference
+            !this.props?.floating ||
+            !this.props?.reference
         )
             return {} as ComputePositionReturn;
 
-        const { floating, reference, arrow: arrowEl } = this.props.elements;
+        const { floating, reference, arrow: arrowEl } = this.props;
 
         const returnValue = await computePosition(reference, floating, {
-            placement: this.props.placement,
+            placement: this.props.placement || 'bottom-start',
             strategy: 'fixed',
             middleware: [
-                offset(this.props.showTail !== false ? 8 : 4),
-                flip(),
-                shift({ padding: 8 }),
                 arrowEl ? arrow({ element: arrowEl! }) : undefined,
+                offset(this.props.offsetOptions),
+                flip(),
+                this.props.refWidth &&
+                    size({
+                        apply({ rects, elements }: MiddlewareState) {
+                            Object.assign(elements.floating.style, {
+                                width: `${rects.reference.width}px`,
+                            });
+                        },
+                    }),
             ],
         });
 
@@ -45,14 +107,21 @@ export class Floating {
         this.render.setStyle(floating, 'left', `${x}px`);
         this.render.setStyle(floating, 'top', `${y}px`);
         this.render.setStyle(floating, 'position', 'fixed');
+        this.render.setStyle(floating, 'opacity', '0');
+        this.render.setStyle(floating, 'pointerEvents', 'none');
+        this.render.removeStyle(floating, 'display');
+
+        setTimeout(() => {
+            this.render.setStyle(floating, 'opacity', '1');
+            this.render.setStyle(floating, 'pointerEvents', 'auto');
+            this.render.removeStyle(floating, 'display');
+        }, 10);
 
         if (arrowEl) {
             if (arrowCoords) {
                 this.render.setStyle(arrowEl, 'left', `${arrowCoords?.x}px`);
                 this.render.setStyle(arrowEl, 'top', `${arrowCoords?.y}px`);
             }
-            // Toggle tail visibility
-            this.render.setStyle(arrowEl, 'opacity', this.props.showTail !== false ? '1' : '0');
         }
 
         return returnValue;

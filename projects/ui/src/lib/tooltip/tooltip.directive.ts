@@ -124,6 +124,9 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
         this.renderer.setStyle(this.tooltipEl, 'display', 'block');
 
+        // // Toggle tail visibility
+        // this.render.setStyle(arrowEl, 'opacity', this.props.showTail !== false ? '1' : '0');
+
         const { placement } = await this.floating.compute();
 
         if (this.tooltipEl && placement !== this.props()?.placement)
@@ -194,14 +197,14 @@ export class UITooltipDirective implements OnDestroy, OnInit {
         this.tooltipComponent.instance.id.set(tooltipId);
         this.updateTooltipProps(props);
 
-        this.floating.props = {
-            elements: {
-                reference: this.referenceEl,
-                floating: this.tooltipEl,
-                arrow: this.tooltipComponent?.instance.arrowElement || null,
-            },
-            ...this.props(),
-        };
+        this.floating.setProps({
+            placement: props.placement,
+            reference: this.referenceEl,
+            floating: this.tooltipEl,
+            arrow: (this.props()?.showTail && this.tooltipComponent?.instance.arrowElement) || null,
+            offsetOptions: this.props()?.showTail ? 8 : 4,
+            refWidth: false,
+        });
     }
 }
 
