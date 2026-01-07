@@ -21,20 +21,21 @@ import { UIListItem } from '../list-item';
         data-bspk="checkbox-option"
         [attr.aria-disabled]="disabled() ? true : null"
         as="label">
-        <ui-checkbox
-            data-leading
-            [id]="id()"
-            [name]="name()"
-            [value]="value()"
-            [checked]="checked()"
-            [indeterminate]="indeterminate()"
-            [disabled]="disabled()"
-            [required]="required()"
-            [invalid]="invalid()"
-            [ariaLabel]="ariaLabel()"
-            (checkedChange)="checkedChange.emit($event)"
-            #input>
-        </ui-checkbox>
+        <span data-leading>
+            <ui-checkbox
+                [id]="id()"
+                [name]="name()"
+                [value]="value()"
+                [checked]="checked()"
+                [indeterminate]="indeterminate()"
+                [disabled]="disabled()"
+                [required]="required()"
+                [invalid]="invalid()"
+                [ariaLabel]="ariaLabel()"
+                (checkedChange)="checkedChange.emit($event)"
+                #input>
+            </ui-checkbox>
+        </span>
     </ui-list-item>`,
     host: {
         'data-bspk': 'checkbox-option',
