@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { UILinkDirective } from '../../../../ui/src/public-api';
+import { UILinkDirective } from '../../../../ui/src/lib/link';
 import { navigationItems } from '../app.routes';
 
 @Component({

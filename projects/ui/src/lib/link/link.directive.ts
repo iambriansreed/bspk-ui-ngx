@@ -8,15 +8,9 @@ import {
     effect,
     EffectRef,
     ViewContainerRef,
-    createComponent,
     EnvironmentInjector,
-    inputBinding,
-    signal,
 } from '@angular/core';
-import { BspkIcon } from '../../types/bspk-icon';
 import { AsInputSignal } from '../../types/common';
-import { UIIcon } from '../icon';
-import { IconChevronRight, IconLink, IconOpenInNew } from '../icons';
 
 export interface LinkProps {
     /** The variant of the link. Controls the icon that is displayed and link target. */
@@ -79,7 +73,7 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
     private teardown: EffectRef | null = null;
 
     constructor(private viewContainerRef: ViewContainerRef) {
-        this.teardown = effect(() => {
+        this.teardown = effect(async () => {
             const el = this.host.nativeElement;
 
             // Set base attributes
@@ -113,24 +107,6 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
             const tgt = tIcon === 'external' ? '_blank' : this.target() || '_self';
             this.renderer.setAttribute(el, 'target', tgt);
 
-            if (tIcon) {
-                let bspkIcon: BspkIcon | null = null;
-
-                if (tIcon === 'external') bspkIcon = IconOpenInNew;
-
-                if (tIcon === 'chevron') bspkIcon = IconChevronRight;
-
-                if (tIcon === 'link') bspkIcon = IconLink;
-
-                if (bspkIcon) {
-                    const newIcon = createComponent(UIIcon, {
-                        environmentInjector: this.env,
-                        bindings: [inputBinding('icon', signal(bspkIcon))],
-                    });
-                    this.renderer.appendChild(el, newIcon.instance.viewContainerRef.element.nativeElement);
-                }
-            }
-
             // wrap text content in span
             if (!this.labelSpan) {
                 const span = this.renderer.createElement('span') as HTMLSpanElement;
@@ -139,7 +115,21 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
                 this.renderer.appendChild(el, span);
                 this.labelSpan = span;
             }
+
+            const iconComponent = await this.iconComponent();
+            if (iconComponent) {
+                const icon = this.viewContainerRef.createComponent(iconComponent);
+                this.renderer.appendChild(el, icon.location.nativeElement);
+            }
         });
+    }
+
+    iconComponent() {
+        const tIcon = this.trailingIcon();
+        if (tIcon === 'external') return import('../icons/open-in-new').then((m) => m.IconOpenInNew);
+        if (tIcon === 'chevron') return import('../icons/chevron-right').then((m) => m.IconChevronRight);
+        if (tIcon === 'link') return import('../icons/link').then((m) => m.IconLink);
+        return null;
     }
 
     ngOnDestroy(): void {
