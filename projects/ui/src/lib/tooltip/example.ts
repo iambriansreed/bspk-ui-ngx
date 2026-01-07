@@ -52,7 +52,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             >Hover me (disabled)</span
         >
 
-        // hide every 10 seconds for 5 seconds to show dynamic updates
+        <!-- // hide every 10 seconds for 5 seconds to show dynamic updates -->
         @if (counter() % 10 < 5) {
             <h3>Updated Live</h3>
             <span
