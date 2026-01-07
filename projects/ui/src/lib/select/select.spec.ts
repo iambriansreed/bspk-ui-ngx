@@ -12,10 +12,11 @@ describe('Select', () => {
 
         fixture = TestBed.createComponent(UISelect);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('options', [
+        fixture.componentRef.setInput('items', [
             { label: 'Option 1', value: '1' },
             { label: 'Option 2', value: '2' },
         ]);
+        fixture.componentRef.setInput('name', 'example-select');
         fixture.detectChanges();
     });
 
