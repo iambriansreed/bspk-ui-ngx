@@ -25,6 +25,7 @@ export * from './lib/icons';
 export * from './lib/inline-alert';
 export * from './lib/input';
 export * from './lib/input-field';
+export * from './lib/link';
 export * from './lib/list-item';
 export * from './lib/match-parent-height';
 export * from './lib/menu';

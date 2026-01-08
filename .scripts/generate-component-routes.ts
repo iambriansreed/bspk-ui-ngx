@@ -73,8 +73,8 @@ if (process.argv.includes('--watch')) {
 
     fs.watch(uiLibPath, { recursive: true }, () => {
         const examplesNow = getExamples();
-        // we don't care about individual file changes, just whether the number of examples has changed
-        if (examplesNow.length !== examples.length) {
+        // we don't care about individual file changes, just whether the number of examples has changed or their slugs
+        if (examplesNow.length !== examples.length || examplesNow.some((ex, i) => ex.slug !== examples[i].slug)) {
             console.log(
                 `\n\x1b[33m🔄 Detected change to examples (${examples.length} => ${examplesNow.length}), regenerating component routes...\x1b[0m`,
             );
