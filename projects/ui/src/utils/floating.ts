@@ -73,8 +73,19 @@ export class FloatingUtility implements UtilityBase<FloatingProps> {
         this.updateProps(props);
     }
 
-    async compute() {
-        const { placement, strategy, offsetOptions, refWidth, floating, reference, arrow: arrowEl } = this.props();
+    async compute(nextProps?: Partial<FloatingProps>) {
+        const {
+            placement,
+            strategy,
+            offsetOptions,
+            refWidth,
+            floating,
+            reference,
+            arrow: arrowEl,
+        } = {
+            ...this.props(),
+            ...nextProps,
+        };
 
         if (
             // Missing required elements

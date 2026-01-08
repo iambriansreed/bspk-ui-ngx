@@ -1,3 +1,5 @@
+import { model, signal } from '@angular/core';
+
 /**
  * Returns a random integer between min and max (inclusive).
  *
