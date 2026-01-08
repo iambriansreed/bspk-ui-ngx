@@ -25,27 +25,7 @@ import { IconChevronRight } from '../icons/chevron-right';
 import { IconMoreHoriz } from '../icons/more-horiz';
 import { UIListItem } from '../list-item';
 import { UIMenu } from '../menu';
-
-export interface BreadcrumbItem {
-    /**
-     * The label of the breadcrumb item.
-     *
-     * @example
-     *     Page 1
-     *
-     * @required
-     */
-    label: string;
-    /**
-     * The href of the breadcrumb item.
-     *
-     * @example
-     *     https://bspk.anywhere.re
-     *
-     * @required
-     */
-    href: string;
-}
+import { BreadcrumbItem } from './utils';
 
 export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
     items: BreadcrumbItem[];

@@ -8,6 +8,7 @@ import { IconChevronRight } from '../icons/chevron-right';
 import { UILinkDirective } from '../link';
 import { UITxtDirective } from '../txt';
 import { UIBreadcrumbDropdown } from './breadcrumb-dropdown';
+import { BreadcrumbItem } from './utils';
 
 export type BreadcrumbProps = CommonProps<'id'> &
     ScrollLimitStyleProps & {
@@ -35,27 +36,6 @@ export type BreadcrumbProps = CommonProps<'id'> &
          */
         items: BreadcrumbItem[];
     };
-
-export interface BreadcrumbItem {
-    /**
-     * The label of the breadcrumb item.
-     *
-     * @example
-     *     'Page 1';
-     *
-     * @required
-     */
-    label: string;
-    /**
-     * The href of the breadcrumb item.
-     *
-     * @example
-     *     'https://bspk.anywhere.re';
-     *
-     * @required
-     */
-    href: string;
-}
 
 /**
  * Used to indicate the current page's location within a navigational hierarchy.

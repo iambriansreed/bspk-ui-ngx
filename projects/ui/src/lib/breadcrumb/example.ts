@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { UIBreadcrumb, BreadcrumbItem } from './breadcrumb';
+import { UIBreadcrumb, BreadcrumbItem } from './';
 
 @Component({
     selector: 'ui-breadcrumb-example',
