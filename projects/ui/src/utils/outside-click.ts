@@ -1,3 +1,6 @@
+import { signal } from '@angular/core';
+import { UtilityBase } from '../types/common';
+
 export interface OutsideClickUtilityProps {
     /** The elements to monitor for outside clicks. */
     elements: HTMLElement[];
@@ -18,29 +21,29 @@ export interface OutsideClickUtilityProps {
 }
 
 /** Utility to detect clicks outside specified elements and execute a callback. */
-export class OutsideClickUtility {
-    private elements: HTMLElement[] | undefined;
-    private callback: ((event?: KeyboardEvent | MouseEvent) => void) | undefined;
-    private disabled = false;
-    private handleTabs = false;
+export class OutsideClickUtility implements UtilityBase<OutsideClickUtilityProps> {
+    readonly props = signal<OutsideClickUtilityProps>({
+        elements: [],
+        callback: () => {
+            /* no-op */
+        },
+        disabled: false,
+        handleTabs: false,
+    });
 
-    setProps(next: Partial<OutsideClickUtilityProps>) {
-        if ('elements' in next) this.elements = next.elements;
-        if ('callback' in next) this.callback = next.callback;
-        if ('disabled' in next) this.disabled = !!next.disabled;
-        if ('handleTabs' in next) this.handleTabs = !!next.handleTabs;
-
-        if (!this.elements?.length) {
-            this.destroy();
-        }
+    updateProps(next: Partial<OutsideClickUtilityProps>) {
+        this.props.set({
+            ...this.props(),
+            ...next,
+        });
     }
 
     init(props: OutsideClickUtilityProps) {
         if (typeof document === 'undefined') return;
 
-        this.setProps(props);
+        this.updateProps(props);
 
-        if (this.elements?.length) {
+        if (this.props().elements?.length) {
             document.addEventListener('mousedown', this.handleClickOutside);
             document.addEventListener('keydown', this.handleOutsideTab);
         }
@@ -48,19 +51,18 @@ export class OutsideClickUtility {
 
     destroy() {
         if (typeof document === 'undefined') return;
-
         document.removeEventListener('mousedown', this.handleClickOutside);
         document.removeEventListener('keydown', this.handleOutsideTab);
     }
 
     private handleClickOutside = (event: MouseEvent) => {
-        const { elements, callback, disabled } = this;
+        const { elements, callback, disabled } = this.props();
         if (disabled || elements?.some?.((element) => element?.contains?.(event.target as Node))) return;
         callback?.(event);
     };
 
     private handleOutsideTab = (event: KeyboardEvent) => {
-        const { elements, callback, disabled, handleTabs } = this;
+        const { elements, callback, disabled, handleTabs } = this.props();
 
         if (!handleTabs || event.key !== 'Tab' || disabled) return;
 
