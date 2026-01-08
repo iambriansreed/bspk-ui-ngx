@@ -3,6 +3,7 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, input, computed 
 
 import { UIIcon } from '../icon';
 import { IconChevronRight } from '../icons/chevron-right';
+import { UILinkDirective } from '../link';
 import { UITruncated } from '../truncated/truncated';
 import { UITxtDirective } from '../txt';
 import { UIBreadcrumbDropdown } from './breadcrumb-dropdown';
@@ -60,9 +61,8 @@ export interface BreadcrumbItem {
         <nav aria-label="Breadcrumb" [attr.data-bspk]="'breadcrumb'" [attr.id]="id()">
             <ol>
                 <li>
-                    <a [href]="firstItem().href"
-                        ><ui-truncated>{{ firstItem().label }}</ui-truncated></a
-                    >
+                    <a ui-link [href]="firstItem().href">{{ firstItem().label }}</a>
+
                     <ui-icon [icon]="iconChevronRight" [attr.aria-hidden]="true" />
                 </li>
                 @if (items().length > 5) {
@@ -85,7 +85,7 @@ export interface BreadcrumbItem {
     }`,
     styleUrls: ['./breadcrumb.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, UIIcon, UITxtDirective, UIBreadcrumbDropdown, UITruncated],
+    imports: [CommonModule, UIIcon, UITxtDirective, UIBreadcrumbDropdown, UITruncated, UILinkDirective],
     encapsulation: ViewEncapsulation.None,
 })
 export class UIBreadcrumb {

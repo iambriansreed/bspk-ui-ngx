@@ -11,23 +11,6 @@
         li {
             display: flex;
             gap: var(--spacing-sizing-02);
-
-            // TODO: Remove these styles when Link component becomes available for Angular.
-            a {
-                display: inline-flex;
-                flex-direction: row;
-                align-items: center;
-                gap: var(--spacing-sizing-01);
-                font: var(--labels-base);
-                text-decoration: none;
-                color: inherit;
-            }
-
-            svg {
-                width: var(--spacing-sizing-05);
-            }
-
-            // END block to delete
         }
     }
 }
