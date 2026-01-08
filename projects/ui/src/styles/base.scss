@@ -95,7 +95,7 @@ body[data-bspk] {
 }
 
 [data-truncated] {
-    max-width: inherit;
+    max-width: 100%;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;

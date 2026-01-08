@@ -22,6 +22,20 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             >
         }
 
+        <h3>Truncated Only</h3>
+        <p>
+            This tooltip only appears when the content is truncated. Resize the window to see the effect. When the text
+            is fully visible, no tooltip will appear.
+        </p>
+        <div style="width: 200px; border: 1px solid #ccc; padding: 8px; margin-bottom: 16px;">
+            <span [ui-tooltip]="'truncatedOnly'"
+                >This is some really long text that might be truncated when displayed in a small container.</span
+            >
+            <br />
+            <br />
+            <span [ui-tooltip]="'truncatedOnly'">This is some text.</span>
+        </div>
+
         <h3>Dynamic Placement</h3>
         <div style="text-align: right;">
             <span
@@ -72,6 +86,11 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             >
         } @else {
             <span>Will return in {{ 10 - (counter() % 10) }} second{{ 10 - (counter() % 10) === 1 ? '' : 's' }}</span>
+        }
+    `,
+    styles: `
+        span[aria-labelledby] {
+            border: 1px dashed #666;
         }
     `,
     host: {

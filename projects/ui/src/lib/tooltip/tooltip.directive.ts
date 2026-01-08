@@ -72,7 +72,7 @@ export interface TooltipProps {
     },
 })
 export class UITooltipDirective implements OnDestroy, OnInit {
-    readonly value = model<TooltipProps | string | undefined>(undefined, {
+    readonly value = model<TooltipProps | string | 'truncatedOnly' | undefined>(undefined, {
         alias: 'ui-tooltip',
     });
 
@@ -81,20 +81,33 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     readonly props = computed((): TooltipProps | undefined => {
         if (!this.value()) return undefined;
 
-        const next =
-            typeof this.value() === 'object'
-                ? (this.value() as TooltipProps)
-                : {
-                      label: this.value() as string,
-                  };
-
-        return {
-            // Defaults
+        const defaults: TooltipProps = {
+            label: '',
             placement: this.computedPlacement || 'top',
             showTail: true,
             disabled: false,
-            ...next,
         };
+
+        if (this.value() === 'truncatedOnly') {
+            const el = this.host.nativeElement;
+
+            this.renderer.setAttribute(el, 'data-truncated', 'true');
+
+            return {
+                ...defaults,
+                label: el?.textContent || '',
+                disabled: !(el.scrollWidth > el.clientWidth),
+            };
+        }
+        if (typeof this.value() === 'string')
+            return {
+                ...defaults,
+                label: this.value() as string,
+            };
+
+        if (typeof this.value() === 'object') return { ...defaults, ...(this.value() as TooltipProps) };
+
+        return defaults;
     });
 
     host = inject<ElementRef<HTMLElement>>(ElementRef);
