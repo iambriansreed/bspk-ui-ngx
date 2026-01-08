@@ -82,7 +82,7 @@ export interface BreadcrumbItem {
  *     ```;
  *
  * @name Breadcrumb
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-breadcrumb',

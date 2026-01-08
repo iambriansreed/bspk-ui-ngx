@@ -43,8 +43,6 @@ export interface FloatingProps {
      * @default false
      */
     refWidth?: boolean;
-    /** Whether to hide the floating element. */
-    hide?: boolean;
     /** The reference element for positioning. */
     reference?: HTMLElement | null;
     /** The floating element to be positioned. */

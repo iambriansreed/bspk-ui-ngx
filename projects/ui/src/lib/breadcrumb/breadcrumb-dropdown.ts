@@ -8,6 +8,9 @@ import {
     signal,
     Renderer2,
     inject,
+    OnInit,
+    viewChild,
+    ElementRef,
 } from '@angular/core';
 
 import { AsInputSignal } from '../../types/common';
@@ -65,7 +68,6 @@ export type BreadcrumbDropdownProps = ScrollListItemsStyleProps & {
             [attr.aria-controls]="open() ? menuId() : null"
             (onClick)="toggleDropdown()"
             #reference />
-
         <ui-menu
             #floating
             [id]="menuId()"
@@ -77,7 +79,6 @@ export type BreadcrumbDropdownProps = ScrollListItemsStyleProps & {
                 <ui-list-item [label]="item.label" [href]="item.href" />
             }
         </ui-menu>
-
         <icon-chevron-right aria-hidden="true" />
     </li> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -87,7 +88,7 @@ export type BreadcrumbDropdownProps = ScrollListItemsStyleProps & {
         style: 'display: contents;',
     },
 })
-export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownProps> {
+export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownProps>, OnInit {
     renderer = inject(Renderer2);
     floating = new Floating(this.renderer);
 
@@ -101,8 +102,38 @@ export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownPro
     readonly open = signal(false);
     readonly menuId = computed(() => `${this.id()}-menu`);
 
+    readonly menu = viewChild('floating', { read: ElementRef });
+    readonly reference = viewChild('reference', { read: ElementRef });
+
+    readonly menuStyle = computed(() => {
+        return {
+            ...this.scrollListItemsStyle(this.scrollLimit(), this.items().length),
+            display: this.open() ? 'block' : 'none',
+            width: 'fit-content',
+            maxWidth: '300px',
+            minWidth: '150px',
+        };
+    });
+
+    ngOnInit(): void {
+        console.log({
+            reference: this.reference()?.nativeElement,
+            floating: this.menu()?.nativeElement,
+        });
+
+        this.floating.setProps({
+            offsetOptions: 4,
+            refWidth: false,
+            reference: this.reference()?.nativeElement,
+            floating: this.menu()?.nativeElement,
+        });
+    }
+
     toggleDropdown(): void {
-        this.open.update((value) => !value);
-        this.floating.compute();
+        const next = !this.open();
+
+        this.open.set(next);
+
+        if (next) this.floating.compute();
     }
 }
