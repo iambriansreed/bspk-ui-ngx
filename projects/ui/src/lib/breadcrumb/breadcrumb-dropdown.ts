@@ -15,6 +15,7 @@ import {
 
 import { AsInputSignal } from '../../types/common';
 import { Floating } from '../../utils/floating';
+import { OutsideClick } from '../../utils/outsideClick';
 import { scrollListItemsStyle, ScrollListItemsStyleProps } from '../../utils/scrollListItemsStyle';
 import { UIButton } from '../button';
 import { IconChevronRight } from '../icons/chevron-right';
@@ -90,8 +91,12 @@ export type BreadcrumbDropdownProps = ScrollListItemsStyleProps & {
 })
 export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownProps>, OnInit {
     renderer = inject(Renderer2);
-    floating = new Floating(this.renderer);
+    readonly menu = viewChild('floating', { read: ElementRef });
+    readonly reference = viewChild('reference', { read: ElementRef });
 
+    outsideClick = inject(OutsideClick);
+
+    floating = new Floating(this.renderer);
     scrollListItemsStyle = scrollListItemsStyle;
 
     readonly items = input.required<BreadcrumbItem[]>();
@@ -99,16 +104,12 @@ export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownPro
     readonly scrollLimit = input<number | undefined>();
     readonly iconChevronRight = IconChevronRight;
     readonly iconMoreHoriz = IconMoreHoriz;
-    readonly open = signal(false);
-    readonly menuId = computed(() => `${this.id()}-menu`);
 
-    readonly menu = viewChild('floating', { read: ElementRef });
-    readonly reference = viewChild('reference', { read: ElementRef });
+    readonly menuId = computed(() => `${this.id()}-menu`);
 
     readonly menuStyle = computed(() => {
         return {
             ...this.scrollListItemsStyle(this.scrollLimit(), this.items().length),
-            display: this.open() ? 'block' : 'none',
             width: 'fit-content',
             maxWidth: '300px',
             minWidth: '150px',
@@ -116,9 +117,8 @@ export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownPro
     });
 
     ngOnInit(): void {
-        console.log({
-            reference: this.reference()?.nativeElement,
-            floating: this.menu()?.nativeElement,
+        this.outsideClick.onInit([this.menu()?.nativeElement, this.reference()?.nativeElement], () => {
+            this.open.set(false);
         });
 
         this.floating.setProps({
