@@ -9,8 +9,16 @@ import { LinkProps, UILinkDirective } from './link.directive';
     template: `
         <h2>Link</h2>
 
-        <h3>Default</h3>
-        <a ui-link href="https://bspk.dev">Default Link</a>
+        <h3>Sizes</h3>
+        <p>
+            <a ui-link href="#" size="small">Small Link</a>
+        </p>
+        <p>
+            <a ui-link href="#" size="base">Base Link</a>
+        </p>
+        <p>
+            <a ui-link href="#" size="large">Large Link</a>
+        </p>
 
         <h3>With External Icon</h3>
         <a ui-link href="https://anywhere.re" trailingIcon="external">External Link</a>
@@ -20,16 +28,6 @@ import { LinkProps, UILinkDirective } from './link.directive';
 
         <h3>With Link Icon</h3>
         <a ui-link href="#" trailingIcon="link">Link Icon</a>
-
-        <h3>Sizes</h3>
-        <a ui-link href="#" size="small">Small Link</a>
-        <br />
-        <a ui-link href="#" size="base">Base Link</a>
-        <br />
-        <a ui-link href="#" size="large">Large Link</a>
-
-        <h3>Disabled</h3>
-        <a ui-link href="#" [disabled]="true">Disabled Link</a>
 
         <h3>Variants</h3>
         <div data-links-grid>
