@@ -26,21 +26,18 @@ export type TooltipPlacement = Extract<Placement, 'bottom' | 'left' | 'right' | 
 export interface TooltipProps {
     /** The tooltip content. */
     label?: string;
-
     /**
      * The placement of the tooltip.
      *
      * @default top
      */
     placement?: TooltipPlacement;
-
     /**
      * Whether to visually show the arrow (tail).
      *
      * @default true
      */
     showTail?: boolean;
-
     /**
      * Determines if the tooltip is disabled.
      *
@@ -99,7 +96,7 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     floating = new FloatingUtility(this.renderer);
 
-    private readonly computedPlacement = signal<TooltipPlacement>('top');
+    private readonly computedPlacement = signal<TooltipPlacement | null>(null);
     private tooltipComponent?: ComponentRef<UITooltip> | null;
 
     constructor() {
@@ -124,7 +121,12 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     updateTooltipProps(props: TooltipProps) {
         if (!this.tooltipComponent) return;
-        this.tooltipComponent.instance.props.set(props);
+        this.tooltipComponent.instance.props.set({
+            ...props,
+
+            // ensure placement is always up to date
+            placement: this.computedPlacement() || props.placement,
+        });
         this.tooltipComponent.changeDetectorRef.detectChanges();
     }
 

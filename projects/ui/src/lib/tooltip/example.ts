@@ -52,6 +52,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
         <span
             [ui-tooltip]="{
                 label: 'No tail',
+                showTail: false,
             }"
             >Hover me (no tail)</span
         >
