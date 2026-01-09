@@ -1,0 +1,1 @@
+var n=e=>{let o=e.code;return e.ctrlKey&&e.altKey&&e.code==="Space"&&(o="Ctrl+Option+Space"),e.shiftKey&&!o.startsWith("Shift")&&(o=`Shift+${e.code}`),o};function d(e={},{stopPropagation:o=!1,preventDefault:l=!1}={}){return t=>{let r=n(t),a=e[r];return a&&(a(t),o&&t.stopPropagation(),l&&t.preventDefault()),a?r:null}}export{d as a};
