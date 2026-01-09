@@ -71,7 +71,7 @@ export type InputProps = CommonProps<'owner' | 'size'> &
             [readOnly]="readOnly() || null"
             [required]="required() || null"
             [type]="type()"
-            [value]="value()"
+            [value]="value() || ''"
             (input)="handleInput($event)"
             #inputEl />
         <ng-content select="[data-trailing]">

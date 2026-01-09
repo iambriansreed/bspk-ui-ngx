@@ -1,7 +1,11 @@
-import { InputSignal } from '@angular/core';
+import { InputSignal, Signal } from '@angular/core';
 
 export type AsInputSignal<T> = {
     [K in keyof T]: undefined extends T[K] ? InputSignal<T[K] | undefined> : InputSignal<NonNullable<T[K]>>;
+};
+
+export type AsSignal<T> = {
+    [K in keyof T]: undefined extends T[K] ? Signal<T[K] | undefined> : Signal<NonNullable<T[K]>>;
 };
 
 export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
@@ -105,6 +109,16 @@ export interface CommonPropsLibrary {
      * Allows for CSS variables to be passed in as well.
      */
     style?: string;
+    /*
+     * The aria-describedby attribute for the control.
+     */
+    ariaDescribedBy?: string;
+    /*
+     * The aria-errormessage attribute for the control.
+     */
+    ariaErrorMessage?: string;
+    /** The aria-labelledby attribute for the control. */
+    ariaLabelledBy?: string;
 }
 
 export type CommonProps<K extends keyof CommonPropsLibrary> = Pick<CommonPropsLibrary, K>;
@@ -112,7 +126,16 @@ export type CommonProps<K extends keyof CommonPropsLibrary> = Pick<CommonPropsLi
 export type RequiredCommonProps<K extends keyof CommonPropsLibrary> = Required<Pick<CommonPropsLibrary, K>>;
 
 export type FieldControlProps<ValueType = string> = CommonProps<
-    'ariaLabel' | 'disabled' | 'id' | 'invalid' | 'name' | 'readOnly' | 'required'
+    | 'ariaDescribedBy'
+    | 'ariaErrorMessage'
+    | 'ariaLabel'
+    | 'ariaLabelledBy'
+    | 'disabled'
+    | 'id'
+    | 'invalid'
+    | 'name'
+    | 'readOnly'
+    | 'required'
 > & {
     /**
      * The value of the field control.
@@ -120,16 +143,6 @@ export type FieldControlProps<ValueType = string> = CommonProps<
      * @required
      */
     value: ValueType | undefined;
-    /*
-     * The aria-describedby attribute for the field control.
-     */
-    ariaDescribedBy?: string;
-    /*
-     * The aria-errormessage attribute for the field control.
-     */
-    ariaErrorMessage?: string;
-    /** The aria-labelledby attribute for the field control. */
-    ariaLabelledBy?: string;
 };
 
 export type Brand =
@@ -144,7 +157,7 @@ export type Brand =
     | 'sothebys';
 
 // All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions
-type AriaRole =
+export type AriaRole =
     | 'alert'
     | 'alertdialog'
     | 'application'
@@ -215,5 +228,12 @@ type AriaRole =
     | 'treegrid'
     | 'treeitem'
     | (string & {});
+
+export interface UtilityBase<PropsType> {
+    props: Signal<PropsType>;
+    init(props: Partial<PropsType>): void;
+    destroy(): void;
+    updateProps(props: Partial<PropsType>): void;
+}
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

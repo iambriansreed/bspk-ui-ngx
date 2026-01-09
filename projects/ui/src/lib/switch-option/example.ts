@@ -33,20 +33,14 @@ export class UISwitchOptionExample {
         value: string;
         checked: boolean;
         disabled: boolean;
-        invalid: boolean;
-        required: boolean;
         ariaLabel: string;
     }> & { id: string })[] = [
-        { label: 'basic', checked: false },
+        { label: 'basic' },
         { label: 'checked = true', checked: true },
+        { label: 'checked = false', checked: false },
         { label: 'checked = true, disabled = true', checked: true, disabled: true },
         { label: 'disabled = true', disabled: true },
-        { label: 'checked = true, invalid = true', checked: true, invalid: true },
-        { label: 'invalid = true', invalid: true },
-        { label: 'required = true', required: true },
-        { label: 'required = false', required: false },
-        { label: 'disabled = true, invalid = true', invalid: true, disabled: true },
-        { label: 'checked = true, disabled = true, invalid = true', invalid: true, disabled: true, checked: true },
+        { label: 'checked = false, disabled = true ', disabled: true, checked: false },
     ].map((config, idx) => ({
         id: `switch-option-example-${idx}`,
         name: `example-switch-group-${idx}`,
@@ -56,7 +50,6 @@ export class UISwitchOptionExample {
 
     onCheckedChange(idx: number, checked: boolean) {
         this.examples[idx].checked = checked;
-        // Optionally, show a snackbar or log for feedback
         sendSnackbar(`Switch ${idx} checked: ${checked}`);
     }
 }

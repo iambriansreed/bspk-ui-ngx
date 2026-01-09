@@ -10,7 +10,6 @@ import {
     Renderer2,
     ViewEncapsulation,
     computed,
-    createComponent,
     effect,
     inject,
     model,
@@ -18,29 +17,27 @@ import {
     viewChild,
 } from '@angular/core';
 import { Placement } from '@floating-ui/dom';
-import { randomString } from '../../utils';
-import { Floating } from '../../utils/floating';
+import { uniqueId } from '../../utils';
+import { addComponent } from '../../utils/add-component';
+import { FloatingUtility } from '../../utils/floating';
 
 export type TooltipPlacement = Extract<Placement, 'bottom' | 'left' | 'right' | 'top'>;
 
 export interface TooltipProps {
     /** The tooltip content. */
     label?: string;
-
     /**
      * The placement of the tooltip.
      *
      * @default top
      */
     placement?: TooltipPlacement;
-
     /**
      * Whether to visually show the arrow (tail).
      *
      * @default true
      */
     showTail?: boolean;
-
     /**
      * Determines if the tooltip is disabled.
      *
@@ -66,145 +63,150 @@ export interface TooltipProps {
     standalone: true,
     host: {
         '(mouseenter)': 'handleOpenEvent($event)',
-        '(mouseleave)': 'handleCloseEvent($event)',
+        '(mouseleave)': 'handleCloseEvent()',
         '(focusin)': 'handleOpenEvent($event)',
-        '(blur)': 'handleCloseEvent($event)',
+        '(blur)': 'handleCloseEvent()',
     },
 })
 export class UITooltipDirective implements OnDestroy, OnInit {
-    readonly value = model<TooltipProps | string | undefined>(undefined, {
+    readonly value = model<TooltipProps | string | { truncated: true } | undefined>(undefined, {
         alias: 'ui-tooltip',
     });
 
-    readonly tooltipId = model<string | undefined>(undefined);
+    readonly tooltipId = uniqueId('tooltip');
 
-    readonly props = computed((): TooltipProps | undefined => {
-        if (!this.value()) return undefined;
+    readonly props = computed(() => {
+        const value = this.value();
 
-        const next =
-            typeof this.value() === 'object'
-                ? (this.value() as TooltipProps)
-                : {
-                      label: this.value() as string,
-                  };
+        const next: TooltipProps & { truncated?: true } = {};
 
-        return {
-            // Defaults
-            placement: 'top',
-            showTail: true,
-            disabled: false,
-            ...next,
-        };
+        if (!value) return next;
+
+        if (typeof value === 'string') {
+            return { ...next, label: value };
+        } else {
+            return { ...next, ...value };
+        }
     });
 
     host = inject<ElementRef<HTMLElement>>(ElementRef);
     renderer = inject(Renderer2);
     env = inject(EnvironmentInjector);
     document = inject<Document>(DOCUMENT);
-    floating = new Floating(this.renderer);
 
+    floating = new FloatingUtility(this.renderer);
+
+    private readonly computedPlacement = signal<TooltipPlacement | null>(null);
     private tooltipComponent?: ComponentRef<UITooltip> | null;
-    private referenceEl?: HTMLElement | null;
-    private tooltipEl?: HTMLElement | null;
 
     constructor() {
         effect(() => {
-            this.updateTooltipProps(this.props() || {});
+            this.updateTooltipProps(this.props());
         });
+    }
+
+    get arrowEl() {
+        return this.tooltipComponent?.instance.arrowElement;
+    }
+
+    get tooltipEl() {
+        return this.tooltipComponent?.location.nativeElement as HTMLElement;
+    }
+
+    get referenceEl() {
+        let el = this.host.nativeElement;
+        if (!el?.checkVisibility?.()) el = (el?.firstElementChild as HTMLElement) || null;
+        return el;
     }
 
     updateTooltipProps(props: TooltipProps) {
         if (!this.tooltipComponent) return;
-        this.tooltipComponent.instance.props.set(props);
+        this.tooltipComponent.instance.props.set({
+            ...props,
+
+            // ensure placement is always up to date
+            placement: this.computedPlacement() || props.placement,
+        });
         this.tooltipComponent.changeDetectorRef.detectChanges();
     }
 
-    async handleOpenEvent(event: Event) {
-        if (!this.tooltipEl || event.target !== this.referenceEl) return;
+    handleOpenEvent(event: Event) {
+        const props = this.props();
+
+        if (
+            event.target !== this.referenceEl ||
+            props.disabled ||
+            // skip if not actively truncated
+            (props.truncated && this.referenceEl?.scrollWidth <= this.referenceEl?.clientWidth)
+        )
+            return;
+
+        if (props.truncated) this.addComponent({ label: this.referenceEl.textContent || '' });
 
         this.renderer.setStyle(this.tooltipEl, 'display', 'block');
 
-        // // Toggle tail visibility
-        // this.render.setStyle(arrowEl, 'opacity', this.props.showTail !== false ? '1' : '0');
-
-        const { placement } = await this.floating.compute();
-
-        if (this.tooltipEl && placement !== this.props()?.placement)
-            this.updateTooltipProps({ ...this.props(), placement: placement as TooltipPlacement });
+        this.floating
+            .compute({
+                placement: this.props()?.placement || 'top',
+                reference: this.referenceEl,
+                floating: this.tooltipEl,
+                arrow: this.arrowEl,
+                offsetOptions: this.arrowEl ? 8 : 4,
+                refWidth: false,
+            })
+            .then(({ placement }) => {
+                if (this.tooltipEl && placement !== this.props()?.placement)
+                    this.computedPlacement.set(placement as TooltipPlacement);
+            });
     }
 
-    handleCloseEvent(force: true): void;
-    handleCloseEvent(event: Event): void;
-    handleCloseEvent(event: Event | true) {
-        if (
-            // if there is no tooltip or reference element
-            !this.tooltipComponent ||
-            !this.tooltipEl ||
-            !this.referenceEl ||
-            // if not forced to try to close or event target is not the reference element
-            (event !== true && event.target !== this.referenceEl)
-        )
-            // nothing to do
-            return;
-
+    handleCloseEvent() {
+        if (this.props().truncated) this.removeComponent();
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
     }
 
     ngOnDestroy(): void {
-        this.handleCloseEvent(true);
+        this.handleCloseEvent();
         if (this.referenceEl) this.renderer.removeAttribute(this.referenceEl, 'aria-labelledby');
 
-        if (this.tooltipEl) this.renderer.removeChild(this.tooltipEl.parentNode, this.tooltipEl);
-
-        if (this.tooltipComponent) this.tooltipComponent.destroy();
-        this.tooltipComponent = null;
+        this.removeComponent();
     }
 
-    ngOnInit(): void {
-        const tooltipId = this.tooltipId() || `tooltip-${randomString()}`;
-        this.tooltipId.set(tooltipId);
+    removeComponent() {
+        if (this.tooltipComponent) {
+            this.renderer.removeChild(this.tooltipEl.parentNode, this.tooltipEl);
+            this.tooltipComponent.destroy();
+            this.tooltipComponent = null;
+        }
+    }
 
-        const props = this.props();
-        let referenceElement = this.host.nativeElement;
-
-        if (!referenceElement?.checkVisibility?.())
-            referenceElement = (referenceElement?.firstElementChild as HTMLElement) || null;
-
-        this.referenceEl = referenceElement;
-
+    addComponent(props = this.props()): boolean {
         if (
             // if we can't render or already rendered or disabled or no label we can't show
             !this.document ||
             !this.referenceEl ||
-            props?.disabled ||
-            !props?.label
+            !props.label
         ) {
-            return;
+            return false;
         }
 
-        // Link host and tooltip for a11y
-        this.renderer.setAttribute(referenceElement, 'aria-labelledby', tooltipId);
-        const hostEl = this.document.createElement('ui-tooltip');
-        this.document.body.appendChild(hostEl);
+        this.tooltipComponent = addComponent(this.env, UITooltip, 'ui-tooltip')!;
 
-        this.tooltipComponent = createComponent(UITooltip, {
-            environmentInjector: this.env,
-            hostElement: hostEl,
-        });
-
-        this.tooltipEl = this.tooltipComponent.location.nativeElement as HTMLElement;
         this.renderer.setStyle(this.tooltipEl, 'display', 'none');
-        this.tooltipComponent.instance.id.set(tooltipId);
+        this.tooltipComponent.instance.id.set(this.tooltipId);
         this.updateTooltipProps(props);
+        return true;
+    }
 
-        this.floating.setProps({
-            placement: props.placement,
-            reference: this.referenceEl,
-            floating: this.tooltipEl,
-            arrow: (this.props()?.showTail && this.tooltipComponent?.instance.arrowElement) || null,
-            offsetOptions: this.props()?.showTail ? 8 : 4,
-            refWidth: false,
-        });
+    ngOnInit(): void {
+        if (!this.referenceEl) return;
+
+        if (this.props().truncated) {
+            this.renderer.setAttribute(this.referenceEl, 'data-truncated', 'true');
+        } else {
+            this.renderer.setAttribute(this.referenceEl, 'aria-labelledby', this.tooltipId);
+            this.addComponent(this.props());
+        }
     }
 }
 
@@ -214,29 +216,26 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     standalone: true,
     template: `
         <span data-text>{{ props().label }}</span>
-        <span aria-hidden="true" data-arrow #arrow></span>
+        @if (props().showTail !== false) {
+            <span aria-hidden="true" data-arrow #arrow></span>
+        }
     `,
     styleUrl: './tooltip.scss',
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'tooltip',
         role: 'tooltip',
-        '[attr.data-placement]': 'props().placement',
+        '[attr.data-placement]': 'props().placement || "top"',
         '[attr.id]': 'id() || null',
     },
 })
 class UITooltip {
-    readonly arrow = viewChild.required<ElementRef>('arrow');
+    readonly arrow = viewChild<ElementRef>('arrow');
 
     /** Tooltip id for a11y labelling */
     readonly id = signal<string | undefined>(undefined);
 
-    readonly props = model<TooltipProps>({
-        label: '',
-        placement: 'top',
-        showTail: true,
-        disabled: false,
-    });
+    readonly props = model<TooltipProps>({});
 
     get arrowElement(): HTMLElement | null {
         return this.arrow()?.nativeElement || null;

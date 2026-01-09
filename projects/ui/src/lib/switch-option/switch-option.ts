@@ -18,16 +18,17 @@ import { UISwitch } from '../switch';
         data-bspk="switch-option"
         [attr.aria-disabled]="disabled() ? true : null"
         as="label">
-        <ui-switch
-            data-leading
-            [id]="id()"
-            [name]="name()"
-            [value]="value()"
-            [checked]="checked()"
-            [disabled]="disabled()"
-            [ariaLabel]="ariaLabel()"
-            (checkedChange)="checkedChange.emit($event)">
-        </ui-switch>
+        <span data-leading>
+            <ui-switch
+                [id]="id()"
+                [name]="name()"
+                [value]="value()"
+                [checked]="checked()"
+                [disabled]="disabled()"
+                [ariaLabel]="ariaLabel()"
+                (checkedChange)="checkedChange.emit($event)">
+            </ui-switch
+        ></span>
     </ui-list-item>`,
     host: {
         'data-bspk': 'switch-option',

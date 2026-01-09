@@ -16,7 +16,7 @@ export const getEventCode = (event: KeyboardEvent) => {
  * @param keysCallback - An object where keys are keyboard event codes and values are callback functions.
  * @returns A function that can be used as an event handler for keydown events.
  */
-export function handleKeyDown(
+export function keydownHandler(
     keysCallback: KeysCallback = {},
     { stopPropagation = false, preventDefault = false }: { stopPropagation?: boolean; preventDefault?: boolean } = {},
 ) {

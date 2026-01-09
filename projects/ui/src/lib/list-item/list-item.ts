@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } from '@angular/core';
+import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { UITooltipDirective } from '../tooltip';
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
@@ -19,14 +20,16 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
 @Component({
     selector: 'ui-list-item',
     standalone: true,
-    imports: [NgTemplateOutlet],
+    imports: [NgTemplateOutlet, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./list-item.scss'],
     template: `
         <ng-template #inner>
             <ng-content select="[data-leading]"></ng-content>
             <span data-item-label>
-                <span data-text>{{ label() }}</span>
+                <span data-text [ui-tooltip]="{ truncated: true }">
+                    {{ label() }}
+                </span>
                 @if (subText()) {
                     <span data-sub-text>{{ subText() }}</span>
                 }
@@ -38,7 +41,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
                 [attr.href]="href()"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
@@ -47,7 +50,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
@@ -58,7 +61,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -66,7 +69,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
             </button>
@@ -75,7 +78,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -83,18 +86,18 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 [attr.for]="htmlFor()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
             </label>
         } @else {
-            <span
+            <div
                 [attr.aria-label]="ariaLabel() || undefined"
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
-                [attr.tabindex]="tabIndex() ?? (actionable() ? 0 : -1)"
+                [attr.tabindex]="tabIndex() ?? (actionable ? 0 : -1)"
                 [attr.data-action]="actionable || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
@@ -102,15 +105,16 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
-            </span>
+            </div>
         }
     `,
     host: {
         style: 'display: contents;',
+        '[id]': `'list-item-' + id()`,
     },
 })
 export class UIListItem {
@@ -160,19 +164,16 @@ export class UIListItem {
     /** Explicit tabIndex; defaults to 0 when actionable, otherwise -1. */
     readonly tabIndex = input<number | null>();
 
-    readonly actionable = computed(() => {
-        return (
-            !!((this.href() || this.clicked.observed) && !this.isReadonly && !this.isDisabled) || this.as() === 'button'
-        );
-    });
-
-    id = `${Math.random().toString(36).slice(2)}`;
+    readonly id = input<string>(`${Math.random().toString(36).slice(2)}`);
 
     get isReadonly() {
         return !!(this.readonly() || this.ariaReadonly());
     }
     get isDisabled() {
         return !!(this.disabled() || this.ariaDisabled());
+    }
+    get actionable() {
+        return !!(this.href() && !this.isReadonly && !this.isDisabled) || this.as() === 'button';
     }
 
     get As() {

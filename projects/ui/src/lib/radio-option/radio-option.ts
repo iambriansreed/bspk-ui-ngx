@@ -20,18 +20,19 @@ import { UIRadio } from '../radio/radio';
         data-bspk="radio-option"
         [attr.aria-disabled]="disabled() ? true : null"
         as="label">
-        <ui-radio
-            data-leading
-            [id]="id()"
-            [name]="name()"
-            [value]="value()"
-            [checked]="checked()"
-            [disabled]="disabled()"
-            [required]="required()"
-            [invalid]="invalid()"
-            [ariaLabel]="ariaLabel()"
-            (checkedChange)="checkedChange.emit($event)">
-        </ui-radio>
+        <span data-leading>
+            <ui-radio
+                [id]="id()"
+                [name]="name()"
+                [value]="value()"
+                [checked]="checked()"
+                [disabled]="disabled()"
+                [required]="required()"
+                [invalid]="invalid()"
+                [ariaLabel]="ariaLabel()"
+                (checkedChange)="checkedChange.emit($event)">
+            </ui-radio>
+        </span>
     </ui-list-item>`,
     host: {
         'data-bspk': 'radio-option',
