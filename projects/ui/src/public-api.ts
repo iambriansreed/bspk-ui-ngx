@@ -46,6 +46,5 @@ export * from './lib/tag';
 export * from './lib/textarea';
 export * from './lib/textarea-field';
 export * from './lib/tooltip';
-export * from './lib/truncated';
 export * from './lib/txt';
 export * from './services/theme';

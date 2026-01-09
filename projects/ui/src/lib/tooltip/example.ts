@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, model, AfterViewInit } from '@angular/core';
+import { Component, model, AfterViewInit, OnDestroy } from '@angular/core';
 import { UIButton } from '../button/button';
 import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
 
@@ -22,6 +22,20 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             >
         }
 
+        <h3>Truncated Only</h3>
+        <p>
+            This tooltip only appears when the content is truncated. Resize the window to see the effect. When the text
+            is fully visible, no tooltip will appear.
+        </p>
+        <div style="width: 200px; border: 1px solid #ccc; padding: 8px; margin-bottom: 16px;">
+            <span style="width: 100%" [ui-tooltip]="{ truncated: true }"
+                >This is some really long text that might be truncated when displayed in a small container.</span
+            >
+            <br />
+            <br />
+            <span style="width: 100%" [ui-tooltip]="{ truncated: true }">This is some text.</span>
+        </div>
+
         <h3>Dynamic Placement</h3>
         <div style="text-align: right;">
             <span
@@ -38,7 +52,6 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
         <span
             [ui-tooltip]="{
                 label: 'No tail',
-                showTail: false,
             }"
             >Hover me (no tail)</span
         >
@@ -74,19 +87,31 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             <span>Will return in {{ 10 - (counter() % 10) }} second{{ 10 - (counter() % 10) === 1 ? '' : 's' }}</span>
         }
     `,
+    styles: `
+        span[aria-labelledby] {
+            border: 1px dashed #666;
+        }
+    `,
     host: {
         // ensure the example tooltips are not cut off
         style: `overflow: hidden;`,
     },
 })
-export class UITooltipExample implements AfterViewInit {
+export class UITooltipExample implements AfterViewInit, OnDestroy {
     placements: TooltipPlacement[] = ['top', 'bottom', 'left', 'right'];
 
     readonly counter = model(0);
 
+    interval: ReturnType<typeof setInterval> | undefined;
+
     ngAfterViewInit() {
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.counter.set(this.counter() + 1);
         }, 1000);
+    }
+
+    ngOnDestroy() {
+        // make sure to clear interval on destroy
+        if (this.interval) clearInterval(this.interval);
     }
 }

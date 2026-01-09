@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
 import { randomString } from '../../utils';
-import { keydownHandler } from '../../utils/keydownHandler';
+import { keydownHandler } from '../../utils/keydown-handler';
 import { UIBadge } from '../badge';
 import { UIIcon } from '../icon';
 import { UITooltipDirective } from '../tooltip/tooltip.directive';

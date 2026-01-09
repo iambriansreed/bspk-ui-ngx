@@ -1,4 +1,4 @@
-import { Renderer2 } from '@angular/core';
+import { Renderer2, signal } from '@angular/core';
 import {
     arrow,
     computePosition,
@@ -11,6 +11,7 @@ import {
     size,
     Strategy,
 } from '@floating-ui/dom';
+import { UtilityBase } from '../types/common';
 
 export interface FloatingProps {
     /**
@@ -51,42 +52,60 @@ export interface FloatingProps {
     arrow?: HTMLElement | null;
 }
 
-export class FloatingUtility {
-    private props: FloatingProps | null = null;
+export class FloatingUtility implements UtilityBase<FloatingProps> {
+    readonly props = signal<FloatingProps>({});
 
     constructor(private render: Renderer2) {}
+    destroy(): void {
+        throw new Error('Method not implemented.');
+    }
+
+    updateProps(props: Partial<FloatingProps>) {
+        this.props.set({
+            ...this.props(),
+            ...props,
+        });
+    }
 
     init(
         props: Omit<FloatingProps, 'floating' | 'reference'> & Required<Pick<FloatingProps, 'floating' | 'reference'>>,
     ) {
-        this.props = {
-            ...this.props,
-            ...props,
-        };
+        this.updateProps(props);
     }
 
-    async compute() {
+    async compute(nextProps?: Partial<FloatingProps>) {
+        const {
+            placement,
+            strategy,
+            offsetOptions,
+            refWidth,
+            floating,
+            reference,
+            arrow: arrowEl,
+        } = {
+            ...this.props(),
+            ...nextProps,
+        };
+
         if (
-            //
-            !this.props?.floating ||
-            !this.props?.reference
+            // Missing required elements
+            !floating ||
+            !reference
         )
             return {} as ComputePositionReturn;
 
-        const { floating, reference, arrow: arrowEl } = this.props;
-
-        this.render.setStyle(floating, 'position', this.props?.strategy || 'fixed');
+        this.render.setStyle(floating, 'position', strategy || 'fixed');
         this.render.setStyle(floating, 'opacity', '0');
         this.render.setStyle(floating, 'pointerEvents', 'none');
 
         const returnValue = await computePosition(reference, floating, {
-            placement: this.props.placement || 'bottom-start',
-            strategy: 'fixed',
+            placement: placement || 'bottom-start',
+            strategy: strategy || 'fixed',
             middleware: [
                 arrowEl ? arrow({ element: arrowEl! }) : undefined,
-                offset(this.props.offsetOptions),
+                offset(offsetOptions),
                 flip(),
-                this.props.refWidth &&
+                refWidth &&
                     size({
                         apply({ rects, elements }: MiddlewareState) {
                             Object.assign(elements.floating.style, {

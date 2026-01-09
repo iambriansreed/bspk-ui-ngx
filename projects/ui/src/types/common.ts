@@ -1,7 +1,11 @@
-import { InputSignal } from '@angular/core';
+import { InputSignal, Signal } from '@angular/core';
 
 export type AsInputSignal<T> = {
     [K in keyof T]: undefined extends T[K] ? InputSignal<T[K] | undefined> : InputSignal<NonNullable<T[K]>>;
+};
+
+export type AsSignal<T> = {
+    [K in keyof T]: undefined extends T[K] ? Signal<T[K] | undefined> : Signal<NonNullable<T[K]>>;
 };
 
 export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
@@ -224,5 +228,12 @@ export type AriaRole =
     | 'treegrid'
     | 'treeitem'
     | (string & {});
+
+export interface UtilityBase<PropsType> {
+    props: Signal<PropsType>;
+    init(props: Partial<PropsType>): void;
+    destroy(): void;
+    updateProps(props: Partial<PropsType>): void;
+}
 
 /** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */

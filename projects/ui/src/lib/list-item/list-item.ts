@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
-import { UITruncated } from '../truncated/truncated';
+import { UITooltipDirective } from '../tooltip';
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
@@ -20,15 +20,15 @@ import { UITruncated } from '../truncated/truncated';
 @Component({
     selector: 'ui-list-item',
     standalone: true,
-    imports: [NgTemplateOutlet, UITruncated],
+    imports: [NgTemplateOutlet, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./list-item.scss'],
     template: `
         <ng-template #inner>
             <ng-content select="[data-leading]"></ng-content>
             <span data-item-label>
-                <span data-text>
-                    <ui-truncated>{{ label() }}</ui-truncated>
+                <span data-text [ui-tooltip]="{ truncated: true }">
+                    {{ label() }}
                 </span>
                 @if (subText()) {
                     <span data-sub-text>{{ subText() }}</span>
