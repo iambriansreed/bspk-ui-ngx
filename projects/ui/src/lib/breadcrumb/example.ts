@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { UIBreadcrumb, BreadcrumbItem } from './breadcrumb';
+import { UIBreadcrumb, BreadcrumbItem } from './';
 
 @Component({
     selector: 'ui-breadcrumb-example',
@@ -28,42 +28,42 @@ import { UIBreadcrumb, BreadcrumbItem } from './breadcrumb';
 })
 export class UIBreadcrumbExample {
     readonly minimumItems: BreadcrumbItem[] = [
-        { label: 'Item 1', href: '#link-1' },
-        { label: 'Item 2', href: '#link-2' },
+        { label: 'Item 1', href: 'breadcrumb/#link-1' },
+        { label: 'Item 2', href: 'breadcrumb/#link-2' },
     ];
 
     readonly fiveItems: BreadcrumbItem[] = [
-        { label: 'Item 1', href: '#link-1' },
-        { label: 'Item 2', href: '#link-2' },
-        { label: 'Item 3', href: '#link-3' },
-        { label: 'Item 4', href: '#link-4' },
-        { label: 'Item 5', href: '#link-5' },
+        { label: 'Item 1', href: 'breadcrumb/#link-1' },
+        { label: 'Item 2', href: 'breadcrumb/#link-2' },
+        { label: 'Item 3', href: 'breadcrumb/#link-3' },
+        { label: 'Item 4', href: 'breadcrumb/#link-4' },
+        { label: 'Item 5', href: 'breadcrumb/#link-5' },
     ];
 
     readonly manyItems: BreadcrumbItem[] = [
-        { label: 'Item 1', href: '#link-1' },
-        { label: 'Item 2', href: '#link-2' },
-        { label: 'Item 3', href: '#link-3' },
-        { label: 'Item 4', href: '#link-4' },
-        { label: 'Item 5', href: '#link-5' },
-        { label: 'Item 6', href: '#link-6' },
+        { label: 'Item 1', href: 'breadcrumb/#link-1' },
+        { label: 'Item 2', href: 'breadcrumb/#link-2' },
+        { label: 'Item 3', href: 'breadcrumb/#link-3' },
+        { label: 'Item 4', href: 'breadcrumb/#link-4' },
+        { label: 'Item 5', href: 'breadcrumb/#link-5' },
+        { label: 'Item 6', href: 'breadcrumb/#link-6' },
     ];
 
     readonly manyItemsExtended: BreadcrumbItem[] = [
-        { label: 'Brioche', href: '#brioche' },
-        { label: 'Whole Wheat', href: '#whole-wheat' },
-        { label: 'Sourdough', href: '#sourdough' },
-        { label: 'Rye', href: '#rye' },
-        { label: 'Multigrain', href: '#multigrain' },
-        { label: 'Baguette', href: '#baguette' },
-        { label: 'Focaccia', href: '#focaccia' },
-        { label: 'Ciabatta', href: '#ciabatta' },
-        { label: 'Pita', href: '#pita' },
-        { label: 'Naan', href: '#naan' },
-        { label: 'Flatbread', href: '#flatbread' },
-        { label: 'Pumpernickel', href: '#pumpernickel' },
-        { label: 'Cornbread', href: '#cornbread' },
-        { label: 'Indian Bread', href: '#indian-bread' },
-        { label: 'Tortilla', href: '#tortilla' },
+        { label: 'Brioche', href: 'breadcrumb/#brioche' },
+        { label: 'Whole Wheat', href: 'breadcrumb/#whole-wheat' },
+        { label: 'Sourdough', href: 'breadcrumb/#sourdough' },
+        { label: 'Rye', href: 'breadcrumb/#rye' },
+        { label: 'Multigrain', href: 'breadcrumb/#multigrain' },
+        { label: 'Baguette', href: 'breadcrumb/#baguette' },
+        { label: 'Focaccia', href: 'breadcrumb/#focaccia' },
+        { label: 'Ciabatta', href: 'breadcrumb/#ciabatta' },
+        { label: 'Pita', href: 'breadcrumb/#pita' },
+        { label: 'Naan', href: 'breadcrumb/#naan' },
+        { label: 'Flatbread', href: 'breadcrumb/#flatbread' },
+        { label: 'Pumpernickel', href: 'breadcrumb/#pumpernickel' },
+        { label: 'Cornbread', href: 'breadcrumb/#cornbread' },
+        { label: 'Indian Bread', href: 'breadcrumb/#indian-bread' },
+        { label: 'Tortilla', href: 'breadcrumb/#tortilla' },
     ];
 }

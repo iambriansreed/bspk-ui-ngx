@@ -1,13 +1,35 @@
-import { OverlayModule, ConnectedPosition } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, input, computed, signal } from '@angular/core';
+import {
+    Component,
+    ChangeDetectionStrategy,
+    ViewEncapsulation,
+    input,
+    computed,
+    inject,
+    OnInit,
+    viewChild,
+    ElementRef,
+    Renderer2,
+    signal,
+} from '@angular/core';
 
+import { AsInputSignal } from '../../types/common';
+import { ArrowNavigationUtility } from '../../utils/arrow-navigation';
+import { FloatingUtility } from '../../utils/floating';
+import { keydownHandler } from '../../utils/keydown-handler';
+import { OutsideClickUtility } from '../../utils/outside-click';
+import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
 import { UIButton } from '../button';
 import { IconChevronRight } from '../icons/chevron-right';
 import { IconMoreHoriz } from '../icons/more-horiz';
 import { UIListItem } from '../list-item';
 import { UIMenu } from '../menu';
-import { BreadcrumbItem } from './breadcrumb';
+import { BreadcrumbItem } from './utils';
+
+export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
+    items: BreadcrumbItem[];
+    id: string;
+};
 
 /**
  * The BreadcrumbDropdown component is used to display a dropdown menu within a breadcrumb navigation.
@@ -19,117 +41,130 @@ import { BreadcrumbItem } from './breadcrumb';
     selector: 'ui-breadcrumb-dropdown',
     template: `<li>
         <ui-button
-            cdkOverlayOrigin
-            #trigger="cdkOverlayOrigin"
             [icon]="iconMoreHoriz"
             [label]="'Access to ' + items().length + ' pages'"
             [iconOnly]="true"
             variant="tertiary"
             size="small"
-            [attr.aria-expanded]="open()"
+            [attr.aria-expanded]="!!open()"
             [attr.aria-haspopup]="'listbox'"
             [attr.aria-controls]="open() ? menuId() : null"
-            (onClick)="toggleDropdown()" />
-
-        <ng-template
-            cdk-connected-overlay
-            [cdkConnectedOverlayOrigin]="trigger"
-            [cdkConnectedOverlayOpen]="open()"
-            [cdkConnectedOverlayHasBackdrop]="true"
-            [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-            [cdkConnectedOverlayPositions]="positions"
-            (backdropClick)="open.set(false)">
-            <ui-menu
-                [id]="menuId()"
-                label="Expanded breadcrumb"
-                owner="Breadcrumb"
-                role="listbox"
-                [ngStyle]="dropdownStyles()">
-                @for (item of items(); track item.href) {
-                    <ui-list-item [label]="item.label" [href]="item.href" />
-                }
-            </ui-menu>
-        </ng-template>
-
-        <icon-chevron-right aria-hidden="true" />
+            (onClick)="toggleDropdown()"
+            #reference
+            (keydown)="handleKeydown($event)" />
+        <ui-menu
+            #floating
+            [id]="menuId()"
+            label="Expanded breadcrumb"
+            owner="Breadcrumb"
+            role="listbox"
+            [ngStyle]="menuStyle()">
+            @for (item of itemsWithIds(); track item.href) {
+                <ui-list-item
+                    as="a"
+                    [tabIndex]="-1"
+                    [id]="item.id"
+                    [label]="item.label"
+                    [href]="item.href"
+                    [active]="arrowNavigation.activeElementId === item.id" />
+            }
+        </ui-menu>
+        <icon-chevron-right aria-hidden="true" width="24" />
     </li> `,
-    styles: `
-        :host {
-            display: contents;
-        }
-
-        li {
-            display: flex;
-            gap: var(--spacing-sizing-02);
-        }
-    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, UIButton, UIListItem, UIMenu, IconChevronRight, OverlayModule],
+    imports: [CommonModule, UIButton, UIListItem, UIMenu, IconChevronRight],
     encapsulation: ViewEncapsulation.None,
+    host: {
+        style: 'display: contents;',
+    },
 })
-export class UIBreadcrumbDropdown {
-    /**
-     * The array of breadcrumb items to display in the dropdown.
-     *
-     * @required
-     */
+export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownProps>, OnInit {
+    render = inject(Renderer2);
+
+    outsideClick = new OutsideClickUtility();
+    floating = new FloatingUtility(this.render);
+    arrowNavigation = new ArrowNavigationUtility();
+
+    readonly menu = viewChild('floating', { read: ElementRef });
+    readonly reference = viewChild('reference', { read: ElementRef });
+
+    readonly open = signal<boolean>(false);
+
     readonly items = input.required<BreadcrumbItem[]>();
-
-    /**
-     * The unique identifier for the breadcrumb (used to generate menu ID).
-     *
-     * @required
-     */
     readonly id = input.required<string>();
-
-    /**
-     * The maximum number of items to display before scrolling.
-     *
-     * @example
-     *     5;
-     */
     readonly scrollLimit = input<number | undefined>();
-
     readonly iconChevronRight = IconChevronRight;
     readonly iconMoreHoriz = IconMoreHoriz;
-
-    readonly open = signal(false);
     readonly menuId = computed(() => `${this.id()}-menu`);
+    readonly itemsWithIds = computed(() => this.items().map((item, index) => ({ ...item, id: this.itemId(index) })));
 
-    readonly positions: ConnectedPosition[] = [
-        {
-            originX: 'start',
-            originY: 'bottom',
-            overlayX: 'start',
-            overlayY: 'top',
-            offsetY: 4,
-        },
-        {
-            originX: 'start',
-            originY: 'top',
-            overlayX: 'start',
-            overlayY: 'bottom',
-            offsetY: -4,
-        },
-    ];
-
-    readonly dropdownStyles = computed(() => {
-        const scrollLimit = this.scrollLimit();
-        const itemCount = this.items().length;
-
-        let maxHeight = 'auto';
-
-        if (scrollLimit && itemCount > scrollLimit) {
-            maxHeight = `calc(var(--list-item-height) * ${scrollLimit})`;
-        }
-
+    readonly menuStyle = computed(() => {
         return {
-            'max-height': maxHeight,
-            'overflow-y': scrollLimit && itemCount > scrollLimit ? 'auto' : 'visible',
+            ...scrollLimitStyle(this.scrollLimit(), this.items().length),
+            width: 'fit-content',
+            maxWidth: '300px',
+            minWidth: '150px',
+            display: this.open() ? 'block' : 'none',
         };
     });
 
+    get itemId(): (index: number) => string {
+        return (index: number) => `${this.id()}-item-${index}`;
+    }
+
+    openMenu(): void {
+        this.open.set(true);
+        this.arrowNavigation.setActiveElementId(this.itemsWithIds()[0]?.id || null);
+        this.outsideClick.updateProps({ disabled: false });
+        this.floating.compute();
+    }
+
+    closeMenu(): void {
+        this.open.set(false);
+        this.arrowNavigation.setActiveElementId(null);
+        this.outsideClick.updateProps({ disabled: true });
+    }
+
+    ngOnInit(): void {
+        this.outsideClick.init({
+            elements: [this.menu()?.nativeElement, this.reference()?.nativeElement],
+            disabled: !this.open(),
+            handleTabs: true,
+            callback: () => this.closeMenu(),
+        });
+
+        this.arrowNavigation.init({
+            ids: this.itemsWithIds().map((i) => i.id),
+            defaultActiveId: undefined,
+        });
+
+        this.floating.init({
+            offsetOptions: 4,
+            refWidth: false,
+            reference: this.reference()?.nativeElement,
+            floating: this.menu()?.nativeElement,
+        });
+    }
+
     toggleDropdown(): void {
-        this.open.update((value) => !value);
+        if (this.open()) {
+            this.closeMenu();
+        } else {
+            this.openMenu();
+        }
+    }
+
+    handleKeydown(event: KeyboardEvent): void {
+        this.arrowNavigation.handleKeydown(event);
+
+        const SpaceEnter = () => {
+            document.querySelector<HTMLElement>(`[id="${this.arrowNavigation.activeElementId}"]`)?.click();
+        };
+
+        keydownHandler({
+            Escape: () => this.closeMenu(),
+            Enter: SpaceEnter,
+            Space: SpaceEnter,
+        })(event);
     }
 }
