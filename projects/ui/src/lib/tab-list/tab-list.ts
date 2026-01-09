@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
 import { randomString } from '../../utils';
-import { handleKeyDown } from '../../utils/handleKeyDown';
+import { keydownHandler } from '../../utils/keydown-handler';
 import { UIBadge } from '../badge';
 import { UIIcon } from '../icon';
 import { UITooltipDirective } from '../tooltip/tooltip.directive';
@@ -168,7 +168,7 @@ export class UITabListUtility {
         const currentId = this.activeId() || this.focusableId();
         const idx = opts.findIndex((o) => o.id === currentId);
 
-        handleKeyDown(
+        keydownHandler(
             {
                 ArrowRight: () => {
                     const next = idx >= 0 ? opts[(idx + 1) % opts.length] : opts[0];

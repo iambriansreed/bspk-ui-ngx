@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
-import { UITruncated } from '../truncated/truncated';
+import { UITooltipDirective } from '../tooltip';
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and
@@ -20,15 +20,15 @@ import { UITruncated } from '../truncated/truncated';
 @Component({
     selector: 'ui-list-item',
     standalone: true,
-    imports: [NgTemplateOutlet, UITruncated],
+    imports: [NgTemplateOutlet, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./list-item.scss'],
     template: `
         <ng-template #inner>
             <ng-content select="[data-leading]"></ng-content>
             <span data-item-label>
-                <span data-text>
-                    <ui-truncated>{{ label() }}</ui-truncated>
+                <span data-text [ui-tooltip]="{ truncated: true }">
+                    {{ label() }}
                 </span>
                 @if (subText()) {
                     <span data-sub-text>{{ subText() }}</span>
@@ -50,7 +50,7 @@ import { UITruncated } from '../truncated/truncated';
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
@@ -69,7 +69,7 @@ import { UITruncated } from '../truncated/truncated';
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
             </button>
@@ -86,7 +86,7 @@ import { UITruncated } from '../truncated/truncated';
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 [attr.for]="htmlFor()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
@@ -105,7 +105,7 @@ import { UITruncated } from '../truncated/truncated';
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id"
+                [id]="id()"
                 (click)="onClick($event)"
                 (keydown.enter)="onClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
@@ -114,6 +114,7 @@ import { UITruncated } from '../truncated/truncated';
     `,
     host: {
         style: 'display: contents;',
+        '[id]': `'list-item-' + id()`,
     },
 })
 export class UIListItem {
@@ -163,7 +164,7 @@ export class UIListItem {
     /** Explicit tabIndex; defaults to 0 when actionable, otherwise -1. */
     readonly tabIndex = input<number | null>();
 
-    id = `${Math.random().toString(36).slice(2)}`;
+    readonly id = input<string>(`${Math.random().toString(36).slice(2)}`);
 
     get isReadonly() {
         return !!(this.readonly() || this.ariaReadonly());
