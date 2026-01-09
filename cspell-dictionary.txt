@@ -98,3 +98,6 @@ aria-keyshortcuts
 aria-roledescription 
 
 noopener
+
+# ICONS & THEMES
+Horiz

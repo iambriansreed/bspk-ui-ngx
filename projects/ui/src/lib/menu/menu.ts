@@ -38,6 +38,7 @@ export type MenuProps = CommonProps<'ariaLabel' | 'id' | 'owner' | 'role'> & {
         '[attr.id]': 'id() || null',
         '[attr.role]': 'role() || null',
         '[style.width]': 'width() || null',
+        tabindex: '-1',
     },
 })
 export class UIMenu implements AsInputSignal<MenuProps> {
