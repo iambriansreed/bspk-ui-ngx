@@ -110,6 +110,7 @@ export class ArrowNavigationUtility implements UtilityBase<ArrowNavigationProps>
     get activeElementId() {
         return this.props().activeElementId;
     }
+    
     destroy() {
         this.props.set({
             ids: [],
