@@ -46,7 +46,7 @@ export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
         UIFloatingDirective,
         UIOutsideClickDirective,
     ],
-    template: `<li [ui-outside-click]="{ callback: handleOutsideClick.bind(this) }" class="ui-breadcrumb-dropdown">
+    template: `
         <ui-button
             [icon]="iconMoreHoriz"
             [label]="'Access to ' + items().length + ' pages'"
@@ -62,6 +62,7 @@ export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
             [id]="safeId() + '-reference'" />
         @if (open()) {
             <ui-menu
+                [ui-outside-click]="{ callback: handleOutsideClick.bind(this) }"
                 [ui-floating]="{ reference: referenceEl }"
                 [id]="menuId()"
                 label="Expanded breadcrumb"
@@ -80,7 +81,7 @@ export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
             </ui-menu>
         }
         <icon-chevron-right aria-hidden="true" width="24" />
-    </li>`,
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
