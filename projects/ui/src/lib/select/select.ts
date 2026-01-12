@@ -20,6 +20,7 @@ import { IconKeyboardArrowDown } from '../icons/keyboard-arrow-down';
 import { KeyNavigationUtility } from '../key-navigation';
 import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
+import { UIOutsideClickDirective } from '../outside-click';
 
 export type SelectOption = CommonProps<'disabled'> & { label: string; value: string };
 export type SelectItem = SelectOption & { id: string; ariaLabel?: string; ariaSelected?: boolean };
@@ -91,7 +92,7 @@ export type SelectProps = CommonProps<'size'> &
 @Component({
     selector: 'ui-select',
     standalone: true,
-    imports: [CommonModule, UIListItem, UIMenu, IconKeyboardArrowDown, UIFloatingDirective],
+    imports: [CommonModule, UIListItem, UIMenu, IconKeyboardArrowDown, UIFloatingDirective, UIOutsideClickDirective],
     encapsulation: ViewEncapsulation.None,
     styleUrl: './select.scss',
     template: `
@@ -134,7 +135,10 @@ export type SelectProps = CommonProps<'size'> &
         @if (open()) {
             <ui-menu
                 #floating
-                [ui-floating]="{ reference: referenceEl }"
+                [ui-floating]="{ reference: referenceEl, refWidth: true }"
+                [ui-outside-click]="{
+                    callback: handleOutsideClick.bind(this),
+                }"
                 [id]="menuId()"
                 [owner]="'select'"
                 role="listbox"
@@ -193,6 +197,7 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
     readonly ngMenuStyle = computed(() => {
         return {
             ...scrollLimitStyle(this.scrollLimit(), this.items().length),
+            width: this.menuWidth() || 'fit-content',
         };
     });
 
@@ -217,6 +222,10 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
         this.value.set(item.value);
         this.toggleMenu(false);
     }
+
+    handleOutsideClick = (): void => {
+        this.open.set(false);
+    };
 
     handleKeydown(event: KeyboardEvent): void {
         if (!this.open()) {
