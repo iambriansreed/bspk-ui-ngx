@@ -1,13 +1,13 @@
 /**
  * Ensures all component classes and selectors follow naming conventions.
  *
- * Ensures that the public API file is up to date.
+ * Ensures that the index file is up to date.
  *
  * $ npx tsx .scripts/lint.ts
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { getPublicApiFileContent } from './update-public-api.js';
+import { getIndexFileContent } from './update-index.js';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -80,17 +80,17 @@ files.forEach((dirent) => {
 
 console.log('\x1b[32mAll components and directives follow naming conventions 🎉✅\x1b[0m\n');
 
-// ensure public api is up to date
-// compare existing public api content to generated content
+// ensure index is up to date
+// compare existing index content to generated content
 
-const { publicApiPath, publicApiContent } = getPublicApiFileContent();
+const { indexPath, indexContent } = getIndexFileContent();
 
-const existingPublicApiContent = fs.readFileSync(publicApiPath, 'utf-8');
+const existingIndexContent = fs.readFileSync(indexPath, 'utf-8');
 
-if (existingPublicApiContent !== publicApiContent) {
-    errors.push('Public API is out of date. Please run:   npx tsx .scripts/update-public-api.ts --write\n');
+if (existingIndexContent !== indexContent) {
+    errors.push('Index is out of date. Please run:   npx tsx .scripts/update-index.ts --write\n');
 } else {
-    console.log('\x1b[32mPublic API is up to date 🎉✅\x1b[0m\n');
+    console.log('\x1b[32mIndex is up to date 🎉✅\x1b[0m\n');
 }
 
 if (errors.length > 0) {
