@@ -51,7 +51,7 @@ import { UIButton } from './button';
             label="Example Primary with Tooltip"
             size="large"
             [icon]="iconCloud"
-            tooltip="Primary with Tooltip" />
+            tooltip="Example Primary with Tooltip" />
 
         <h3>Destructive with Tooltip</h3>
         <ui-button
@@ -134,8 +134,8 @@ import { UIButton } from './button';
         <h3>Custom Icon</h3>
         <ui-button
             (click)="handleClick('Custom Icon')"
-            tooltip="Hello world"
-            label="hello world example"
+            tooltip="Hello world Example"
+            label="Hello world Example"
             variant="secondary">
             <svg
                 focusable="false"
