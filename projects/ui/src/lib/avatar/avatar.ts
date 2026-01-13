@@ -1,7 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import {
+    Component,
+    Output,
+    EventEmitter,
+    ViewEncapsulation,
+    input,
+    AfterViewInit,
+    Renderer2,
+    inject,
+    EnvironmentInjector,
+    ElementRef,
+} from '@angular/core';
 import { IconPerson } from '../icons/person';
-import { UITooltipDirective } from '../tooltip';
+import { TooltipUtility } from '../tooltip/tooltip';
 
 export type SizeVariant =
     | 'large'
@@ -41,20 +52,8 @@ export type SizeVariant =
 @Component({
     selector: 'ui-avatar',
     standalone: true,
-    imports: [CommonModule, IconPerson, UITooltipDirective],
-    template: `<span
-        [ui-tooltip]="{ label: name(), disabled: hideTooltip() }"
-        data-bspk="avatar"
-        [attr.aria-label]="name()"
-        aria-roledescription="person"
-        [attr.aria-disabled]="disabled() || undefined"
-        [attr.tabindex]="!disabled() && onClick.observed ? 0 : undefined"
-        [attr.role]="onClick.observed ? 'button' : 'img'"
-        [attr.data-color]="color()"
-        [attr.data-size]="size()"
-        (click)="handleOnClick($event)"
-        (keydown)="handleKeyDown($event)">
-        @if (image()) {
+    imports: [CommonModule, IconPerson],
+    template: ` @if (image()) {
             <img [src]="image()" [alt]="name()" aria-hidden="true" />
         } @else if (showIcon()) {
             <span aria-hidden="true" data-icon>
@@ -64,15 +63,23 @@ export type SizeVariant =
             <span aria-hidden="true" data-initials>
                 {{ computedInitials }}
             </span>
-        }
-    </span>`,
+        }`,
     styleUrls: ['./avatar.scss'],
     encapsulation: ViewEncapsulation.None,
     host: {
-        style: `display: contents;`,
+        'data-bspk': 'avatar',
+        '[attr.aria-label]': 'name()',
+        'aria-roledescription': 'person',
+        '[attr.aria-disabled]': 'disabled() || undefined',
+        '[attr.tabindex]': '!disabled() && onClick.observed ? 0 : undefined',
+        '[attr.role]': "onClick.observed ? 'button' : 'img'",
+        '[attr.data-color]': 'color()',
+        '[attr.data-size]': 'size()',
+        '(click)': 'handleOnClick($event)',
+        '(keydown)': 'handleKeyDown($event)',
     },
 })
-export class UIAvatar {
+export class UIAvatar implements AfterViewInit {
     /** The function to call when the avatar is clicked. */
     @Output() onClick = new EventEmitter<MouseEvent>();
 
@@ -144,6 +151,12 @@ export class UIAvatar {
      */
     readonly disabled = input(false);
 
+    private renderer = inject(Renderer2);
+    private env = inject(EnvironmentInjector);
+    private host = inject(ElementRef<HTMLElement>);
+
+    private tooltipUtility: TooltipUtility | undefined;
+
     get computedInitials(): string | undefined {
         const initials = this.initials();
         if (initials) return initials.slice(0, 2).toUpperCase();
@@ -157,6 +170,20 @@ export class UIAvatar {
                 .toUpperCase();
         }
         return undefined;
+    }
+
+    ngAfterViewInit() {
+        if (!this.hideTooltip()) {
+            this.tooltipUtility = new TooltipUtility(this.renderer, this.env, {
+                label: this.name(),
+                reference: this.host.nativeElement,
+                placement: 'top',
+            });
+        }
+    }
+
+    onDestroy() {
+        this.tooltipUtility?.destroy();
     }
 
     handleOnClick(event: MouseEvent) {

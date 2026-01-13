@@ -1,6 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, model, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+    Component,
+    model,
+    AfterViewInit,
+    OnDestroy,
+    ElementRef,
+    viewChild,
+    inject,
+    EnvironmentInjector,
+    Renderer2,
+} from '@angular/core';
 import { UIButton } from '../button/button';
+import { TooltipUtility } from './tooltip';
 import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
 
 @Component({
@@ -87,6 +98,9 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
         } @else {
             <span>Will return in {{ 10 - (counter() % 10) }} second{{ 10 - (counter() % 10) === 1 ? '' : 's' }}</span>
         }
+
+        <h3>Tooltip Utility Component</h3>
+        <span #tooltipUtil>Hello there</span>
     `,
     styles: `
         span[aria-labelledby] {
@@ -105,10 +119,23 @@ export class UITooltipExample implements AfterViewInit, OnDestroy {
 
     interval: ReturnType<typeof setInterval> | undefined;
 
+    readonly tooltipUtil = viewChild('tooltipUtil', { read: ElementRef });
+
+    tooltip?: TooltipUtility;
+
+    renderer = inject(Renderer2);
+    env = inject(EnvironmentInjector);
+
     ngAfterViewInit() {
         this.interval = setInterval(() => {
             this.counter.set(this.counter() + 1);
         }, 1000);
+
+        this.tooltip = new TooltipUtility(this.renderer, this.env, {
+            label: 'Tooltip Utility says hello!',
+            placement: 'top',
+            reference: this.tooltipUtil()?.nativeElement,
+        });
     }
 
     ngOnDestroy() {
