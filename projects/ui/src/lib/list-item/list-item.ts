@@ -91,14 +91,14 @@ export type ListItemProps = CommonProps<
                 [attr.role]="role"
                 [attr.tabindex]="tabindex"
                 [attr.href]="href()"
-                [attr.data-action]="actionable || undefined"
+                [attr.data-action]="actionable() || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
                 [attr.data-bspk-owner]="owner() || undefined"
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id()"
+                [attr.id]="id()"
                 (click)="handleClick($event)"
                 (keydown.enter)="handleClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
@@ -110,14 +110,14 @@ export type ListItemProps = CommonProps<
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
                 [attr.tabindex]="tabindex"
-                [attr.data-action]="actionable || undefined"
+                [attr.data-action]="actionable() || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
                 [attr.data-bspk-owner]="owner() || undefined"
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id()"
+                [attr.id]="id()"
                 (click)="handleClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
             </button>
@@ -127,14 +127,14 @@ export type ListItemProps = CommonProps<
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
                 [attr.tabindex]="tabindex"
-                [attr.data-action]="actionable || undefined"
+                [attr.data-action]="actionable() || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
                 [attr.data-bspk-owner]="owner() || undefined"
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id()"
+                [attr.id]="id()"
                 [attr.for]="htmlFor()"
                 (click)="handleClick($event)"
                 (keydown.enter)="handleClick($event)">
@@ -146,14 +146,14 @@ export type ListItemProps = CommonProps<
                 [attr.aria-selected]="ariaSelected()"
                 [attr.role]="role"
                 [attr.tabindex]="tabindex"
-                [attr.data-action]="actionable || undefined"
+                [attr.data-action]="actionable() || undefined"
                 [attr.data-active]="active() || undefined"
                 data-bspk="list-item"
                 [attr.data-bspk-owner]="owner() || undefined"
                 [attr.data-disabled]="isDisabled || undefined"
                 [attr.data-readonly]="isReadonly || undefined"
                 [attr.data-width]="width() === 'hug' ? 'hug' : undefined"
-                [id]="id()"
+                [attr.id]="id()"
                 (click)="handleClick($event)"
                 (keydown.enter)="handleClick($event)">
                 <ng-container *ngTemplateOutlet="inner"></ng-container>
@@ -162,7 +162,7 @@ export type ListItemProps = CommonProps<
     `,
     host: {
         style: 'display: contents;',
-        '[id]': 'listItemId()',
+        '[attr.id]': 'listItemId()',
     },
 })
 export class UIListItem implements AsInputSignal<ListItemProps> {
@@ -215,7 +215,7 @@ export class UIListItem implements AsInputSignal<ListItemProps> {
     get role(): string | undefined {
         if (!this.actionable()) return undefined;
         if (this.as() === 'button') return undefined;
-        return undefined;
+        return 'button';
     }
 
     handleClick(event: Event) {

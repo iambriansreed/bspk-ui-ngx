@@ -24,7 +24,7 @@ import { UIButton } from './button';
         <h3>Primary</h3>
         <ui-button
             (click)="handleClick('Primary')"
-            label="Example Label"
+            label="Example Primary"
             size="large"
             variant="primary"
             [icon]="iconGTranslate" />
@@ -32,7 +32,7 @@ import { UIButton } from './button';
         <h3>Secondary</h3>
         <ui-button
             (click)="handleClick('Secondary')"
-            label="Example Label"
+            label="Example Secondary"
             size="medium"
             variant="secondary"
             [icon]="iconBrail" />
@@ -40,7 +40,7 @@ import { UIButton } from './button';
         <h3>Tertiary</h3>
         <ui-button
             (click)="handleClick('Tertiary')"
-            label="Example Label"
+            label="Example Tertiary"
             size="small"
             variant="tertiary"
             [icon]="iconBarn" />
@@ -48,7 +48,7 @@ import { UIButton } from './button';
         <h3>Primary with Tooltip</h3>
         <ui-button
             (click)="handleClick('Primary with Tooltip')"
-            label="Example Label"
+            label="Example Primary with Tooltip"
             size="large"
             [icon]="iconCloud"
             tooltip="Primary with Tooltip" />
@@ -56,7 +56,7 @@ import { UIButton } from './button';
         <h3>Destructive with Tooltip</h3>
         <ui-button
             (click)="handleClick('Destructive with Tooltip')"
-            label="Destructive test"
+            label="Destructive with Tooltip"
             [icon]="iconWarningFill"
             [destructive]="true"
             tooltip="Destructive with Tooltip" />
@@ -65,7 +65,7 @@ import { UIButton } from './button';
 
         <ui-button
             (click)="handleClick('Destructive iconOnly = true')"
-            label="Destructive test"
+            label="Destructive iconOnly = true"
             [icon]="iconWarningFill"
             [iconOnly]="true"
             [destructive]="true" />
@@ -76,7 +76,7 @@ import { UIButton } from './button';
         <h3>Disabled iconOnly = true</h3>
         <ui-button
             (click)="handleClick('Disabled iconOnly = true')"
-            label="Destructive test"
+            label="Disabled iconOnly = true"
             [icon]="iconWarningFill"
             [iconOnly]="true"
             [disabled]="true" />
@@ -94,7 +94,7 @@ import { UIButton } from './button';
         <p>should visually see disabled and not destructive</p>
         <ui-button
             (click)="handleClick('Primary Disabled & Destructive')"
-            label="Disabled & Destructive Test"
+            label="Primary Disabled & Destructive Test"
             variant="primary"
             [icon]="iconWarningFill"
             [disabled]="true"

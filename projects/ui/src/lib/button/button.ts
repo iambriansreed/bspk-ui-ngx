@@ -68,9 +68,7 @@ export type IconType = BspkIcon;
                 </span>
             }
             @if (shouldShowLabel) {
-                <span [attr.data-button-label]="true">
-                    {{ label() }}
-                </span>
+                <span [attr.data-button-label]="true">{{ label() }}</span>
             }
         }
         <span [attr.data-touch-target]="true"></span>
