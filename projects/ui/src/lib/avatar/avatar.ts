@@ -174,8 +174,7 @@ export class UIAvatar implements AfterViewInit {
 
     ngAfterViewInit() {
         if (!this.hideTooltip()) {
-            this.tooltipUtility = new TooltipUtility(this.renderer, this.env);
-            this.tooltipUtility.init({
+            this.tooltipUtility = new TooltipUtility(this.renderer, this.env, {
                 label: this.name(),
                 reference: this.host.nativeElement,
                 placement: 'top',

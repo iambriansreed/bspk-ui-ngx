@@ -1,6 +1,5 @@
 import { ComponentRef, Renderer2, signal } from '@angular/core';
 
-import { UtilityBase } from '../../types/common';
 import { addComponent } from '../../utils/add-component';
 import { uniqueId } from '../../utils/random';
 import { FloatingUtility } from '../floating/floating';
@@ -13,7 +12,7 @@ export type TooltipUtilityProps = TooltipProps & { reference?: HTMLElement };
  *
  * Should be used in components that require tooltip functionality.
  */
-export class TooltipUtility implements UtilityBase<TooltipUtilityProps> {
+export class TooltipUtility {
     readonly props = signal<TooltipUtilityProps>({});
 
     readonly tooltipId = uniqueId('tooltip');
@@ -25,7 +24,27 @@ export class TooltipUtility implements UtilityBase<TooltipUtilityProps> {
     constructor(
         private renderer: Renderer2,
         private env: any,
-    ) {}
+        props: Partial<TooltipUtilityProps>,
+    ) {
+        this.updateProps(props);
+
+        const host = props.reference;
+
+        this.floating = new FloatingUtility(this.renderer);
+
+        if (typeof document === 'undefined' || !host) return;
+
+        host.addEventListener('mouseenter', this.handleOpenEvent.bind(this));
+        host.addEventListener('mouseleave', this.handleCloseEvent.bind(this));
+        host.addEventListener('focusin', this.handleOpenEvent.bind(this));
+        host.addEventListener('blur', this.handleCloseEvent.bind(this));
+
+        if (!this.referenceEl || !this.props().label) return;
+
+        this.renderer.setAttribute(this.referenceEl, 'aria-labelledby', this.tooltipId);
+
+        this.addComponent(this.props());
+    }
 
     get referenceEl() {
         return this.props().reference || null;
@@ -56,27 +75,6 @@ export class TooltipUtility implements UtilityBase<TooltipUtilityProps> {
             });
             this.tooltipComponent.changeDetectorRef.detectChanges();
         }
-    }
-
-    init(props: Partial<TooltipUtilityProps>) {
-        this.updateProps(props);
-
-        const host = props.reference;
-
-        this.floating = new FloatingUtility(this.renderer);
-
-        if (typeof document === 'undefined' || !host) return;
-
-        host.addEventListener('mouseenter', this.handleOpenEvent.bind(this));
-        host.addEventListener('mouseleave', this.handleCloseEvent.bind(this));
-        host.addEventListener('focusin', this.handleOpenEvent.bind(this));
-        host.addEventListener('blur', this.handleCloseEvent.bind(this));
-
-        if (!this.referenceEl || !this.props().label) return;
-
-        this.renderer.setAttribute(this.referenceEl, 'aria-labelledby', this.tooltipId);
-
-        this.addComponent(this.props());
     }
 
     destroy() {
