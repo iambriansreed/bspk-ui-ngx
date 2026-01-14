@@ -3,7 +3,7 @@ import { AsInputSignal, CommonProps, FieldControlProps } from '../../types/commo
 import { IconCancel } from '../icons/cancel';
 import { UIIncrementButton } from './increment-button';
 
-export type InputProps = CommonProps<'owner' | 'size'> &
+export type InputNumberProps = CommonProps<'owner' | 'size'> &
     FieldControlProps & {
         /**
          * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
@@ -69,27 +69,27 @@ export type InputProps = CommonProps<'owner' | 'size'> &
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputNumber implements AsInputSignal<InputProps> {
+export class UIInputNumber implements AsInputSignal<InputNumberProps> {
     public IconCancel = IconCancel;
 
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-    readonly value = model<InputProps['value']>('');
-    readonly name = input.required<InputProps['name']>();
+    readonly value = model<InputNumberProps['value']>('');
+    readonly name = input.required<InputNumberProps['name']>();
 
-    readonly disabled = input<InputProps['disabled']>(false);
-    readonly invalid = input<InputProps['invalid']>(false);
-    readonly readOnly = input<InputProps['readOnly']>(false);
-    readonly required = input<InputProps['required']>(false);
-    readonly size = input<InputProps['size']>('medium');
-    readonly id = input<InputProps['id']>(undefined);
-    readonly owner = input<InputProps['owner']>(undefined);
-    readonly ariaLabel = input<InputProps['ariaLabel']>(undefined);
-    readonly step = input<InputProps['step']>(1);
+    readonly disabled = input<InputNumberProps['disabled']>(false);
+    readonly invalid = input<InputNumberProps['invalid']>(false);
+    readonly readOnly = input<InputNumberProps['readOnly']>(false);
+    readonly required = input<InputNumberProps['required']>(false);
+    readonly size = input<InputNumberProps['size']>('medium');
+    readonly id = input<InputNumberProps['id']>(undefined);
+    readonly owner = input<InputNumberProps['owner']>(undefined);
+    readonly ariaLabel = input<InputNumberProps['ariaLabel']>(undefined);
+    readonly step = input<InputNumberProps['step']>(1);
 
-    readonly ariaLabelledBy = input<InputProps['ariaLabelledBy']>(undefined);
-    readonly ariaDescribedBy = input<InputProps['ariaDescribedBy']>(undefined);
-    readonly ariaErrorMessage = input<InputProps['ariaErrorMessage']>(undefined);
+    readonly ariaLabelledBy = input<InputNumberProps['ariaLabelledBy']>(undefined);
+    readonly ariaDescribedBy = input<InputNumberProps['ariaDescribedBy']>(undefined);
+    readonly ariaErrorMessage = input<InputNumberProps['ariaErrorMessage']>(undefined);
 
     incrementHandler(kind: 'add' | 'remove') {
         if (this.readOnly() || this.disabled()) {
