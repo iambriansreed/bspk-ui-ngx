@@ -1,8 +1,19 @@
 {
     "name": "bspk-ui-ngx",
     "version": "0.0.0",
-    "private": true,
+    "license": "CC-BY-4.0",
     "type": "module",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Anywhererealestate/bspk-ui"
+    },
+    "engines": {
+        "node": ">=22"
+    },
     "scripts": {
         "prebuild": "npx tsx .scripts/pre-build.ts",
         "build": "ng build --project=demo --configuration=production && ng build --project=ui --configuration=production",
