@@ -14,6 +14,19 @@ import {
 import { IconPerson } from '../icons/person';
 import { TooltipUtility } from '../tooltip/tooltip';
 
+export interface UIAvatarProps {
+    id: string;
+    name: string;
+    size?: SizeVariant;
+    color?: string;
+    initials?: string;
+    showIcon?: boolean;
+    image?: string;
+    src?: string; // For image source
+    hideTooltip?: boolean;
+    disabled?: boolean;
+}
+
 export type SizeVariant =
     | 'large'
     | 'medium'
