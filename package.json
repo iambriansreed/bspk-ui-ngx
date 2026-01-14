@@ -1,6 +1,6 @@
 {
     "name": "bspk-ui-ngx",
-    "version": "0.0.0",
+    "version": "1.0.1",
     "license": "CC-BY-4.0",
     "type": "module",
     "publishConfig": {
