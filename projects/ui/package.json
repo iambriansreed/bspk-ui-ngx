@@ -1,6 +1,6 @@
 {
     "name": "@bspk/ui-ngx",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "CC-BY-4.0",
     "type": "module",
     "publishConfig": {
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Anywhererealestate/bspk-ui-ngx"
+        "url": "git+https://github.com/Anywhererealestate/bspk-ui-ngx.git"
     },
     "peerDependencies": {
         "@angular/common": "^20.3.0",
