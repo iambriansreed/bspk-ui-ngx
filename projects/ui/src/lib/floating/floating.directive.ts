@@ -1,4 +1,4 @@
-import { Directive, inject, input, Renderer2, AfterViewInit, ElementRef } from '@angular/core';
+import { Directive, inject, input, Renderer2, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { FloatingUtility, FloatingProps } from './floating';
 
 export type FloatingDirectiveProps = Omit<FloatingProps, 'floating'>;
@@ -15,7 +15,7 @@ export type FloatingDirectiveProps = Omit<FloatingProps, 'floating'>;
         style: 'position: absolute;',
     },
 })
-export class UIFloatingDirective implements AfterViewInit {
+export class UIFloatingDirective implements AfterViewInit, OnDestroy {
     render = inject(Renderer2);
     host = inject(ElementRef);
 
@@ -30,5 +30,20 @@ export class UIFloatingDirective implements AfterViewInit {
         };
 
         this.floating.compute(nextProps);
+        window.addEventListener('scroll', this.updateFloatingPosition, true);
+        window.addEventListener('resize', this.updateFloatingPosition, true);
     }
+
+    ngOnDestroy() {
+        window.removeEventListener('scroll', this.updateFloatingPosition, true);
+        window.removeEventListener('resize', this.updateFloatingPosition, true);
+    }
+
+    updateFloatingPosition = () => {
+        const nextProps: FloatingProps = {
+            ...this.props(),
+            floating: this.host.nativeElement,
+        };
+        this.floating.compute(nextProps);
+    };
 }

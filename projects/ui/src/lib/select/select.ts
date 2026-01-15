@@ -135,7 +135,7 @@ export type SelectProps = CommonProps<'size'> &
         @if (open()) {
             <ui-menu
                 #floating
-                [ui-floating]="{ reference: referenceEl, refWidth: true }"
+                [ui-floating]="{ reference: referenceEl, refWidth: true, offsetOptions: offset }"
                 [ui-outside-click]="{
                     callback: handleOutsideClick.bind(this),
                 }"
@@ -200,6 +200,11 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
             width: this.menuWidth() || 'fit-content',
         };
     });
+
+    get offset() {
+        // Reads the CSS variable value at runtime, offsetOptions requires a number
+        return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spacing-sizing-01'));
+    }
 
     get selectedItem(): SelectItem | undefined {
         return this.menuItems().find((item) => item.value === this.value());
