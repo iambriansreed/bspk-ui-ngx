@@ -99,6 +99,7 @@ export type SelectProps = CommonProps<'size'> &
         <input [attr.name]="name() || null" type="hidden" [value]="value() || ''" />
         <button
             type="button"
+            [attr.role]="'combobox'"
             [attr.aria-label]="
                 (ariaLabel() ? ariaLabel() + ' ' : '') + (selectedItem?.label || placeholder() || 'Select one')
             "
@@ -237,7 +238,10 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
             keydownHandler({
                 ArrowDown: () => this.toggleMenu(true),
                 'Ctrl+Option+Space': () => this.toggleMenu(true),
-                Space: () => this.toggleMenu(true),
+                Space: (e) => {
+                    e.preventDefault(); // Prevent default button click from space
+                    this.toggleMenu(true);
+                },
                 Enter: () => this.toggleMenu(true),
             })(event);
             return;
@@ -248,7 +252,9 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
         // all key events run through keyNavigation utility when menu is open
         this.keyNavigation.handleKeydown(event, {
             'Ctrl+Option+Space': SpaceEnter,
-            Space: SpaceEnter,
+            Space: () => {
+                this.toggleMenu(!this.open());
+            },
             Enter: SpaceEnter,
             Escape: () => {
                 if (this.open()) this.toggleMenu(false);
