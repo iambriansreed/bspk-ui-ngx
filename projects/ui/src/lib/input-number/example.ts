@@ -10,44 +10,54 @@ import { UIInputNumber } from './input-number';
         <h2>Input</h2>
 
         <h3>Default</h3>
-        <ui-input-number
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            id="default-input"
-            name="default-input"
-            ariaLabel="Input Label" />
+        <div style="width: 320px">
+            <ui-input-number
+                [value]="values()['default']"
+                (valueChange)="update('default', $event)"
+                id="default-input"
+                name="default-input"
+                ariaLabel="Input Label" />
+        </div>
 
         <h3>Disabled</h3>
-        <ui-input-number
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            name="disabled-input"
-            ariaLabel="Input Label"
-            [disabled]="true" />
+        <div style="width: 320px">
+            <ui-input-number
+                [value]="values()['default']"
+                (valueChange)="update('default', $event)"
+                name="disabled-input"
+                ariaLabel="Input Label"
+                [disabled]="true" />
+        </div>
 
         <h3>Invalid</h3>
-        <ui-input-number
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            name="invalid-input"
-            ariaLabel="Input Label"
-            [invalid]="true" />
+        <div style="width: 320px">
+            <ui-input-number
+                [value]="values()['default']"
+                (valueChange)="update('default', $event)"
+                name="invalid-input"
+                ariaLabel="Input Label"
+                [invalid]="true" />
+        </div>
 
         <h3>Required</h3>
-        <ui-input-number
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            name="required-input"
-            ariaLabel="Input Label"
-            [required]="true" />
+        <div style="width: 320px">
+            <ui-input-number
+                [value]="values()['default']"
+                (valueChange)="update('default', $event)"
+                name="required-input"
+                ariaLabel="Input Label"
+                [required]="true" />
+        </div>
 
         <h3>Read Only</h3>
-        <ui-input-number
-            (valueChange)="update('default', $event)"
-            [value]="values()['default']"
-            name="read-only-input"
-            ariaLabel="Input Label"
-            [readOnly]="true" />
+        <div style="width: 320px">
+            <ui-input-number
+                (valueChange)="update('default', $event)"
+                [value]="values()['default']"
+                name="read-only-input"
+                ariaLabel="Input Label"
+                [readOnly]="true" />
+        </div>
     `,
 })
 export class UIInputNumberExample {

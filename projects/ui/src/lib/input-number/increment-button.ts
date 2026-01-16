@@ -5,7 +5,8 @@ import { IconAdd, IconRemove } from '../icons';
 @Component({
     selector: 'ui-increment-button',
     imports: [UIIcon],
-    template: ` <button
+    template: `<button
+        tabindex="-1"
         [attr.aria-label]="label"
         data-bspk="input-number--increment-button"
         (click)="onClick.emit($event)"
@@ -13,8 +14,9 @@ import { IconAdd, IconRemove } from '../icons';
         <ui-icon [icon]="icon"></ui-icon>
     </button>`,
     styleUrl: './input-number.scss',
-    providers: [],
-    host: {},
+    host: {
+        style: 'display: contents',
+    },
     encapsulation: ViewEncapsulation.None,
 })
 export class UIIncrementButton {

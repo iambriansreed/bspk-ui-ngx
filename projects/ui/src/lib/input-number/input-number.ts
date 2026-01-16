@@ -3,8 +3,26 @@ import { AsInputSignal, CommonProps, FieldControlProps } from '../../types/commo
 import { IconCancel } from '../icons/cancel';
 import { UIIncrementButton } from './increment-button';
 
-export type InputNumberProps = CommonProps<'owner' | 'size'> &
-    FieldControlProps & {
+export type InputNumberProps = CommonProps<'size'> &
+    FieldControlProps<number> & {
+        /**
+         * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
+         *
+         * @default center
+         */
+        align?: 'center' | 'left';
+        /**
+         * Defines the [maximum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) value that is
+         * accepted.
+         */
+        max?: number;
+        /**
+         * Defines the [minimum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) value that is
+         * accepted.
+         *
+         * @default 0
+         */
+        min?: number;
         /**
          * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
          *
@@ -27,7 +45,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
  *     (valueChange)="updateInput($event)"
  *     id="default-input-number"
  *     name="default-input-number"
- *     ariaLabel="Input Number Label "/>
+ *     ariaLabel="Input Number Label"/>
  *
  * @name InputNumber
  * @phase UXReview
@@ -35,11 +53,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
 @Component({
     selector: 'ui-input-number',
     imports: [UIIncrementButton],
-    template: `
-        <ui-increment-button
-            kind="remove"
-            (click)="incrementHandler('remove')"
-            [disabled]="disabled()"></ui-increment-button>
+    template: `<ui-increment-button kind="remove" (click)="incrementHandler('remove')" [disabled]="disabled()" />
         <input
             data-main-input
             [attr.aria-labelledby]="ariaLabelledBy() || null"
@@ -48,7 +62,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
             [attr.aria-label]="ariaLabel() || null"
             [attr.aria-invalid]="invalid() || null"
             [attr.data-invalid]="invalid() || null"
-            [disabled]="this.disabled()"
+            [disabled]="disabled()"
             [attr.id]="id() || null"
             [attr.name]="name() || null"
             [readOnly]="readOnly() || null"
@@ -58,14 +72,15 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
             inputMode="numeric"
             type="number"
             #inputEl />
-        <ui-increment-button kind="add" (click)="incrementHandler('add')" [disabled]="disabled()"></ui-increment-button>
-    `,
+        <ui-increment-button kind="add" (click)="incrementHandler('add')" [disabled]="disabled()" />`,
     styleUrl: './input-number.scss',
-    providers: [],
     host: {
         'data-bspk': 'input-number',
         '[attr.data-size]': 'size()',
         '[attr.data-invalid]': 'invalid() || null',
+        '[attr.data-disabled]': 'disabled() || null',
+        '[attr.data-centered]': 'centered() || undefined',
+        '[attr.data-readonly]': 'readOnly() || undefined',
     },
     encapsulation: ViewEncapsulation.None,
 })
@@ -74,7 +89,7 @@ export class UIInputNumber implements AsInputSignal<InputNumberProps> {
 
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
 
-    readonly value = model<InputNumberProps['value']>('');
+    readonly value = model<InputNumberProps['value']>();
     readonly name = input.required<InputNumberProps['name']>();
 
     readonly disabled = input<InputNumberProps['disabled']>(false);
@@ -83,9 +98,9 @@ export class UIInputNumber implements AsInputSignal<InputNumberProps> {
     readonly required = input<InputNumberProps['required']>(false);
     readonly size = input<InputNumberProps['size']>('medium');
     readonly id = input<InputNumberProps['id']>(undefined);
-    readonly owner = input<InputNumberProps['owner']>(undefined);
     readonly ariaLabel = input<InputNumberProps['ariaLabel']>(undefined);
     readonly step = input<InputNumberProps['step']>(1);
+    readonly max = input<InputNumberProps['max']>();
 
     readonly ariaLabelledBy = input<InputNumberProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<InputNumberProps['ariaDescribedBy']>(undefined);
@@ -100,13 +115,13 @@ export class UIInputNumber implements AsInputSignal<InputNumberProps> {
         const stepValue = this.step() || 1;
 
         if (kind === 'add') {
-            this.value.set((newValue + stepValue).toString());
+            this.value.set(newValue + stepValue);
         } else {
-            this.value.set((newValue - stepValue).toString());
+            this.value.set(newValue - stepValue);
         }
     }
 
     handleInput(event: Event) {
-        this.value.set((event.target as HTMLInputElement).value);
+        this.value.set(Number((event.target as HTMLInputElement).value));
     }
 }
