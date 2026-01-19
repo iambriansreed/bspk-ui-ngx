@@ -99,6 +99,7 @@ export type SelectProps = CommonProps<'size'> &
         <input [attr.name]="name() || null" type="hidden" [value]="value() || ''" />
         <button
             type="button"
+            [attr.role]="'combobox'"
             [attr.aria-label]="
                 (ariaLabel() ? ariaLabel() + ' ' : '') + (selectedItem?.label || placeholder() || 'Select one')
             "
@@ -233,27 +234,37 @@ export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDe
     };
 
     handleKeydown(event: KeyboardEvent): void {
+        // when menu is closed
         if (!this.open()) {
             keydownHandler({
                 ArrowDown: () => this.toggleMenu(true),
                 'Ctrl+Option+Space': () => this.toggleMenu(true),
-                Space: () => this.toggleMenu(true),
+                Space: (e) => {
+                    e.preventDefault();
+                    this.toggleMenu(true);
+                },
                 Enter: () => this.toggleMenu(true),
             })(event);
+
             return;
         }
-
-        const SpaceEnter = () => this.keyNavigation.activeElement?.click();
+        // when menu is open
+        const SpaceEnter = () => {
+            this.keyNavigation.activeElement?.click();
+            this.toggleMenu(false);
+        };
 
         // all key events run through keyNavigation utility when menu is open
-        this.keyNavigation.handleKeydown(event, {
-            'Ctrl+Option+Space': SpaceEnter,
-            Space: SpaceEnter,
-            Enter: SpaceEnter,
-            Escape: () => {
-                if (this.open()) this.toggleMenu(false);
+        this.keyNavigation.handleKeydown(
+            event,
+            // additional callbacks for when menu is open
+            {
+                'Ctrl+Option+Space': SpaceEnter,
+                Space: SpaceEnter,
+                Enter: SpaceEnter,
+                Escape: () => this.toggleMenu(false),
             },
-        });
+        );
     }
 
     ngAfterViewInit(): void {
