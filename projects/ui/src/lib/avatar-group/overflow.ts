@@ -21,9 +21,12 @@ import { UIMenu } from '../menu/menu';
                     [style.paddingRight]="'var(--spacing-sizing-04)'"
                     [style.--list-item-height]="'var(--spacing-sizing-12)'"
                     [style.maxHeight]="maxMenuHeight"
-                    role="menu">
+                    [ariaRole]="'menu'">
                     @for (item of items(); track item.id) {
-                        <ui-list-item [active]="activeElementId() === item.id" [label]="item.name">
+                        <ui-list-item
+                            [ariaRole]="'menuitem'"
+                            [active]="activeElementId() === item.id"
+                            [label]="item.name">
                             <span data-leading>
                                 <ui-avatar
                                     [hideTooltip]="true"
