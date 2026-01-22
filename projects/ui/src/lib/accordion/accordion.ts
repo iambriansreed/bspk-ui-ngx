@@ -64,7 +64,7 @@ export interface AccordionSection {
     standalone: true,
     imports: [CommonModule, IconKeyboardArrowDown, IconKeyboardArrowUp],
     template: `@for (item of itemsWithIds(); track item) {
-        <section [attr.data-disabled]="item.disabled ? true : null" [id]="item.id">
+        <section data-bspk="accordion-item" [attr.data-disabled]="item.disabled ? true : null" [id]="item.id">
             <button
                 type="button"
                 [attr.aria-controls]="item.id + '-content'"
