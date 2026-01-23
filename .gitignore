@@ -50,3 +50,4 @@ nj-bspk-ui
 projects/demo/src/app/routes/generated.ts
 pretty.ts
 *.tgz
+meta

@@ -17,6 +17,9 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
+      "common": [
+        "./dist/common"
+      ],
       "ui": [
         "./dist/ui"
       ]
@@ -40,5 +43,11 @@
     {
       "path": "./projects/demo/tsconfig.app.json"
     },
+    {
+      "path": "./projects/common/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/common/tsconfig.spec.json"
+    }
   ]
 }
