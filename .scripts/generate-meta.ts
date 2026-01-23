@@ -17,7 +17,7 @@ const documentationPath = path.join(__dirname, '../.tmp/documentation.json');
 export const generatedMetaPath = 'projects/demo/src/meta.ts';
 
 export function generateMeta(): { version: string; components: ComponentDemo[] } {
-    execSync('npx compodoc -p tsconfig.doc.json -e json -d ./.tmp');
+    execSync('npx compodoc -p tsconfig.doc.json projects/ui/src -e json -d ./.tmp');
 
     const metadata = JSON.parse(fs.readFileSync(documentationPath, 'utf-8'));
 
