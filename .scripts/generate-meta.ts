@@ -79,7 +79,9 @@ if (process.argv.includes('--write')) {
 if (process.argv.includes('--watch')) {
     console.log('\x1b[33mWatching for changes to regenerate component metadata...\x1b[0m');
 
-    ['projects/demo', 'projects/ui'].forEach((proj) => {
+    const thisFilePath = path.join(__dirname, 'generate-meta.ts');
+
+    ['projects/ui', thisFilePath].forEach((proj) => {
         fs.watch(proj, { recursive: true }, (eventType, filename) => {
             if (filename === 'meta.ts' || filename === 'generated.ts') return;
 
