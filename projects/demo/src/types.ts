@@ -13,6 +13,10 @@ export interface ComponentDemo {
     description: string;
     phase: ComponentPhase;
     descriptionExample?: string;
-    example: string;
     slug: string;
+    directive: boolean;
+    example: {
+        name: string;
+        path: string;
+    };
 }

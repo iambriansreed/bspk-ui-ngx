@@ -23,23 +23,22 @@ export function generateMeta(): { version: string; components: ComponentDemo[] }
 
     // fund compoennts that end with 'ComponentNameExample' and their base component 'ComponentName'
 
-    const exampleComponents = metadata.components.filter(
-        (comp: any) => comp.name.endsWith('Example') && comp.name.startsWith('UI'),
-    );
+    const exampleComponents = [
+        metadata.components.filter((comp: any) => comp.name.endsWith('Example') && comp.name.startsWith('UI')),
+    ].flat();
 
-    const baseComponents = metadata.components.filter((comp: any) =>
-        exampleComponents.some((exComp: any) => exComp.name === `${comp.name}Example`),
-    );
+    const components: ComponentDemo[] = [...metadata.components, ...metadata.directives].flatMap((comp: any) => {
+        const exampleComp = exampleComponents.find(
+            (exComp: any) =>
+                exComp.name === `${comp.name}Example` ||
+                exComp.name === `${comp.name.replace(/Directive$/, '')}Example`,
+        );
 
-    const components = baseComponents.map((comp: any) => {
-        const exampleComp = exampleComponents.find((exComp: any) => exComp.name === `${comp.name}Example`);
+        if (!exampleComp) return [];
 
-        const slug = comp.name
-            .replace(/^UI/, '')
-            .replace(/([a-z])([A-Z])/g, (_: any, a: any, b: string) => `${a}-${b}`)
-            .toLowerCase();
+        const name = toPascalCase(comp.name.replace(/^UI/, '').replace(/Directive$/, ''));
 
-        const name = toPascalCase(comp.name.replace(/^UI/, ''));
+        const slug = name.replace(/([a-z])([A-Z])/g, (_: any, a: any, b: string) => `${a}-${b}`).toLowerCase();
 
         const example = comp.rawdescription.match(/```html([\s\S]*?)```;/)?.[1]?.trim() || '';
 
@@ -54,7 +53,11 @@ export function generateMeta(): { version: string; components: ComponentDemo[] }
             descriptionExample: comp.description,
             description,
             phase,
-            example,
+            directive: comp.name.endsWith('Directive'),
+            example: {
+                name: exampleComp.name,
+                path: exampleComp.file,
+            },
         };
     });
 

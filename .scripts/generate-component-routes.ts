@@ -42,22 +42,22 @@ export const componentItems: NavRoute[] = [
  ${META.components
      .map(
          // add an entry for each example
-         (data) => `
+         ({ name, slug, example }) => `
             {
-                title: '${data.name}',
-                path: '${data.slug}',
+                title: '${name}',
+                path: '${slug}',
                 component: ComponentPage,
                 children: [
                     {
                         path: '',
                         outlet: 'example',
                         loadComponent: () =>
-                            import('@ui/${data.slug}/example').then(
-                                (m) => m.UI${data.name}Example,
+                            import('${example.path.replace('projects/ui/src/lib/', '@ui/').replace(/\.ts$/, '')}').then(
+                                (m) => m.${example.name},
                             ),
                     },
                 ],
-                data: { component: '${data.name}' }
+                data: { component: '${name}' }
             }`,
      )
      .join(',\n')}
