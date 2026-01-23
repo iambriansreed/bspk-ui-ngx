@@ -1,64 +1,41 @@
-# Ui
+# Bespoke UI-NGX
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.0.
+Bespoke UI NGX package contains all the angular components that are available for Anywhere Real Estate development teams.
 
-## Code scaffolding
+https://bspk.anywhere.re
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
 ```bash
-ng generate --help
+npm install @bspk/ui-ngx
 ```
-
-## Building
-
-To build the library, run:
 
 ```bash
-ng build ui
+npm install --peer @bspk/styles @floating-ui/dom
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+## Setup
 
-### Publishing the Library
+Ensure you your theme stylesheet from `@bspk/styles` and the base and color stylesheets.
 
-Once the project is built, you can publish your library by following these steps:
+```scss
+@use '@bspk/styles/anywhere.css';
+@use '@bspk/ui-ngx/src/styles/base';
+@use '@bspk/ui-ngx/src/styles/colors';
+```
 
-1. Navigate to the `dist` directory:
+## Testing
 
-    ```bash
-    cd dist/ui
-    ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-    ```bash
-    npm publish
-    ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To test all components
 
 ```bash
-ng test
+npm run test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+To test a specific component
 
 ```bash
-ng e2e
+npm run test <componentname>
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+<!--- Copyright 2026 Anywhere Real Estate - CC BY 4.0 -->

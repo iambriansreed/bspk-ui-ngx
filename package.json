@@ -1,8 +1,15 @@
 {
     "name": "bspk-ui-ngx",
-    "version": "0.0.0",
-    "private": true,
+    "version": "1.0.2",
+    "license": "CC-BY-4.0",
     "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Anywhererealestate/bspk-ui-ngx"
+    },
+    "engines": {
+        "node": ">=22"
+    },
     "scripts": {
         "compodoc": "npx compodoc -p tsconfig.doc.json -e json -d ./meta",
         "prebuild": "npx tsx .scripts/pre-build.ts",
@@ -24,7 +31,8 @@
         "routes:watch": "npx tsx .scripts/generate-component-routes.ts --watch",
         "start": "npm run prebuild && ng serve",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "publish:test": "ng build ui && npm pack ./dist/ui"
+        "publish:test": "ng build ui && npm pack ./dist/ui",
+        "semantic-release": "semantic-release"
     },
     "overrides": {
         "glob": "^11.0.1"
@@ -46,6 +54,9 @@
         "@bspk/icons": "^1.0.5",
         "@bspk/ui": "^1.3.23",
         "@cspell/eslint-plugin": "^9.4.0",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^12.0.2",
+        "@semantic-release/npm": "^13.1.2",
         "@testing-library/angular": "^18.1.0",
         "@testing-library/jest-dom": "^6.0.0",
         "@types/jest": "^30.0.0",
@@ -62,6 +73,7 @@
         "npm-run-all": "^4.1.5",
         "prettier": "^3.6.2",
         "prettier-plugin-jsdoc": "^1.5.0",
+        "semantic-release": "^25.0.2",
         "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0",
         "stylelint-config-standard-scss": "^14.0.0",

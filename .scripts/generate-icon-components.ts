@@ -22,7 +22,7 @@ export class Icon${name} {
     @Input() width?: string;
 }
 
-/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
+/** Copyright 2026 Anywhere Real Estate - CC BY 4.0 */
 `;
 
 const pathTemplate = (slug: string) => `projects/ui/src/lib/icons/${slug}.ts`;
@@ -44,7 +44,7 @@ svgFiles.forEach((file) => {
     const svgContent = fs
         .readFileSync(filePath, 'utf-8')
         .trim()
-        .replace('<!--Copyright 2025 Anywhere Real Estate - CC BY 4.0-->', '')
+        .replace('<!--Copyright 2026 Anywhere Real Estate - CC BY 4.0-->', '')
         .replace('<svg', '<svg [attr.width]="width"'); // remove copyright comment;
     const name = path.basename(file, '.svg'); // e.g., 'add'
     // from PascalCase to kebab-case

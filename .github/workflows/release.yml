@@ -3,7 +3,7 @@ name: Release
 on:
     push:
         branches:
-            - beta
+            - main
     workflow_dispatch:
 
 permissions:
@@ -35,4 +35,4 @@ jobs:
             - name: Run Semantic Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-              run: npx semantic-release --dry-run
+              run: npm run semantic-release
