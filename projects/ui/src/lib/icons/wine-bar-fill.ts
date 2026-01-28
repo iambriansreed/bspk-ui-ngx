@@ -1,0 +1,25 @@
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+    selector: 'icon-wine-bar-fill',
+    template: `<svg
+        [attr.width]="width"
+        data-bspk-name="WineBarFill"
+        data-filled="true"
+        data-type="material"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        fill="none">
+        <path
+            d="M11 19V14.9C9.56667 14.6667 8.375 14 7.425 12.9C6.475 11.8 6 10.5 6 9V4C6 3.71667 6.09583 3.47917 6.2875 3.2875C6.47917 3.09583 6.71667 3 7 3H17C17.2833 3 17.5208 3.09583 17.7125 3.2875C17.9042 3.47917 18 3.71667 18 4V9C18 10.5 17.525 11.8 16.575 12.9C15.625 14 14.4333 14.6667 13 14.9V19H15C15.2833 19 15.5208 19.0958 15.7125 19.2875C15.9042 19.4792 16 19.7167 16 20C16 20.2833 15.9042 20.5208 15.7125 20.7125C15.5208 20.9042 15.2833 21 15 21H9C8.71667 21 8.47917 20.9042 8.2875 20.7125C8.09583 20.5208 8 20.2833 8 20C8 19.7167 8.09583 19.4792 8.2875 19.2875C8.47917 19.0958 8.71667 19 9 19H11ZM8 8H16V5H8V8Z"
+            fill="currentColor" />
+    </svg>`,
+    styles: ['icon-wine-bar-fill { display: contents; }'],
+    encapsulation: ViewEncapsulation.None,
+})
+export class IconWineBarFill {
+    @Input() width?: string;
+}
+
+/** Copyright 2026 Anywhere Real Estate - CC BY 4.0 */
