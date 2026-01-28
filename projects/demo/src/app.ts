@@ -17,6 +17,7 @@ import { META } from './meta';
                     <a data-name="true" href="/bspk-ui-ngx" data-bspk="link" data-subtle="true" target="_self"
                         ><span>BSPK</span></a
                     ><span>Version: {{ version }}</span>
+                    <span>({{ hash }})</span>
                 </h2>
             </div>
             <div data-navbar-right>
@@ -39,7 +40,7 @@ import { META } from './meta';
 })
 export class App {
     version = META.version;
-
+    hash = META.hash;
     toggleDarkModeLabel = computed(() => {
         return this.themeService.value() === 'light' ? 'Enable dark mode' : 'Disable dark mode';
     });

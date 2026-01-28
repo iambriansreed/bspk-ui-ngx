@@ -8,6 +8,12 @@ export type NavRoute = Route & {
     //section?: boolean;
 };
 
+export interface Meta {
+    version: string;
+    components: ComponentDemo[];
+    hash: string;
+}
+
 export interface ComponentDemo {
     name: string;
     className: string;

@@ -5,10 +5,10 @@
  */
 
 import { execSync } from 'child_process';
-import { pretty, toPascalCase } from './utils';
+import { toPascalCase } from './utils';
 import fs from 'fs';
 import path from 'path';
-import { ComponentDemo } from '../projects/demo/src/types';
+import { ComponentDemo, Meta } from '../projects/demo/src/types';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -16,7 +16,7 @@ const documentationPath = path.join(__dirname, '../.tmp/documentation.json');
 
 export const generatedMetaPath = 'projects/demo/src/meta.ts';
 
-export function generateMeta(): { version: string; components: ComponentDemo[] } {
+export function generateMeta(dev?: boolean): Meta {
     execSync('npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp');
 
     const metadata = JSON.parse(fs.readFileSync(documentationPath, 'utf-8'));
@@ -72,38 +72,24 @@ export function generateMeta(): { version: string; components: ComponentDemo[] }
             return !prevName || prevName !== value.name;
         });
 
-    // get version from package.json
+    const branch = execSync(`git branch --show-current`, { encoding: 'utf-8' }).trim();
+
+    const hash = execSync('git rev-parse --short HEAD', { encoding: 'utf-8' }).trim();
 
     const version: string = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8')).version || '';
 
-    return { components, version };
+    return { components, version, hash: branch === 'main' ? hash : branch };
 }
 
-function writeMetaToFile() {
-    const meta = generateMeta();
+export function writeMetaToFile(dev?: boolean): Meta {
+    const meta = generateMeta(dev);
     fs.writeFileSync(generatedMetaPath, 'export const META = ' + JSON.stringify(meta, null, 4));
+    return meta;
 }
 
 // if --write is provided, generate the routes once
 if (process.argv.includes('--write')) {
     writeMetaToFile();
-}
 
-// if --watch is provided, watch for changes and regenerate on change
-if (process.argv.includes('--watch')) {
-    console.log('\x1b[33mWatching for changes to regenerate component metadata...\x1b[0m');
-
-    const thisFilePath = path.join(__dirname, 'generate-meta.ts');
-
-    ['projects/ui', thisFilePath].forEach((proj) => {
-        fs.watch(proj, { recursive: true }, (eventType, filename) => {
-            if (filename === 'meta.ts' || filename === 'generated.ts') return;
-
-            writeMetaToFile();
-
-            console.log(
-                `\n\x1b[32m✅ Regenerated component metadata at ${generatedMetaPath} ${eventType} on ${filename} 📄\x1b[0m\n`,
-            );
-        });
-    });
+    console.log(`\n\x1b[32m✅ Generated component metadata at ${generatedMetaPath} 📄\x1b[0m\n`);
 }
