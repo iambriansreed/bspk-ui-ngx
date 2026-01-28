@@ -19,14 +19,15 @@ export class UIIcon {
     constructor() {
         effect(() => {
             const nextIcon = this.icon();
-            if (typeof nextIcon !== 'function' || this.currentIcon === nextIcon) return;
 
-            this.viewContainerRef.clear();
-            this.componentRef = this.viewContainerRef.createComponent(nextIcon);
-            this.currentIcon = nextIcon;
-        });
+            if (typeof nextIcon !== 'function') return;
 
-        effect(() => {
+            if (this.currentIcon !== nextIcon) {
+                this.viewContainerRef.clear();
+                this.componentRef = this.viewContainerRef.createComponent(nextIcon);
+                this.currentIcon = nextIcon;
+            }
+
             if (this.componentRef) this.componentRef.instance.width = this.width();
         });
     }

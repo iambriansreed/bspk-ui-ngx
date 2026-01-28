@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, model } from '@angular/core';
+import { Component, effect, model, signal } from '@angular/core';
 import { IconCat, IconDog, IconIcecream, UIRadioGroup } from '../..';
 import { UIIcon } from './icon';
 
@@ -21,11 +21,10 @@ import { UIIcon } from './icon';
 
         <h4>Change icon</h4>
         <div>
-            <ui-icon [icon]="iconCurrent" [width]="iconWidth()" />
+            <ui-icon [icon]="iconCurrent()" [width]="iconWidth()" />
         </div>
 
         <div style="margin-top: 16px; width: 100px">
-            {{ iconName() }}
             <ui-radio-group
                 name="select-icon-name"
                 label="Select Icon"
@@ -55,13 +54,13 @@ export class UIIconExample {
     iconCat = IconCat;
     iconDog = IconDog;
 
-    iconCurrent = this.iconCat;
+    readonly iconCurrent = signal(this.iconCat);
     readonly iconName = model('cat');
     readonly iconWidth = model('50px');
 
     constructor() {
         effect(() => {
-            this.iconCurrent = this.iconName() === 'cat' ? this.iconCat : this.iconDog;
+            this.iconCurrent.set(this.iconName() === 'cat' ? this.iconCat : this.iconDog);
         });
     }
 }
