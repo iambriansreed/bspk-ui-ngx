@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, model, signal } from '@angular/core';
+import { Component, computed, model } from '@angular/core';
 import { IconCat, IconDog, IconIcecream, UIRadioGroup } from '../..';
+import { BspkIcon } from '../../types/bspk-icon';
 import { UIIcon } from './icon';
 
 @Component({
@@ -54,13 +55,7 @@ export class UIIconExample {
     iconCat = IconCat;
     iconDog = IconDog;
 
-    readonly iconCurrent = signal(this.iconCat);
+    readonly iconCurrent = computed<BspkIcon>(() => (this.iconName() === 'cat' ? this.iconCat : this.iconDog));
     readonly iconName = model('cat');
     readonly iconWidth = model('50px');
-
-    constructor() {
-        effect(() => {
-            this.iconCurrent.set(this.iconName() === 'cat' ? this.iconCat : this.iconDog);
-        });
-    }
 }
