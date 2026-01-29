@@ -25,7 +25,7 @@
         "lint:ui": "npx tsx .scripts/lint.ts",
         "newc": "ng generate component --project=ui && npx tsx .scripts/generate-new-component.ts",
         "ng": "ng",
-        "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/main...$(git symbolic-ref --short HEAD)\"",
+        "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/dev...$(git symbolic-ref --short HEAD)\"",
         "routes": "npx tsx .scripts/generate-component-routes.ts --write",
         "meta": "npx tsx .scripts/generate-meta.ts --write",
         "start": "npm run prebuild && ng serve",

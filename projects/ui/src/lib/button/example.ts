@@ -124,7 +124,10 @@ import { UIButton } from './button';
         </div>
 
         <h4>Custom Content</h4>
-        <ui-button label="" (click)="handleClick('Custom Content')" style="padding: 0 var(--spacing-sizing-03)">
+        <ui-button
+            label="Custom can have label now"
+            (click)="handleClick('Custom Content')"
+            style="padding: 0 var(--spacing-sizing-03)">
             <svg
                 width="16"
                 focusable="false"
@@ -139,7 +142,11 @@ import { UIButton } from './button';
         >
 
         <h4>Custom Icon</h4>
-        <ui-button (click)="handleClick('Custom Icon')" tooltip="hello world example" label="" variant="secondary">
+        <ui-button
+            (click)="handleClick('Custom Icon')"
+            tooltip="hello world example"
+            label="Custom Icon"
+            variant="secondary">
             <svg
                 focusable="false"
                 aria-hidden="true"
