@@ -30,6 +30,7 @@ export * from './lib/inline-alert';
 export * from './lib/input';
 export * from './lib/input-field';
 export * from './lib/input-number';
+export * from './lib/input-phone';
 export * from './lib/key-navigation';
 export * from './lib/link';
 export * from './lib/list-item';

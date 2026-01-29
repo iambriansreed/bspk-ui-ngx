@@ -27,7 +27,12 @@ export type InputProps = CommonProps<'owner' | 'size'> &
          *
          * @default text
          */
-        type?: 'number' | 'password' | 'text';
+        type?: 'number' | 'password' | 'tel' | 'text'; /**
+         * The inputmode attribute for the input.
+         *
+         * @default undefined
+         */
+        inputMode?: 'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url';
         /**
          * Specifies if user agent has any permission to provide automated assistance in filling out form field values
          *
