@@ -17,7 +17,7 @@ import { BspkIcon } from '../../types/bspk-icon';
 import { AsInputSignal, FieldControlProps } from '../../types/common';
 import { countryCodeData, countryCodes, SupportedCountryCode } from '../../utils/country-codes';
 import { uniqueId } from '../../utils/random';
-import { scrollLimitStyle } from '../../utils/scroll-limit-style';
+import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
 import { UIButton } from '../button/button';
 import { UIFloatingDirective } from '../floating';
@@ -50,34 +50,30 @@ export interface CountryCodeItem extends CountryCodeOption {
     id: string;
 }
 
-export type InputPhoneProps = FieldControlProps<string> & {
-    /**
-     * The default country code to select when the component is rendered. If not provided, it will attempt to guess
-     * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
-     * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
-     *
-     * @type string
-     */
-    initialCountryCode?: SupportedCountryCode;
-    /**
-     * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always unformatted.
-     *
-     * @type boolean
-     */
-    disableFormatting?: boolean;
-    /**
-     * The maximum number of ListItems to show before scrolling is enabled.
-     *
-     * Used in conjunction with scrollLimitStyle utility.
-     */
-    scrollLimit?: number;
-    /**
-     * The size of the component
-     *
-     * @default medium
-     */
-    size?: 'large' | 'medium' | 'small';
-};
+export type InputPhoneProps = FieldControlProps<string> &
+    ScrollLimitStyleProps & {
+        /**
+         * The default country code to select when the component is rendered. If not provided, it will attempt to guess
+         * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
+         * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
+         *
+         * @type string
+         */
+        initialCountryCode?: SupportedCountryCode;
+        /**
+         * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always
+         * unformatted.
+         *
+         * @type boolean
+         */
+        disableFormatting?: boolean;
+        /**
+         * The size of the component
+         *
+         * @default medium
+         */
+        size?: 'large' | 'medium' | 'small';
+    };
 
 /**
  * An input that allows users to enter text phone numbers and select country codes for the phone number.
@@ -116,7 +112,7 @@ export type InputPhoneProps = FieldControlProps<string> & {
     ],
     encapsulation: ViewEncapsulation.None,
     styleUrl: './input-phone.scss',
-    host: { 'data-bspk': 'input-phone', tabindex: '-1', '(keydown)': 'handleKeyDown($event)' },
+    host: { 'data-bspk': 'input-phone', tabindex: '-1' },
     template: `
         <ui-input
             [attr.data-bspk-owner]="'input-phone'"
@@ -212,28 +208,8 @@ export class UIInputPhone implements AsInputSignal<InputPhoneProps>, AfterViewIn
     readonly ariaDescribedBy = input<InputPhoneProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputPhoneProps['ariaErrorMessage']>(undefined);
     readonly id = input<InputPhoneProps['id']>(undefined);
-
-    /**
-     * The default country code to select when the component is rendered. If not provided, it will attempt to guess
-     * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
-     * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
-     *
-     * @type string
-     */
     readonly initialCountryCode = input<InputPhoneProps['initialCountryCode']>(undefined);
-
-    /**
-     * Disables formatting of the phone number input in the UI. values returned by valueChange are always unformatted.
-     *
-     * @type boolean
-     */
     readonly disableFormatting = input<InputPhoneProps['disableFormatting']>(false);
-
-    /**
-     * The maximum number of ListItems to show before scrolling is enabled.
-     *
-     * Used in conjunction with scrollLimitStyle utility.
-     */
     readonly scrollLimit = input<InputPhoneProps['scrollLimit']>(5);
 
     readonly reference = viewChild('inputEl', { read: ElementRef });
@@ -324,12 +300,6 @@ export class UIInputPhone implements AsInputSignal<InputPhoneProps>, AfterViewIn
         this.closeMenu();
     }
 
-    handleKeyDown(event: KeyboardEvent): void {
-        if (event.key === 'Tab') {
-            // Allow tab to close menu (commented logic from React)
-        }
-    }
-
     handleButtonKeyDown(event: KeyboardEvent): void {
         const isOpen = this.open();
         const arrowCallbacks = this.keyNavigation.arrowKeyCallbacks();
@@ -395,4 +365,4 @@ export class UIInputPhone implements AsInputSignal<InputPhoneProps>, AfterViewIn
     }
 }
 
-/** Copyright 2025 Anywhere Real Estate - CC BY 4.0 */
+/** Copyright 2026 Anywhere Real Estate - CC BY 4.0 */
