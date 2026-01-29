@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject, ViewContainerRef, AfterViewInit, input, DoCheck } from '@angular/core';
+import { Component, ViewEncapsulation, inject, ViewContainerRef, input, effect, ComponentRef } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
 
 @Component({
@@ -7,34 +7,28 @@ import { BspkIcon } from '../../types/bspk-icon';
     styles: 'ui-icon { display: contents; }',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIIcon implements AfterViewInit, DoCheck {
+export class UIIcon {
     /** @see https://bspk.anywhere.re/icons */
     readonly icon = input.required<BspkIcon>();
     readonly width = input<string>();
-
     viewContainerRef = inject(ViewContainerRef);
-    private lastIcon: BspkIcon | undefined;
 
-    ngAfterViewInit() {
-        this.renderIcon();
-    }
+    componentRef?: ComponentRef<any>;
+    currentIcon?: BspkIcon;
 
-    ngDoCheck() {
-        this.renderIcon();
-    }
+    constructor() {
+        effect(() => {
+            const nextIcon = this.icon();
 
-    private renderIcon() {
-        const iconValue = this.icon();
+            if (typeof nextIcon !== 'function') return;
 
-        if (iconValue === this.lastIcon) return;
+            if (this.currentIcon !== nextIcon) {
+                this.viewContainerRef.clear();
+                this.componentRef = this.viewContainerRef.createComponent(nextIcon);
+                this.currentIcon = nextIcon;
+            }
 
-        this.lastIcon = iconValue;
-
-        if (typeof iconValue !== 'function') return;
-
-        this.viewContainerRef.clear();
-
-        const icon = this.viewContainerRef.createComponent(iconValue).instance;
-        icon.width = this.width();
+            if (this.componentRef) this.componentRef.instance.width = this.width();
+        });
     }
 }

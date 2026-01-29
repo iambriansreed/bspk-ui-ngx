@@ -17,6 +17,8 @@ const files = fs.readdirSync(libDir, { withFileTypes: true });
 
 const errors: string[] = [];
 
+const warnings: string[] = [];
+
 files.forEach((dirent) => {
     if (dirent.isDirectory()) {
         if (dirent.name === 'icons') return;
@@ -43,6 +45,12 @@ files.forEach((dirent) => {
             const content = fs.readFileSync(filePath, 'utf-8');
 
             if (type === 'component' && !content.includes('@name')) return;
+
+            if (!/implements .*AsInputSignal<.*Props/.test(content)) {
+                warnings.push(
+                    `Component "${dirent.name}" in file "${filePath}" does not implenment ${pascalCaseName}Props.`,
+                );
+            }
 
             const classNameExpected = `UI${pascalCaseName}${type === 'directive' ? 'Directive' : ''}`;
             const selectorExpected = type === 'component' ? `ui-${dirent.name}` : `[ui-${dirent.name}]`;
@@ -96,4 +104,8 @@ if (existingIndexContent !== indexContent) {
 if (errors.length > 0) {
     console.error([`❌ Lint Error${errors.length > 1 ? 's' : ''}:`, ...errors].join('\n\n'));
     process.exit(1);
+}
+
+if (warnings.length > 0) {
+    console.warn(`\x1b[33m${[`⚠️ Lint Warning${warnings.length > 1 ? 's' : ''}:`, ...warnings].join('\n\n')}\x1b[0m`);
 }
