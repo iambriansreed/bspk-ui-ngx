@@ -62,9 +62,7 @@ export type IconType = BspkIcon;
         (mouseover)="handleMouseOver($event)"
         (mouseleave)="handleMouseLeave($event)"
         [style]="style()">
-        @if (!label()) {
-            <ng-content></ng-content>
-        } @else {
+        <ng-content>
             @if (icon()) {
                 <span [attr.aria-hidden]="true" [attr.data-button-icon]="true">
                     <ui-icon [icon]="icon()!"></ui-icon>
@@ -73,7 +71,7 @@ export type IconType = BspkIcon;
             @if (shouldShowLabel) {
                 <span [attr.data-button-label]="true">{{ label() }}</span>
             }
-        }
+        </ng-content>
         <span [attr.data-touch-target]="true"></span>
     </button>`,
     styleUrls: ['./button.scss'],
