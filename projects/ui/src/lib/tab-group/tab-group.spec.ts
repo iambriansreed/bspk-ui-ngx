@@ -1,33 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { componentTestProps } from '../../utils/test-props';
-import { UITabGroup } from './tab-group';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UITabGroupExample } from './example';
 
 describe('TabGroup', () => {
-    let component: UITabGroup;
-    let fixture: ComponentFixture<UITabGroup>;
+    let component:  UITabGroupExample;
+    let fixture: ComponentFixture< UITabGroupExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UITabGroup],
+            imports: [ UITabGroupExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UITabGroup,
-            componentTestProps<UITabGroup>({
-                label: 'Example',
-                options: [
-                    { value: '1', label: 'One' },
-                    { value: '2', label: 'Two' },
-                ],
-                value: '1',
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UITabGroupExample);
         component = fixture.componentInstance;
-
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

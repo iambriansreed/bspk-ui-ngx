@@ -1,21 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UIDivider } from './divider';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UIDividerExample } from './example';
 
 describe('Divider', () => {
-    let component: UIDivider;
-    let fixture: ComponentFixture<UIDivider>;
+    let component:  UIDividerExample;
+    let fixture: ComponentFixture< UIDividerExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIDivider],
+            imports: [ UIDividerExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIDivider);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIDividerExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

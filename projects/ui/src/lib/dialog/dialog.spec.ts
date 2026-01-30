@@ -1,20 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UIDialog } from './dialog';
+import { spyOn } from 'jest-mock';
+import { UIDialogExample } from './example';
 
-describe('UIDialog', () => {
-    let fixture: ComponentFixture<UIDialog>;
+describe('Dialog', () => {
+    let component:  UIDialogExample;
+    let fixture: ComponentFixture< UIDialogExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIDialog],
+            imports: [ UIDialogExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIDialog);
-        fixture.componentRef.setInput('open', true);
-
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIDialogExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

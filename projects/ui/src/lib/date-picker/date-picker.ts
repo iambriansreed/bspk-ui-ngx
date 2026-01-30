@@ -11,7 +11,7 @@ import {
     OnChanges,
 } from '@angular/core';
 import { format, startOfToday, parse } from 'date-fns';
-import { AsInputSignal, CommonProps } from '../../types/common';
+import { AsSignal, CommonProps } from '../../types/common';
 import { UIButton } from '../button';
 import { UICalendar } from '../calendar';
 import { UIFloatingDirective } from '../floating';
@@ -77,7 +77,6 @@ export type DatePickerProps = CommonProps<
  * @name DatePicker
  * @phase Dev
  */
-
 @Component({
     selector: 'ui-date-picker',
     standalone: true,
@@ -135,7 +134,7 @@ export type DatePickerProps = CommonProps<
     styleUrl: './date-picker.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIDatePicker implements OnInit, OnChanges, AsInputSignal<DatePickerProps> {
+export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps> {
     @Output() readonly valueChange = new EventEmitter<string>();
 
     // Inputs

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { sendSnackbar } from '../../utils/send-snackbar';
-import { ChipProps } from '../chip';
 import { IconAccessible } from '../icons/accessible';
 import { IconAdd } from '../icons/add';
 import { IconBakeryDining } from '../icons/bakery-dining';
@@ -17,7 +16,7 @@ import { IconPets } from '../icons/pets';
 import { IconPlayPause } from '../icons/play-pause';
 import { IconRemove } from '../icons/remove';
 import { IconReplay } from '../icons/replay';
-import { UIChipGroup } from './chip-group';
+import { ChipGroupItemProps, UIChipGroup } from './chip-group';
 
 @Component({
     selector: 'ui-chip-group-example',
@@ -61,17 +60,32 @@ import { UIChipGroup } from './chip-group';
     `,
 })
 export class UIChipGroupExample {
-    protected readonly basicChips: ChipProps[] = [
+    protected readonly basicChips: ChipGroupItemProps[] = [
         {
             label: 'Chip 1',
             leadingIcon: IconIcecream,
             click: () => sendSnackbar('Chip 1 clicked'),
         },
-        { label: 'Chip 2', leadingIcon: IconAccessible },
-        { label: 'Chip 3', leadingIcon: IconAdd, trailingBadge: { count: 2 } },
-        { label: 'Chip 4', leadingIcon: IconGarage },
-        { label: 'Chip 5 selected = true', leadingIcon: IconBakeryDining, selected: true },
-        { label: 'Chip 6 disabled = true', leadingIcon: IconPets, disabled: true },
+        { label: 'Chip 2', leadingIcon: IconAccessible, click: () => sendSnackbar('Chip 2 clicked') },
+        {
+            label: 'Chip 3',
+            leadingIcon: IconAdd,
+            trailingBadge: { count: 2 },
+            click: () => sendSnackbar('Chip 3 clicked'),
+        },
+        { label: 'Chip 4', leadingIcon: IconGarage, click: () => sendSnackbar('Chip 4 clicked') },
+        {
+            label: 'Chip 5 selected = true',
+            leadingIcon: IconBakeryDining,
+            selected: true,
+            click: () => sendSnackbar('Chip 5 clicked'),
+        },
+        {
+            label: 'Chip 6 disabled = true',
+            leadingIcon: IconPets,
+            disabled: true,
+            click: () => sendSnackbar('Chip 6 clicked'),
+        },
     ];
 
     protected readonly iconIcecream = IconIcecream;

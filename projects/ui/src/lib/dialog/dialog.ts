@@ -10,11 +10,48 @@ import {
     OnDestroy,
     viewChild,
 } from '@angular/core';
+import { AsSignal, CommonProps } from '../../types/common';
 import { UIFocusTrapDirective } from '../focus-trap';
-import { UIPortalDirective } from '../portal';
+import { PortalProps, UIPortalDirective } from '../portal';
 import { UIScrim } from '../scrim/scrim';
 
 export type Placement = 'bottom' | 'center' | 'left' | 'right' | 'top';
+
+export type DialogProps = CommonProps<'ariaDescription' | 'ariaLabel' | 'id' | 'owner'> &
+    Pick<PortalProps, 'container'> & {
+        /**
+         * If the dialog should appear.
+         *
+         * @default false
+         */
+        open?: boolean;
+        /**
+         * The placement of the dialog on the screen.
+         *
+         * @default center
+         */
+        placement?: 'bottom' | 'center' | 'left' | 'right' | 'top';
+        /**
+         * Whether the dialog should have a scrim behind it.
+         *
+         * @default true
+         */
+        showScrim?: boolean;
+        /**
+         * If the dialog should take the full width of the screen.
+         *
+         * @default false
+         */
+
+        widthFull?: boolean;
+        /**
+         * If focus trapping should be disabled. Generally this should not be disabled as dialogs should always trap
+         * focus.
+         *
+         * @default false
+         */
+        disableFocusTrap?: boolean;
+    };
 
 /**
  * Dialogs display important information that users need to acknowledge. They appear over the interface and may block
@@ -68,50 +105,27 @@ export type Placement = 'bottom' | 'center' | 'left' | 'right' | 'top';
                 (click)="handleClose()" />
         }
     `,
-    styleUrl: './dialog.scss',
+    styleUrls: ['./dialog.scss'],
     encapsulation: ViewEncapsulation.None,
     host: {
         style: 'display: contents;',
     },
 })
-export class UIDialog implements OnChanges, OnDestroy {
-    /** Function to call when the dialog is closed. */
+export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
     @Output() onClose = new EventEmitter<void>();
 
     readonly box = viewChild('box', { read: ElementRef });
 
-    /** A ref to the dialog element. */
-    readonly innerRef = input<(el: HTMLDivElement | null) => void>();
-
-    /** If the dialog should appear. */
-    readonly open = input<boolean>(false);
-
-    /** The placement of the dialog on the screen. */
-    readonly placement = input<Placement>('center');
-
-    /** Whether the dialog should have a scrim behind it. */
-    readonly showScrim = input<boolean>(true);
-
-    /** If the dialog should take the full width of the screen. */
-    readonly widthFull = input<boolean>(false);
-
-    /** Owner tag for theming/analytics parity. */
-    readonly owner = input<string | undefined>(undefined);
-
-    /** Element id. */
-    readonly id = input<string | undefined>(undefined);
-
-    /** Portal container element to contain dialog within. */
-    readonly container = input<HTMLElement | undefined>(undefined);
-
-    /** Disable focus trap (not implemented here; Angular users can manage focus as needed). */
-    readonly disableFocusTrap = input<boolean>(false);
-
-    /** Accessible label for the dialog container. */
-    readonly ariaLabel = input<string | undefined>(undefined);
-
-    /** Accessible description for the dialog container. */
-    readonly ariaDescription = input<string | undefined>(undefined);
+    readonly open = input<DialogProps['open']>(false);
+    readonly placement = input<DialogProps['placement']>('center');
+    readonly showScrim = input<DialogProps['showScrim']>(true);
+    readonly widthFull = input<DialogProps['widthFull']>(false);
+    readonly owner = input<DialogProps['owner']>(undefined);
+    readonly id = input<DialogProps['id']>(undefined);
+    readonly container = input<DialogProps['container']>(undefined);
+    readonly disableFocusTrap = input<DialogProps['disableFocusTrap']>(false);
+    readonly ariaLabel = input<DialogProps['ariaLabel']>(undefined);
+    readonly ariaDescription = input<DialogProps['ariaDescription']>(undefined);
 
     private readonly keydownBound = signal(false);
 

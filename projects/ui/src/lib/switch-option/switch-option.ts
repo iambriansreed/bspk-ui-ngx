@@ -1,6 +1,23 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+import { AsSignal, CommonProps } from '../../types/common';
 import { UIListItem } from '../list-item';
-import { UISwitch } from '../switch';
+import { SwitchProps, UISwitch } from '../switch';
+
+export type SwitchOptionProps = CommonProps<'style'> &
+    SwitchProps & {
+        /**
+         * The label of the option. Also used as the aria-label of the control.
+         *
+         * @required
+         */
+        label: string;
+        /**
+         * The description of the option.
+         *
+         * @type multiline
+         */
+        description?: string;
+    };
 
 /**
  * A control that allows users to choose one or more items from a list or turn an feature on or off.
@@ -25,7 +42,7 @@ import { UISwitch } from '../switch';
                 [value]="value()"
                 [checked]="checked()"
                 [disabled]="disabled()"
-                [ariaLabel]="ariaLabel()"
+                [ariaLabel]="ariaLabel() || computedAriaLabel()"
                 (checkedChange)="checkedChange.emit($event)">
             </ui-switch
         ></span>
@@ -34,17 +51,11 @@ import { UISwitch } from '../switch';
         'data-bspk': 'switch-option',
     },
 })
-export class UISwitchOption extends UISwitch {
-    /** The label of the option. Also used as the aria-label of the control. */
-    readonly label = input<string>();
+export class UISwitchOption extends UISwitch implements AsSignal<SwitchOptionProps> {
+    readonly label = input.required<SwitchOptionProps['label']>();
+    readonly description = input<SwitchOptionProps['description']>(undefined);
 
-    /** The description of the option. */
-    readonly description = input<string | undefined>(undefined);
-
-    /** The aria-label for the switch element. Combines label and description if both are present. */
-    override readonly ariaLabel = input<string | undefined>(this.computedAriaLabel());
-
-    computedAriaLabel(): string | undefined {
-        return this.description() ? `${this.label()} - ${this.description()}` : this.label();
-    }
+    readonly computedAriaLabel = computed(() => {
+        return this.ariaLabel() || (this.description() ? `${this.label()} - ${this.description()}` : this.label());
+    });
 }

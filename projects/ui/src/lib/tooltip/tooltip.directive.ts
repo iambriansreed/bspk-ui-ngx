@@ -17,6 +17,7 @@ import {
     viewChild,
 } from '@angular/core';
 import { Placement } from '@floating-ui/dom';
+import { AsSignal } from '../../types/common';
 import { addComponent } from '../../utils/add-component';
 import { uniqueId } from '../../utils/random';
 import { FloatingUtility } from '../floating/floating';
@@ -121,12 +122,10 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     updateTooltipProps(props: TooltipProps) {
         if (!this.tooltipComponent) return;
-        this.tooltipComponent.instance.props.set({
-            ...props,
-
-            // ensure placement is always up to date
-            placement: this.computedPlacement() || props.placement,
-        });
+        this.tooltipComponent.instance.label.set(props.label);
+        this.tooltipComponent.instance.disabled.set(props.disabled);
+        this.tooltipComponent.instance.showTail.set(props.showTail);
+        this.tooltipComponent.instance.placement.set(this.computedPlacement() || props.placement);
         this.tooltipComponent.changeDetectorRef.detectChanges();
     }
 
@@ -219,8 +218,8 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     selector: 'ui-tooltip',
     standalone: true,
     template: `
-        <span data-text>{{ props().label }}</span>
-        @if (props().showTail !== false) {
+        <span data-text>{{ label() }}</span>
+        @if (showTail() !== false) {
             <span aria-hidden="true" data-arrow #arrow></span>
         }
     `,
@@ -229,17 +228,17 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     host: {
         'data-bspk': 'tooltip',
         role: 'tooltip',
-        '[attr.data-placement]': 'props().placement || "top"',
+        '[attr.data-placement]': 'placement() || "top"',
         '[attr.id]': 'id() || null',
     },
 })
-export class UITooltip {
+export class UITooltip implements AsSignal<TooltipProps> {
     readonly arrow = viewChild<ElementRef>('arrow');
-
-    /** Tooltip id for a11y labelling */
     readonly id = signal<string | undefined>(undefined);
-
-    readonly props = model<TooltipProps>({});
+    readonly disabled = model<TooltipProps['disabled']>(false);
+    readonly label = model<TooltipProps['label']>();
+    readonly placement = model<TooltipProps['placement']>();
+    readonly showTail = model<TooltipProps['showTail']>();
 
     get arrowElement(): HTMLElement | null {
         return this.arrow()?.nativeElement || null;

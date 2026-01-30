@@ -1,13 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation, input } from '@angular/core';
+import { AsSignal } from '../../types/common';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
 import { UIButton } from '../button/button';
 import { IconChevronLeft, IconChevronRight } from '../icons';
 import { UIInput } from '../input';
 
-// After this point the manual input renders. With equal or fewer pages
-// the individual page buttons render instead (matches React implementation).
+// After this point the manual input renders. With equal or fewer pages the individual page buttons render instead.
 const INPUT_TYPE_THRESHOLD = 7;
+
+export interface PaginationProps {
+    /**
+     * The number of pages to display in the pagination component.
+     *
+     * If there is only one page, the component will not render.
+     *
+     * @default 2
+     */
+    numPages: number;
+    /**
+     * The current page number.
+     *
+     * @default 1
+     */
+    value: number;
+}
 
 /**
  * A navigation component that allows customers to move between a range of listed content within a page into smaller
@@ -41,7 +58,7 @@ const INPUT_TYPE_THRESHOLD = 7;
                 <ng-container>
                     <form data-input-form (submit)="submitManual($event)">
                         <ui-input
-                            label="Page number"
+                            ariaLabel="Page number"
                             [type]="'number'"
                             [showClearButton]="false"
                             [value]="inputValue"
@@ -85,23 +102,11 @@ const INPUT_TYPE_THRESHOLD = 7;
         role: 'group',
     },
 })
-export class UIPagination implements OnChanges {
+export class UIPagination implements OnChanges, AsSignal<PaginationProps> {
     /** Called when the page changes. */
     @Output() onChange = new EventEmitter<number>();
 
-    /**
-     * The number of pages to display in the pagination component.
-     *
-     * If there is only one page, the component will not render.
-     *
-     * @default 2
-     */
     readonly numPages = input(2);
-    /**
-     * The current (1-based) page number.
-     *
-     * @default 1
-     */
     readonly value = input(1);
 
     // Internal string representation for the input field when large page counts.

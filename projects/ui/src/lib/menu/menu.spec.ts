@@ -1,22 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UIMenu } from './menu';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UIMenuExample } from './example';
 
 describe('Menu', () => {
-    let component: UIMenu;
-    let fixture: ComponentFixture<UIMenu>;
+    let component:  UIMenuExample;
+    let fixture: ComponentFixture< UIMenuExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIMenu],
+            imports: [ UIMenuExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIMenu);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIMenuExample);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('ariaLabel', 'User menu');
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

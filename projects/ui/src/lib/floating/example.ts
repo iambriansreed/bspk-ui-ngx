@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, signal, viewChild } from '@angular/core';
 import { sendSnackbar } from '../../utils/send-snackbar';
 import { UIButton } from '../button';
-import { UIFloatingDirective, FloatingDirectiveProps } from './floating.directive';
+import { FloatingUtilityProps } from './floating';
+import { UIFloatingDirective } from './floating.directive';
 
 @Component({
     selector: 'ui-floating-example',
@@ -30,7 +31,7 @@ export class UIFloatingExample {
 
     readonly reference = viewChild<UIButton>('reference');
 
-    floatingProps = (): FloatingDirectiveProps => {
+    floatingProps = (): FloatingUtilityProps => {
         return {
             reference: this.reference()?.nativeElement,
         };

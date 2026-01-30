@@ -1,14 +1,26 @@
-import {
-    Component,
-    ViewEncapsulation,
-    input,
-    booleanAttribute,
-    ElementRef,
-    output,
-    viewChild,
-    effect,
-} from '@angular/core';
+import { Component, ViewEncapsulation, input, ElementRef, output, viewChild, effect } from '@angular/core';
+import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
+
+export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'readOnly' | 'value'> & {
+    /**
+     * If the checkbox is partially checked or
+     * [indeterminate](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes).
+     *
+     * This will override the `checked` prop.
+     *
+     * @default false
+     */
+    indeterminate?: boolean;
+    /**
+     * Marks the checkbox as checked.
+     *
+     * @default false
+     */
+    checked?: boolean;
+    /** The value of the checkbox. */
+    value: string;
+};
 
 /**
  * A control that allows users to choose one or more items from a list or turn a feature on or off. This is the base
@@ -73,42 +85,21 @@ import { uniqueId } from '../../utils/random';
         'data-bspk': 'checkbox',
     },
 })
-export class UICheckbox {
+export class UICheckbox implements AsSignal<CheckboxProps> {
     /** Emits the new checked state (true or false) */
     checkedChange = output<boolean>();
 
-    /** The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control. */
-    readonly name = input.required<string>();
-
-    /** The value of the field control. */
-    readonly value = input<string | undefined>(undefined);
-
-    /** The aria-label for the element. */
-    readonly ariaLabel = input<string | undefined>(undefined);
-
-    /** The id of the element. If not provided one will be generated. */
-    readonly id = input<string>(uniqueId('checkbox'));
-
-    /** Marks the checkbox as checked. @default false */
-    readonly checked = input(false, { transform: booleanAttribute });
-
-    /** If the checkbox is indeterminate. @default false */
-    readonly indeterminate = input(false, { transform: booleanAttribute });
-
-    /** Determines if the element is disabled. @default false */
-    readonly disabled = input(false, { transform: booleanAttribute });
-
-    /** Indicates that the element is in an invalid state. @default false */
-    readonly invalid = input(false, { transform: booleanAttribute });
-
-    /** Determines if the element is required. @default false */
-    readonly required = input(false, { transform: booleanAttribute });
-
-    /** The `aria-describedby` attribute for the checkbox. */
-    readonly ariaDescribedBy = input<string | undefined>(undefined);
-
-    /** The `aria-errormessage` attribute for the checkbox. */
-    readonly ariaErrorMessage = input<string | undefined>(undefined);
+    readonly name = input.required<CheckboxProps['name']>();
+    readonly value = input.required<CheckboxProps['value']>();
+    readonly ariaLabel = input<CheckboxProps['ariaLabel']>(undefined);
+    readonly id = input<CheckboxProps['id']>(uniqueId('checkbox'));
+    readonly checked = input<CheckboxProps['checked']>(false);
+    readonly indeterminate = input<CheckboxProps['indeterminate']>(false);
+    readonly disabled = input<CheckboxProps['disabled']>(false);
+    readonly invalid = input<CheckboxProps['invalid']>(false);
+    readonly required = input<CheckboxProps['required']>(false);
+    readonly ariaDescribedBy = input<CheckboxProps['ariaDescribedBy']>(undefined);
+    readonly ariaErrorMessage = input<CheckboxProps['ariaErrorMessage']>(undefined);
 
     private readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('input');
 
@@ -116,7 +107,7 @@ export class UICheckbox {
         effect(() => {
             // Update indeterminate property on the native input
             const nativeInput: HTMLInputElement | null = this.inputEl().nativeElement;
-            if (nativeInput) nativeInput.indeterminate = this.indeterminate();
+            if (nativeInput) nativeInput.indeterminate = !!this.indeterminate();
         });
     }
 

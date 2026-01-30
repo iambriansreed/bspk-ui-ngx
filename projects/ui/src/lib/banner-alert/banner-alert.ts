@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewEncapsulation, input } from '@angular/core';
-import { AlertVariant, AsInputSignal } from '../../types/common';
+import { AlertVariant, AsSignal } from '../../types/common';
 import { UIButton } from '../button';
 import { IconCheckCircleFill, IconClose, IconErrorFill, IconInfoFill, IconWarningFill } from '../icons';
 
@@ -52,6 +52,13 @@ export interface CallToActionButton {
     onClick: () => void;
 }
 
+/**
+ * A visual and contextual message used to communicate an important message or notification to users relating to a
+ * status or the body content of a page.
+ *
+ * @name BannerAlert
+ * @phase UXReview
+ */
 @Component({
     selector: 'ui-banner-alert',
     imports: [UIButton, IconErrorFill, IconInfoFill, IconCheckCircleFill, IconWarningFill],
@@ -102,7 +109,7 @@ export interface CallToActionButton {
         role: 'alert',
     },
 })
-export class UIBannerAlert implements AsInputSignal<BannerAlertProps> {
+export class UIBannerAlert implements AsSignal<BannerAlertProps> {
     /** Function to call when the banner alert is closed. */
     @Output() onClose = new EventEmitter<void>();
 

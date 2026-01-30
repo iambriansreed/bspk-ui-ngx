@@ -1,26 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UISelect } from './select';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UISelectExample } from './example';
 
 describe('Select', () => {
-    let component: UISelect;
-    let fixture: ComponentFixture<UISelect>;
+    let component:  UISelectExample;
+    let fixture: ComponentFixture< UISelectExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UISelect],
+            imports: [ UISelectExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UISelect);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UISelectExample);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('items', [
-            { label: 'Option 1', value: '1' },
-            { label: 'Option 2', value: '2' },
-        ]);
-        fixture.componentRef.setInput('name', 'example-select');
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

@@ -67,12 +67,10 @@ export class TooltipUtility {
         this.props.set(props);
 
         if (this.tooltipComponent) {
-            this.tooltipComponent.instance.props.set({
-                ...props,
-
-                // ensure placement is always up to date
-                placement: this.computedPlacement() || props.placement,
-            });
+            this.tooltipComponent.instance.placement.set(this.computedPlacement() || props.placement);
+            this.tooltipComponent.instance.label.set(props.label);
+            this.tooltipComponent.instance.disabled.set(!!props.disabled);
+            this.tooltipComponent.instance.showTail.set(props.showTail !== false);
             this.tooltipComponent.changeDetectorRef.detectChanges();
         }
     }

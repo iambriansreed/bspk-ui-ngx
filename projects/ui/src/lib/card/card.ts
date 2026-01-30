@@ -1,6 +1,14 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
+import { AsSignal } from '../../types/common';
 
-export type CardVariant = 'elevated' | 'outlined';
+export interface CardProps {
+    /**
+     * Determines how the card border will appear.
+     *
+     * @default elevated
+     */
+    variant?: 'elevated' | 'outlined';
+}
 
 /**
  * Cards are often rectangular and contain various content, such as text, images, icons, multimedia, and interactive
@@ -32,11 +40,6 @@ export type CardVariant = 'elevated' | 'outlined';
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UICard {
-    /**
-     * Determines how the card border will appear.
-     *
-     * @default elevated
-     */
-    readonly variant = input<CardVariant>('elevated');
+export class UICard implements AsSignal<CardProps> {
+    readonly variant = input<CardProps['variant']>('elevated');
 }

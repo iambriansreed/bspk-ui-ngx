@@ -1,9 +1,32 @@
-import { InputSignal, Signal } from '@angular/core';
+import { InputSignal, Signal, OutputEmitterRef, ModelSignal } from '@angular/core';
 
-export type AsInputSignal<T> = {
-    [K in keyof T]: undefined extends T[K]
-        ? InputSignal<T[K] | undefined> | Signal<T[K] | undefined>
-        : InputSignal<NonNullable<T[K]>> | Signal<NonNullable<T[K]>>;
+import * as CSS from 'csstype';
+
+type Output<T> = OutputEmitterRef<T>;
+
+type AsInputOrSignal<V> = undefined extends V
+    ? InputSignal<V | undefined> | ModelSignal<V | undefined> | Signal<V | undefined>
+    : InputSignal<NonNullable<V>> | ModelSignal<NonNullable<V>> | Signal<NonNullable<V>>;
+
+type OutputPayload<V> =
+    Extract<NonNullable<V>, (...args: any[]) => any> extends (...args: infer A) => any
+        ? A extends []
+            ? void
+            : A[0]
+        : void;
+
+/**
+ * A mapped type that transforms the properties of a given type T to Signal or Output types.
+ *
+ * - For properties starting with "on" followed by a capital letter, they are transformed into Output types.
+ * - All other properties are transformed into AsInputOrSignal types.
+ */
+export type AsSignal<T> = {
+    [K in keyof T]: K extends `on${infer R}`
+        ? R extends Capitalize<R>
+            ? Output<OutputPayload<T[K]>>
+            : AsInputOrSignal<T[K]>
+        : AsInputOrSignal<T[K]>;
 };
 
 export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
@@ -107,6 +130,8 @@ export interface CommonPropsLibrary {
      * Allows for CSS variables to be passed in as well.
      */
     style?: string;
+    /** Inline styles object to apply to the element. */
+    ngStyle?: CSS.Properties;
     /*
      * The aria-describedby attribute for the control.
      */
@@ -130,6 +155,24 @@ export interface CommonPropsLibrary {
     htmlFor?: string;
     /** Explicit tabIndex; defaults to 0 when actionable, otherwise -1. */
     tabIndex?: number;
+    /** The aria-description attribute for the element. */
+    ariaDescription?: string;
+    /** The aria-haspopup attribute of the element for accessibility purposes. */
+    ariaHaspopup?: string;
+    /**
+     * The aria-expanded attribute of the element for accessibility purposes.
+     *
+     * @default null
+     */
+    ariaExpanded?: boolean | null;
+    /**
+     * The aria-controls attribute of the element for accessibility purposes.
+     *
+     * @default null
+     */
+    ariaControls?: string | null;
+    /** Additional CSS classes to apply. */
+    class?: string;
 }
 
 export type CommonProps<K extends keyof CommonPropsLibrary> = Pick<CommonPropsLibrary, K>;

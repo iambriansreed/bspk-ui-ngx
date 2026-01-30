@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TableColumn, TableRow, UITable } from './table';
+import { TableColumn, TableRow, UITable } from './';
 
 @Component({
     selector: 'ui-table-example',

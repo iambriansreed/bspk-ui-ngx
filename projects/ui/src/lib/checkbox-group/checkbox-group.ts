@@ -1,15 +1,42 @@
 import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angular/core';
-import { UICheckboxOption } from '../checkbox-option';
+import { AsSignal, FieldControlProps } from '../../types/common';
+import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
-export interface CheckboxGroupOption {
-    value: string;
-    label: string;
-    description?: string;
-    checked?: boolean;
-    disabled?: boolean;
-    ariaLabel?: string;
-}
+export type CheckboxGroupOption = Omit<CheckboxOptionProps, 'name' | 'onChange'>;
 
+export type CheckboxGroupProps = Omit<FieldControlProps<string[]>, 'readOnly'> & {
+    /**
+     * The options for the checkboxes.
+     *
+     * @example
+     *     [
+     *         { label: 'Option 1', value: 'option1' },
+     *         { label: 'Option 2', value: 'option2' },
+     *         { label: 'Option 3', value: 'option3' },
+     *     ];
+     *
+     * @type Array<CheckboxGroupOption>
+     * @required
+     */
+    options: CheckboxGroupOption[];
+    /**
+     * Whether to show a select all checkbox at the top of the list.
+     *
+     * @default false
+     */
+    selectAll?: boolean;
+    /** The props for the select all checkbox. */
+    selectAllProps?: Pick<CheckboxOptionProps, 'ariaLabel' | 'description' | 'label'>;
+};
+
+/**
+ * A group of checkboxes that allows users to choose one or more items from a list or turn an feature on or off.
+ *
+ * For a more complete example with field usage, see the CheckboxGroupField component.
+ *
+ * @name CheckboxGroup
+ * @phase Stable
+ */
 @Component({
     selector: 'ui-checkbox-group',
     standalone: true,
@@ -46,14 +73,17 @@ export interface CheckboxGroupOption {
         </div>
     `,
 })
-export class UICheckboxGroup {
+export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
     @Output() valueChange = new EventEmitter<string[]>();
-    readonly options = input<CheckboxGroupOption[]>([]);
-    readonly value = input<string[]>([]);
-    readonly selectAll = input<boolean>(false);
-    readonly selectAllProps = input<Partial<CheckboxGroupOption> | undefined>(undefined);
-    readonly disabled = input<boolean>(false);
-    readonly invalid = input<boolean>(false);
+
+    readonly name = input.required<CheckboxGroupProps['name']>();
+    readonly options = input<CheckboxGroupProps['options']>([]);
+    readonly value = input<CheckboxGroupProps['value']>([]);
+    readonly selectAll = input<CheckboxGroupProps['selectAll']>(false);
+    readonly selectAllProps = input<CheckboxGroupProps['selectAllProps']>(undefined);
+    readonly disabled = input<CheckboxGroupProps['disabled']>(false);
+    readonly invalid = input<CheckboxGroupProps['invalid']>(false);
+
     selectAllLabel = 'All';
 
     isChecked(optionValue: string): boolean {

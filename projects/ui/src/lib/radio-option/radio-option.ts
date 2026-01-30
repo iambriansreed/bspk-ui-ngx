@@ -1,6 +1,14 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+import { AsSignal } from '../../types/common';
 import { UIListItem } from '../list-item';
-import { UIRadio } from '../radio/radio';
+import { RadioProps, UIRadio } from '../radio/radio';
+
+export type RadioOptionProps = RadioProps & {
+    /** The label of the option. Also used as the aria-label of the control. */
+    label: string;
+    /** The description of the option. */
+    description?: string;
+};
 
 /**
  * A control that allows users to choose one or more items from a list or turn an feature on or off.
@@ -29,7 +37,7 @@ import { UIRadio } from '../radio/radio';
                 [disabled]="disabled()"
                 [required]="required()"
                 [invalid]="invalid()"
-                [ariaLabel]="ariaLabel()"
+                [ariaLabel]="ariaLabel() || computedAriaLabel()"
                 (checkedChange)="checkedChange.emit($event)">
             </ui-radio>
         </span>
@@ -38,17 +46,11 @@ import { UIRadio } from '../radio/radio';
         'data-bspk': 'radio-option',
     },
 })
-export class UIRadioOption extends UIRadio {
-    /** The label of the option. Also used as the aria-label of the control. */
-    readonly label = input<string>();
+export class UIRadioOption extends UIRadio implements AsSignal<RadioOptionProps> {
+    readonly label = input.required<RadioOptionProps['label']>();
+    readonly description = input<RadioOptionProps['description']>(undefined);
 
-    /** The description of the option. */
-    readonly description = input<string | undefined>(undefined);
-    /** The aria-label for the radio element. Combines label and description if both are present. */
-
-    override readonly ariaLabel = input<string | undefined>(this.computedAriaLabel());
-
-    computedAriaLabel(): string | undefined {
-        return this.description() ? `${this.label()} - ${this.description()}` : this.label();
-    }
+    readonly computedAriaLabel = computed(() => {
+        return this.ariaLabel() ?? (this.description() ? `${this.label()} - ${this.description()}` : this.label());
+    });
 }

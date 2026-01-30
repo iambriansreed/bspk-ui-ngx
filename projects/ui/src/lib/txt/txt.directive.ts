@@ -1,4 +1,5 @@
 import { computed, Directive, input } from '@angular/core';
+import { AsSignal } from '../../types/common';
 
 export type TxtVariant =
     | 'body-base'
@@ -27,14 +28,44 @@ export type TxtVariant =
     | 'subheader-xx-large'
     | 'subheader-xxx-large';
 
+export interface TxtProps {
+    /**
+     * The variant to use.
+     *
+     * @default body-base
+     */
+    variant?: TxtVariant;
+    /** The id of the element. */
+    id?: string;
+    /**
+     * Inherit style and not set font style.
+     *
+     * @default false
+     */
+    inherit?: boolean;
+}
+
+/**
+ * A directive that applies the correct font styles based on the variant and size.
+ *
+ * @example
+ *     <div ui-txt="heading-h3">This is a heading</div>
+ *
+ * @name Txt
+ * @phase UXReview
+ */
 @Directive({
     selector: '[ui-txt]',
     host: {
         '[attr.data-txt]': 'variant()',
-        '[style.font]': 'font()',
+        '[style.font]': 'inherit() ? null : font()',
+        '[attr.id]': 'id()',
     },
 })
-export class UITxtDirective {
-    readonly variant = input<TxtVariant | ''>('body-base', { alias: 'ui-txt' });
+export class UITxtDirective implements AsSignal<TxtProps> {
+    readonly variant = input<TxtProps['variant']>('body-base', { alias: 'ui-txt' });
+    readonly id = input<TxtProps['id']>();
+    readonly inherit = input<TxtProps['inherit']>(false);
+
     readonly font = computed(() => `var(--${this.variant() || 'body-base'})`);
 }

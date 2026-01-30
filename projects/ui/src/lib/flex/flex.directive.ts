@@ -1,19 +1,50 @@
-import { Directive, ElementRef, computed, input } from '@angular/core';
+import { Directive, computed, input } from '@angular/core';
+import { AsSignal } from '../../types/common';
+import { SizingPixels } from '../../utils/sizing';
 
-export type UIFlexJustify =
-    | 'around'
-    | 'between'
-    | 'center'
-    | 'end'
-    | 'evenly'
-    | 'flex-end'
-    | 'flex-start'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly'
-    | 'start';
-
-export type UIFlexAlign = 'baseline' | 'center' | 'end' | 'flex-end' | 'flex-start' | 'start' | 'stretch';
+export interface FlexProps {
+    /** The gap between the children. */
+    gap?: SizingPixels | 'auto';
+    /**
+     * The align-items style to apply to the Flex.
+     *
+     * @default flex-start
+     */
+    align?: 'baseline' | 'center' | 'end' | 'flex-end' | 'flex-start' | 'start' | 'stretch';
+    /**
+     * The justification style to apply to the Flex.
+     *
+     * @default flex-start
+     */
+    justify?:
+        | 'around'
+        | 'between'
+        | 'center'
+        | 'end'
+        | 'evenly'
+        | 'flex-end'
+        | 'flex-start'
+        | 'space-around'
+        | 'space-between'
+        | 'space-evenly'
+        | 'start';
+    /**
+     * The flex-wrap style to apply to the Flex.
+     *
+     * @default nowrap
+     */
+    wrap?: 'nowrap' | 'wrap-reverse' | 'wrap';
+    /**
+     * The flex-direction style to apply to the Flex.
+     *
+     * @default row
+     */
+    direction?: 'column-reverse' | 'column' | 'row-reverse' | 'row';
+    /** The padding to apply to the Flex. */
+    padding?: SizingPixels | SizingPixels[];
+    /** If true the Flex will take up the full width of its container. */
+    full?: boolean;
+}
 
 /**
  * Apply flexbox layout to an element.
@@ -28,7 +59,7 @@ export type UIFlexAlign = 'baseline' | 'center' | 'end' | 'flex-end' | 'flex-sta
         '[style]': 'computedStyle()',
     },
 })
-export class UIFlexDirective {
+export class UIFlexDirective implements AsSignal<FlexProps> {
     readonly computedStyle = computed(() => ({
         display: 'flex',
         flexDirection: this.direction(),
@@ -38,24 +69,13 @@ export class UIFlexDirective {
         gap: this.gap() ?? null,
     }));
 
-    /** Flex-direction */
-    readonly direction = input<'column-reverse' | 'column' | 'row-reverse' | 'row'>('row');
+    readonly direction = input<FlexProps['direction']>('row');
+    readonly justify = input<FlexProps['justify']>('flex-start');
+    readonly align = input<FlexProps['align']>('stretch');
+    readonly wrap = input<FlexProps['wrap']>('nowrap');
+    readonly gap = input<FlexProps['gap']>();
 
-    /** Justify-content Accepts CSS values or shorthands: start,end,center,between,around,evenly */
-    readonly justify = input<UIFlexJustify>('flex-start');
-
-    /** Align-items Accepts CSS values or shorthands: start,end,center,stretch,baseline */
-    readonly align = input<UIFlexAlign>('stretch');
-
-    /** Flex-wrap */
-    readonly wrap = input<'nowrap' | 'wrap-reverse' | 'wrap'>('nowrap');
-
-    /** Gap (e.g., 8px, 1rem, var(--space-2)) */
-    readonly gap = input<string>();
-
-    constructor(private elementRef: ElementRef) {}
-
-    private normalizeJustify(v: UIFlexJustify): string {
+    private normalizeJustify(v: FlexProps['justify']): string {
         switch (v) {
             case 'start':
                 return 'flex-start';
@@ -68,18 +88,18 @@ export class UIFlexDirective {
             case 'evenly':
                 return 'space-evenly';
             default:
-                return v;
+                return v || 'flex-start';
         }
     }
 
-    private normalizeAlign(v: UIFlexAlign): string {
+    private normalizeAlign(v: FlexProps['align']): string {
         switch (v) {
             case 'start':
                 return 'flex-start';
             case 'end':
                 return 'flex-end';
             default:
-                return v;
+                return v || 'stretch';
         }
     }
 }

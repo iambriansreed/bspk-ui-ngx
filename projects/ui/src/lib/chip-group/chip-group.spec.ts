@@ -1,22 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UIChipGroupExample } from './example';
 
-import { UIChipGroup } from './chip-group';
-
-describe('UIChipGroup', () => {
-    let component: UIChipGroup;
-    let fixture: ComponentFixture<UIChipGroup>;
+describe('ChipGroup', () => {
+    let component:  UIChipGroupExample;
+    let fixture: ComponentFixture< UIChipGroupExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIChipGroup],
+            imports: [ UIChipGroupExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIChipGroup);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIChipGroupExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

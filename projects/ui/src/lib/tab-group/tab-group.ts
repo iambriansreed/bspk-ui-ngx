@@ -1,9 +1,18 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
-import { UITabList, UITabListUtility } from '../tab-list/tab-list';
+import { AsSignal } from '../../types/common';
+import { TabListProps, TabOption, UITabList, UITabListUtility } from '../tab-list/tab-list';
 
 export type TabGroupSize = 'large' | 'medium' | 'small';
 
-export interface TabGroupProps {}
+export type TabGroupProps = Omit<TabListProps<TabOption>, 'iconsOnly'> & {
+    /**
+     * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
+     * property isn't applicable.
+     *
+     * @default false
+     */
+    showTrail?: boolean;
+};
 
 /**
  * Navigation tool that organizes content across different screens and views.
@@ -47,12 +56,12 @@ export interface TabGroupProps {}
         style: 'display: contents;',
     },
 })
-export class UITabGroup extends UITabListUtility {
+export class UITabGroup extends UITabListUtility implements AsSignal<TabGroupProps> {
     /**
      * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
      * property isn't applicable.
      *
      * @default false
      */
-    readonly showTrail = input<boolean | undefined>();
+    readonly showTrail = input<TabGroupProps['showTrail']>();
 }

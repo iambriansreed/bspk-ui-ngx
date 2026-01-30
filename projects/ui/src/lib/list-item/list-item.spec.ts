@@ -1,23 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { componentTestProps } from '../../utils/test-props';
-import { UIListItem } from './list-item';
+import { spyOn } from 'jest-mock';
+import { UIListItemExample } from './example';
 
-describe('UIListItem', () => {
-    let fixture: ComponentFixture<UIListItem>;
+describe('ListItem', () => {
+    let component:  UIListItemExample;
+    let fixture: ComponentFixture< UIListItemExample>;
+    let errorSpy: any;
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIListItem],
+            imports: [ UIListItemExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UIListItem,
-            componentTestProps<UIListItem>({
-                label: 'Test List Item',
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIListItemExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

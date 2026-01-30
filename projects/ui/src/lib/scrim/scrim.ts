@@ -1,4 +1,16 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
+import { AsSignal, CommonProps } from '../../types/common';
+
+export type ScrimProps = CommonProps<'owner'> & {
+    /**
+     * Whether the Scrim should be visible.
+     *
+     * @default true
+     */
+    visible?: boolean;
+    /** If the scrim should be contained within a parent element, or fixed to the viewport. */
+    contained?: boolean;
+};
 
 /**
  * A temporary effect or overlay that can be applied to a user interface to make content less prominent or to draw
@@ -21,11 +33,8 @@ import { Component, ViewEncapsulation, input } from '@angular/core';
         '[attr.data-contained]': 'contained() || undefined',
     },
 })
-export class UIScrim {
-    /** Whether the Scrim should be visible. */
-    readonly visible = input(true);
-    /** Owner identifier for tracking/analytics. */
-    readonly owner = input<string>();
-    /** Whether the scrim is contained within another element. */
-    readonly contained = input<boolean>();
+export class UIScrim implements AsSignal<ScrimProps> {
+    readonly visible = input<ScrimProps['visible']>(true);
+    readonly owner = input<ScrimProps['owner']>();
+    readonly contained = input<ScrimProps['contained']>();
 }

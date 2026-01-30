@@ -1,28 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { componentTestProps } from '../../utils/test-props';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UITagExample } from './example';
 
-import { UITag } from './tag';
-
-describe('UITag', () => {
-    let component: UITag;
-    let fixture: ComponentFixture<UITag>;
+describe('Tag', () => {
+    let component:  UITagExample;
+    let fixture: ComponentFixture< UITagExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UITag],
+            imports: [ UITagExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UITag,
-            componentTestProps<UITag>({
-                label: 'Test Tag',
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UITagExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UIRadioOption } from './radio-option';
+import { spyOn } from 'jest-mock';
+import { UIRadioOptionExample } from './example';
 
-@Component({
-    template: `<ui-radio-option label="Test Label" name="test-name" value="test-value" />`,
-    standalone: true,
-    imports: [UIRadioOption],
-})
-class TestHostComponent {}
-
-describe('UIRadioOption', () => {
-    let fixture: ComponentFixture<TestHostComponent>;
+describe('RadioOption', () => {
+    let component:  UIRadioOptionExample;
+    let fixture: ComponentFixture< UIRadioOptionExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ UIRadioOptionExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(TestHostComponent);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIRadioOptionExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
     it('should create', () => {
-        expect(fixture.componentInstance).toBeTruthy();
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

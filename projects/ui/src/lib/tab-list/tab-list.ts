@@ -9,8 +9,10 @@ import {
     signal,
     inject,
     ElementRef,
+    model,
 } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
+import { AsSignal } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
 import { randomString } from '../../utils/random';
 import { UIBadge } from '../badge';
@@ -33,7 +35,7 @@ export interface TabOption {
      */
     disabled?: boolean;
     /**
-     * The value of the tab sent to onChange when selected.
+     * The value of the tab sent to valueChange when selected.
      *
      * If not provided, the label will be used as the value.
      */
@@ -63,38 +65,86 @@ const TAB_BADGE_SIZES: Record<TabSize, 'small' | 'x-small'> = {
     small: 'x-small',
 };
 
-@Component({
-    template: '',
-})
-export class UITabListUtility {
-    /** The function to call when the tab is clicked. */
-    @Output() valueChange = new EventEmitter<string>();
-
-    /** The tabs to display. If less than 2 items are provided, the component will not render. */
-    readonly options = input<TabOption[]>([]);
-
-    /** The value of the selected tab. */
-    readonly value = input<string | undefined>(undefined);
-
-    /** The size of the tabs. @default medium */
-    readonly size = input<TabSize>('medium');
-
-    /** Determines how the tab options use horizontal space. @default hug */
-    readonly width = input<'fill' | 'hug'>('hug');
-
-    /** The label for the tab utility, used for accessibility. */
-    readonly label = input.required<string>();
-
+export interface TabListProps<O extends TabOption = TabOption> {
+    /**
+     * The tabs to display.
+     *
+     * If **less than 2** items are provided, the component will not render.
+     *
+     * @example
+     *     [
+     *         { value: '1', label: 'Option 1' },
+     *         { value: '2', label: 'Disabled 2 ', disabled: true },
+     *         { value: '3', label: 'Option 3' },
+     *     ];
+     *
+     * @type Array<TabOption>
+     * @required
+     */
+    options: O[];
+    /**
+     * The value of the selected tab.
+     *
+     * @example
+     *     1;
+     *
+     * @required
+     */
+    value: TabOption['value'];
+    /**
+     * The size of the tabs.
+     *
+     * @default medium
+     */
+    size?: TabSize;
+    /**
+     * Determines how the tab options use horizontal space.
+     *
+     * If set to 'fill', options expand to fill the container's width.
+     *
+     * If set to 'hug', options only take up as much space as the content requires.
+     *
+     * @default hug
+     */
+    width?: 'fill' | 'hug';
+    /**
+     * The label for the tab utility, used for accessibility.
+     *
+     * @required
+     */
+    label: string;
     /** The id of the tab utility, used for accessibility. */
-    readonly id = input<string | undefined>(undefined);
-
+    id?: string;
     /**
      * Determines if the labels of the options should be displayed. If icons are not provided for every option this is
      * ignored and labels are shown.
      *
      * @default false
      */
-    readonly iconsOnly = input<boolean>(false);
+    iconsOnly?: boolean;
+}
+
+/**
+ * Navigation tool that organizes content across different screens and views.
+ *
+ * See TabGroup or SegmentedControl for examples.
+ */
+@Component({
+    template: '',
+})
+export class UITabListUtility<O extends TabOption = TabOption> implements AsSignal<TabListProps<O>> {
+    /** The function to call when the tab is clicked. */
+    @Output() valueChange = new EventEmitter<string>();
+
+    readonly options = input<TabListProps<O>['options']>([]);
+    readonly value = input.required<TabListProps<O>['value']>();
+    readonly width = input<TabListProps<O>['width']>('hug');
+    readonly label = input.required<TabListProps<O>['label']>();
+    readonly id = input<TabListProps<O>['id']>(undefined);
+    readonly iconsOnly = input<TabListProps<O>['iconsOnly']>(false);
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    readonly sizeProp = input<TabListProps<O>['size']>('medium', { alias: 'size' });
+    readonly size = computed<Exclude<TabListProps<O>['size'], undefined>>(() => this.sizeProp() || 'medium');
 
     // Internals
     readonly componentId = computed(() => this.id() || `tab-list-${randomString(8)}`);
@@ -194,6 +244,15 @@ export class UITabListUtility {
     }
 }
 
+export interface UITabListProps {
+    /**
+     * The component identifier.
+     *
+     * Usually
+     */
+    component: string;
+}
+
 /**
  * Navigation tool that organizes content across different screens and views.
  *
@@ -263,9 +322,8 @@ export class UITabListUtility {
         '(keydown)': 'handleKeyDownEvent($event)',
     },
 })
-export class UITabList extends UITabListUtility {
-    readonly component = input<string>('', {
-        // eslint-disable-next-line @angular-eslint/no-input-rename
+export class UITabList extends UITabListUtility implements AsSignal<UITabListProps> {
+    readonly component = model<UITabListProps['component']>('', {
         alias: 'data-bspk',
     });
 }

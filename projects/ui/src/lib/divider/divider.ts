@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { AsSignal } from '../../types/common';
 
 export interface DividerProps {
     /**
@@ -69,7 +69,7 @@ const insetToVariable = (insetProp: number | string) => {
         '[style.--inset]': 'insetStyle()',
     },
 })
-export class UIDivider implements AsInputSignal<DividerProps> {
+export class UIDivider implements AsSignal<DividerProps> {
     readonly orientation = input<DividerProps['orientation']>('horizontal');
     readonly thickness = input<DividerProps['thickness']>('light');
     readonly padding = input<DividerProps['padding']>(true);

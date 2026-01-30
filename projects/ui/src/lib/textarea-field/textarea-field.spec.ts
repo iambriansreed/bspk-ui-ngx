@@ -1,21 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UITextareaField } from './textarea-field';
+import { spyOn } from 'jest-mock';
+import { UITextareaFieldExample } from './example';
 
-describe('UITextareaField', () => {
-    let fixture: ComponentFixture<UITextareaField>;
+describe('TextareaField', () => {
+    let component:  UITextareaFieldExample;
+    let fixture: ComponentFixture< UITextareaFieldExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UITextareaField],
+            imports: [ UITextareaFieldExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UITextareaField);
-        fixture.componentRef.setInput('label', 'Textarea test');
-        fixture.componentRef.setInput('name', 'textarea-name');
-
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UITextareaFieldExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

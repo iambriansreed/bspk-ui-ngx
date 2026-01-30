@@ -10,7 +10,7 @@ import {
     AfterViewInit,
     OnDestroy,
 } from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { AsSignal } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
 import { uniqueId } from '../../utils/random';
 import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
@@ -89,7 +89,7 @@ export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
         style: 'display: contents;',
     },
 })
-export class UIBreadcrumbDropdown implements AsInputSignal<BreadcrumbDropdownProps>, AfterViewInit, OnDestroy {
+export class UIBreadcrumbDropdown implements AsSignal<BreadcrumbDropdownProps>, AfterViewInit, OnDestroy {
     readonly iconChevronRight = IconChevronRight;
     readonly iconMoreHoriz = IconMoreHoriz;
 

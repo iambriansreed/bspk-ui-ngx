@@ -1,23 +1,34 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UILinkDirective } from './link.directive';
+import { spyOn } from 'jest-mock';
+import { UILinkExample } from './example';
 
-@Component({
-    selector: 'ui-host',
-    standalone: true,
-    imports: [UILinkDirective],
-    template: `<a [ui-link]="'#ok'">Hover me</a>`,
-})
-class HostComponent {}
-
-describe('UILinkDirective', () => {
-    let fixture: ComponentFixture<HostComponent>;
+describe('Link', () => {
+    let component:  UILinkExample;
+    let fixture: ComponentFixture< UILinkExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
-        await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
-        fixture = TestBed.createComponent(HostComponent);
+        await TestBed.configureTestingModule({
+            imports: [ UILinkExample],
+        }).compileComponents();
+
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UILinkExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

@@ -1,32 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { componentTestProps } from '../../utils/test-props';
-import { UITabList } from './tab-list';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UITabListExample } from './example';
 
 describe('TabList', () => {
-    let component: UITabList;
-    let fixture: ComponentFixture<UITabList>;
+    let component:  UITabListExample;
+    let fixture: ComponentFixture< UITabListExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UITabList],
+            imports: [ UITabListExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UITabList,
-            componentTestProps<UITabList>({
-                label: 'Example',
-                options: [
-                    { value: '1', label: 'One' },
-                    { value: '2', label: 'Two' },
-                ],
-                value: '1',
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UITabListExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

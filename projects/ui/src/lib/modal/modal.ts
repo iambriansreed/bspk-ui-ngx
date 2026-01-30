@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output, ViewEncapsulation, input, computed, inject } from '@angular/core';
-import { ButtonSize } from '../../types/common';
+import { AsSignal, ButtonSize } from '../../types/common';
 import { UIBreakpointService } from '../../utils/breakpoint.service';
 import { UIButton, ButtonWidth } from '../button/button';
-import { UIDialog } from '../dialog/dialog';
+import { DialogProps, UIDialog } from '../dialog/dialog';
 import { IconClose } from '../icons/close';
 import { UIMatchParentHeightDirective } from '../match-parent-height';
 
@@ -13,6 +13,53 @@ export interface ModalCallToAction {
 }
 
 export type ButtonFormat = 'horizontal' | 'vertical';
+
+export type ModalProps = Pick<DialogProps, 'container' | 'disableFocusTrap' | 'id' | 'open' | 'owner'> & {
+    /**
+     * Modal header.
+     *
+     * @example
+     *     Change your email
+     *
+     * @required
+     */
+    header: string;
+    /**
+     * Modal description. Used for the
+     * [aria-description](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)
+     * attribute.
+     *
+     * @example
+     *     Email change confirmation.
+     *
+     * @required
+     */
+    description: string;
+    /**
+     * Whether to show the cancel button in the footer.
+     *
+     * Providing a string will set the label of the cancel button.
+     *
+     * @default false
+     */
+    cancelButton?: boolean | string;
+    /**
+     * The call to action button to display in the footer of the modal.
+     *
+     * @example
+     *     {
+     *     label: 'Confirm',
+     *     onClick: () => action('Confirm clicked'),
+     *     }
+     */
+    callToAction?: ModalCallToAction;
+    /**
+     * The format of the buttons in the footer. Vertical applies only on screen widths less than or equal to 640px.
+     *
+     * @default horizontal
+     */
+    buttonFormat?: 'horizontal' | 'vertical';
+};
 
 /**
  * Modals display important information that users need to acknowledge. They appear over the interface and block further
@@ -91,38 +138,24 @@ export type ButtonFormat = 'horizontal' | 'vertical';
     styleUrl: './modal.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIModal {
+export class UIModal implements AsSignal<ModalProps> {
     /** Emits when modal requests to close. */
     @Output() onClose = new EventEmitter<void>();
 
     iconClose = IconClose;
 
-    /** Modal header. */
-    readonly header = input.required<string>();
-
-    /** Modal description. Used for the aria-description attribute. */
-    readonly description = input.required<string>();
-
-    /** A ref to the modal element. */
+    readonly header = input.required<ModalProps['header']>();
+    readonly description = input.required<ModalProps['description']>();
     readonly innerRef = input<(el: HTMLDivElement | null) => void>();
+    readonly cancelButton = input<ModalProps['cancelButton']>(false);
+    readonly callToAction = input<ModalProps['callToAction']>(undefined);
+    readonly buttonFormat = input<ModalProps['buttonFormat']>('horizontal');
+    readonly open = input<ModalProps['open']>(false);
+    readonly id = input<ModalProps['id']>(undefined);
+    readonly owner = input<ModalProps['owner']>(undefined);
+    readonly container = input<ModalProps['container']>(undefined);
+    readonly disableFocusTrap = input<ModalProps['disableFocusTrap']>(false);
 
-    /** Whether to show the cancel button in the footer. Providing a string sets its label. */
-    readonly cancelButton = input<boolean | string>(false);
-
-    /** The call to action button to display in the footer of the modal. */
-    readonly callToAction = input<ModalCallToAction | undefined>(undefined);
-
-    /** The format of the buttons in the footer. Vertical only applies on <=640px. */
-    readonly buttonFormat = input<ButtonFormat>('horizontal');
-
-    // Dialog-proxy inputs
-    readonly open = input<boolean>(false);
-    readonly id = input<string | undefined>(undefined);
-    readonly owner = input<string | undefined>(undefined);
-    readonly container = input<HTMLElement | undefined>(undefined);
-    readonly disableFocusTrap = input<boolean>(false);
-
-    // Defaults: Angular app likely desktop; keep small; width depends on format
     readonly buttonSize = computed<ButtonSize>(() => (this.isMobile() ? 'medium' : 'small'));
     readonly buttonWidth = computed<ButtonWidth>(() => (this.buttonFormat() === 'vertical' ? 'fill' : 'hug'));
 

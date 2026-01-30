@@ -1,8 +1,26 @@
 import { Component, input, ViewEncapsulation } from '@angular/core';
-import { AlertVariant } from '../../types/common';
+import { AlertVariant, AsSignal, CommonProps } from '../../types/common';
 import { IconCheckCircleFill, IconErrorFill, IconInfoFill } from '../icons';
 import { UITxtDirective } from '../txt/txt.directive';
 import { UIWarningTwoTone } from './warning-two-tone';
+
+export type InlineAlertProps = CommonProps<'owner'> & {
+    /**
+     * The content of the inline alert.
+     *
+     * @type multiline
+     * @required
+     */
+    label: string;
+    /**
+     * The color variant of the inline alert.
+     *
+     * @default informational
+     */
+    variant?: AlertVariant;
+    /** The id of the inline alert. */
+    id?: string;
+};
 
 /**
  * Inline alerts provide contextual feedback messages for typical user actions with a handful of available and flexible
@@ -36,21 +54,9 @@ import { UIWarningTwoTone } from './warning-two-tone';
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInlineAlert {
-    /**
-     * The alert message content.
-     *
-     * @required
-     */
-    readonly label = input.required<string>();
-    /**
-     * The color variant of the inline alert.
-     *
-     * @default informational
-     */
-    readonly variant = input<AlertVariant>('informational');
-    /** The id of the inline alert. */
-    readonly id = input<string | null>(null);
-    /** Identifies the parent component. Helps with styling, debugging, and/or testing purposes. */
-    readonly owner = input<string | null>(null);
+export class UIInlineAlert implements AsSignal<InlineAlertProps> {
+    readonly label = input.required<InlineAlertProps['label']>();
+    readonly variant = input<InlineAlertProps['variant']>('informational');
+    readonly id = input<InlineAlertProps['id']>();
+    readonly owner = input<InlineAlertProps['owner']>();
 }

@@ -22,6 +22,8 @@ import { UISwitchOption } from './switch-option';
                 (checkedChange)="onCheckedChange($index, $event)" />
             <div>Demo checked: {{ ex.checked }}</div>
         }
+
+        <ui-switch-option [checked]="false" label="Test Label" name="test-name" value="test-value" />
     `,
 })
 export class UISwitchOptionExample {

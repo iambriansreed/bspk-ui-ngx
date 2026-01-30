@@ -1,9 +1,35 @@
 import { Component, ElementRef, ViewEncapsulation, input, viewChild } from '@angular/core';
+import { AsSignal } from '../../types/common';
 
 export interface BadgeProps {
+    /**
+     * The content of the badge. If larger than 99, the badge will display '99+'.
+     *
+     * @example
+     *     5;
+     *
+     * @default 1
+     *
+     * @type number
+     */
     count?: number;
-    size?: string;
-    color?: string;
+    /**
+     * The size of the badge.
+     *
+     * @default small
+     */
+    size?: 'small' | 'x-small';
+    /**
+     * The color variant of the badge.
+     *
+     * @default primary
+     */
+    color?: 'primary' | 'secondary';
+    /**
+     * Whether the badge should have a border that matches the surface color.
+     *
+     * @default false
+     */
     surfaceBorder?: boolean;
 }
 
@@ -20,7 +46,6 @@ export interface BadgeProps {
  * @name Badge
  * @phase Dev
  */
-
 @Component({
     selector: 'ui-badge',
     standalone: true,
@@ -40,44 +65,17 @@ export interface BadgeProps {
         'data-attachment-wrapper': '',
     },
 })
-export class UIBadge {
+export class UIBadge implements AsSignal<BadgeProps> {
     /**
      * The context for which the badge is applied.
      *
      * Could be a button, link, or any other element that the badge is associated with.
      */
     readonly contentWrapper = viewChild.required<ElementRef<HTMLElement>>('contentWrapper');
-
-    /**
-     * The content of the badge. If larger than 99, the badge will display '99+'.
-     *
-     * @example
-     *     5;
-     *
-     * @default 1
-     */
-    readonly count = input<number | undefined>(1);
-
-    /**
-     * The size of the badge.
-     *
-     * @default small
-     */
-    readonly size = input<'small' | 'x-small'>('small');
-
-    /**
-     * The color variant of the badge.
-     *
-     * @default primary
-     */
-    readonly color = input<'primary' | 'secondary'>('primary');
-
-    /**
-     * Whether the badge should have a border that matches the surface color.
-     *
-     * @default false
-     */
-    readonly surfaceBorder = input(false);
+    readonly count = input<BadgeProps['count']>(1);
+    readonly size = input<BadgeProps['size']>('small');
+    readonly color = input<BadgeProps['color']>('primary');
+    readonly surfaceBorder = input<BadgeProps['surfaceBorder']>(false);
 
     /**
      * Indicates whether the badge has projected (custom) content.

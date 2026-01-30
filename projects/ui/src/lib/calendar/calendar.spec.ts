@@ -1,24 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UICalendar } from './calendar';
+import { spyOn } from 'jest-mock';
+import { UICalendarExample } from './example';
 
 describe('Calendar', () => {
-    let component: UICalendar;
-    let fixture: ComponentFixture<UICalendar>;
+    let component:  UICalendarExample;
+    let fixture: ComponentFixture< UICalendarExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UICalendar],
+            imports: [ UICalendarExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UICalendar);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UICalendarExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

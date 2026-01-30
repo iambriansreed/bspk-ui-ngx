@@ -1,24 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UIAccordion } from './accordion';
+import { spyOn } from 'jest-mock';
+import { UIAccordionExample } from './example';
 
 describe('Accordion', () => {
-    let component: UIAccordion;
-    let fixture: ComponentFixture<UIAccordion>;
+    let component:  UIAccordionExample;
+    let fixture: ComponentFixture< UIAccordionExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIAccordion],
+            imports: [ UIAccordionExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIAccordion);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIAccordionExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

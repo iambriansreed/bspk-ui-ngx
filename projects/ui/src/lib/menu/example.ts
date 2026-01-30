@@ -65,6 +65,7 @@ import { UIMenu } from './menu';
                 </span>
                 <span data-trailing>
                     <ui-checkbox
+                        value="dark"
                         name="dark-mode"
                         [checked]="themeService.value() === 'dark'"
                         (checkedChange)="themeService.toggle()"></ui-checkbox>

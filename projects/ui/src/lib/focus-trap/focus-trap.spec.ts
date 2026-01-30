@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UIFocusTrapDirective } from './focus-trap.directive';
 
+/**
+ * - Should trap focus within the focus trap when enabled
+ * - Should allow focus to leave the focus trap when disabled
+ */
 @Component({
     standalone: true,
     imports: [UIFocusTrapDirective],

@@ -1,9 +1,45 @@
 import { CommonModule } from '@angular/common';
-import { Component, output, input, model, computed } from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { Component, output, input, model } from '@angular/core';
+import { AsSignal, CommonProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { IconKeyboardArrowDown, IconKeyboardArrowUp } from '../icons';
-import { AccordionSection } from './accordion';
+
+export type AccordionSectionProps = CommonProps<'id'> & {
+    /**
+     * The title of the accordion.
+     *
+     * @required
+     */
+    title: string;
+    /** The subtitle of the accordion. */
+    subtitle?: string;
+    /**
+     * The leading element to display in the accordion header.
+     *
+     * May be passed as string or use <span data-leading> for non-string content.
+     */
+    leading?: string;
+    /**
+     * The trailing element to display in the accordion header.
+     *
+     * May be passed as string or use <span data-trailing> for non-string content.
+     */
+    trailing?: string;
+    /**
+     * If the accordion is initially open.
+     *
+     * This is ignored if the accordion section disabled property is true.
+     *
+     * @default false
+     */
+    isOpen?: boolean;
+    /**
+     * Indicates whether the accordion is disabled.
+     *
+     * @default false
+     */
+    disabled?: boolean;
+};
 
 /** A utility component representing a single section within an accordion. */
 @Component({
@@ -12,33 +48,33 @@ import { AccordionSection } from './accordion';
     imports: [CommonModule, IconKeyboardArrowDown, IconKeyboardArrowUp],
     host: {
         'data-bspk': 'accordion-item',
-        '[attr.data-disabled]': 'item.disabled ? true : null',
-        '[id]': 'item.id',
+        '[attr.data-disabled]': 'disabled() ? true : null',
+        '[id]': 'id()',
     },
     template: `
         <button
             type="button"
-            [attr.aria-controls]="item.id + '-content'"
+            [attr.aria-controls]="id() + '-content'"
             [attr.aria-expanded]="isOpen()"
             data-header
-            [disabled]="item.disabled ? true : null"
-            (click)="!item.disabled && toggleOpen.emit(item.id!)">
+            [disabled]="disabled() ? true : null"
+            (click)="!disabled() && toggleOpen.emit(id()!)">
             <ng-content select="[data-leading]">
-                @if (item.leading) {
-                    <span data-leading>{{ item.leading }}</span>
+                @if (leading()) {
+                    <span data-leading>{{ leading() }}</span>
                 }
             </ng-content>
 
             <span data-title-subtitle>
-                <span data-title>{{ item.title }}</span>
+                <span data-title>{{ title() }}</span>
 
-                @if (item.subtitle) {
-                    <span data-subtitle>{{ item.subtitle }}</span>
+                @if (subtitle()) {
+                    <span data-subtitle>{{ subtitle() }}</span>
                 }
             </span>
             <ng-content select="[data-trailing]">
-                @if (item.trailing) {
-                    <span data-trailing>{{ item.trailing }}</span>
+                @if (trailing()) {
+                    <span data-trailing>{{ trailing() }}</span>
                 }
             </ng-content>
 
@@ -51,36 +87,21 @@ import { AccordionSection } from './accordion';
             </span>
         </button>
         @if (isOpen()) {
-            <div data-content [id]="item.id + '-content'">
+            <div data-content [id]="id() + '-content'">
                 <ng-content></ng-content>
             </div>
         }
         <span data-divider></span>
     `,
 })
-export class UIAccordionSection implements AsInputSignal<AccordionSection> {
+export class UIAccordionSection implements AsSignal<AccordionSectionProps> {
     toggleOpen = output<string>();
 
-    readonly title = input<AccordionSection['title']>('');
-    readonly subtitle = input<AccordionSection['subtitle']>(undefined);
-    readonly isOpen = model<AccordionSection['isOpen']>(false);
-    readonly disabled = input<AccordionSection['disabled']>(false);
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    readonly idProp = input<AccordionSection['id']>('', { alias: 'id' });
-    readonly id = computed<string>(() => this.idProp() || uniqueId('accordion-item'));
-
-    readonly leading = input<AccordionSection['leading']>(undefined);
-    readonly trailing = input<AccordionSection['trailing']>(undefined);
-
-    get item(): AccordionSection & { id: string } {
-        return {
-            title: this.title(),
-            subtitle: this.subtitle(),
-            isOpen: this.isOpen(),
-            disabled: this.disabled(),
-            id: this.id(),
-            leading: this.leading(),
-            trailing: this.trailing(),
-        };
-    }
+    readonly title = input<AccordionSectionProps['title']>('');
+    readonly subtitle = input<AccordionSectionProps['subtitle']>(undefined);
+    readonly isOpen = model<AccordionSectionProps['isOpen']>(false);
+    readonly disabled = input<AccordionSectionProps['disabled']>(false);
+    readonly id = input<AccordionSectionProps['id']>(uniqueId('accordion-section'));
+    readonly leading = input<AccordionSectionProps['leading']>(undefined);
+    readonly trailing = input<AccordionSectionProps['trailing']>(undefined);
 }

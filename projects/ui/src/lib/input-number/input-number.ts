@@ -1,5 +1,5 @@
 import { Component, ElementRef, input, model, viewChild, ViewEncapsulation } from '@angular/core';
-import { AsInputSignal, CommonProps, FieldControlProps } from '../../types/common';
+import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { UIIcon } from '../icon';
 import { IconAdd, IconRemove } from '../icons';
 import { IconCancel } from '../icons/cancel';
@@ -118,7 +118,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputNumber implements AsInputSignal<InputNumberProps> {
+export class UIInputNumber implements AsSignal<InputNumberProps> {
     public IconCancel = IconCancel;
 
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
@@ -138,7 +138,6 @@ export class UIInputNumber implements AsInputSignal<InputNumberProps> {
     readonly min = input<InputNumberProps['min']>(undefined);
     readonly max = input<InputNumberProps['max']>(undefined);
     readonly align = input<InputNumberProps['align']>('center');
-
     readonly ariaLabelledBy = input<InputNumberProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<InputNumberProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputNumberProps['ariaErrorMessage']>(undefined);

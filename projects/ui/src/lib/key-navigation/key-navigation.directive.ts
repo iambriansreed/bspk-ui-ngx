@@ -1,5 +1,10 @@
 import { Directive, input, AfterViewInit, inject, ElementRef, OnDestroy } from '@angular/core';
+import { AsSignal } from '../../types/common';
 import { KeyNavigationUtility, KeyNavigationUtilityProps } from './key-navigation';
+
+export interface KeyNavigationProps {
+    props: KeyNavigationUtilityProps;
+}
 
 /**
  * A directive to enable key navigation on an element.
@@ -13,10 +18,10 @@ import { KeyNavigationUtility, KeyNavigationUtilityProps } from './key-navigatio
         '(keydown)': 'handleKeydown($event)',
     },
 })
-export class UIKeyNavigationDirective implements AfterViewInit, OnDestroy {
+export class UIKeyNavigationDirective implements AfterViewInit, OnDestroy, AsSignal<KeyNavigationProps> {
     host = inject<ElementRef<HTMLElement>>(ElementRef<HTMLElement>);
 
-    readonly props = input<KeyNavigationUtilityProps>(
+    readonly props = input<KeyNavigationProps['props']>(
         {
             activeElementId: null,
         },

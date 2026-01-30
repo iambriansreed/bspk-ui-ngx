@@ -22,7 +22,7 @@ import {
     startOfToday,
     startOfWeek,
 } from 'date-fns';
-import { CommonProps } from '../../types/common';
+import { AsSignal } from '../../types/common';
 import { UIButton } from '../button';
 import { IconChevronLeft } from '../icons/chevron-left';
 import { IconChevronRight } from '../icons/chevron-right';
@@ -30,9 +30,13 @@ import { IconKeyboardDoubleArrowLeft } from '../icons/keyboard-double-arrow-left
 import { IconKeyboardDoubleArrowRight } from '../icons/keyboard-double-arrow-right';
 import { getCalendarKeydownHandler, optionIdGenerator, COLUMNS_COUNT } from './utils';
 
-export type CalendarProps = CommonProps<'id'> & {
-    /** The currently selected date. */
-    value?: Date;
+export interface CalendarProps {
+    /**
+     * The currently selected date
+     *
+     * @type Date
+     */
+    value: Date | undefined;
     /**
      * When true, keyboard focus is trapped within the calendar component on initial render.
      *
@@ -41,9 +45,9 @@ export type CalendarProps = CommonProps<'id'> & {
      * @default false
      */
     focusTrap?: boolean;
-    /** Fires when the date changes with the new date */
-    onChange?: (date: Date) => void;
-};
+    /** The id of the calendar component. */
+    id?: string;
+}
 
 /**
  * Allows customers to select the date, month, and year.
@@ -54,7 +58,6 @@ export type CalendarProps = CommonProps<'id'> & {
  * @name Calendar
  * @phase Dev
  */
-
 @Component({
     selector: 'ui-calendar',
     standalone: true,
@@ -138,7 +141,7 @@ export type CalendarProps = CommonProps<'id'> & {
         style: 'display: contents;',
     },
 })
-export class UICalendar implements AfterViewInit, OnInit {
+export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps> {
     @Output() onChange = new EventEmitter<Date>();
 
     IconKeyboardDoubleArrowLeft = IconKeyboardDoubleArrowLeft;
@@ -146,9 +149,9 @@ export class UICalendar implements AfterViewInit, OnInit {
     IconChevronLeft = IconChevronLeft;
     IconChevronRight = IconChevronRight;
 
-    readonly value = input<Date | undefined>(undefined);
-    readonly focusTrap = input(false);
-    readonly id = input<string | undefined>(undefined);
+    readonly value = input<CalendarProps['value']>(undefined);
+    readonly focusTrap = input<CalendarProps['focusTrap']>(false);
+    readonly id = input<CalendarProps['id']>(undefined);
 
     activeDate: Date = startOfToday();
     focusDay = false;

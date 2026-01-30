@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UICheckbox } from './checkbox';
+import { spyOn } from 'jest-mock';
+import { UICheckboxExample } from './example';
 
-@Component({
-    template: `<ui-checkbox label="Test Label" name="test-name" value="test-value" ariaLabel="Test label" />`,
-    standalone: true,
-    imports: [UICheckbox],
-})
-class TestHostComponent {}
-
-describe('UICheckbox', () => {
-    let fixture: ComponentFixture<TestHostComponent>;
+describe('Checkbox', () => {
+    let component:  UICheckboxExample;
+    let fixture: ComponentFixture< UICheckboxExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ UICheckboxExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(TestHostComponent);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UICheckboxExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
     it('should create', () => {
-        expect(fixture.componentInstance).toBeTruthy();
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

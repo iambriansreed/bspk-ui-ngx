@@ -1,12 +1,53 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, viewChild, ElementRef, ViewEncapsulation, model } from '@angular/core';
-
-// Assume these are your Angular equivalents:
-import { UIAvatar, UIAvatarProps } from '../avatar/avatar';
+import { AsSignal } from '../../types/common';
+import { UIAvatar, AvatarProps } from '../avatar/avatar';
 import { UIFloatingDirective } from '../floating';
 import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 
+export interface AvatarGroupOverflowProps {
+    /**
+     * The unique identifier for the overflow menu.
+     *
+     * @required
+     */
+    menuId: string;
+    /**
+     * The reference element for the floating menu positioning.
+     *
+     * @required
+     */
+    menuReference: HTMLElement;
+    /**
+     * The list of avatar items to display in the overflow menu.
+     *
+     * Each item should include the properties defined in AvatarProps along with a unique `id` property.
+     *
+     * @required
+     */
+    items: (AvatarProps & { id: string })[];
+    /**
+     * The currently active element ID in the overflow menu.
+     *
+     * This is used to manage keyboard navigation within the menu.
+     */
+    activeElementId: string | undefined;
+    /**
+     * Whether the overflow menu is open.
+     *
+     * @default false
+     */
+    open: boolean;
+    /**
+     * The size of the avatars in the overflow menu.
+     *
+     * @default medium
+     */
+    size?: AvatarProps['size'];
+}
+
+/** A component to display overflow avatars in an avatar group. */
 @Component({
     selector: 'ui-avatar-group-overflow',
     standalone: true,
@@ -61,14 +102,15 @@ import { UIMenu } from '../menu/menu';
         style: `display: contents;`,
     },
 })
-export class UIAvatarGroupOverflow {
+export class UIAvatarGroupOverflow implements AsSignal<AvatarGroupOverflowProps> {
     readonly overflowBtn = viewChild<ElementRef<HTMLButtonElement>>('overflowBtn');
-    readonly size = input<string>('medium');
-    readonly items = input.required<UIAvatarProps[]>();
-    readonly open = model<boolean>(false);
-    readonly menuId = input.required<string>();
-    readonly activeElementId = model<string | null>(null);
-    readonly menuReference = input.required<HTMLElement>();
+
+    readonly size = input<AvatarGroupOverflowProps['size']>('medium');
+    readonly open = model<AvatarGroupOverflowProps['open']>(false);
+    readonly menuId = input.required<AvatarGroupOverflowProps['menuId']>();
+    readonly activeElementId = model<AvatarGroupOverflowProps['activeElementId']>();
+    readonly menuReference = input.required<AvatarGroupOverflowProps['menuReference']>();
+    readonly items = input.required<AvatarGroupOverflowProps['items']>();
 
     get offset() {
         // Reads the CSS variable value at runtime, offsetOptions requires a number
@@ -76,7 +118,7 @@ export class UIAvatarGroupOverflow {
     }
 
     get maxMenuHeight() {
-        return this.items.length > 5 ? 'calc(var(--spacing-sizing-12) * 5)' : '';
+        return this.items().length > 5 ? 'calc(var(--spacing-sizing-12) * 5)' : '';
     }
 
     closeMenu() {
@@ -87,13 +129,13 @@ export class UIAvatarGroupOverflow {
         this.open.set(!this.open());
         const items = this.items();
         if (this.open() && items.length) {
-            this.activeElementId.set(items[0].id);
+            this.activeElementId.set(items[0].id!);
         } else {
-            this.activeElementId.set(null);
+            this.activeElementId.set(undefined);
         }
     }
 
-    avatarTemplate(item: UIAvatarProps) {
+    avatarTemplate(item: AvatarProps) {
         return {
             ...item,
             hideTooltip: true,

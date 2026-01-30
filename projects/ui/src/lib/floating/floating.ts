@@ -13,7 +13,7 @@ import {
 } from '@floating-ui/dom';
 import { UtilityBase } from '../../types/common';
 
-export interface FloatingProps {
+export interface FloatingUtilityProps {
     /**
      * The preferred placement of the floating element.
      *
@@ -57,15 +57,15 @@ export interface FloatingProps {
  *
  * Should be used in components that require floating element positioning.
  */
-export class FloatingUtility implements UtilityBase<FloatingProps> {
-    readonly props = signal<FloatingProps>({});
+export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
+    readonly props = signal<FloatingUtilityProps>({});
 
     constructor(private render: Renderer2) {}
     destroy(): void {
         // No-op
     }
 
-    updateProps(props: Partial<FloatingProps>) {
+    updateProps(props: Partial<FloatingUtilityProps>) {
         this.props.set({
             ...this.props(),
             ...props,
@@ -73,12 +73,13 @@ export class FloatingUtility implements UtilityBase<FloatingProps> {
     }
 
     init(
-        props: Omit<FloatingProps, 'floating' | 'reference'> & Required<Pick<FloatingProps, 'floating' | 'reference'>>,
+        props: Omit<FloatingUtilityProps, 'floating' | 'reference'> &
+            Required<Pick<FloatingUtilityProps, 'floating' | 'reference'>>,
     ) {
         this.updateProps(props);
     }
 
-    async compute(nextProps?: Partial<FloatingProps>) {
+    async compute(nextProps?: Partial<FloatingUtilityProps>) {
         const {
             placement,
             strategy,

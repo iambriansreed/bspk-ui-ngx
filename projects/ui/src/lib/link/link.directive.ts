@@ -1,16 +1,5 @@
-import {
-    Directive,
-    ElementRef,
-    Renderer2,
-    inject,
-    input,
-    OnDestroy,
-    effect,
-    EffectRef,
-    ViewContainerRef,
-    EnvironmentInjector,
-} from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { Directive, ElementRef, Renderer2, inject, input, effect, ViewContainerRef, DestroyRef } from '@angular/core';
+import { AsSignal } from '../../types/common';
 
 export interface LinkProps {
     /** The variant of the link. Controls the icon that is displayed and link target. */
@@ -57,7 +46,7 @@ export interface LinkProps {
 @Directive({
     selector: 'a[ui-link]',
 })
-export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
+export class UILinkDirective implements AsSignal<LinkProps> {
     readonly trailingIcon = input<LinkProps['trailingIcon']>();
     readonly href = input<LinkProps['href']>();
     readonly size = input<LinkProps['size']>('base');
@@ -67,13 +56,24 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
 
     private readonly host = inject<ElementRef<HTMLAnchorElement>>(ElementRef);
     private readonly renderer = inject(Renderer2);
-    private env = inject(EnvironmentInjector);
+    private viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+    private destroyRef = inject(DestroyRef);
 
     private labelSpan: HTMLSpanElement | null = null;
-    private teardown: EffectRef | null = null;
 
-    constructor(private viewContainerRef: ViewContainerRef) {
-        this.teardown = effect(async () => {
+    constructor() {
+        effect(async () => {
+            const el = this.host.nativeElement;
+            const iconComponent = await this.iconComponent();
+
+            // only add icon if component is not destroyed since this is async
+            if (iconComponent && !this.destroyRef.destroyed) {
+                const icon = this.viewContainerRef.createComponent(iconComponent);
+                this.renderer.appendChild(el, icon.location.nativeElement);
+            }
+        });
+
+        effect(() => {
             const el = this.host.nativeElement;
 
             // Set base attributes
@@ -115,12 +115,6 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
                 this.renderer.appendChild(el, span);
                 this.labelSpan = span;
             }
-
-            const iconComponent = await this.iconComponent();
-            if (iconComponent) {
-                const icon = this.viewContainerRef.createComponent(iconComponent);
-                this.renderer.appendChild(el, icon.location.nativeElement);
-            }
         });
     }
 
@@ -130,11 +124,6 @@ export class UILinkDirective implements AsInputSignal<LinkProps>, OnDestroy {
         if (tIcon === 'chevron') return import('../icons/chevron-right').then((m) => m.IconChevronRight);
         if (tIcon === 'link') return import('../icons/link').then((m) => m.IconLink);
         return null;
-    }
-
-    ngOnDestroy(): void {
-        if (this.teardown) this.teardown.destroy();
-        this.labelSpan = null;
     }
 }
 

@@ -1,5 +1,15 @@
-import { Component, Output, EventEmitter, ViewEncapsulation, input, booleanAttribute } from '@angular/core';
+import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
+
+export type RadioProps = Omit<FieldControlProps<string>, 'onChange' | 'readOnly'> & {
+    /**
+     * Marks the radio as checked.
+     *
+     * @default false
+     */
+    checked?: boolean;
+};
 
 /**
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you
@@ -13,7 +23,6 @@ import { uniqueId } from '../../utils/random';
  * @name Radio
  * @phase Utility
  */
-
 @Component({
     selector: 'ui-radio',
     standalone: true,
@@ -37,72 +46,17 @@ import { uniqueId } from '../../utils/random';
         'data-bspk': 'radio',
     },
 })
-export class UIRadio {
-    /** Emits the new checked state (true or false) */
+export class UIRadio implements AsSignal<RadioProps> {
     @Output() checkedChange = new EventEmitter<boolean>();
 
-    /**
-     * The function to call when the radio is checked.
-     *
-     * @required
-     */
-    readonly change = input<((event: Event) => void) | undefined>(undefined);
-
-    /**
-     * The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control.
-     *
-     * @required
-     */
-    readonly name = input.required<string | undefined>();
-
-    /**
-     * The value of the field control.
-     *
-     * @required
-     */
-    readonly value = input.required<string | undefined>();
-
-    /**
-     * The aria-label for the element.
-     *
-     * This is used to provide an accessible name for the element when a visible label is not present.
-     *
-     * Ensure this is provided when using the element in isolation to maintain accessibility.
-     */
-    readonly ariaLabel = input<string | undefined>(undefined);
-
-    /**
-     * Marks the radio as checked.
-     *
-     * @default false
-     */
-    readonly checked = input(false, { transform: booleanAttribute });
-
-    /**
-     * Determines if the element is [disabled](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled).
-     *
-     * @default false
-     */
-    readonly disabled = input(false, { transform: booleanAttribute });
-
-    /** The id of the element. If not provided one will be generated. */
-    readonly id = input<string>(uniqueId('radio'));
-
-    /**
-     * Indicates that the element is in an invalid state and displays the error theme.
-     *
-     * If set to true, an accompanying error message should be provided.
-     *
-     * @default false
-     */
-    readonly invalid = input(false, { transform: booleanAttribute });
-
-    /**
-     * Determines if the element is [required](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required).
-     *
-     * @default false
-     */
-    readonly required = input(false, { transform: booleanAttribute });
+    readonly name = input.required<RadioProps['name']>();
+    readonly value = input.required<RadioProps['value']>();
+    readonly ariaLabel = input<RadioProps['ariaLabel']>(undefined);
+    readonly checked = input<RadioProps['checked']>(false);
+    readonly disabled = input<RadioProps['disabled']>(false);
+    readonly id = input<RadioProps['id']>(uniqueId('radio'));
+    readonly invalid = input<RadioProps['invalid']>(false);
+    readonly required = input<RadioProps['required']>(false);
 
     onInputChange(event: Event) {
         const inputElement = event.target as HTMLInputElement;

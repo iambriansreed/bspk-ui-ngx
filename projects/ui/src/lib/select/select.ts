@@ -11,7 +11,7 @@ import {
     AfterViewInit,
     OnDestroy,
 } from '@angular/core';
-import { AsInputSignal, CommonProps, FieldControlProps } from '../../types/common';
+import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
 import { uniqueId } from '../../utils/random';
 import { scrollLimitStyle } from '../../utils/scroll-limit-style';
@@ -160,7 +160,7 @@ export type SelectProps = CommonProps<'size'> &
         }
     `,
 })
-export class UISelect implements AsInputSignal<SelectProps>, AfterViewInit, OnDestroy {
+export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy {
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<SelectProps['value']>('');

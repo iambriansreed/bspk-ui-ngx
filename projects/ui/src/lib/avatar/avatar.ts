@@ -11,21 +11,10 @@ import {
     EnvironmentInjector,
     ElementRef,
 } from '@angular/core';
+import { AsSignal, CommonProps } from '../../types/common';
+import { ColorVariant } from '../../utils/color-variants';
 import { IconPerson } from '../icons/person';
 import { TooltipUtility } from '../tooltip/tooltip';
-
-export interface UIAvatarProps {
-    id: string;
-    name: string;
-    size?: SizeVariant;
-    color?: string;
-    initials?: string;
-    showIcon?: boolean;
-    image?: string;
-    src?: string; // For image source
-    hideTooltip?: boolean;
-    disabled?: boolean;
-}
 
 export type SizeVariant =
     | 'large'
@@ -37,6 +26,63 @@ export type SizeVariant =
     | 'xxx-large'
     | 'xxxx-large'
     | 'xxxxx-large';
+
+export type AvatarProps = CommonProps<'disabled'> & {
+    /**
+     * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
+     *
+     * @example
+     *     Andre Giant
+     *
+     * @required
+     */
+    name: string;
+    /**
+     * The size of the avatar.
+     *
+     * @default small
+     */
+    size?: SizeVariant;
+    /**
+     * The color of the avatar.
+     *
+     * @default grey
+     */
+    color?: Exclude<ColorVariant, 'white'>;
+    /**
+     * Customizable initials to display in the avatar limited to 2 characters.
+     *
+     * By default, initials are the first letters of the first two words in the name. For a single-word name, only one
+     * initial is shown. Names with three or more words, only the first two initials are used.
+     *
+     * @example
+     *     AG;
+     */
+    initials?: string;
+    /**
+     * Whether to show the icon in the avatar instead of the initials.
+     *
+     * If an image is provided, the image will be shown instead of the icon.
+     *
+     * @default true
+     */
+    showIcon?: boolean;
+    /**
+     * The url to the image to display in the avatar.
+     *
+     * When provided the image will be displayed instead of the icon or initials.
+     *
+     * @example
+     *     /avatar-01.png
+     */
+    image?: string;
+    /**
+     * Whether to hide the represented user's name as a tooltip.
+     *
+     * @default false
+     */
+    hideTooltip?: boolean;
+};
 
 /**
  * An avatar is a visual representation of a user or entity. It can be used to display an initials, icon, or image.
@@ -90,77 +136,18 @@ export type SizeVariant =
         '(keydown)': 'handleKeyDown($event)',
     },
 })
-export class UIAvatar implements AfterViewInit {
+export class UIAvatar implements AfterViewInit, AsSignal<AvatarProps> {
     /** The function to call when the avatar is clicked. */
     @Output() onClick = new EventEmitter<MouseEvent>();
 
-    /**
-     * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
-     *
-     * @example
-     *     Andre Giant
-     *
-     * @required
-     */
-    readonly name = input.required<string>();
-
-    /**
-     * The size of the avatar.
-     *
-     * @default small
-     */
-    readonly size = input<SizeVariant>('small');
-
-    /**
-     * The color of the avatar.
-     *
-     * @default grey
-     */
-    readonly color = input<string | undefined>('grey');
-
-    /**
-     * Customizable initials to display in the avatar limited to 2 characters.
-     *
-     * By default, initials are the first letters of the first two words in the name. For a single-word name, only one
-     * initial is shown. Names with three or more words, only the first two initials are used.
-     *
-     * @example
-     *     AG;
-     */
-    readonly initials = input<string>();
-
-    /**
-     * Whether to show the icon in the avatar instead of the initials.
-     *
-     * If an image is provided, the image will be shown instead of the icon.
-     *
-     * @default false
-     */
-    readonly showIcon = input<boolean | undefined>(false);
-
-    /**
-     * The url to the image to display in the avatar.
-     *
-     * When provided the image will be displayed instead of the icon or initials.
-     *
-     * @example
-     *     /avatar-01.png
-     */
-    readonly image = input<string | undefined>();
-
-    /**
-     * Whether to hide the represented user's name as a tooltip.
-     *
-     * @default false
-     */
-    readonly hideTooltip = input<boolean | undefined>(false);
-
-    /**
-     * Determines if the element is [disabled](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled).
-     *
-     * @default false
-     */
-    readonly disabled = input(false);
+    readonly name = input.required<AvatarProps['name']>();
+    readonly size = input<AvatarProps['size']>('small');
+    readonly color = input<AvatarProps['color']>('grey');
+    readonly initials = input<AvatarProps['initials']>();
+    readonly showIcon = input<AvatarProps['showIcon']>(false);
+    readonly image = input<AvatarProps['image']>();
+    readonly hideTooltip = input<AvatarProps['hideTooltip']>(false);
+    readonly disabled = input<AvatarProps['disabled']>(false);
 
     private renderer = inject(Renderer2);
     private env = inject(EnvironmentInjector);

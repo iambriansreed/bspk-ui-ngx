@@ -12,13 +12,70 @@ import {
 
 import { BspkIcon } from '../../types/bspk-icon';
 
-import { ButtonSize } from '../../types/common';
+import { AsSignal, ButtonSize, CommonProps } from '../../types/common';
 import { UIIcon } from '../icon';
 import { UITooltipDirective } from '../tooltip';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonWidth = 'fill' | 'hug';
-export type IconType = BspkIcon;
+
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+export type ButtonProps = CommonProps<
+    'ariaControls' | 'ariaExpanded' | 'ariaHaspopup' | 'ariaLabel' | 'class' | 'disabled' | 'owner' | 'style'
+> & {
+    type?: 'button' | 'reset' | 'submit';
+    /**
+     * The label of the button.
+     *
+     * @required
+     */
+    label: string;
+    /**
+     * The icon of the button.
+     *
+     * @type BspkIcon
+     */
+    icon?: BspkIcon;
+    /**
+     * When true the button label is hidden and only the icon is shown. When label isn't showing it is used in a tooltip
+     * and as the aria-label prop.
+     *
+     * Ignored if `icon` is not provided.
+     *
+     * @default false
+     */
+    iconOnly?: boolean;
+    /**
+     * The function of the button is destructive.
+     *
+     * @default false
+     */
+    destructive?: boolean;
+    /**
+     * The size of the button.
+     *
+     * @default medium
+     */
+    size?: ButtonSize;
+    /**
+     * The color variant of the button.
+     *
+     * @default primary
+     */
+    variant?: ButtonVariant;
+    /**
+     * Determines how the button uses horizontal space.
+     *
+     * If set to 'fill', options expand to fill the container's width.
+     *
+     * If set to 'hug', options only take up as much space as the content requires.
+     *
+     * @default hug
+     */
+    width?: 'fill' | 'hug';
+    /** The tool tip text that appears when hovered. */
+    tooltip?: string;
+};
 
 /**
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.
@@ -82,7 +139,7 @@ export type IconType = BspkIcon;
         style: 'display: contents;',
     },
 })
-export class UIButton {
+export class UIButton implements AsSignal<ButtonProps> {
     /** Event emitted when the button is clicked. */
     @Output() onClick = new EventEmitter<MouseEvent>();
 
@@ -100,95 +157,23 @@ export class UIButton {
 
     readonly buttonElement = viewChild.required<ElementRef<HTMLButtonElement>>('buttonElement');
 
-    readonly style = input<string>();
-
-    /**
-     * The label of the button.
-     *
-     * @required
-     */
-    readonly label = input.required<string>();
-
-    /** Use only for custom buttons. The aria-label of the button for accessibility purposes. */
-    readonly ariaLabel = input<string>();
-
-    /** The aria-haspopup attribute of the button for accessibility purposes. */
-    readonly ariaHaspopup = input<string>();
-
-    /** The aria-expanded attribute of the button for accessibility purposes. */
-    readonly ariaExpanded = input<boolean | null>(null);
-
-    /** The aria-controls attribute of the button for accessibility purposes. */
-    readonly ariaControls = input<string | null>(null);
-
-    /**
-     * The icon of the button.
-     *
-     * Should be a SVG from the BSPK icon library.
-     */
-    readonly icon = input<IconType | undefined>();
-
-    /**
-     * When true the button label is hidden and only the icon is shown. When label isn't showing it is used in a tooltip
-     * and as the aria-label prop.
-     *
-     * Ignored if `icon` is not provided.
-     *
-     * @default false
-     */
-    readonly iconOnly = input(false);
-
-    /**
-     * The function of the button is destructive.
-     *
-     * @default false
-     */
-    readonly destructive = input(false);
-
-    /**
-     * The size of the button.
-     *
-     * @default medium
-     */
-    readonly size = input<ButtonSize>('medium');
-
-    /**
-     * The color variant of the button.
-     *
-     * @default primary
-     */
-    readonly variant = input<ButtonVariant>('primary');
-
-    /**
-     * The width of the button.
-     *
-     * @default hug
-     */
-    readonly width = input<ButtonWidth>('hug');
-
-    /** The tool tip text that appears when hovered. */
-    readonly tooltip = input<string>();
-
-    /**
-     * Whether the button is disabled.
-     *
-     * @default false
-     */
-    readonly disabled = input(false);
-
-    /**
-     * The button type attribute.
-     *
-     * @default button
-     */
-    readonly type = input<'button' | 'reset' | 'submit'>('button');
-
-    /** Owner identifier for tracking/analytics. */
-    readonly owner = input<string>();
-
-    /** Additional CSS classes to apply. */
-    readonly class = input<string>();
-    /** Custom content template to override default button content. Not recommended - use for special cases only. */
+    readonly style = input<ButtonProps['style']>();
+    readonly label = input.required<ButtonProps['label']>();
+    readonly ariaLabel = input<ButtonProps['ariaLabel']>();
+    readonly ariaHaspopup = input<ButtonProps['ariaHaspopup']>();
+    readonly ariaExpanded = input<ButtonProps['ariaExpanded']>();
+    readonly ariaControls = input<ButtonProps['ariaControls']>();
+    readonly icon = input<ButtonProps['icon']>();
+    readonly iconOnly = input<ButtonProps['iconOnly']>(false);
+    readonly destructive = input<ButtonProps['destructive']>(false);
+    readonly size = input<ButtonProps['size']>('medium');
+    readonly variant = input<ButtonProps['variant']>('primary');
+    readonly width = input<ButtonProps['width']>('hug');
+    readonly tooltip = input<ButtonProps['tooltip']>();
+    readonly disabled = input<ButtonProps['disabled']>(false);
+    readonly type = input<ButtonProps['type']>('button');
+    readonly owner = input<ButtonProps['owner']>();
+    readonly class = input<ButtonProps['class']>();
 
     get nativeElement(): HTMLButtonElement {
         return this.buttonElement().nativeElement!;

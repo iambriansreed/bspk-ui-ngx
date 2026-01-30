@@ -1,29 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UIChipExample } from './example';
 
-import { componentTestProps } from '../../utils/test-props';
-import { UIChip } from './chip';
-
-describe('UIChip', () => {
-    let component: UIChip;
-    let fixture: ComponentFixture<UIChip>;
+describe('Chip', () => {
+    let component:  UIChipExample;
+    let fixture: ComponentFixture< UIChipExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIChip],
+            imports: [ UIChipExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UIChip,
-            componentTestProps<UIChip>({
-                label: 'Test Chip',
-                // Add any input properties here if needed
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIChipExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

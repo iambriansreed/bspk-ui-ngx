@@ -1,21 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UIInputPhone } from './input-phone';
+import { spyOn } from 'jest-mock';
+import { UIInputPhoneExample } from './example';
 
-describe('UIInputPhone', () => {
-    let fixture: ComponentFixture<UIInputPhone>;
+describe('InputPhone', () => {
+    let component:  UIInputPhoneExample;
+    let fixture: ComponentFixture< UIInputPhoneExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIInputPhone],
+            imports: [ UIInputPhoneExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIInputPhone);
-        fixture.componentRef.setInput('name', 'test-input-phone');
-        fixture.componentRef.setInput('ariaLabel', 'Phone Number');
-
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIInputPhoneExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

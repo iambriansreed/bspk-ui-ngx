@@ -10,7 +10,7 @@ import {
     TemplateRef,
     signal,
 } from '@angular/core';
-import { AsInputSignal, ButtonSize, CommonProps, FieldControlProps } from '../../types/common';
+import { AsSignal, ButtonSize, CommonProps, FieldControlProps } from '../../types/common';
 import { UIButton } from '../button/button';
 import { IconCancel } from '../icons/cancel';
 
@@ -122,7 +122,7 @@ export type InputProps = CommonProps<'owner' | 'size'> &
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInput implements AsInputSignal<InputProps> {
+export class UIInput implements AsSignal<InputProps> {
     public IconCancel = IconCancel;
     readonly hasFocus = signal(false);
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
@@ -140,6 +140,7 @@ export class UIInput implements AsInputSignal<InputProps> {
     readonly value = model<InputProps['value']>(undefined);
     readonly name = input.required<InputProps['name']>();
 
+    readonly inputMode = input<InputProps['inputMode']>(undefined);
     readonly showClearButton = input<InputProps['showClearButton']>(true);
     readonly disabled = input<InputProps['disabled']>(false);
     readonly invalid = input<InputProps['invalid']>(false);
@@ -154,7 +155,6 @@ export class UIInput implements AsInputSignal<InputProps> {
     readonly id = input<InputProps['id']>(undefined);
     readonly owner = input<InputProps['owner']>(undefined);
     readonly ariaLabel = input<InputProps['ariaLabel']>(undefined);
-
     readonly ariaLabelledBy = input<InputProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<InputProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputProps['ariaErrorMessage']>(undefined);

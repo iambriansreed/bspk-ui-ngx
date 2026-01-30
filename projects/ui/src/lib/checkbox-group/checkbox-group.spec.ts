@@ -1,50 +1,35 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UICheckboxGroup } from './checkbox-group';
+import { spyOn } from 'jest-mock';
+import { UICheckboxGroupExample } from './example';
 
-@Component({
-    selector: 'ui-checkbox-group-example',
-    standalone: true,
-    imports: [CommonModule, UICheckboxGroup],
-    template: `
-        <h2>Checkbox Group Example</h2>
-        <ui-checkbox-group
-            [options]="options"
-            [value]="selected"
-            (valueChange)="onValueChange($event)"
-            [name]="'user-checkbox-group'"
-            [selectAll]="true"
-            [selectAllProps]="{ label: 'Select All', description: 'Select all options' }">
-        </ui-checkbox-group>
-        <div>Selected: {{ selected | json }}</div>
-    `,
-})
-class TestHostComponent {
-    options = [
-        { label: 'Option 1', value: 'option1' },
-        { label: 'Option 2', value: 'option2' },
-        { label: 'Option 3', value: 'option3' },
-    ];
-    selected: string[] = [];
+describe('CheckboxGroup', () => {
+    let component:  UICheckboxGroupExample;
+    let fixture: ComponentFixture< UICheckboxGroupExample>;
+    let errorSpy: any;
 
-    onValueChange(newValue: string[]) {
-        this.selected = newValue;
-    }
-}
-
-describe('UICheckboxGroup', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ UICheckboxGroupExample],
         }).compileComponents();
+
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UICheckboxGroupExample);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
-        expect(TestHostComponent).toBeTruthy();
+        expect(component).toBeTruthy();
     });
 
-    it('should have no basic a11y issues', async () =>
-        await hasNoBasicA11yIssues(TestBed.createComponent(TestHostComponent)));
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

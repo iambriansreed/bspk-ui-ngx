@@ -1,22 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UIRadioGroup } from './radio-group';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UIRadioGroupExample } from './example';
 
 describe('RadioGroup', () => {
-    let component: UIRadioGroup;
-    let fixture: ComponentFixture<UIRadioGroup>;
+    let component:  UIRadioGroupExample;
+    let fixture: ComponentFixture< UIRadioGroupExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIRadioGroup],
+            imports: [ UIRadioGroupExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIRadioGroup);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIRadioGroupExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

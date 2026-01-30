@@ -1,9 +1,27 @@
 import { DOCUMENT } from '@angular/common';
 import { ElementRef, OnChanges, OnDestroy, input, signal, inject, Directive } from '@angular/core';
+import { AsSignal } from '../../types/common';
 
 /** Safely focus an element if it exists and has a focus method. */
 function safeFocus(el: HTMLElement | null | undefined) {
     if (el && 'focus' in el && typeof el.focus === 'function') el.focus();
+}
+
+export interface FocusTrapProps {
+    /**
+     * Auto-focus first focusable child on enable.
+     *
+     * @default true
+     */
+    autoFocus?: boolean;
+    /**
+     * Restore focus to previously focused element on disable/destroy.
+     *
+     * @default true
+     */
+    restoreFocus?: boolean;
+    /** Enable or disable the focus trap. */
+    'ui-focus-trap'?: boolean;
 }
 
 /**
@@ -23,19 +41,16 @@ function safeFocus(el: HTMLElement | null | undefined) {
     selector: '[ui-focus-trap]',
     standalone: true,
 })
-export class UIFocusTrapDirective implements OnChanges, OnDestroy {
-    /** Enables the focus trap. */
-    readonly enabled = input<boolean>(true, {
+export class UIFocusTrapDirective implements OnChanges, OnDestroy, AsSignal<FocusTrapProps> {
+    readonly enabled = input<FocusTrapProps['ui-focus-trap']>(true, {
         alias: 'ui-focus-trap',
     });
-    /** Auto-focus first focusable child on enable. @default true */
-    readonly autoFocus = input<boolean>(true);
-    /** Restore focus to previously focused element on disable/destroy. @default true */
-    readonly restoreFocus = input<boolean>(true);
+    readonly autoFocus = input<FocusTrapProps['autoFocus']>(true);
+    readonly restoreFocus = input<FocusTrapProps['restoreFocus']>(true);
 
     readonly container = inject<ElementRef<HTMLElement>>(ElementRef);
+    readonly document = inject(DOCUMENT);
 
-    document = inject(DOCUMENT);
     private readonly bound = signal(false);
     private readonly prevFocused = signal<HTMLElement | null>(null);
 

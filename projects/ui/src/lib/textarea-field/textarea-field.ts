@@ -1,8 +1,10 @@
 import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { describedById, errorMessageId, FieldProps, labelledById, UIField } from '../field';
 import { UITextarea } from '../textarea';
+
+type TextareaFieldProps = Omit<FieldProps, 'controlId'>;
 
 /**
  * A component that allows users to input large amounts of text that could span multiple lines.
@@ -66,14 +68,13 @@ import { UITextarea } from '../textarea';
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UITextareaField extends UITextarea implements AsInputSignal<Omit<FieldProps, 'controlId' | 'label'>> {
+export class UITextareaField extends UITextarea implements AsSignal<TextareaFieldProps> {
     readonly valueChange = output<string | undefined>();
-
-    readonly errorMessage = input<string | undefined>(undefined);
-    readonly label = input.required<string>();
-    readonly helperText = input<string | undefined>(undefined);
-    readonly labelTrailing = input<string | undefined>(undefined);
-    readonly style = input<string | undefined>(undefined);
+    readonly errorMessage = input<TextareaFieldProps['errorMessage']>(undefined);
+    readonly label = input.required<TextareaFieldProps['label']>();
+    readonly helperText = input<TextareaFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<TextareaFieldProps['labelTrailing']>(undefined);
+    readonly style = input<TextareaFieldProps['style']>(undefined);
 
     readonly labelledById = computed(() => labelledById(this.controlId()));
 

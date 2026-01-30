@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
-import { AsInputSignal, FieldControlProps } from '../../types/common';
+import { AsSignal, FieldControlProps } from '../../types/common';
 import { countryCodeData, countryCodes, SupportedCountryCode } from '../../utils/country-codes';
 import { uniqueId } from '../../utils/random';
 import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
@@ -193,7 +193,7 @@ export type InputPhoneProps = FieldControlProps<string> &
         }
     `,
 })
-export class UIInputPhone implements AsInputSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<InputPhoneProps['value']>('');

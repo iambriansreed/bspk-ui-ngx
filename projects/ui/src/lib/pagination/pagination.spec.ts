@@ -1,18 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { UIPagination } from './pagination';
+import { spyOn } from 'jest-mock';
+import { UIPaginationExample } from './example';
 
-describe('UIPagination', () => {
-    let fixture: ComponentFixture<UIPagination>;
+describe('Pagination', () => {
+    let component:  UIPaginationExample;
+    let fixture: ComponentFixture< UIPaginationExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UIPagination],
+            imports: [ UIPaginationExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(UIPagination);
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UIPaginationExample);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));

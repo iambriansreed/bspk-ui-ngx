@@ -1,27 +1,7 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
-import { AsInputSignal, CommonProps } from '../../types/common';
+import { AsSignal, CommonProps } from '../../types/common';
 import { UIInlineAlert } from '../inline-alert/inline-alert';
 
-/**
- * Wrapper component for form controls.
- *
- * Children should be one of the following: DatePicker, Input, InputNumber, InputPhone, Password, Select, Textarea,
- * RadioGroup, CheckboxGroup, or TimePicker.
- *
- * @example
- *     <ui-field
- *     controlId="example-control-id"
- *     helperText="This is an example description."
- *     label="Example label">
- *     <input
- *     aria-label="example aria-label"
- *     id="example-control-id"
- *     name="example-text" />
- *     </ui-field>
- *
- * @name Field
- * @phase Utility
- */
 export interface FieldProps extends CommonProps<'style'> {
     /** Displays an error message and marks the field as invalid. */
     errorMessage?: string;
@@ -50,6 +30,26 @@ export interface FieldProps extends CommonProps<'style'> {
     controlId: string;
 }
 
+/**
+ * Wrapper component for form controls.
+ *
+ * Children should be one of the following: DatePicker, Input, InputNumber, InputPhone, Password, Select, Textarea,
+ * RadioGroup, CheckboxGroup, or TimePicker.
+ *
+ * @example
+ *     <ui-field
+ *     controlId="example-control-id"
+ *     helperText="This is an example description."
+ *     label="Example label">
+ *     <input
+ *     aria-label="example aria-label"
+ *     id="example-control-id"
+ *     name="example-text" />
+ *     </ui-field>
+ *
+ * @name Field
+ * @phase Utility
+ */
 @Component({
     selector: 'ui-field',
     standalone: true,
@@ -79,14 +79,14 @@ export interface FieldProps extends CommonProps<'style'> {
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIField implements AsInputSignal<FieldProps> {
-    readonly errorMessage = input<string | undefined>(undefined);
-    readonly label = input.required<string>();
-    readonly helperText = input<string | undefined>(undefined);
-    readonly labelTrailing = input<string | undefined>(undefined);
-    readonly required = input<boolean | undefined>(undefined);
-    readonly controlId = input.required<string>();
-    readonly style = input<string | undefined>(undefined);
+export class UIField implements AsSignal<FieldProps> {
+    readonly errorMessage = input<FieldProps['errorMessage']>();
+    readonly label = input.required<FieldProps['label']>();
+    readonly helperText = input<FieldProps['helperText']>();
+    readonly labelTrailing = input<FieldProps['labelTrailing']>();
+    readonly required = input<FieldProps['required']>();
+    readonly controlId = input.required<FieldProps['controlId']>();
+    readonly style = input<FieldProps['style']>();
 
     errorMessageId(): string {
         return errorMessageId(this.controlId());

@@ -1,14 +1,34 @@
 import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angular/core';
-import { UIRadioOption } from '../radio-option/radio-option';
+import { AsSignal, FieldControlProps } from '../../types/common';
+import { RadioProps } from '../radio/radio';
+import { RadioOptionProps, UIRadioOption } from '../radio-option/radio-option';
 
-export interface RadioGroupOption {
-    value: string;
-    label: string;
-    description?: string;
-    checked?: boolean;
-    disabled?: boolean;
-}
+export type RadioGroupOption = Pick<RadioOptionProps, 'checked' | 'description' | 'disabled' | 'label'> &
+    Pick<RadioProps, 'value'>;
 
+export type RadioGroupProps = Omit<FieldControlProps, 'readOnly'> & {
+    /**
+     * The options for the radios.
+     *
+     * @example
+     *     [
+     *         {
+     *             value: '1',
+     *             label: 'Option 1',
+     *         },
+     *         {
+     *             value: '2',
+     *             label: 'Option 2',
+     *             description: 'Description here',
+     *         },
+     *         { value: '3', label: 'Option 3' },
+     *     ];
+     *
+     * @type Array<RadioGroupOption>
+     * @required
+     */
+    options: RadioGroupOption[];
+};
 /**
  * A group of radios that allows users to choose one or more items from a list or turn an feature on or off.
  *
@@ -24,7 +44,6 @@ export interface RadioGroupOption {
  * @name RadioGroup
  * @phase Dev
  */
-
 @Component({
     selector: 'ui-radio-group',
     standalone: true,
@@ -47,7 +66,7 @@ export interface RadioGroupOption {
                     [disabled]="disabled() || option.disabled"
                     [required]="required()"
                     [invalid]="invalid()"
-                    (checkedChange)="onRadioChange(option.value, $event)">
+                    (checkedChange)="onRadioChange(option.value || '', $event)">
                 </ui-radio-option>
             }
         </div>
@@ -62,29 +81,19 @@ export interface RadioGroupOption {
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UIRadioGroup extends UIRadioOption {
+export class UIRadioGroup implements AsSignal<RadioGroupProps> {
     @Output() valueChange = new EventEmitter<string>();
-    /** Radio group options */
+
+    readonly id = input<RadioGroupProps['id']>(undefined);
+    readonly name = input.required<RadioGroupProps['name']>();
+    readonly value = input<RadioGroupProps['value']>(undefined);
+    readonly disabled = input<RadioGroupProps['disabled']>(false);
+    readonly required = input<RadioGroupProps['required']>(false);
+    readonly invalid = input<RadioGroupProps['invalid']>(false);
     readonly options = input<RadioGroupOption[]>([]);
-    /**
-     * The `aria-describedby` attribute for the radio group.
-     *
-     * This should be set to the ID of an element that contains additional descriptive text for the group. When
-     * provided, assistive technologies will announce the referenced description to users, improving accessibility.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby
-     */
-    readonly ariaDescribedBy = input<string | null>(null);
-    /**
-     * The `aria-errormessage` attribute for the radio group.
-     *
-     * This should be set to the ID of an element that contains an error message describing the validation error for the
-     * group. When provided, assistive technologies will announce the referenced error message when the group is
-     * invalid.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage
-     */
-    readonly ariaErrorMessage = input<string | null>(null);
+    readonly ariaDescribedBy = input<RadioGroupProps['ariaDescribedBy']>();
+    readonly ariaErrorMessage = input<RadioGroupProps['ariaErrorMessage']>();
+
     /** Handles changes to the radio button selection. */
     onRadioChange(value: string, checked: boolean) {
         if (checked) {

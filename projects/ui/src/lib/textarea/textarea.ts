@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, computed, input, model } from '@angular/core';
-import { CommonProps, FieldControlProps, AsInputSignal } from '../../types/common';
+import { CommonProps, FieldControlProps, AsSignal } from '../../types/common';
 
 export type TextareaProps = CommonProps<'size'> &
     FieldControlProps & {
@@ -92,7 +92,7 @@ export type TextareaProps = CommonProps<'size'> &
     },
     encapsulation: ViewEncapsulation.None,
 })
-export class UITextarea implements AsInputSignal<TextareaProps> {
+export class UITextarea implements AsSignal<TextareaProps> {
     readonly name = input.required<TextareaProps['name']>();
     readonly value = model<string | undefined>('');
 
@@ -107,7 +107,6 @@ export class UITextarea implements AsInputSignal<TextareaProps> {
     readonly readOnly = input<TextareaProps['readOnly']>(false);
     readonly required = input<TextareaProps['required']>(false);
     readonly size = input<TextareaProps['size']>('medium');
-
     readonly ariaLabelledBy = input<TextareaProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<TextareaProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<TextareaProps['ariaErrorMessage']>(undefined);

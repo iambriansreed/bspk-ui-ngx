@@ -1,33 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { componentTestProps } from '../../utils/test-props';
-import { UISegmentedControl } from './segmented-control';
+import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
+import { spyOn } from 'jest-mock';
+import { UISegmentedControlExample } from './example';
 
 describe('SegmentedControl', () => {
-    let component: UISegmentedControl;
-    let fixture: ComponentFixture<UISegmentedControl>;
+    let component:  UISegmentedControlExample;
+    let fixture: ComponentFixture< UISegmentedControlExample>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UISegmentedControl],
+            imports: [ UISegmentedControlExample],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(
-            UISegmentedControl,
-            componentTestProps<UISegmentedControl>({
-                label: 'Example',
-                options: [
-                    { value: '1', label: 'One' },
-                    { value: '2', label: 'Two' },
-                ],
-                value: '1',
-            }),
-        );
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( UISegmentedControlExample);
         component = fixture.componentInstance;
-
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
 });

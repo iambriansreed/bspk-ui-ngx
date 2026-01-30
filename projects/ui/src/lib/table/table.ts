@@ -1,49 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation, computed, input, model } from '@angular/core';
+import { Component, ViewEncapsulation, computed, input, signal } from '@angular/core';
+import { AsSignal } from '../../types/common';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
 import { IconArrowDownward, IconArrowUpward } from '../icons';
 import { UIPagination } from '../pagination';
+import {
+    TableRow,
+    TableColumn,
+    TableSize,
+    TableCellValue,
+    BuiltInColumnSorters,
+    TableColumnSortingFn,
+    SortOrder,
+    SortState,
+} from './utils';
 
-/**
- * A component that displays data in a tabular format with support for sorting and pagination.
- *
- * @example
- *     <ui-table
- *     [data]="[{ id: 'ca', name: 'California', capital: 'Sacramento' }, { id: 'tx', name: 'Texas', capital: 'Austin' }, { id: 'fl', name: 'Florida', capital:'Tallahassee' }]"
- *     [columns]="[{ key: 'state', label: 'State', width: '160px', sort: 'string' },{ key: 'capital', label: 'Capital', width: '140px' }]"
- *     [pageSize]="5"
- *     size="medium"
- *     title="Sample State Capital Table">
- *     </ui-table>
- *
- * @name Table
- * @phase Dev
- */
-
-export type TableSize = 'large' | 'medium' | 'small' | 'x-large';
-
-export type TableCellValue = unknown;
-
-export interface TableRow {
-    [key: string]: TableCellValue | TableCellValue[];
-    id: string;
+export interface TableProps<R extends TableRow> {
+    /**
+     * The data of the table.
+     *
+     * Array<TableRow>
+     */
+    data: R[];
+    /**
+     * The column definitions of the table.
+     *
+     * @type Array<TableColumn>
+     */
+    columns: (TableColumn<R> | boolean)[];
+    /** The title of the table. */
+    title?: string;
+    /**
+     * The size of the table.
+     *
+     * @default medium
+     */
+    size?: TableSize;
+    /**
+     * The number of rows per page.
+     *
+     * If the number of rows exceeds the page size, pagination controls will be displayed.
+     *
+     * @default 10
+     */
+    pageSize?: number;
 }
-
-export type BuiltInColumnSorters = 'boolean' | 'date' | 'number' | 'string';
-export type TableColumnSortingFn = (a: TableCellValue, b: TableCellValue) => number;
-
-export interface TableColumn<R extends TableRow> {
-    key: string;
-    label: string;
-    width?: string;
-    align?: 'center' | 'left' | 'right';
-    valign?: 'bottom' | 'center' | 'top';
-    sort?: BuiltInColumnSorters | TableColumnSortingFn;
-    formatter?: (row: R, size: TableSize) => unknown;
-}
-
-type SortOrder = 'asc' | 'desc';
-type SortState = { key: string; order: SortOrder }[];
 
 function parseDateTime(val: TableCellValue): number {
     let dateValue: any = val;
@@ -62,6 +63,21 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
     date: (a, b) => parseDateTime(a) - parseDateTime(b),
 };
 
+/**
+ * A component that displays data in a tabular format with support for sorting and pagination.
+ *
+ * @example
+ *     <ui-table
+ *     [data]="[{ id: 'ca', name: 'California', capital: 'Sacramento' }, { id: 'tx', name: 'Texas', capital: 'Austin' }, { id: 'fl', name: 'Florida', capital:'Tallahassee' }]"
+ *     [columns]="[{ key: 'state', label: 'State', width: '160px', sort: 'string' },{ key: 'capital', label: 'Capital', width: '140px' }]"
+ *     [pageSize]="5"
+ *     size="medium"
+ *     title="Sample State Capital Table">
+ *     </ui-table>
+ *
+ * @name Table
+ * @phase Dev
+ */
 @Component({
     selector: 'ui-table',
     standalone: true,
@@ -117,7 +133,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
                                     [attr.data-valign]="column.valign || 'center'">
                                     {{
                                         formatCell(
-                                            column.formatter ? column.formatter(row, size()) : $any(row)[column.key]
+                                            column.formatter ? column.formatter(row, sizeSafe) : $any(row)[column.key]
                                         )
                                     }}
                                 </td>
@@ -146,7 +162,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
         'data-bspk': 'table',
     },
 })
-export class UITable<R extends TableRow> {
+export class UITable<R extends TableRow> implements AsSignal<TableProps<R>> {
     readonly rows = computed<R[]>(() => {
         const cols = this.normalizedColumns;
         const result = [...(this.data() || [])];
@@ -166,8 +182,8 @@ export class UITable<R extends TableRow> {
             });
         }
 
-        const start = this.pageIndex * this.pageSize();
-        const end = start + this.pageSize();
+        const start = this.pageIndex * this.pageSizeSafe;
+        const end = start + this.pageSizeSafe;
         return result.slice(start, end);
     });
 
@@ -178,41 +194,26 @@ export class UITable<R extends TableRow> {
         ),
     );
 
-    readonly sorting = model<SortState>([]);
+    readonly sorting = signal<SortState>([]);
 
-    /**
-     * The data of the table.
-     *
-     * Array<TableRow>
-     */
-    readonly data = input<R[]>([]);
-    /**
-     * The column definitions of the table.
-     *
-     * @exampleType Array<TableColumn>
-     */
-    readonly columns = input<(TableColumn<R> | boolean)[]>([]);
-    /** The title of the table. */
-    readonly title = input<string | undefined>(undefined);
-    /**
-     * The size of the table.
-     *
-     * @default medium
-     */
-    readonly size = input<TableSize>('medium');
-    /**
-     * The number of rows per page.
-     *
-     * If the number of rows exceeds the page size, pagination controls will be displayed.
-     *
-     * @default 10
-     */
-    readonly pageSize = input(10);
+    readonly data = input<TableProps<R>['data']>([]);
+    readonly columns = input<TableProps<R>['columns']>([]);
+    readonly title = input<TableProps<R>['title']>(undefined);
+    readonly size = input<TableProps<R>['size']>('medium');
+    readonly pageSize = input<TableProps<R>['pageSize']>(10);
 
     pageIndex = 0;
 
+    get sizeSafe(): TableSize {
+        return this.size() || 'medium';
+    }
+
+    get pageSizeSafe(): number {
+        return this.pageSize() || 10;
+    }
+
     get hasPagination(): boolean {
-        return (this.data()?.length || 0) > this.pageSize();
+        return (this.data()?.length || 0) > this.pageSizeSafe;
     }
 
     get normalizedColumns(): TableColumn<R>[] {
@@ -225,7 +226,7 @@ export class UITable<R extends TableRow> {
 
     get totalPages(): number {
         const len = this.data()?.length || 0;
-        return Math.ceil(len / this.pageSize()) || 1;
+        return Math.ceil(len / this.pageSizeSafe) || 1;
     }
     toggleSorting(key: string) {
         const exists = this.sorting().find((sort) => sort.key === key);
@@ -255,11 +256,11 @@ export class UITable<R extends TableRow> {
 
     startRow(): number {
         const total = this.data().length;
-        return total === 0 ? 0 : this.pageIndex * this.pageSize() + 1;
+        return total === 0 ? 0 : this.pageIndex * this.pageSizeSafe + 1;
     }
 
     endRow(): number {
-        const end = this.pageIndex * this.pageSize() + this.pageSize();
+        const end = this.pageIndex * this.pageSizeSafe + this.pageSizeSafe;
         return Math.min(end, this.data().length);
     }
 

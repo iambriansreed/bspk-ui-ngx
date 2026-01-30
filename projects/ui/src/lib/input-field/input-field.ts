@@ -1,8 +1,10 @@
 import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
-import { AsInputSignal } from '../../types/common';
+import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 import { UIInput } from '../input';
+
+export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
  * An input that allows users to enter text, numbers or symbols in a singular line. This is a utility element and is not
@@ -63,14 +65,14 @@ import { UIInput } from '../input';
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsInputSignal<Omit<FieldProps, 'controlId' | 'label'>> {
+export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
     readonly valueChange = output<string | undefined>();
 
-    readonly errorMessage = input<string | undefined>(undefined);
-    readonly label = input.required<string>();
-    readonly helperText = input<string | undefined>(undefined);
-    readonly labelTrailing = input<string | undefined>(undefined);
-    readonly style = input<string | undefined>(undefined);
+    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+    readonly label = input.required<FieldProps['label']>();
+    readonly helperText = input<InputFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
+    readonly style = input<InputFieldProps['style']>(undefined);
 
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
