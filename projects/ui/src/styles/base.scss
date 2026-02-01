@@ -229,6 +229,11 @@ body[data-bspk] {
     display: none !important;
 }
 
+[data-invisible] {
+    visibility: hidden !important;
+    position: absolute !important;
+}
+
 [data-bspk='link'] {
     @extend %link;
 }
