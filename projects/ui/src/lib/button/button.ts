@@ -116,7 +116,7 @@ export type ButtonProps = CommonProps<
         (click)="handleClick($event)"
         (focus)="handleFocus($event)"
         (blur)="handleBlur($event)"
-        (mouseover)="handleMouseOver($event)"
+        (mouseenter)="handleMouseEnter($event)"
         (mouseleave)="handleMouseLeave($event)"
         [style]="style()">
         <ng-content>
@@ -150,7 +150,7 @@ export class UIButton implements AsSignal<ButtonProps> {
     @Output() onBlur = new EventEmitter<FocusEvent>();
 
     /** Event emitted when mouse enters the button. */
-    @Output() onMouseOver = new EventEmitter<MouseEvent>();
+    @Output() onMouseEnter = new EventEmitter<MouseEvent>();
 
     /** Event emitted when mouse leaves the button. */
     @Output() onMouseLeave = new EventEmitter<MouseEvent>();
@@ -215,9 +215,9 @@ export class UIButton implements AsSignal<ButtonProps> {
         }
     }
 
-    handleMouseOver(event: MouseEvent): void {
+    handleMouseEnter(event: MouseEvent): void {
         if (!this.disabled()) {
-            this.onMouseOver.emit(event);
+            this.onMouseEnter.emit(event);
         }
     }
 
