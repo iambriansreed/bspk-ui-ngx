@@ -97,6 +97,8 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     floating = new FloatingUtility(this.renderer);
 
+    private isTooltipOpen = false;
+
     private readonly computedPlacement = signal<TooltipPlacement | null>(null);
     private tooltipComponent?: ComponentRef<UITooltip> | null;
 
@@ -132,6 +134,8 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     handleOpenEvent(event: Event) {
         const props = this.props();
 
+        if (this.isTooltipOpen) return; // Prevent duplicate opens
+
         if (
             !props.label ||
             event.target !== this.referenceEl ||
@@ -143,7 +147,10 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
         if (props.truncated) this.addComponent({ label: this.referenceEl.textContent || '' });
 
-        if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'block');
+        // Only show if not already visible
+        if (this.tooltipEl && this.tooltipEl.style.display !== 'block') {
+            this.renderer.setStyle(this.tooltipEl, 'display', 'block');
+        }
 
         this.floating
             .compute({
@@ -158,14 +165,27 @@ export class UITooltipDirective implements OnDestroy, OnInit {
                 if (this.tooltipEl && placement !== this.props()?.placement)
                     this.computedPlacement.set(placement as TooltipPlacement);
             });
+
+        this.addGlobalListeners();
+        this.repositionTooltip();
+
+        this.isTooltipOpen = true;
     }
 
     handleCloseEvent() {
         const { label, truncated } = this.props();
         if (!label) return;
 
-        if (truncated) this.removeComponent();
-        if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
+        // For truncated tooltips, remove component on close
+        if (truncated && this.tooltipComponent) this.removeComponent();
+
+        // Only hide if currently visible
+        if (this.tooltipEl && this.tooltipEl.style.display !== 'none') {
+            this.renderer.setStyle(this.tooltipEl, 'display', 'none');
+        }
+
+        this.removeGlobalListeners();
+        this.isTooltipOpen = false;
     }
 
     ngOnDestroy(): void {
@@ -209,6 +229,40 @@ export class UITooltipDirective implements OnDestroy, OnInit {
         } else {
             this.renderer.setAttribute(this.referenceEl, 'aria-labelledby', this.tooltipId);
             this.addComponent(this.props());
+        }
+    }
+
+    private scrollHandler = () => this.repositionTooltip();
+    private resizeHandler = () => this.repositionTooltip();
+
+    // Call this after showing the tooltip
+    private addGlobalListeners() {
+        window.addEventListener('scroll', this.scrollHandler, true);
+        window.addEventListener('resize', this.resizeHandler, true);
+    }
+
+    // Call this after hiding the tooltip
+    private removeGlobalListeners() {
+        window.removeEventListener('scroll', this.scrollHandler, true);
+        window.removeEventListener('resize', this.resizeHandler, true);
+    }
+
+    private repositionTooltip() {
+        // Only reposition if tooltip is open and exists
+        if (this.isTooltipOpen && this.tooltipEl && this.referenceEl) {
+            this.floating
+                .compute({
+                    placement: this.props()?.placement || 'top',
+                    reference: this.referenceEl,
+                    floating: this.tooltipEl,
+                    arrow: this.arrowEl,
+                    offsetOptions: this.arrowEl ? 8 : 4,
+                    refWidth: false,
+                })
+                .then(({ placement }) => {
+                    if (this.tooltipEl && placement !== this.props()?.placement)
+                        this.computedPlacement.set(placement as TooltipPlacement);
+                });
         }
     }
 }

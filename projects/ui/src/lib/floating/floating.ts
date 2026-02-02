@@ -101,7 +101,6 @@ export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
             return {} as ComputePositionReturn;
 
         this.render.setStyle(floating, 'position', strategy || 'fixed');
-        this.render.setStyle(floating, 'opacity', '0');
         this.render.setStyle(floating, 'pointerEvents', 'none');
 
         const returnValue = await computePosition(reference, floating, {
@@ -132,7 +131,6 @@ export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
         this.render.setStyle(floating, 'top', `${y}px`);
 
         setTimeout(() => {
-            this.render.setStyle(floating, 'opacity', '1');
             this.render.setStyle(floating, 'pointerEvents', 'auto');
         }, 10);
 
