@@ -1,10 +1,13 @@
-import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, input, output } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
 export type CheckboxGroupOption = Omit<CheckboxOptionProps, 'name' | 'onChange'>;
 
-export type CheckboxGroupProps = Omit<FieldControlProps<string[]>, 'readOnly'> & {
+export type CheckboxGroupProps = Omit<
+    FieldControlProps<string[]>,
+    'ariaDescribedBy' | 'ariaErrorMessage' | 'readOnly' | 'required'
+> & {
     /**
      * The options for the checkboxes.
      *
@@ -74,7 +77,7 @@ export type CheckboxGroupProps = Omit<FieldControlProps<string[]>, 'readOnly'> &
     `,
 })
 export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
-    @Output() valueChange = new EventEmitter<string[]>();
+    valueChange = output<string[]>();
 
     readonly name = input.required<CheckboxGroupProps['name']>();
     readonly options = input<CheckboxGroupProps['options']>([]);

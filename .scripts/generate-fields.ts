@@ -1,86 +1,94 @@
-/** This script generates Field components for various input types. */
-import { exec } from 'child_process';
-import fs from 'fs/promises';
+/**
+ * This script generates Field components for various input types.
+ *
+ * Provide no arguments; the controls to generate are hardcoded in the CONTROLS array.
+ *
+ * $ npx tsx .scripts/generate-fields.ts
+ */
+import { execSync } from 'child_process';
+import fs from 'fs';
+import { generateTestWithExample } from './generate-test-with-example';
+import { updateIndex } from './update-index';
 
+// List of control components to generate field wrappers for
 const CONTROLS = [
-    {
-        componentName: 'InputPhone',
-        componentFileName: 'input-phone',
-    },
+    'input-phone',
+    'checkbox-group',
+    'radio-group',
+    'date-picker',
+    'select',
+    'input-number',
+    'input',
+    'textarea',
 ];
 
-async function run() {
-    await Promise.all(CONTROLS.map(buildFieldComponentForControl));
-}
-void run();
+// Set to true to overwrite existing components - be careful with this!
+const FORCE = false;
 
-async function buildFieldComponentForControl({
-    componentFileName,
-    componentName,
-}: {
-    componentFileName: string;
-    componentName: string;
-}) {
-    const componentClassName = `UI${componentName}`;
-    const fieldComponentFileName = `${componentFileName}-field`;
+function main() {
+    CONTROLS.map(buildFieldComponentForControl);
+
+    updateIndex();
+}
+
+main();
+
+function buildFieldComponentForControl(componentSlug: string) {
+    // ensure component slug is formatted correctly
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(componentSlug)) {
+        console.error(`Component slug "${componentSlug}" is not formatted correctly.`);
+        process.exit(1);
+    }
+
+    const fieldComponentSlug = `${componentSlug}-field`;
+
+    if (fs.existsSync(`./projects/ui/src/lib/${fieldComponentSlug}`)) {
+        if (!FORCE) {
+            console.info(`\x1b[33mSkipping "${fieldComponentSlug}" component; folder already exists.\x1b[0m`);
+            return;
+        } else {
+            console.info(`\x1b[33mOverwriting "${fieldComponentSlug}" component.\x1b[0m`);
+        }
+    }
+
+    const componentName = componentSlug
+        .split('-')
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('');
+
     const fieldComponentName = `${componentName}Field`;
+    const componentClassName = `UI${componentName}`;
     const fieldComponentClassName = `UI${fieldComponentName}`;
 
-    await clearExistingFieldComponent(fieldComponentFileName, componentFileName);
-    await makeComponentFolder(fieldComponentFileName);
+    // create component directory
+    execSync(`mkdir -p ./projects/ui/src/lib/${fieldComponentSlug}`, { stdio: 'inherit' });
 
-    await Promise.all([
-        generateFieldComponentFile(
-            componentClassName,
-            componentFileName,
-            fieldComponentClassName,
-            fieldComponentFileName,
-            fieldComponentName,
-        ),
-        generateFieldTestFile(fieldComponentClassName, fieldComponentFileName),
-        generateFieldExampleFile(fieldComponentClassName, fieldComponentName, fieldComponentFileName),
-        generateFieldIndexFile(fieldComponentFileName),
-    ]);
+    generateComponentFile(
+        componentClassName,
+        componentSlug,
+        fieldComponentClassName,
+        fieldComponentSlug,
+        fieldComponentName,
+    );
+
+    generateTestWithExample(fieldComponentSlug);
+
+    generateIndexFile(fieldComponentSlug);
+
+    execSync(`npx prettier --write ./projects/ui/src/lib/${fieldComponentSlug}`, { stdio: 'inherit' });
+    execSync(`npx eslint --fix ./projects/ui/src/lib/${fieldComponentSlug}`, { stdio: 'inherit' });
+
+    console.info(`\x1b[32mGenerated "${fieldComponentSlug}" component.\x1b[0m`);
 }
 
-async function clearExistingFieldComponent(fieldComponentFileName: string, componentFileName: string) {
-    const fieldPath = `./projects/ui/src/lib/${fieldComponentFileName}`;
-    // ensure index file does not export the Field component
-    const indexPath = `./projects/ui/src/lib/${componentFileName}/index.ts`;
-
-    if (await fileExists(fieldPath)) {
-        await fs.rm(fieldPath, { recursive: true, force: true });
-    }
-
-    const indexContent = await fs.readFile(indexPath, 'utf8');
-
-    const exportStatement = `export * from './Field';\n`;
-
-    if (indexContent.includes(exportStatement)) {
-        await fs.writeFile(indexPath, indexContent.replace(exportStatement, ''), 'utf8');
-    }
-}
-
-async function makeComponentFolder(componentFileName: string) {
-    return new Promise<void>((resolve, reject) => {
-        exec(`mkdir -p ./projects/ui/src/lib/${componentFileName}`, (error) => {
-            if (error) {
-                reject(error);
-                return;
-            }
-            resolve();
-        });
-    });
-}
-
-async function generateFieldComponentFile(
+function generateComponentFile(
     componentClassName: string,
     componentFileName: string,
     fieldComponentClassName: string,
     fieldComponentFileName: string,
     fieldComponentName: string,
 ) {
-    const content = `import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
+    const content = `import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
@@ -112,6 +120,8 @@ export type ${fieldComponentName}Props = Omit<FieldProps, 'controlId' | 'label'>
             [style]="style()"
             [required]="required()">
             <ui-${componentFileName}
+                [ariaLabelledBy]="labelledById()"
+                [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
                 (valueChange)="valueChange.emit($event)"
                 [ariaLabel]="ariaLabel()"
@@ -134,7 +144,6 @@ export type ${fieldComponentName}Props = Omit<FieldProps, 'controlId' | 'label'>
     encapsulation: ViewEncapsulation.None,
 })
 export class ${fieldComponentClassName} extends ${componentClassName} implements AsSignal<${fieldComponentName}Props> {
-    readonly valueChange = output<string | undefined>();
 
     readonly errorMessage = input<${fieldComponentName}Props['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
@@ -155,125 +164,10 @@ export class ${fieldComponentClassName} extends ${componentClassName} implements
 `;
 
     const path = `./projects/ui/src/lib/${fieldComponentFileName}/${fieldComponentFileName}.ts`;
-    await fs.writeFile(path, content, 'utf8');
+    fs.writeFileSync(path, content, 'utf8');
 }
 
-async function generateFieldTestFile(componentClassName: string, componentFileName: string) {
-    const content = `import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { spyOn } from 'jest-mock';
-import { ${componentClassName}Example } from './example';
-
-describe('${componentClassName}', () => {
-    let component:  ${componentClassName}Example;
-    let fixture: ComponentFixture<${componentClassName}Example>;
-    let errorSpy: any;
-
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [ ${componentClassName}Example],
-        }).compileComponents();
-
-        errorSpy = spyOn(console, 'error');
-        fixture = TestBed.createComponent( ${componentClassName}Example);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        errorSpy.mockRestore();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
-    it('should not have console errors', () => {
-        expect(errorSpy).not.toHaveBeenCalled();
-    });
-
-    it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
-});
-`;
-
-    const testPath = `./projects/ui/src/lib/${componentFileName}/${componentFileName}.rtl.test.ts`;
-    await fs.writeFile(testPath, content, 'utf8');
-}
-
-async function generateFieldExampleFile(componentClassName: string, componentName: string, componentFileName: string) {
-    const content = `import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { ${componentClassName} } from './${componentFileName}';
-
-@Component({
-    selector: 'ui-${componentFileName}-example',
-    standalone: true,
-    imports: [CommonModule, ${componentClassName}],
-    template: \`
-        <h4>Default</h4>
-        <ui-${componentFileName}
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            id="default-input"
-            name="default-input"
-            label="${componentName} Label"
-            helperText="The value of the default input is: {{ values()['default'] || 'null' }}" />
-
-        <h4>Disabled</h4>
-        <ui-${componentFileName} name="disabled-input" label="${componentName} Label" [disabled]="true" />
-
-        <h4>Invalid</h4>
-        <ui-${componentFileName} name="invalid-input" label="${componentName} Label" [invalid]="true" />
-
-        <h4>Required</h4>
-        <ui-${componentFileName} name="required-input" label="${componentName} Label" [required]="true" />
-
-        <h4>Read Only</h4>
-        <ui-${componentFileName} name="read-only-input" label="${componentName} Label" [readOnly]="true" />
-
-        <h4>size = small</h4>
-        <ui-${componentFileName} name="size-small" label="${componentName} Label" size="small" />
-
-        <h4>size = medium</h4>
-        <ui-${componentFileName} name="size-medium" label="${componentName} Label" size="medium" />
-
-        <h4>size = large</h4>
-        <ui-${componentFileName} name="size-large" label="${componentName} Label" size="large" />
-    \`,
-})
-export class ${componentClassName}Example {
-    readonly values = signal<Record<string, string | undefined>>({
-        default: 'Default value example',
-        'value-example': 'I am an example value',
-    });
-
-    readonly defaultValue = signal<string | undefined>('Default value example');
-
-    update = (key: string, next: string | undefined) => {
-        this.values.update((current) => ({
-            ...current,
-            [key]: next,
-        }));
-    };
-}
-`;
-
-    const examplePath = `./projects/ui/src/lib/${componentFileName}/example.ts`;
-    await fs.writeFile(examplePath, content, 'utf8');
-}
-
-async function generateFieldIndexFile(componentFileName: string) {
+function generateIndexFile(componentFileName: string) {
     const newIndexPath = `./projects/ui/src/lib/${componentFileName}/index.ts`;
-    await fs.writeFile(newIndexPath, `export * from './${componentFileName}';`, 'utf8');
+    fs.writeFileSync(newIndexPath, `export * from './${componentFileName}';`, 'utf8');
 }
-
-async function fileExists(path: string) {
-    try {
-        await fs.access(path, fs.constants.F_OK);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-// execSync('npx prettier --write ./projects/ui/src/lib');

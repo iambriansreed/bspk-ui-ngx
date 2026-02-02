@@ -1,4 +1,4 @@
-import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
@@ -30,6 +30,8 @@ export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
             [style]="style()"
             [required]="required()">
             <ui-input-phone
+                [ariaLabelledBy]="labelledById()"
+                [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
                 (valueChange)="valueChange.emit($event)"
                 [ariaLabel]="ariaLabel()"
@@ -40,8 +42,7 @@ export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
                 [readOnly]="readOnly()"
                 [value]="value()"
                 [required]="required()"
-                [size]="size()"
-                />
+                [size]="size()" />
         </ui-field>
     `,
     host: {
@@ -52,8 +53,6 @@ export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
     encapsulation: ViewEncapsulation.None,
 })
 export class UIInputPhoneField extends UIInputPhone implements AsSignal<InputPhoneFieldProps> {
-    readonly valueChange = output<string | undefined>();
-
     readonly errorMessage = input<InputPhoneFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
     readonly helperText = input<InputPhoneFieldProps['helperText']>(undefined);

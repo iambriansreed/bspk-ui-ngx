@@ -2,24 +2,24 @@ import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
+import { UIInputNumber } from '../input-number';
 
-export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export type InputNumberFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the UIInputNumber component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the FormField and UIInputNumber components.
  *
- * @name UIInputField
+ * @name UIInputNumberField
  * @phase UXReview
  *
  * @generated
  */
 @Component({
-    selector: 'ui-input-field',
+    selector: 'ui-input-number-field',
     standalone: true,
-    imports: [UIField, UIInput],
+    imports: [UIField, UIInputNumber],
     template: `
         <ui-field
             [errorMessage]="errorMessage()"
@@ -29,7 +29,7 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
             [controlId]="controlId()"
             [style]="style()"
             [required]="required()">
-            <ui-input
+            <ui-input-number
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -46,18 +46,18 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
         </ui-field>
     `,
     host: {
-        'data-bspk': 'input-field',
+        'data-bspk': 'input-number-field',
         '[id]': 'controlId()+"-field"',
     },
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
-    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+export class UIInputNumberField extends UIInputNumber implements AsSignal<InputNumberFieldProps> {
+    readonly errorMessage = input<InputNumberFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
-    readonly helperText = input<InputFieldProps['helperText']>(undefined);
-    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
-    readonly style = input<InputFieldProps['style']>(undefined);
+    readonly helperText = input<InputNumberFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<InputNumberFieldProps['labelTrailing']>(undefined);
+    readonly style = input<InputNumberFieldProps['style']>(undefined);
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(
@@ -67,5 +67,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.id() || uniqueId('UIInputNumberField-'));
 }

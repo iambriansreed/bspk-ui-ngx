@@ -4,17 +4,17 @@ import { spyOn } from 'jest-mock';
 import { UITextareaFieldExample } from './example';
 
 describe('TextareaField', () => {
-    let component:  UITextareaFieldExample;
-    let fixture: ComponentFixture< UITextareaFieldExample>;
+    let component: UITextareaFieldExample;
+    let fixture: ComponentFixture<UITextareaFieldExample>;
     let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ UITextareaFieldExample],
+            imports: [UITextareaFieldExample],
         }).compileComponents();
 
         errorSpy = spyOn(console, 'error');
-        fixture = TestBed.createComponent( UITextareaFieldExample);
+        fixture = TestBed.createComponent(UITextareaFieldExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

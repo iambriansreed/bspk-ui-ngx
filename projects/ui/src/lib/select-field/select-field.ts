@@ -2,24 +2,24 @@ import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
+import { UISelect } from '../select';
 
-export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the UISelect component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the FormField and UISelect components.
  *
- * @name UIInputField
+ * @name UISelectField
  * @phase UXReview
  *
  * @generated
  */
 @Component({
-    selector: 'ui-input-field',
+    selector: 'ui-select-field',
     standalone: true,
-    imports: [UIField, UIInput],
+    imports: [UIField, UISelect],
     template: `
         <ui-field
             [errorMessage]="errorMessage()"
@@ -29,7 +29,8 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
             [controlId]="controlId()"
             [style]="style()"
             [required]="required()">
-            <ui-input
+            <ui-select
+                [items]="items()"
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -46,18 +47,18 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
         </ui-field>
     `,
     host: {
-        'data-bspk': 'input-field',
+        'data-bspk': 'select-field',
         '[id]': 'controlId()+"-field"',
     },
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
-    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+export class UISelectField extends UISelect implements AsSignal<SelectFieldProps> {
+    readonly errorMessage = input<SelectFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
-    readonly helperText = input<InputFieldProps['helperText']>(undefined);
-    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
-    readonly style = input<InputFieldProps['style']>(undefined);
+    readonly helperText = input<SelectFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<SelectFieldProps['labelTrailing']>(undefined);
+    readonly style = input<SelectFieldProps['style']>(undefined);
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(
@@ -67,5 +68,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.id() || uniqueId('UISelectField-'));
 }

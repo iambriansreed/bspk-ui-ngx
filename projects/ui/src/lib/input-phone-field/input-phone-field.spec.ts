@@ -3,18 +3,18 @@ import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
 import { spyOn } from 'jest-mock';
 import { UIInputPhoneFieldExample } from './example';
 
-describe('UIInputPhoneField', () => {
-    let component:  UIInputPhoneFieldExample;
+describe('InputPhoneField', () => {
+    let component: UIInputPhoneFieldExample;
     let fixture: ComponentFixture<UIInputPhoneFieldExample>;
     let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ UIInputPhoneFieldExample],
+            imports: [UIInputPhoneFieldExample],
         }).compileComponents();
 
         errorSpy = spyOn(console, 'error');
-        fixture = TestBed.createComponent( UIInputPhoneFieldExample);
+        fixture = TestBed.createComponent(UIInputPhoneFieldExample);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

@@ -1,25 +1,25 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
+import { UIDatePicker } from '../date-picker';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
 
-export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export type DatePickerFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the UIDatePicker component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the FormField and UIDatePicker components.
  *
- * @name UIInputField
+ * @name UIDatePickerField
  * @phase UXReview
  *
  * @generated
  */
 @Component({
-    selector: 'ui-input-field',
+    selector: 'ui-date-picker-field',
     standalone: true,
-    imports: [UIField, UIInput],
+    imports: [UIField, UIDatePicker],
     template: `
         <ui-field
             [errorMessage]="errorMessage()"
@@ -29,7 +29,7 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
             [controlId]="controlId()"
             [style]="style()"
             [required]="required()">
-            <ui-input
+            <ui-date-picker
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -46,18 +46,18 @@ export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
         </ui-field>
     `,
     host: {
-        'data-bspk': 'input-field',
+        'data-bspk': 'date-picker-field',
         '[id]': 'controlId()+"-field"',
     },
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
-    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+export class UIDatePickerField extends UIDatePicker implements AsSignal<DatePickerFieldProps> {
+    readonly errorMessage = input<DatePickerFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
-    readonly helperText = input<InputFieldProps['helperText']>(undefined);
-    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
-    readonly style = input<InputFieldProps['style']>(undefined);
+    readonly helperText = input<DatePickerFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<DatePickerFieldProps['labelTrailing']>(undefined);
+    readonly style = input<DatePickerFieldProps['style']>(undefined);
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(
@@ -67,5 +67,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.id() || uniqueId('UIDatePickerField-'));
 }
