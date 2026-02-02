@@ -28,16 +28,19 @@ async function buildFieldComponentForControl({
 
     await clearExistingFieldComponent(fieldComponentFileName, componentFileName);
     await makeComponentFolder(fieldComponentFileName);
-    await generateFieldComponentFile(
-        componentClassName,
-        componentFileName,
-        fieldComponentClassName,
-        fieldComponentFileName,
-        fieldComponentName,
-    );
-    await generateFieldTestFile(fieldComponentClassName, fieldComponentFileName);
-    await generateFieldExampleFile(fieldComponentClassName, fieldComponentName, fieldComponentFileName);
-    await generateFieldIndexFile(fieldComponentFileName);
+
+    await Promise.all([
+        generateFieldComponentFile(
+            componentClassName,
+            componentFileName,
+            fieldComponentClassName,
+            fieldComponentFileName,
+            fieldComponentName,
+        ),
+        generateFieldTestFile(fieldComponentClassName, fieldComponentFileName),
+        generateFieldExampleFile(fieldComponentClassName, fieldComponentName, fieldComponentFileName),
+        generateFieldIndexFile(fieldComponentFileName),
+    ]);
 }
 
 async function clearExistingFieldComponent(fieldComponentFileName: string, componentFileName: string) {
