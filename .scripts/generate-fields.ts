@@ -160,23 +160,36 @@ export class ${fieldComponentClassName} extends ${componentClassName} implements
 
 async function generateFieldTestFile(componentClassName: string, componentFileName: string) {
     const content = `import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { hasNoBasicA11yIssues } from '@shared/testing/hasNoBasicA11yIssues';
-import { ${componentClassName} } from './${componentFileName}';
+import { spyOn } from 'jest-mock';
+import { ${componentClassName}Example } from './example';
 
 describe('${componentClassName}', () => {
-    let fixture: ComponentFixture<${componentClassName}>;
+    let component:  ${componentClassName}Example;
+    let fixture: ComponentFixture<${componentClassName}Example>;
+    let errorSpy: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [${componentClassName}],
+            imports: [ ${componentClassName}Example],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(${componentClassName});
-        fixture.componentRef.setInput('name', 'test-input');
-        fixture.componentRef.setInput('ariaLabel', 'Test Input');
-
+        errorSpy = spyOn(console, 'error');
+        fixture = TestBed.createComponent( ${componentClassName}Example);
+        component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        errorSpy.mockRestore();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should not have console errors', () => {
+        expect(errorSpy).not.toHaveBeenCalled();
     });
 
     it('should have no basic a11y issues', async () => await hasNoBasicA11yIssues(fixture));
