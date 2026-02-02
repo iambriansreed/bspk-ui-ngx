@@ -123,6 +123,15 @@ import { UIButton } from './button';
             <ui-button (click)="handleClick('Example Label')" label="Example Label" [icon]="iconBox" width="fill" />
         </div>
 
+        <h4>Events</h4>
+        <ui-button
+            label="Event Button"
+            (onClick)="handleClick('Events')"
+            (onBlur)="log('Blur')"
+            (onFocus)="log('Focus')"
+            (onMouseLeave)="log('Mouse Leave')"
+            (onMouseEnter)="log('Mouse Enter')" />
+
         <h4>Custom Content</h4>
         <ui-button
             label="Custom can have label now"
@@ -166,6 +175,10 @@ export class UIButtonExample {
     protected readonly iconCloud = IconCloud;
     protected readonly iconWarningFill = IconWarningFill;
     protected readonly iconBox = IconBox;
+
+    log(msg: string) {
+        sendSnackbar(msg);
+    }
 
     protected handleClick(name: string): void {
         sendSnackbar(`${name} Button clicked!`);
