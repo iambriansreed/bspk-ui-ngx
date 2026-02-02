@@ -20,6 +20,7 @@ export * from './lib/chip-group';
 export * from './lib/date-picker';
 export * from './lib/dialog';
 export * from './lib/divider';
+export * from './lib/fab';
 export * from './lib/field';
 export * from './lib/flex';
 export * from './lib/floating';
