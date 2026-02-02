@@ -10,7 +10,7 @@
 import fs from 'fs';
 import path from 'path';
 import { META } from '../projects/demo/src/meta';
-import { Meta } from '../projects/demo/src/types';
+import { Meta } from '../projects/shared/src/types/meta';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const uiLibPath = path.join(__dirname, '../projects/ui/src/lib');
@@ -40,21 +40,25 @@ export const componentItems: NavRoute[] = [
  ${meta.components
      .map(
          // add an entry for each example
-         ({ name, slug, example }) => `
+         ({ name, slug, exampleFile }) => `
             {
                 title: '${name}',
                 path: '${slug}',
                 component: ComponentPage,
-                children: [
+                ${
+                    exampleFile
+                        ? `children: [
                     {
                         path: '',
                         outlet: 'example',
                         loadComponent: () =>
-                            import('${example.path.replace('projects/ui/src/lib/', '@ui/').replace(/\.ts$/, '')}').then(
-                                (m) => m.${example.name},
+                            import('${exampleFile.path.replace('projects/ui/src/lib/', '@ui/').replace(/\.ts$/, '')}').then(
+                                (m) => m.${exampleFile.name},
                             ),
                     },
-                ],
+                ],`
+                        : ''
+                }
                 data: { component: '${name}' }
             }`,
      )

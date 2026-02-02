@@ -1,4 +1,4 @@
-import { ComponentPhase } from '@shared/types';
+import { ComponentPhase } from '@shared/types/meta';
 import { ColorVariant } from '@ui/utils/color-variants';
 
 export const COMPONENT_PHASE_COLORS: Record<ComponentPhase, ColorVariant> = {
