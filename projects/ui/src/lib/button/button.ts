@@ -129,7 +129,7 @@ export type ButtonProps = CommonProps<
                 <span [attr.data-button-label]="true">{{ label() }}</span>
             }
         </ng-content>
-        <span [attr.data-touch-target]="true"></span>
+        <span [attr.aria-hidden]="true" [attr.data-touch-target]="true"></span>
     </button>`,
     styleUrls: ['./button.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
