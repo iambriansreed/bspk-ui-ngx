@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, model, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, input, model, output, viewChild, ViewEncapsulation } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { UIIcon } from '../icon';
 import { IconAdd, IconRemove } from '../icons';
@@ -119,6 +119,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
     encapsulation: ViewEncapsulation.None,
 })
 export class UIInputNumber implements AsSignal<InputNumberProps> {
+    valueChange = output<string>();
     public IconCancel = IconCancel;
 
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
@@ -144,6 +145,12 @@ export class UIInputNumber implements AsSignal<InputNumberProps> {
 
     readonly iconAdd = IconAdd;
     readonly iconRemove = IconRemove;
+
+    constructor() {
+        this.value.subscribe((val) => {
+            this.valueChange.emit(val || '');
+        });
+    }
 
     get centered() {
         return this.align() === 'center';

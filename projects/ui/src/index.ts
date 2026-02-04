@@ -32,7 +32,6 @@ export * from './lib/icons';
 export * from './lib/inline-alert';
 export * from './lib/input';
 export * from './lib/input-field';
-export * from './lib/input-field-field';
 export * from './lib/input-number';
 export * from './lib/input-number-field';
 export * from './lib/input-phone';

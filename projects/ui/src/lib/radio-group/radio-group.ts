@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, input, output, model } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { RadioProps } from '../radio/radio';
 import { RadioOptionProps, UIRadioOption } from '../radio-option/radio-option';
@@ -82,17 +82,23 @@ export type RadioGroupProps = Omit<FieldControlProps, 'readOnly'> & {
     encapsulation: ViewEncapsulation.None,
 })
 export class UIRadioGroup implements AsSignal<RadioGroupProps> {
-    @Output() valueChange = new EventEmitter<string>();
+    valueChange = output<string>();
 
     readonly id = input<RadioGroupProps['id']>(undefined);
     readonly name = input.required<RadioGroupProps['name']>();
-    readonly value = input<RadioGroupProps['value']>(undefined);
+    readonly value = model<RadioGroupProps['value']>('');
     readonly disabled = input<RadioGroupProps['disabled']>(false);
     readonly required = input<RadioGroupProps['required']>(false);
     readonly invalid = input<RadioGroupProps['invalid']>(false);
     readonly options = input<RadioGroupOption[]>([]);
     readonly ariaDescribedBy = input<RadioGroupProps['ariaDescribedBy']>();
     readonly ariaErrorMessage = input<RadioGroupProps['ariaErrorMessage']>();
+
+    constructor() {
+        this.value.subscribe((val) => {
+            this.valueChange.emit(val || '');
+        });
+    }
 
     /** Handles changes to the radio button selection. */
     onRadioChange(value: string, checked: boolean) {

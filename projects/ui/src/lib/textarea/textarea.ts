@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, computed, input, model } from '@angular/core';
+import { Component, ViewEncapsulation, computed, input, model, output } from '@angular/core';
 import { CommonProps, FieldControlProps, AsSignal } from '../../types/common';
 
 export type TextareaProps = CommonProps<'size'> &
@@ -93,6 +93,8 @@ export type TextareaProps = CommonProps<'size'> &
     encapsulation: ViewEncapsulation.None,
 })
 export class UITextarea implements AsSignal<TextareaProps> {
+    valueChange = output<string>();
+
     readonly name = input.required<TextareaProps['name']>();
     readonly value = model<string | undefined>('');
 
@@ -113,6 +115,12 @@ export class UITextarea implements AsSignal<TextareaProps> {
 
     readonly minRowsValid = computed(() => Math.min(10, Math.max(3, this.minRows() || 3)));
     readonly maxRowsValid = computed(() => Math.min(10, Math.max(3, this.maxRows() || 10)));
+
+    constructor() {
+        this.value.subscribe((val) => {
+            this.valueChange.emit(val || '');
+        });
+    }
 
     handleBlur(event: FocusEvent) {
         const target = event.target as HTMLTextAreaElement;
