@@ -30,7 +30,6 @@ export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
             [style]="style()"
             [required]="required()">
             <ui-select
-                [items]="items()"
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -43,6 +42,7 @@ export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
                 [readOnly]="readOnly()"
                 [value]="value()"
                 [required]="required()"
+                [items]="items()"
                 [size]="size()" />
         </ui-field>
     `,
@@ -59,6 +59,7 @@ export class UISelectField extends UISelect implements AsSignal<SelectFieldProps
     readonly helperText = input<SelectFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<SelectFieldProps['labelTrailing']>(undefined);
     readonly style = input<SelectFieldProps['style']>(undefined);
+
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(

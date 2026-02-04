@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
-export type RadioProps = Omit<FieldControlProps<string>, 'onChange' | 'readOnly'> & {
+export type RadioProps = Omit<FieldControlProps<string>, 'onChange'> & {
     /**
      * Marks the radio as checked.
      *
@@ -57,6 +57,7 @@ export class UIRadio implements AsSignal<RadioProps> {
     readonly id = input<RadioProps['id']>(uniqueId('radio'));
     readonly invalid = input<RadioProps['invalid']>(false);
     readonly required = input<RadioProps['required']>(false);
+    readonly readOnly = input<RadioProps['readOnly']>(false);
 
     onInputChange(event: Event) {
         const inputElement = event.target as HTMLInputElement;

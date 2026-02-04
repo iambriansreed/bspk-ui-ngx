@@ -4,7 +4,7 @@ import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 import { UIRadioGroup } from '../radio-group';
 
-export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label' | 'size'>;
 
 /**
  * A field wrapper for the UIRadioGroup component.
@@ -41,8 +41,7 @@ export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
                 [name]="name()"
                 [readOnly]="readOnly()"
                 [value]="value()"
-                [required]="required()"
-                [size]="size()" />
+                [required]="required()" />
         </ui-field>
     `,
     host: {

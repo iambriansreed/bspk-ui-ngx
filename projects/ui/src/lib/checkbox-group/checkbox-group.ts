@@ -4,10 +4,7 @@ import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
 export type CheckboxGroupOption = Omit<CheckboxOptionProps, 'name' | 'onChange'>;
 
-export type CheckboxGroupProps = Omit<
-    FieldControlProps<string[]>,
-    'ariaDescribedBy' | 'ariaErrorMessage' | 'readOnly' | 'required'
-> & {
+export type CheckboxGroupProps = FieldControlProps<string[]> & {
     /**
      * The options for the checkboxes.
      *
@@ -50,6 +47,9 @@ export type CheckboxGroupProps = Omit<
             @if (selectAll()) {
                 <ui-checkbox-option
                     name="select-all"
+                    [attr.aria-labelledby]="ariaLabelledBy() || null"
+                    [attr.aria-describedby]="ariaDescribedBy() || null"
+                    [attr.ariaErrorMessage]="ariaErrorMessage() || null"
                     [label]="selectAllProps()?.label ?? selectAllLabel"
                     [ariaLabel]="selectAllProps()?.ariaLabel ?? selectAllLabel"
                     [description]="selectAllProps()?.description"
@@ -57,6 +57,8 @@ export type CheckboxGroupProps = Omit<
                     [indeterminate]="someChecked() && !allChecked()"
                     [disabled]="disabled()"
                     [invalid]="invalid()"
+                    [required]="required()"
+                    [readOnly]="readOnly()"
                     [value]="'all'"
                     (checkedChange)="onSelectAllChange($event)">
                 </ui-checkbox-option>
@@ -64,12 +66,17 @@ export type CheckboxGroupProps = Omit<
             @for (option of options(); track option.value) {
                 <ui-checkbox-option
                     name="checkbox-group-option-{{ option.value }}"
+                    [attr.aria-labelledby]="ariaLabelledBy() || null"
+                    [attr.aria-describedby]="ariaDescribedBy() || null"
+                    [attr.ariaErrorMessage]="ariaErrorMessage() || null"
                     [label]="option.label"
                     [value]="option.value"
                     [checked]="isChecked(option.value)"
                     [description]="option.description"
                     [disabled]="disabled() || option.disabled"
                     [invalid]="invalid()"
+                    [required]="required()"
+                    [readOnly]="readOnly()"
                     (checkedChange)="onOptionChange(option.value, $event)">
                 </ui-checkbox-option>
             }
@@ -84,8 +91,17 @@ export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
     readonly value = input<CheckboxGroupProps['value']>([]);
     readonly selectAll = input<CheckboxGroupProps['selectAll']>(false);
     readonly selectAllProps = input<CheckboxGroupProps['selectAllProps']>(undefined);
+
+    readonly id = input<CheckboxGroupProps['id']>(undefined);
     readonly disabled = input<CheckboxGroupProps['disabled']>(false);
     readonly invalid = input<CheckboxGroupProps['invalid']>(false);
+    readonly required = input<CheckboxGroupProps['required']>(false);
+    readonly readOnly = input<CheckboxGroupProps['readOnly']>(false);
+    readonly ariaLabel = input<CheckboxGroupProps['ariaLabel']>(undefined);
+
+    readonly ariaLabelledBy = input<CheckboxGroupProps['ariaLabelledBy']>(undefined);
+    readonly ariaDescribedBy = input<CheckboxGroupProps['ariaDescribedBy']>(undefined);
+    readonly ariaErrorMessage = input<CheckboxGroupProps['ariaErrorMessage']>(undefined);
 
     selectAllLabel = 'All';
 

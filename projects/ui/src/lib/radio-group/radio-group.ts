@@ -6,7 +6,7 @@ import { RadioOptionProps, UIRadioOption } from '../radio-option/radio-option';
 export type RadioGroupOption = Pick<RadioOptionProps, 'checked' | 'description' | 'disabled' | 'label'> &
     Pick<RadioProps, 'value'>;
 
-export type RadioGroupProps = Omit<FieldControlProps, 'readOnly'> & {
+export type RadioGroupProps = FieldControlProps & {
     /**
      * The options for the radios.
      *
@@ -66,6 +66,7 @@ export type RadioGroupProps = Omit<FieldControlProps, 'readOnly'> & {
                     [disabled]="disabled() || option.disabled"
                     [required]="required()"
                     [invalid]="invalid()"
+                    [readOnly]="readOnly()"
                     (checkedChange)="onRadioChange(option.value || '', $event)">
                 </ui-radio-option>
             }
@@ -91,8 +92,11 @@ export class UIRadioGroup implements AsSignal<RadioGroupProps> {
     readonly required = input<RadioGroupProps['required']>(false);
     readonly invalid = input<RadioGroupProps['invalid']>(false);
     readonly options = input<RadioGroupOption[]>([]);
+    readonly ariaLabel = input<RadioGroupProps['ariaLabel']>(undefined);
+    readonly ariaLabelledBy = input<RadioGroupProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<RadioGroupProps['ariaDescribedBy']>();
     readonly ariaErrorMessage = input<RadioGroupProps['ariaErrorMessage']>();
+    readonly readOnly = input<RadioGroupProps['readOnly']>(false);
 
     constructor() {
         this.value.subscribe((val) => {

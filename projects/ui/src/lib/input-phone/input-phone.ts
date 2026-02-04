@@ -11,6 +11,7 @@ import {
     AfterViewInit,
     OnDestroy,
     effect,
+    output,
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
@@ -127,7 +128,7 @@ export type InputPhoneProps = FieldControlProps<string> &
             [required]="required() || false"
             [placeholder]="''"
             [value]="value()"
-            (valueChange)="onValueChange($event)"
+            (valueChange)="handleValueChange($event)"
             [ariaLabel]="ariaLabel() || 'Phone number input'"
             [ariaDescribedBy]="ariaDescribedBy()"
             [ariaLabelledBy]="ariaLabelledBy()"
@@ -195,6 +196,7 @@ export type InputPhoneProps = FieldControlProps<string> &
     `,
 })
 export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+    valueChange = output<string>();
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<InputPhoneProps['value']>('');
@@ -333,11 +335,12 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
         }
     }
 
-    onValueChange(newValue?: string): void {
+    handleValueChange(newValue?: string): void {
         const formatted = this.formatValueIfNeeded(newValue || '');
 
         this.previousValue.set(formatted);
         this.value.set(formatted);
+        this.valueChange.emit(formatted);
     }
 
     private formatValueIfNeeded(newValue: string): string {

@@ -41,8 +41,7 @@ export type CheckboxGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
                 [name]="name()"
                 [readOnly]="readOnly()"
                 [value]="value()"
-                [required]="required()"
-                [size]="size()" />
+                [required]="required()" />
         </ui-field>
     `,
     host: {

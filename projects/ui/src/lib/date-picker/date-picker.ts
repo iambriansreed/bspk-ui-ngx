@@ -11,7 +11,7 @@ import {
     OnChanges,
 } from '@angular/core';
 import { format, startOfToday, parse } from 'date-fns';
-import { AsSignal, CommonProps } from '../../types/common';
+import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { UIButton } from '../button';
 import { UICalendar } from '../calendar';
 import { UIFloatingDirective } from '../floating';
@@ -35,34 +35,35 @@ export type DatePickerProps = CommonProps<
     | 'name'
     | 'readOnly'
     | 'required'
-> & {
-    /**
-     * If the calendar should close when a date is selected.
-     *
-     * @default true
-     */
-    closeCalendarOnChange?: boolean;
-    /**
-     * The currently selected date
-     *
-     * String formatted as 'MM/dd/yyyy'.
-     *
-     * @type string
-     */
-    value?: Date | string | undefined;
-    /**
-     * The placeholder text for the date input field.
-     *
-     * @default mm/dd/yyyy
-     */
-    placeholder?: string;
-    /**
-     * The size of the element.
-     *
-     * @default 'medium'
-     */
-    size?: 'large' | 'medium' | 'small';
-};
+> &
+    Pick<FieldControlProps<string>, 'ariaLabelledBy'> & {
+        /**
+         * If the calendar should close when a date is selected.
+         *
+         * @default true
+         */
+        closeCalendarOnChange?: boolean;
+        /**
+         * The currently selected date
+         *
+         * String formatted as 'MM/dd/yyyy'.
+         *
+         * @type string
+         */
+        value?: Date | string | undefined;
+        /**
+         * The placeholder text for the date input field.
+         *
+         * @default mm/dd/yyyy
+         */
+        placeholder?: string;
+        /**
+         * The size of the element.
+         *
+         * @default 'medium'
+         */
+        size?: 'large' | 'medium' | 'small';
+    };
 
 /**
  * An input that allows a customer to manually type in a specific date or triggers a the Calendar component to select a
@@ -87,6 +88,7 @@ export type DatePickerProps = CommonProps<
                 #reference
                 [ariaDescribedBy]="ariaDescribedBy()"
                 [ariaErrorMessage]="ariaErrorMessage()"
+                [ariaLabelledBy]="ariaLabelledBy()"
                 [ariaLabel]="ariaLabel()"
                 [disabled]="disabled()"
                 [id]="id()"
@@ -151,7 +153,7 @@ export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps
     readonly ariaLabel = input<DatePickerProps['ariaLabel']>('Enter or choose date');
     readonly ariaDescribedBy = input<DatePickerProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<DatePickerProps['ariaErrorMessage']>(undefined);
-
+    readonly ariaLabelledBy = input<DatePickerProps['ariaLabelledBy']>(undefined);
     // State
     readonly calendarVisible = signal(false);
     readonly floatingStyles = signal<Record<string, string>>({});
