@@ -57,6 +57,7 @@ export type InputPhoneProps = FieldControlProps<string> &
          * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
          * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
          *
+         * @default US
          * @type string
          */
         initialCountryCode?: SupportedCountryCode;
@@ -95,7 +96,7 @@ export type InputPhoneProps = FieldControlProps<string> &
  *     </div>
  *
  * @name InputPhone
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-input-phone',
@@ -178,7 +179,7 @@ export type InputPhoneProps = FieldControlProps<string> &
                 @for (item of menuItems(); track item.id) {
                     <ui-list-item
                         [attr.data-bspk-owner]="'input-phone'"
-                        [attr.aria-selected]="countryCode() === item.value"
+                        [attr.aria-selected]="initialCountryCode() === item.value"
                         [as]="'div'"
                         [active]="keyNavigation.activeElementId === item.id"
                         [label]="item.label"
@@ -198,7 +199,6 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
 
     readonly value = model<InputPhoneProps['value']>('');
     readonly name = input.required<InputPhoneProps['name']>();
-
     readonly size = input<InputPhoneProps['size']>('medium');
     readonly disabled = input<InputPhoneProps['disabled']>(false);
     readonly invalid = input<InputPhoneProps['invalid']>(false);
@@ -208,19 +208,15 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
     readonly ariaDescribedBy = input<InputPhoneProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputPhoneProps['ariaErrorMessage']>(undefined);
     readonly id = input<InputPhoneProps['id']>(undefined);
-    readonly initialCountryCode = input<InputPhoneProps['initialCountryCode']>(undefined);
     readonly disableFormatting = input<InputPhoneProps['disableFormatting']>(false);
     readonly scrollLimit = input<InputPhoneProps['scrollLimit']>(5);
-
     readonly reference = viewChild('inputEl', { read: ElementRef });
     readonly containerRef = viewChild('inputEl', { read: ElementRef });
-
     readonly safeId = computed(() => this.id() || uniqueId('input-phone'));
     readonly menuId = computed(() => `${this.safeId()}-menu`);
     readonly referenceEl = computed(() => this.reference()?.nativeElement);
-
     readonly open = signal<boolean>(false);
-    readonly countryCode = signal<SupportedCountryCode>('US' as SupportedCountryCode);
+    readonly initialCountryCode = model<InputPhoneProps['initialCountryCode']>('US');
 
     readonly menuItems = computed<CountryCodeItem[]>(() =>
         SELECT_OPTIONS.map((option: CountryCodeOption, index: number) => ({
@@ -230,12 +226,12 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
     );
 
     readonly selectedCodeData = computed(() => {
-        const selectedValue = (this.countryCode() || 'US') as SupportedCountryCode;
+        const selectedValue = this.initialCountryCode() as SupportedCountryCode;
         return countryCodeData[selectedValue] ?? countryCodeData.US;
     });
 
     readonly callingCode = computed(() => {
-        return getCountryCallingCode(this.countryCode());
+        return getCountryCallingCode(this.initialCountryCode() ?? 'US');
     });
 
     readonly ngMenuStyle = computed(() => {
@@ -251,7 +247,7 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
 
     constructor() {
         effect(() => {
-            const code = this.countryCode();
+            const code = this.initialCountryCode();
 
             if (this.disableFormatting()) return;
 
@@ -295,7 +291,7 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
     }
 
     onCountryCodeSelect(item: CountryCodeItem): void {
-        this.countryCode.set(item.value);
+        this.initialCountryCode.set(item.value);
         sendAriaLiveMessage(`Selected country code ${item.label}`);
         this.closeMenu();
     }
@@ -345,7 +341,7 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
             return newValue;
         }
 
-        const formatter = new AsYouType(this.countryCode());
+        const formatter = new AsYouType(this.initialCountryCode());
         return formatter.input(newValue);
     }
 
