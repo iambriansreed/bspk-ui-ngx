@@ -4,6 +4,12 @@ import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
 export interface CheckboxGroupOption extends Omit<CheckboxOptionProps, 'name' | 'onChange'> {}
 
+export interface SelectAllProps {
+    ariaLabel?: CheckboxOptionProps['ariaLabel'];
+    description?: CheckboxOptionProps['description'];
+    label?: CheckboxOptionProps['label'];
+}
+
 export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'readOnly'> {
     /**
      * The options for the checkboxes.
@@ -26,7 +32,7 @@ export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'r
      */
     selectAll?: boolean;
     /** The props for the select all checkbox. */
-    selectAllProps?: Pick<CheckboxOptionProps, 'ariaLabel' | 'description' | 'label'>;
+    selectAllProps?: SelectAllProps;
 }
 
 /**

@@ -3,8 +3,13 @@ import { AsSignal, FieldControlProps } from '../../types/common';
 import { RadioProps } from '../radio/radio';
 import { RadioOptionProps, UIRadioOption } from '../radio-option/radio-option';
 
-export interface RadioGroupOption
-    extends Pick<RadioOptionProps, 'checked' | 'description' | 'disabled' | 'label'>, Pick<RadioProps, 'value'> {}
+export interface RadioGroupOption {
+    checked?: RadioOptionProps['checked'];
+    description?: RadioOptionProps['description'];
+    disabled?: RadioOptionProps['disabled'];
+    label: RadioOptionProps['label'];
+    value: RadioProps['value'];
+}
 
 export interface RadioGroupProps extends Omit<FieldControlProps, 'readOnly'> {
     /**

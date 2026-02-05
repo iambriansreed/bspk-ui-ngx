@@ -84,7 +84,10 @@ export function generateMeta(dev?: boolean): Meta {
 
 export function writeMetaToFile(dev?: boolean): Meta {
     const meta = generateMeta(dev);
-    fs.writeFileSync(generatedMetaPath, 'export const META = ' + JSON.stringify(meta, null, 4));
+    fs.writeFileSync(
+        generatedMetaPath,
+        '/* eslint-disable @cspell/spellchecker */\n\nexport const META = ' + JSON.stringify(meta, null, 4),
+    );
     return meta;
 }
 

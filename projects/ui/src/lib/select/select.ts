@@ -22,7 +22,9 @@ import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 import { UIOutsideClickDirective } from '../outside-click';
 
-export interface SelectOption extends Pick<CommonProps, 'disabled'> {
+export interface SelectOption {
+    disabled?: CommonProps['disabled'];
+
     label: string;
     value: string;
 }
