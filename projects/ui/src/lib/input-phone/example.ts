@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { sendSnackbar } from '@ui/utils/send-snackbar';
 import { UIInputPhone } from './input-phone';
 
 @Component({
@@ -7,81 +8,59 @@ import { UIInputPhone } from './input-phone';
     standalone: true,
     imports: [CommonModule, UIInputPhone],
     template: `
-        <h4>Default</h4>
-        <ui-input-phone
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
-            id="default-input-phone"
-            name="default-input-phone"
-            ariaLabel="Phone Number"
-            initialCountryCode="US" />
+        <h4>Default: valueChange, name</h4>
+        <ui-input-phone (valueChange)="update('default', $event)" name="default-input-phone" />
 
-        <h4>Disabled</h4>
-        <ui-input-phone
-            name="disabled-input-phone"
-            ariaLabel="Phone Number"
-            [disabled]="true"
-            initialCountryCode="US" />
+        <h4>Disabled: valueChange, name, disabled</h4>
+        <ui-input-phone (valueChange)="update('disabled', $event)" name="disabled-input-phone" [disabled]="true" />
 
-        <h4>Invalid</h4>
-        <ui-input-phone name="invalid-input-phone" ariaLabel="Phone Number" [invalid]="true" initialCountryCode="US" />
+        <h4>Invalid: valueChange, name, invalid</h4>
+        <ui-input-phone (valueChange)="update('invalid', $event)" name="invalid-input-phone" [invalid]="true" />
 
-        <h4>Required</h4>
-        <ui-input-phone
-            name="required-input-phone"
-            ariaLabel="Phone Number"
-            [required]="true"
-            initialCountryCode="US" />
+        <h4>Required: valueChange, name, required</h4>
+        <ui-input-phone (valueChange)="update('required', $event)" name="required-input-phone" [required]="true" />
 
-        <h4>Read Only</h4>
+        <h4>Read Only: valueChange, name, readOnly, value</h4>
         <ui-input-phone
+            (valueChange)="update('read-only', $event)"
             name="read-only-input-phone"
-            ariaLabel="Phone Number"
             [readOnly]="true"
-            initialCountryCode="US"
-            value="+1234567890" />
+            value="1235556789" />
 
-        <h4>Different Country Code</h4>
+        <h4>Different Country Code: valueChange, name, initialCountryCode</h4>
         <ui-input-phone
-            [value]="values()['country']"
             (valueChange)="update('country', $event)"
-            id="country-input-phone"
             name="country-input-phone"
-            ariaLabel="Phone Number"
-            initialCountryCode="GB" />
+            [initialCountryCode]="'GB'" />
 
-        <h4>Disable Formatting</h4>
+        <h4>Disable Formatting: valueChange, name, disableFormatting</h4>
         <ui-input-phone
-            [value]="values()['unformatted']"
-            (valueChange)="update('unformatted', $event)"
-            id="unformatted-input-phone"
+            (valueChange)="update('Disabled Formatting', $event)"
             name="unformatted-input-phone"
-            ariaLabel="Phone Number"
-            [disableFormatting]="true"
-            initialCountryCode="US" />
+            [disableFormatting]="true" />
+
+        <h4>Multiple props: valueChange, name, value, ariaLabel, id, disabledFormatting</h4>
+        <ui-input-phone
+            (valueChange)="update('Multiple props', $event)"
+            name="multiple-props-phone"
+            value="1235556789"
+            id="multiple-props-phone"
+            ariaLabel="Phone Number of disabled formatting example"
+            [disableFormatting]="true" />
 
         <h4>Different Sizes</h4>
-        <p>Small:</p>
-        <ui-input-phone name="small-input-phone" ariaLabel="Phone Number" [size]="'small'" initialCountryCode="US" />
+        <p>Small: valueChange, name, size</p>
+        <ui-input-phone (valueChange)="update('Small', $event)" name="small-input-phone" [size]="'small'" />
 
-        <p>Medium:</p>
-        <ui-input-phone name="medium-input-phone" ariaLabel="Phone Number" [size]="'medium'" initialCountryCode="US" />
+        <p>Medium: valueChange, name, size</p>
+        <ui-input-phone (valueChange)="update('Medium', $event)" name="medium-input-phone" [size]="'medium'" />
 
-        <p>Large:</p>
-        <ui-input-phone name="large-input-phone" ariaLabel="Phone Number" [size]="'large'" initialCountryCode="US" />
+        <p>Large: valueChange, name, size</p>
+        <ui-input-phone (valueChange)="update('Large', $event)" name="large-input-phone" [size]="'large'" />
     `,
 })
 export class UIInputPhoneExample {
-    readonly values = signal({
-        default: '',
-        country: '',
-        unformatted: '',
-    });
-
     update(key: string, value: string | undefined): void {
-        this.values.update((current) => ({
-            ...current,
-            [key]: value || '',
-        }));
+        sendSnackbar(`Updated ${key} | value: ${value ?? ''}`);
     }
 }
