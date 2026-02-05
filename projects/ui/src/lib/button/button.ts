@@ -82,15 +82,13 @@ export interface ButtonProps extends Pick<
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.
  *
  * @example
- *     ```html
  *     <bspk-button
- *       label="Click Me"
- *       size="medium"
- *       variant="primary"
- *       (onClick)="handleClick($event)"
- *       icon="iconTemplate">
+ *     label="Click Me"
+ *     size="medium"
+ *     variant="primary"
+ *     (onClick)="handleClick($event)"
+ *     icon="iconTemplate">
  *     </bspk-button>
- *     ```;
  *
  * @name Button
  * @phase Dev

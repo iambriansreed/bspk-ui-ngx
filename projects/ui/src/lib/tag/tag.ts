@@ -50,7 +50,6 @@ export interface TagProps {
         '[attr.data-color]': 'color()',
         '[attr.data-size]': 'size()',
         '[attr.data-variant]': 'variant()',
-        style: 'cursor: pointer;',
     },
 })
 export class UITag implements AsSignal<TagProps> {

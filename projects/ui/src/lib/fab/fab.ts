@@ -63,12 +63,10 @@ export interface FabProps extends Pick<CommonProps, 'ariaLabel' | 'owner' | 'sty
  * bottom right of a screen.
  *
  * @example
- *     ```html
  *     <ui-fab
- *         label="Floating Action Button"
- *         [icon]="iconCloud"
- *         (onClick)="handleClick()" />
- *     ```;
+ *     label="Floating Action Button"
+ *     [icon]="iconCloud"
+ *     (onClick)="handleClick()" />
  *
  * @name Fab
  * @phase Dev

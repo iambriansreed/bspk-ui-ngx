@@ -56,7 +56,7 @@ export abstract class UITableCell<R extends TableRow = TableRow> implements AsSi
     readonly size = input.required<TableCellProps<R>['size']>();
 }
 
-export interface TableColumn<R extends TableRow> {
+export interface TableColumn<R extends TableRow = TableRow> {
     /**
      * The key of the column. This is used to access the data in the row.
      *
@@ -126,7 +126,7 @@ export interface TableColumn<R extends TableRow> {
     hideHeader?: boolean;
 }
 
-export type TableCellValueFormatter<R extends TableRow> = (row: R, size: TableSize) => string | null;
+export type TableCellValueFormatter<R extends TableRow = TableRow> = (row: R, size: TableSize) => string | null;
 
 export type SortOrder = 'asc' | 'desc';
 
