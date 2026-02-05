@@ -1,4 +1,6 @@
+import { Component, input, Type } from '@angular/core';
 import { isValid } from 'date-fns';
+import { AsSignal } from '../../types/common';
 
 const parseDateTime = (val: TableCellValue) => {
     let dateValue = val;
@@ -32,6 +34,27 @@ export interface TableRow {
 }
 
 export type TableColumnSortingFn = (a: TableCellValue, b: TableCellValue) => number;
+
+interface TableCellProps<R extends TableRow = TableRow> {
+    /** The row data for the current cell. */
+    row: R;
+    /** The size of the table. */
+    size: TableSize;
+}
+
+/**
+ * Base class for table cell components.
+ *
+ * Use this class to create custom table cell components that can be used in table columns.
+ */
+@Component({
+    standalone: true,
+    template: ``,
+})
+export abstract class UITableCell<R extends TableRow = TableRow> implements AsSignal<TableCellProps<R>> {
+    readonly row = input.required<TableCellProps<R>['row']>();
+    readonly size = input.required<TableCellProps<R>['size']>();
+}
 
 export interface TableColumn<R extends TableRow> {
     /**
@@ -84,6 +107,23 @@ export interface TableColumn<R extends TableRow> {
      * This function is called for each cell in the column and can be used to customize the display of the cell value.
      */
     formatter?: TableCellValueFormatter<R>;
+    /**
+     * A custom component to use for rendering the cell values in the column.
+     *
+     * This component will receive the following inputs:
+     *
+     * - `row`: The current row data.
+     * - `size`: The table size.
+     *
+     * Use a component that extends `UITableCell<R>`.
+     */
+    component?: Type<UITableCell<R>>;
+    /**
+     * Whether to hide the header for this column.
+     *
+     * @default false
+     */
+    hideHeader?: boolean;
 }
 
 export type TableCellValueFormatter<R extends TableRow> = (row: R, size: TableSize) => string | null;

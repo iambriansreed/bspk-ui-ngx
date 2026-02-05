@@ -1,6 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TableColumn, TableRow, UITable } from './';
+import { sendSnackbar } from '../../utils/send-snackbar';
+import { UIButton } from '../button';
+import { IconInfo } from '../icons/info';
+import { TableColumn, TableRow, UITable, UITableCell } from './';
+
+@Component({
+    selector: 'ui-table-id',
+    standalone: true,
+    imports: [CommonModule, UIButton, IconInfo],
+    template: `<ui-button variant="tertiary" size="small" label="Get Info" (onClick)="info()"
+        ><icon-info width="18"
+    /></ui-button>`,
+    host: { style: 'display: contents;' },
+})
+export class AppTableId<R extends TableRow = TableRow> extends UITableCell<R> {
+    info() {
+        sendSnackbar(`Row ID: ${this.row().id}`);
+    }
+}
 
 @Component({
     selector: 'ui-table-example',
@@ -30,6 +48,7 @@ import { TableColumn, TableRow, UITable } from './';
 export class UITableExample {
     capitals: TableExampleData<TableRow & { population: number }> = {
         columns: [
+            { key: 'id', label: 'More info', hideHeader: true, component: AppTableId, width: 'auto' },
             { key: 'state', label: 'State', width: '160px', sort: 'string' },
             { key: 'capital', label: 'Capital', width: '140px' },
             {
