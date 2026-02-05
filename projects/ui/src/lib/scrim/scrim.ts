@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 
-export interface ScrimProps extends Pick<CommonProps, 'owner'> {
+export interface ScrimProps {
+    owner?: CommonProps['owner'];
+
     /**
      * Whether the Scrim should be visible.
      *

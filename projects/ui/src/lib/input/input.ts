@@ -14,7 +14,10 @@ import { AsSignal, ButtonSize, CommonProps, FieldControlProps } from '../../type
 import { UIButton } from '../button/button';
 import { IconCancel } from '../icons/cancel';
 
-export interface InputProps extends Pick<CommonProps, 'owner' | 'size'>, FieldControlProps {
+export interface InputProps extends FieldControlProps {
+    owner?: CommonProps['owner'];
+    size?: CommonProps['size'];
+
     /** The trailing element to display in the field. */
     trailing?: TemplateRef<any> | string;
     /** The leading element to display in the field. */

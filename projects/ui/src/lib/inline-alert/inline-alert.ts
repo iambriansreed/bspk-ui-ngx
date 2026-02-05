@@ -4,7 +4,9 @@ import { IconCheckCircleFill, IconErrorFill, IconInfoFill } from '../icons';
 import { UITxtDirective } from '../txt/txt.directive';
 import { UIWarningTwoTone } from './warning-two-tone';
 
-export interface InlineAlertProps extends Pick<CommonProps, 'owner'> {
+export interface InlineAlertProps {
+    owner?: CommonProps['owner'];
+
     /**
      * The content of the inline alert.
      *

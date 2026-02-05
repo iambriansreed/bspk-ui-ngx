@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 import { UIInlineAlert } from '../inline-alert/inline-alert';
 
-export interface FieldProps extends Pick<CommonProps, 'style'> {
+export interface FieldProps {
+    style?: CommonProps['style'];
+
     /** Displays an error message and marks the field as invalid. */
     errorMessage?: string;
     /**

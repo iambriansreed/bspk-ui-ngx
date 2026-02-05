@@ -27,7 +27,9 @@ export type SizeVariant =
     | 'xxxx-large'
     | 'xxxxx-large';
 
-export interface AvatarProps extends Pick<CommonProps, 'disabled'> {
+export interface AvatarProps {
+    disabled?: CommonProps['disabled'];
+
     /**
      * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
      *

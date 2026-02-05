@@ -3,22 +3,21 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
 import { AsSignal, CommonProps } from '../../types/common';
 import { UITooltipDirective } from '../tooltip';
 
-export interface ListItemProps extends Pick<
-    CommonProps,
-    | 'active'
-    | 'ariaDisabled'
-    | 'ariaLabel'
-    | 'ariaReadonly'
-    | 'ariaRole'
-    | 'ariaSelected'
-    | 'disabled'
-    | 'htmlFor'
-    | 'id'
-    | 'owner'
-    | 'readOnly'
-    | 'style'
-    | 'tabIndex'
-> {
+export interface ListItemProps {
+    active?: CommonProps['active'];
+    ariaDisabled?: CommonProps['ariaDisabled'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    ariaReadonly?: CommonProps['ariaReadonly'];
+    ariaRole?: CommonProps['ariaRole'];
+    ariaSelected?: CommonProps['ariaSelected'];
+    disabled?: CommonProps['disabled'];
+    htmlFor?: CommonProps['htmlFor'];
+    id?: CommonProps['id'];
+    owner?: CommonProps['owner'];
+    readOnly?: CommonProps['readOnly'];
+    style?: CommonProps['style'];
+    tabIndex?: CommonProps['tabIndex'];
+
     /**
      * The element type to render as.
      *

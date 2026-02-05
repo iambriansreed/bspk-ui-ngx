@@ -20,10 +20,20 @@ export type ButtonWidth = 'fill' | 'hug';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
-export interface ButtonProps extends Pick<
-    CommonProps,
-    'ariaControls' | 'ariaExpanded' | 'ariaHaspopup' | 'ariaLabel' | 'class' | 'disabled' | 'owner' | 'style'
-> {
+export interface ButtonProps {
+    ariaControls?: CommonProps['ariaControls'];
+    ariaExpanded?: CommonProps['ariaExpanded'];
+    ariaHaspopup?: CommonProps['ariaHaspopup'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    class?: CommonProps['class'];
+    disabled?: CommonProps['disabled'];
+    owner?: CommonProps['owner'];
+    style?: CommonProps['style'];
+    /**
+     * The type of the button element.
+     *
+     * @default button
+     */
     type?: 'button' | 'reset' | 'submit';
     /**
      * The label of the button.

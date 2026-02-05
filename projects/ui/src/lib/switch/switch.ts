@@ -2,6 +2,11 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
 import { AsSignal, CommonProps } from '../../types/common';
 
 export interface SwitchProps extends Pick<CommonProps, 'ariaLabel' | 'disabled' | 'id' | 'name'> {
+    ariaLabel?: CommonProps['ariaLabel'];
+    disabled?: CommonProps['disabled'];
+    id?: CommonProps['id'];
+    name: CommonProps['name'];
+
     /**
      * Marks the control as checked.
      *

@@ -1,7 +1,12 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
 import { CommonProps, AsSignal } from '../../types/common';
 
-export interface MenuProps extends Pick<CommonProps, 'ariaLabel' | 'ariaRole' | 'id' | 'owner'> {
+export interface MenuProps {
+    ariaLabel?: CommonProps['ariaLabel'];
+    ariaRole?: CommonProps['ariaRole'];
+    id?: CommonProps['id'];
+    owner?: CommonProps['owner'];
+
     /**
      * The width of the menu.
      *

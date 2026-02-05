@@ -10,7 +10,9 @@ import { UITxtDirective } from '../txt';
 import { UIBreadcrumbDropdown } from './breadcrumb-dropdown';
 import { BreadcrumbItem } from './utils';
 
-export interface BreadcrumbProps extends Pick<CommonProps, 'ariaLabel' | 'id'>, ScrollLimitStyleProps {
+export interface BreadcrumbProps extends ScrollLimitStyleProps {
+    ariaLabel: CommonProps['ariaLabel'];
+    id: CommonProps['id'];
     /**
      * The array of breadcrumb items.
      *

@@ -28,7 +28,9 @@ export interface SelectOption extends Pick<CommonProps, 'disabled'> {
 }
 export type SelectItem = SelectOption & { id: string; ariaLabel?: string; ariaSelected?: boolean };
 
-export interface SelectProps extends Pick<CommonProps, 'size'>, FieldControlProps<string> {
+export interface SelectProps extends FieldControlProps<string> {
+    size?: CommonProps['size'];
+
     /**
      * Array of options to display in the select
      *

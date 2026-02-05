@@ -3,7 +3,9 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { UIListItem } from '../list-item';
 import { SwitchProps, UISwitch } from '../switch';
 
-export interface SwitchOptionProps extends Pick<CommonProps, 'style'>, SwitchProps {
+export interface SwitchOptionProps extends SwitchProps {
+    style?: CommonProps['style'];
+
     /**
      * The label of the option. Also used as the aria-label of the control.
      *

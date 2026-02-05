@@ -25,18 +25,17 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-export interface DatePickerProps extends Pick<
-    CommonProps,
-    | 'ariaDescribedBy'
-    | 'ariaErrorMessage'
-    | 'ariaLabel'
-    | 'disabled'
-    | 'id'
-    | 'invalid'
-    | 'name'
-    | 'readOnly'
-    | 'required'
-> {
+export interface DatePickerProps {
+    ariaDescribedBy?: CommonProps['ariaDescribedBy'];
+    ariaErrorMessage?: CommonProps['ariaErrorMessage'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    disabled?: CommonProps['disabled'];
+    id?: CommonProps['id'];
+    invalid?: CommonProps['invalid'];
+    name?: CommonProps['name'];
+    readOnly?: CommonProps['readOnly'];
+    required?: CommonProps['required'];
+
     /**
      * If the calendar should close when a date is selected.
      *
