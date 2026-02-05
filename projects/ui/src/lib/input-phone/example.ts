@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { sendSnackbar } from '@ui/utils/send-snackbar';
 import { UIInputPhone } from './input-phone';
 
@@ -39,14 +39,24 @@ import { UIInputPhone } from './input-phone';
             name="unformatted-input-phone"
             [disableFormatting]="true" />
 
-        <h4>Multiple props: valueChange, name, value, ariaLabel, id, disabledFormatting</h4>
+        <h4>Multiple props: valueChange, name, value, ariaLabel, id, disabledFormatting, ariaErrorMessage</h4>
         <ui-input-phone
             (valueChange)="update('Multiple props', $event)"
             name="multiple-props-phone"
             value="1235556789"
             id="multiple-props-phone"
             ariaLabel="Phone Number of disabled formatting example"
-            [disableFormatting]="true" />
+            [disableFormatting]="true"
+            ariaErrorMessage="error message example" />
+        <div id="error message example">This is an example of aria-errormessage text.</div>
+
+        <h4>aria-describedby</h4>
+        <ui-input-phone
+            (valueChange)="update('Disabled Formatting', $event)"
+            name="aria-describedby-example"
+            ariaDescribedBy="described-by-example"
+            id="aria-describedby-example" />
+        <div id="described-by-example">This is an example of aria-describedby text.</div>
 
         <h4>Different Sizes</h4>
         <p>Small: valueChange, name, size</p>
