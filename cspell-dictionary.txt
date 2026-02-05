@@ -9,6 +9,7 @@ Lato
 inversed
 MERIDIEMS
 falsey
+jsdoctags
 
 
 # PROPER NAMES

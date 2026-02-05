@@ -2,8 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { TabOption, UITabList, UITabListUtility, TabListProps } from '../tab-list/tab-list';
 
-export type SegmentedControlOption = Omit<TabOption, 'badge'>;
-export type SegmentedControlProps = TabListProps<SegmentedControlOption>;
+export interface SegmentedControlOption extends Omit<TabOption, 'badge'> {}
+export interface SegmentedControlProps extends TabListProps<SegmentedControlOption> {}
 
 /**
  * Navigation tool that organizes content across different screens and views.

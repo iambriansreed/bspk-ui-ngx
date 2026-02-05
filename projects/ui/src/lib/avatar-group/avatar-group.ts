@@ -6,7 +6,7 @@ import { AvatarProps, SizeVariant } from '../avatar';
 import { UIAvatar } from '../avatar/avatar';
 import { UIAvatarGroupOverflow } from './overflow';
 
-export type AvatarItem = Pick<AvatarProps, 'color' | 'image' | 'initials' | 'name' | 'showIcon'>;
+export interface AvatarItem extends Pick<AvatarProps, 'color' | 'image' | 'initials' | 'name' | 'showIcon'> {}
 
 export interface AvatarGroupProps {
     /**

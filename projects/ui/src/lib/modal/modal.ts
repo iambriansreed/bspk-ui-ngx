@@ -14,7 +14,7 @@ export interface ModalCallToAction {
 
 export type ButtonFormat = 'horizontal' | 'vertical';
 
-export type ModalProps = Pick<DialogProps, 'container' | 'disableFocusTrap' | 'id' | 'open' | 'owner'> & {
+export interface ModalProps extends Pick<DialogProps, 'container' | 'disableFocusTrap' | 'id' | 'open' | 'owner'> {
     /**
      * Modal header.
      *
@@ -59,7 +59,7 @@ export type ModalProps = Pick<DialogProps, 'container' | 'disableFocusTrap' | 'i
      * @default horizontal
      */
     buttonFormat?: 'horizontal' | 'vertical';
-};
+}
 
 /**
  * Modals display important information that users need to acknowledge. They appear over the interface and block further

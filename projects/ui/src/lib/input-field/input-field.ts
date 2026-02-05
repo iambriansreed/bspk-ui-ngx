@@ -4,7 +4,7 @@ import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 import { UIInput } from '../input';
 
-export type InputFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'> {}
 
 /**
  * An input that allows users to enter text, numbers or symbols in a singular line. This is a utility element and is not

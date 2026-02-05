@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 
-export type ScrimProps = CommonProps<'owner'> & {
+export interface ScrimProps extends Pick<CommonProps, 'owner'> {
     /**
      * Whether the Scrim should be visible.
      *
@@ -10,7 +10,7 @@ export type ScrimProps = CommonProps<'owner'> & {
     visible?: boolean;
     /** If the scrim should be contained within a parent element, or fixed to the viewport. */
     contained?: boolean;
-};
+}
 
 /**
  * A temporary effect or overlay that can be applied to a user interface to make content less prominent or to draw

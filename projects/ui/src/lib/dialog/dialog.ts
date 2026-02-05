@@ -17,41 +17,40 @@ import { UIScrim } from '../scrim/scrim';
 
 export type Placement = 'bottom' | 'center' | 'left' | 'right' | 'top';
 
-export type DialogProps = CommonProps<'ariaDescription' | 'ariaLabel' | 'id' | 'owner'> &
-    Pick<PortalProps, 'container'> & {
-        /**
-         * If the dialog should appear.
-         *
-         * @default false
-         */
-        open?: boolean;
-        /**
-         * The placement of the dialog on the screen.
-         *
-         * @default center
-         */
-        placement?: 'bottom' | 'center' | 'left' | 'right' | 'top';
-        /**
-         * Whether the dialog should have a scrim behind it.
-         *
-         * @default true
-         */
-        showScrim?: boolean;
-        /**
-         * If the dialog should take the full width of the screen.
-         *
-         * @default false
-         */
+export interface DialogProps
+    extends Pick<CommonProps, 'ariaDescription' | 'ariaLabel' | 'id' | 'owner'>, Pick<PortalProps, 'container'> {
+    /**
+     * If the dialog should appear.
+     *
+     * @default false
+     */
+    open?: boolean;
+    /**
+     * The placement of the dialog on the screen.
+     *
+     * @default center
+     */
+    placement?: 'bottom' | 'center' | 'left' | 'right' | 'top';
+    /**
+     * Whether the dialog should have a scrim behind it.
+     *
+     * @default true
+     */
+    showScrim?: boolean;
+    /**
+     * If the dialog should take the full width of the screen.
+     *
+     * @default false
+     */
 
-        widthFull?: boolean;
-        /**
-         * If focus trapping should be disabled. Generally this should not be disabled as dialogs should always trap
-         * focus.
-         *
-         * @default false
-         */
-        disableFocusTrap?: boolean;
-    };
+    widthFull?: boolean;
+    /**
+     * If focus trapping should be disabled. Generally this should not be disabled as dialogs should always trap focus.
+     *
+     * @default false
+     */
+    disableFocusTrap?: boolean;
+}
 
 /**
  * Dialogs display important information that users need to acknowledge. They appear over the interface and may block

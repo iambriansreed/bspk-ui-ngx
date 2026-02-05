@@ -5,7 +5,9 @@ import { uniqueId } from '../../utils/random';
 import { FloatingUtility } from '../floating/floating';
 import { TooltipProps, TooltipPlacement, UITooltip } from './';
 
-export type TooltipUtilityProps = TooltipProps & { reference?: HTMLElement };
+export interface TooltipUtilityProps extends TooltipProps {
+    reference?: HTMLElement;
+}
 
 /**
  * Utility to manage tooltip properties and behavior.

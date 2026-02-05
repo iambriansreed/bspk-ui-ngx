@@ -11,33 +11,28 @@ function isNumber(value: unknown, fallbackValue?: number): number | undefined {
     return isNaN(num) ? fallbackValue : num;
 }
 
-export type InputNumberProps = CommonProps<'owner' | 'size'> &
-    FieldControlProps & {
-        /**
-         * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
-         *
-         * @default center
-         */
-        align?: 'center' | 'left';
-        /**
-         * Defines the [maximum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) value that is
-         * accepted.
-         */
-        max?: number;
-        /**
-         * Defines the [minimum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) value that is
-         * accepted.
-         *
-         * @default 0
-         */
-        min?: number;
-        /**
-         * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
-         *
-         * @default 1
-         */
-        step?: number;
-    };
+export interface InputNumberProps extends Pick<CommonProps, 'owner' | 'size'>, FieldControlProps {
+    /**
+     * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
+     *
+     * @default center
+     */
+    align?: 'center' | 'left';
+    /** Defines the [maximum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) value that is accepted. */
+    max?: number;
+    /**
+     * Defines the [minimum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) value that is accepted.
+     *
+     * @default 0
+     */
+    min?: number;
+    /**
+     * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
+     *
+     * @default 1
+     */
+    step?: number;
+}
 
 /**
  * A input element that allows users to either input a numerical value or singularly increase or decrease the values by

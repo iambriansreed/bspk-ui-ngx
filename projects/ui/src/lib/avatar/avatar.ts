@@ -27,7 +27,7 @@ export type SizeVariant =
     | 'xxxx-large'
     | 'xxxxx-large';
 
-export type AvatarProps = CommonProps<'disabled'> & {
+export interface AvatarProps extends Pick<CommonProps, 'disabled'> {
     /**
      * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
      *
@@ -82,7 +82,7 @@ export type AvatarProps = CommonProps<'disabled'> & {
      * @default false
      */
     hideTooltip?: boolean;
-};
+}
 
 /**
  * An avatar is a visual representation of a user or entity. It can be used to display an initials, icon, or image.

@@ -50,30 +50,29 @@ export interface CountryCodeItem extends CountryCodeOption {
     id: string;
 }
 
-export type InputPhoneProps = FieldControlProps<string> &
-    ScrollLimitStyleProps & {
-        /**
-         * The default country code to select when the component is rendered. If not provided, it will attempt to guess
-         * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
-         * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
-         *
-         * @type string
-         */
-        initialCountryCode?: SupportedCountryCode;
-        /**
-         * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always
-         * unformatted.
-         *
-         * @type boolean
-         */
-        disableFormatting?: boolean;
-        /**
-         * The size of the component
-         *
-         * @default medium
-         */
-        size?: 'large' | 'medium' | 'small';
-    };
+export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitStyleProps {
+    /**
+     * The default country code to select when the component is rendered. If not provided, it will attempt to guess
+     * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
+     * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
+     *
+     * @type string
+     */
+    initialCountryCode?: SupportedCountryCode;
+    /**
+     * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always
+     * unformatted.
+     *
+     * @type boolean
+     */
+    disableFormatting?: boolean;
+    /**
+     * The size of the component
+     *
+     * @default medium
+     */
+    size?: 'large' | 'medium' | 'small';
+}
 
 /**
  * An input that allows users to enter text phone numbers and select country codes for the phone number.
