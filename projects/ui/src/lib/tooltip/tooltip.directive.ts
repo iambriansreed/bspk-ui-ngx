@@ -166,13 +166,13 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     }
 
     handleCloseEvent() {
+        this.autoUpdateCleanup?.();
+
         const { label, truncated } = this.props();
         if (!label) return;
 
         if (truncated) this.removeComponent();
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
-
-        this.autoUpdateCleanup?.();
     }
 
     ngOnDestroy(): void {
