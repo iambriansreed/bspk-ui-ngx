@@ -22,13 +22,17 @@ import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 import { UIOutsideClickDirective } from '../outside-click';
 
-export interface SelectOption extends Pick<CommonProps, 'disabled'> {
+export interface SelectOption {
+    disabled?: CommonProps['disabled'];
+
     label: string;
     value: string;
 }
 export type SelectItem = SelectOption & { id: string; ariaLabel?: string; ariaSelected?: boolean };
 
-export interface SelectProps extends Pick<CommonProps, 'size'>, FieldControlProps<string> {
+export interface SelectProps extends FieldControlProps<string> {
+    size?: CommonProps['size'];
+
     /**
      * Array of options to display in the select
      *

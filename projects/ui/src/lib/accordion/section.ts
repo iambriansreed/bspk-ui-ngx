@@ -4,7 +4,8 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { IconKeyboardArrowDown, IconKeyboardArrowUp } from '../icons';
 
-export interface AccordionSectionProps extends Pick<CommonProps, 'id'> {
+export interface AccordionSectionProps {
+    id: CommonProps['id'];
     /**
      * The title of the accordion.
      *

@@ -12,7 +12,11 @@ export type FabContainer = 'local' | 'page';
 
 export type FabIconType = BspkIcon;
 
-export interface FabProps extends Pick<CommonProps, 'ariaLabel' | 'owner' | 'style'> {
+export interface FabProps {
+    ariaLabel?: CommonProps['ariaLabel'];
+    owner?: CommonProps['owner'];
+    style?: CommonProps['style'];
+
     /** The label of the button. */
     label?: string;
     /**

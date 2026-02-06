@@ -11,11 +11,12 @@ import {
     AfterViewInit,
     OnDestroy,
     effect,
+    OnInit,
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
 import { AsSignal, FieldControlProps } from '../../types/common';
-import { countryCodeData, countryCodes, SupportedCountryCode } from '../../utils/country-codes';
+import { countryCodeData, countryCodes, SupportedCountryCode, guessUserCountryCode } from '../../utils/country-codes';
 import { uniqueId } from '../../utils/random';
 import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
@@ -60,8 +61,7 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
      */
     initialCountryCode?: SupportedCountryCode;
     /**
-     * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always
-     * unformatted.
+     * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always unformatted.
      *
      * @type boolean
      */
@@ -94,7 +94,7 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
  *     </div>
  *
  * @name InputPhone
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-input-phone',
@@ -192,7 +192,7 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
         }
     `,
 })
-export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy, OnInit {
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<InputPhoneProps['value']>('');
@@ -263,6 +263,12 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
             this.previousValue.set(reformatted);
             this.value.set(reformatted);
         });
+    }
+
+    ngOnInit(): void {
+        // Set initial country code on init
+        // Priority: initialCountryCode prop > guessed country code > default to 'US'
+        this.countryCode.set(this.initialCountryCode() || guessUserCountryCode() || 'US');
     }
 
     ngAfterViewInit(): void {

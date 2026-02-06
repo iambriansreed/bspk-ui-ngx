@@ -39,7 +39,7 @@ export class UIKeyNavigationExample {
         activeElementId: this.activeElementId(),
         ids: this.items.map((i) => i.id),
         callback: ({ activeElementId }) => {
-            this.activeElementId.set(activeElementId);
+            this.activeElementId.set(activeElementId || null);
             return true;
         },
     };

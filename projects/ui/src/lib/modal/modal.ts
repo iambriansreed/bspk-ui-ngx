@@ -14,7 +14,13 @@ export interface ModalCallToAction {
 
 export type ButtonFormat = 'horizontal' | 'vertical';
 
-export interface ModalProps extends Pick<DialogProps, 'container' | 'disableFocusTrap' | 'id' | 'open' | 'owner'> {
+export interface ModalProps {
+    container?: DialogProps['container'];
+    disableFocusTrap?: DialogProps['disableFocusTrap'];
+    id?: DialogProps['id'];
+    open?: DialogProps['open'];
+    owner?: DialogProps['owner'];
+
     /**
      * Modal header.
      *

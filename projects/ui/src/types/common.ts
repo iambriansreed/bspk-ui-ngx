@@ -175,19 +175,18 @@ export interface CommonProps {
     class?: string;
 }
 
-export interface FieldControlProps<ValueType = string> extends Pick<
-    CommonProps,
-    | 'ariaDescribedBy'
-    | 'ariaErrorMessage'
-    | 'ariaLabel'
-    | 'ariaLabelledBy'
-    | 'disabled'
-    | 'id'
-    | 'invalid'
-    | 'name'
-    | 'readOnly'
-    | 'required'
-> {
+export interface FieldControlProps<ValueType = string> {
+    ariaDescribedBy?: CommonProps['ariaDescribedBy'];
+    ariaErrorMessage?: CommonProps['ariaErrorMessage'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    ariaLabelledBy?: CommonProps['ariaLabelledBy'];
+    disabled?: CommonProps['disabled'];
+    id?: CommonProps['id'];
+    invalid?: CommonProps['invalid'];
+    name: CommonProps['name'];
+    readOnly?: CommonProps['readOnly'];
+    required?: CommonProps['required'];
+
     /**
      * The value of the field control.
      *
