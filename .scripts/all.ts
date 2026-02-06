@@ -18,7 +18,8 @@ const SCRIPTS = {
     'update-version'() {
         // read the latest tag from git
         exec('git fetch --tags');
-        const latestTag = execSyncBase('git describe --tags').toString().trim().substring(1); // remove the leading 'v' from the tag
+        // get the latest tag in the format X.Y.Z - no v or other prefix or suffix
+        const latestTag = execSyncBase('git describe --tags', { encoding: 'utf-8' }).trim().substring(1).split('-')[0];
 
         // update the version in package.json and projects/ui/package.json to match the latest tag
         const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
