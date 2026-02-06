@@ -1,2 +1,0 @@
-import{Ea as c,Ha as s,S as o,Xb as i}from"./chunk-FL2NMBNA.js";var r=class t{icon=i.required();width=i();viewContainerRef=o(c);ngAfterViewInit(){let e=this.icon();if(typeof e!="function")return;let n=this.viewContainerRef.createComponent(e).instance;n.width=this.width()}static \u0275fac=function(n){return new(n||t)};static \u0275cmp=s({type:t,selectors:[["ui-icon"]],inputs:{icon:[1,"icon"],width:[1,"width"]},decls:0,vars:0,template:function(n,a){},styles:[`ui-icon{display:contents}
-`],encapsulation:2})};export{r as a};
