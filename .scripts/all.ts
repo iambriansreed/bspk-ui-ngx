@@ -16,17 +16,20 @@ const SCRIPTS = {
     },
 
     'update-version'() {
-        // read the latest tag from git
-        exec('git fetch --tags');
         // get the latest tag in the format X.Y.Z - no v or other prefix or suffix
-        const latestTag = execSyncBase('git describe --tags', { encoding: 'utf-8' }).trim().substring(1).split('-')[0];
+        const latestVersion = execSyncBase('git fetch --tags && git tag -l --sort=-creatordate | head -n 1', {
+            encoding: 'utf-8',
+        })
+            .trim()
+            .substring(1)
+            .split('-')[0];
 
         // update the version in package.json and projects/ui/package.json to match the latest tag
         const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
         const uiPackageJson = JSON.parse(fs.readFileSync('projects/ui/package.json', 'utf-8'));
 
-        packageJson.version = latestTag;
-        uiPackageJson.version = latestTag;
+        packageJson.version = latestVersion;
+        uiPackageJson.version = latestVersion;
 
         fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
         fs.writeFileSync('projects/ui/package.json', JSON.stringify(uiPackageJson, null, 2));
@@ -37,7 +40,7 @@ const SCRIPTS = {
 
         // commit the changes and push to the repo
 
-        exec(`git commit -m "chore: update version to ${latestTag} [skip ci]"`);
+        exec(`git commit -m "chore: update version to ${latestVersion} [skip ci]"`);
         exec('git push');
     },
 };
