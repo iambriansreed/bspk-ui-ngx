@@ -52,7 +52,11 @@ export interface AvatarGroupOverflowProps {
     size?: AvatarProps['size'];
 }
 
-/** A component to display overflow avatars in an avatar group. */
+/**
+ * A component to display overflow avatars in an avatar group.
+ *
+ * @ignore
+ */
 @Component({
     selector: 'ui-avatar-group-overflow',
     standalone: true,

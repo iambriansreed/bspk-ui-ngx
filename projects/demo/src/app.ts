@@ -89,11 +89,7 @@ export class App implements OnInit {
 
         this.fragmentSubscription = this.route.fragment.subscribe((fragment: string | null) => {
             const element = document.querySelector(`[id="${fragment}"]`);
-            if (fragment && element) {
-                console.log('Fragment changed:', fragment, element);
-
-                requestAnimationFrame(() => element.scrollIntoView({ behavior: 'smooth' }));
-            }
+            if (fragment && element) requestAnimationFrame(() => element.scrollIntoView({ behavior: 'smooth' }));
         });
     }
 

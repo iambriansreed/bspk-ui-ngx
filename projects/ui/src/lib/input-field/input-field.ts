@@ -4,7 +4,13 @@ import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 import { UIInput } from '../input';
 
-export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'> {}
+export interface InputFieldProps {
+    style?: FieldProps['style'];
+    errorMessage?: FieldProps['errorMessage'];
+    helperText?: FieldProps['helperText'];
+    labelTrailing?: FieldProps['labelTrailing'];
+    required?: FieldProps['required'];
+}
 
 /**
  * A field wrapper for the Input component.

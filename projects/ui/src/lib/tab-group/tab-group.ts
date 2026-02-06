@@ -4,7 +4,14 @@ import { TabListProps, TabOption, UITabList, UITabListUtility } from '../tab-lis
 
 export type TabGroupSize = 'large' | 'medium' | 'small';
 
-export interface TabGroupProps extends Omit<TabListProps<TabOption>, 'iconsOnly'> {
+export interface TabGroupProps {
+    options: TabListProps<TabOption>['options'];
+    value: TabListProps<TabOption>['value'];
+    size?: TabListProps<TabOption>['size'];
+    width?: TabListProps<TabOption>['width'];
+    label: TabListProps<TabOption>['label'];
+    id?: TabListProps<TabOption>['id'];
+
     /**
      * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
      * property isn't applicable.

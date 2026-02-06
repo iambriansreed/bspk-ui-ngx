@@ -46,6 +46,8 @@ interface TableCellProps<R extends TableRow = TableRow> {
  * Base class for table cell components.
  *
  * Use this class to create custom table cell components that can be used in table columns.
+ *
+ * @ignore
  */
 @Component({
     standalone: true,

@@ -34,8 +34,6 @@ export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
 /** Sets a ref to the given element. */
 export type SetRef<T> = (instance: T | null) => void;
 
-export interface DataProps extends Record<`data-${string}`, string> {}
-
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
 
 export interface CallToActionButton {

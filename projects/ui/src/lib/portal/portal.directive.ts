@@ -8,7 +8,12 @@ export interface PortalProps {
     container?: PortalContainer;
 }
 
-/** Utility directive to render an element in a different part of the DOM. */
+/**
+ * Utility directive to render an element in a different part of the DOM.
+ *
+ * @name Portal
+ * @phase Utility
+ */
 @Directive({ selector: '[ui-portal]' })
 export class UIPortalDirective implements OnDestroy, OnChanges, AsSignal<PortalProps> {
     /** The target element to render the portal into. Defaults to `document.body` in the browser. */

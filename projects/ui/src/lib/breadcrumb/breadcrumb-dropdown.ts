@@ -37,8 +37,7 @@ export interface BreadcrumbDropdownProps extends ScrollLimitStyleProps {
 /**
  * The BreadcrumbDropdown component is used to display a dropdown menu within a breadcrumb navigation.
  *
- * @name BreadcrumbDropdown
- * @parent Breadcrumb
+ * @ignore
  */
 @Component({
     selector: 'ui-breadcrumb-dropdown',
