@@ -22,7 +22,7 @@
         "lint:all": "npm run lint && npm run lint:ui && npm run lint:css",
         "lint:css": "npx stylelint '**/*.scss'",
         "lint:css:fix": "npx stylelint '**/*.scss' --fix",
-        "lint:ui": "npm run pre:meta && npx tsx .scripts/lint-ui.ts",
+        "lint:ui": "npm run pre:meta && npx tsx .scripts/lint.ts",
         "newc": "ng generate component --project=ui && npx tsx .scripts/generate-new-component.ts",
         "ng": "ng",
         "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/dev...$(git symbolic-ref --short HEAD)\"",
