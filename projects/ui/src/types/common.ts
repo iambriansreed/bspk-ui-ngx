@@ -192,7 +192,7 @@ export interface FieldControlProps<ValueType = string> {
      *
      * @required
      */
-    value: ValueType | undefined;
+    value?: ValueType | undefined;
 }
 
 export type Brand =
