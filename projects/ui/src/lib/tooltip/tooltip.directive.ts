@@ -99,6 +99,7 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     private readonly computedPlacement = signal<TooltipPlacement | null>(null);
     private tooltipComponent?: ComponentRef<UITooltip> | null;
+    private autoUpdateCleanup?: () => void;
 
     constructor() {
         effect(() => {
@@ -159,7 +160,7 @@ export class UITooltipDirective implements OnDestroy, OnInit {
                 this.computedPlacement.set(placement as TooltipPlacement);
         });
 
-        autoUpdate(this.referenceEl!, this.tooltipEl!, () => {
+        this.autoUpdateCleanup = autoUpdate(this.referenceEl!, this.tooltipEl!, () => {
             this.floating.compute(floatingProps);
         });
     }
@@ -170,6 +171,8 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
         if (truncated) this.removeComponent();
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
+
+        this.autoUpdateCleanup?.();
     }
 
     ngOnDestroy(): void {
