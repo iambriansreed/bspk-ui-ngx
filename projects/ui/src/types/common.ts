@@ -34,8 +34,6 @@ export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
 /** Sets a ref to the given element. */
 export type SetRef<T> = (instance: T | null) => void;
 
-export interface DataProps extends Record<`data-${string}`, string> {}
-
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
 
 export interface CallToActionButton {
@@ -175,20 +173,23 @@ export interface CommonProps {
     class?: string;
 }
 
-export interface FieldControlProps<ValueType = string> extends Pick<
-    CommonProps,
-    | 'ariaDescribedBy'
-    | 'ariaErrorMessage'
-    | 'ariaLabel'
-    | 'ariaLabelledBy'
-    | 'disabled'
-    | 'id'
-    | 'invalid'
-    | 'name'
-    | 'readOnly'
-    | 'required'
-> {
-    /** The value of the field control. */
+export interface FieldControlProps<ValueType = string> {
+    ariaDescribedBy?: CommonProps['ariaDescribedBy'];
+    ariaErrorMessage?: CommonProps['ariaErrorMessage'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    ariaLabelledBy?: CommonProps['ariaLabelledBy'];
+    disabled?: CommonProps['disabled'];
+    id?: CommonProps['id'];
+    invalid?: CommonProps['invalid'];
+    name: CommonProps['name'];
+    readOnly?: CommonProps['readOnly'];
+    required?: CommonProps['required'];
+
+    /**
+     * The value of the field control.
+     *
+     * @required
+     */
     value?: ValueType | undefined;
 }
 

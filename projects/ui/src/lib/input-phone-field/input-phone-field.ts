@@ -9,9 +9,9 @@ export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 /**
  * A field wrapper for the UIInputPhone component.
  *
- * This component takes properties from the FormField and UIInputPhone components.
+ * This component takes properties from the Field and InputPhone components.
  *
- * @name UIInputPhoneField
+ * @name InputPhoneField
  * @phase UXReview
  *
  * @generated

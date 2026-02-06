@@ -12,6 +12,7 @@ import {
     OnDestroy,
     effect,
     output,
+    OnInit,
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
@@ -193,7 +194,7 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
         }
     `,
 })
-export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnInit, OnDestroy {
     valueChange = output<string>();
 
     keyNavigation = new KeyNavigationUtility();

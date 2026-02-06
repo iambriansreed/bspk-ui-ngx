@@ -26,12 +26,6 @@ let previousExamples = getExamples();
 
         const hasExampleChanges = previousExamples.join(',') !== nextExamples.join(',');
 
-        console.log({
-            eventType,
-            filename,
-            hasExampleChanges,
-        });
-
         if (
             !filename ||
             filename === 'meta.ts' ||
@@ -45,7 +39,7 @@ let previousExamples = getExamples();
         clearTimeout(writeTimeout);
 
         writeTimeout = setTimeout(() => {
-            const meta = writeMetaToFile(true);
+            const meta = writeMetaToFile();
 
             lastEvent = { filename, eventType };
 

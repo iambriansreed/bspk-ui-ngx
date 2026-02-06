@@ -1,7 +1,12 @@
 import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 
-export interface SwitchProps extends Pick<CommonProps, 'ariaLabel' | 'disabled' | 'id' | 'name'> {
+export interface SwitchProps {
+    ariaLabel?: CommonProps['ariaLabel'];
+    disabled?: CommonProps['disabled'];
+    id?: CommonProps['id'];
+    name: CommonProps['name'];
+
     /**
      * Marks the control as checked.
      *

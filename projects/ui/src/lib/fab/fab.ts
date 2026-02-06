@@ -12,7 +12,11 @@ export type FabContainer = 'local' | 'page';
 
 export type FabIconType = BspkIcon;
 
-export interface FabProps extends Pick<CommonProps, 'ariaLabel' | 'owner' | 'style'> {
+export interface FabProps {
+    ariaLabel?: CommonProps['ariaLabel'];
+    owner?: CommonProps['owner'];
+    style?: CommonProps['style'];
+
     /** The label of the button. */
     label?: string;
     /**
@@ -63,12 +67,10 @@ export interface FabProps extends Pick<CommonProps, 'ariaLabel' | 'owner' | 'sty
  * bottom right of a screen.
  *
  * @example
- *     ```html
  *     <ui-fab
- *         label="Floating Action Button"
- *         [icon]="iconCloud"
- *         (onClick)="handleClick()" />
- *     ```;
+ *     label="Floating Action Button"
+ *     [icon]="iconCloud"
+ *     (onClick)="handleClick()" />
  *
  * @name Fab
  * @phase Dev

@@ -17,8 +17,13 @@ import { UIScrim } from '../scrim/scrim';
 
 export type Placement = 'bottom' | 'center' | 'left' | 'right' | 'top';
 
-export interface DialogProps
-    extends Pick<CommonProps, 'ariaDescription' | 'ariaLabel' | 'id' | 'owner'>, Pick<PortalProps, 'container'> {
+export interface DialogProps {
+    ariaDescription?: CommonProps['ariaDescription'];
+    ariaLabel?: CommonProps['ariaLabel'];
+    id?: CommonProps['id'];
+    owner?: CommonProps['owner'];
+    container?: PortalProps['container'];
+
     /**
      * If the dialog should appear.
      *

@@ -8,7 +8,12 @@ export interface PortalProps {
     container?: PortalContainer;
 }
 
-/** Utility directive to render an element in a different part of the DOM. */
+/**
+ * Utility directive to render an element in a different part of the DOM.
+ *
+ * @name Portal
+ * @phase Utility
+ */
 @Directive({ selector: '[ui-portal]' })
 export class UIPortalDirective implements OnDestroy, OnChanges, AsSignal<PortalProps> {
     /** The target element to render the portal into. Defaults to `document.body` in the browser. */
@@ -18,7 +23,8 @@ export class UIPortalDirective implements OnDestroy, OnChanges, AsSignal<PortalP
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['container']) {
-            if (typeof document === 'undefined' || !this.elRef?.nativeElement) return;
+            if (typeof document === 'undefined' || !this.elRef?.nativeElement || !this.elRef.nativeElement.parentNode)
+                return;
 
             this.elRef.nativeElement.parentNode.removeChild(this.elRef.nativeElement);
             // Move the element to the new target
@@ -38,8 +44,7 @@ export class UIPortalDirective implements OnDestroy, OnChanges, AsSignal<PortalP
     }
 
     ngOnDestroy() {
-        if (this.elRef.nativeElement.parentNode) {
+        if (this.elRef.nativeElement.parentNode)
             this.elRef.nativeElement.parentNode.removeChild(this.elRef.nativeElement);
-        }
     }
 }

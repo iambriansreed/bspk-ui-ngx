@@ -2,7 +2,18 @@ import { Component, ViewEncapsulation, input, ElementRef, output, viewChild, eff
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
-export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'value'> & {
+export interface CheckboxProps {
+    ariaDescribedBy?: FieldControlProps['ariaDescribedBy'];
+    ariaErrorMessage?: FieldControlProps['ariaErrorMessage'];
+    ariaLabel?: FieldControlProps['ariaLabel'];
+    ariaLabelledBy?: FieldControlProps['ariaLabelledBy'];
+    disabled?: FieldControlProps['disabled'];
+    id?: FieldControlProps['id'];
+    invalid?: FieldControlProps['invalid'];
+    name: FieldControlProps['name'];
+    readOnly?: FieldControlProps['readOnly'];
+    required?: FieldControlProps['required'];
+
     /**
      * If the checkbox is partially checked or
      * [indeterminate](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes).
@@ -20,7 +31,7 @@ export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'value'> & {
     checked?: boolean;
     /** The value of the checkbox. */
     value: string;
-};
+}
 
 /**
  * A control that allows users to choose one or more items from a list or turn a feature on or off. This is the base

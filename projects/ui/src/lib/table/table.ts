@@ -27,7 +27,7 @@ export interface TableProps<R extends TableRow> {
      *
      * @type Array<TableColumn>
      */
-    columns: (TableColumn<R> | boolean)[];
+    columns: TableColumn<R>[];
     /** The title of the table. */
     title?: string;
     /**
@@ -80,7 +80,6 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
  */
 @Component({
     selector: 'ui-table',
-    standalone: true,
     imports: [CommonModule, UIPagination, IconArrowUpward, IconArrowDownward],
     template: `<div [attr.data-has-pagination]="hasPagination ? true : null" [attr.data-size]="size() || 'medium'">
         <div data-scroll-container>
@@ -167,6 +166,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
         </div>
     </div>`,
     styleUrls: ['./table.scss'],
+    standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'table',

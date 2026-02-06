@@ -9,9 +9,9 @@ export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label' | 'siz
 /**
  * A field wrapper for the UIRadioGroup component.
  *
- * This component takes properties from the FormField and UIRadioGroup components.
+ * This component takes properties from the Field and RadioGroup components.
  *
- * @name UIRadioGroupField
+ * @name RadioGroupField
  * @phase UXReview
  *
  * @generated

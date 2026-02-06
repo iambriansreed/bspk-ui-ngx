@@ -2,7 +2,28 @@ import { Component, ViewEncapsulation, input, output } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
-export interface CheckboxGroupOption extends Omit<CheckboxOptionProps, 'name' | 'onChange'> {}
+export interface CheckboxGroupOption {
+    style?: CheckboxOptionProps['style'];
+    label: CheckboxOptionProps['label'];
+    description?: CheckboxOptionProps['description'];
+    ariaErrorMessage?: CheckboxOptionProps['ariaErrorMessage'];
+    ariaLabel?: CheckboxOptionProps['ariaLabel'];
+    ariaLabelledBy?: CheckboxOptionProps['ariaLabelledBy'];
+    disabled?: CheckboxOptionProps['disabled'];
+    id?: CheckboxOptionProps['id'];
+    invalid?: CheckboxOptionProps['invalid'];
+    readOnly?: CheckboxOptionProps['readOnly'];
+    required?: CheckboxOptionProps['required'];
+    indeterminate?: CheckboxOptionProps['indeterminate'];
+    checked?: CheckboxOptionProps['checked'];
+    value: CheckboxOptionProps['value'];
+}
+
+export interface SelectAllProps {
+    ariaLabel?: CheckboxOptionProps['ariaLabel'];
+    description?: CheckboxOptionProps['description'];
+    label?: CheckboxOptionProps['label'];
+}
 
 export interface CheckboxGroupProps extends FieldControlProps<string[]> {
     /**
@@ -26,7 +47,7 @@ export interface CheckboxGroupProps extends FieldControlProps<string[]> {
      */
     selectAll?: boolean;
     /** The props for the select all checkbox. */
-    selectAllProps?: Pick<CheckboxOptionProps, 'ariaLabel' | 'description' | 'label'>;
+    selectAllProps?: SelectAllProps;
 }
 
 /**

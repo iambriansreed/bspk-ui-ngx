@@ -1,6 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-/** A two-tone warning icon used to indicate a warning state specifically in inline alerts. */
+/**
+ * A two-tone warning icon used to indicate a warning state specifically in inline alerts.
+ *
+ * @ignore
+ */
 @Component({
     selector: 'ui-warning-two-tone',
     standalone: true,

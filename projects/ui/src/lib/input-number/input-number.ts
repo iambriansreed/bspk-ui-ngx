@@ -11,7 +11,10 @@ function isNumber(value: unknown, fallbackValue?: number): number | undefined {
     return isNaN(num) ? fallbackValue : num;
 }
 
-export interface InputNumberProps extends Pick<CommonProps, 'owner' | 'size'>, FieldControlProps {
+export interface InputNumberProps extends FieldControlProps {
+    owner?: CommonProps['owner'];
+    size?: CommonProps['size'];
+
     /**
      * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
      *

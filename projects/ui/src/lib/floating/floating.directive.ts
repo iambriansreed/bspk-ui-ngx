@@ -9,7 +9,7 @@ export interface FloatingProps {
 /**
  * A directive to position an element relative to a reference element using floating UI logic.
  *
- * @name UIFloatingDirective
+ * @name Floating
  * @phase Utility
  */
 @Directive({

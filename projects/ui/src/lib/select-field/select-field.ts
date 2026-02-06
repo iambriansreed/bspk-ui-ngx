@@ -9,9 +9,9 @@ export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 /**
  * A field wrapper for the UISelect component.
  *
- * This component takes properties from the FormField and UISelect components.
+ * This component takes properties from the Field and Select components.
  *
- * @name UISelectField
+ * @name SelectField
  * @phase UXReview
  *
  * @generated

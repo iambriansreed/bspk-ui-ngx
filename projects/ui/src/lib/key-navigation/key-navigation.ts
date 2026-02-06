@@ -37,7 +37,9 @@ export interface KeyNavigationUtilityProps {
     activeElementId: string | null;
 }
 
-export interface ArrowKeyNavigationCallbackParams extends Pick<KeyNavigationUtilityProps, 'activeElementId'> {
+export interface ArrowKeyNavigationCallbackParams {
+    activeElementId?: KeyNavigationUtilityProps['activeElementId'];
+
     increment: number;
     key: ArrowKeyNames;
     event: KeyboardEvent;

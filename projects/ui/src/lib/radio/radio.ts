@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
-export interface RadioProps extends Omit<FieldControlProps<string>, 'onChange'> {
+export interface RadioProps extends FieldControlProps {
     /**
      * Marks the radio as checked.
      *
@@ -15,10 +15,9 @@ export interface RadioProps extends Omit<FieldControlProps<string>, 'onChange'> 
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you
  * must wrap it with a label. This will more often be used in the RadioOption or RadioGroup component.
  *
- * <ui-radio name="example" [value]="'option1'" (checkedChange)="selected = $event ? 'option1' : selected"
- * [disabled]="false" [invalid]="false" [required]="true" aria-label="Option 1"
- *
- * > </ui-radio>
+ * @example
+ *     <ui-radio name="example" [value]="'option1'" (checkedChange)="selected = $event ? 'option1' : selected"
+ *     [disabled]="false" [invalid]="false" [required]="true" aria-label="Option 1" />
  *
  * @name Radio
  * @phase Utility

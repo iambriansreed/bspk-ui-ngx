@@ -99,9 +99,9 @@ export type ${fieldComponentName}Props = Omit<FieldProps, 'controlId' | 'label'>
 /**
  * A field wrapper for the ${componentClassName} component.
  *
- * This component takes properties from the FormField and ${componentClassName} components.
+ * This component takes properties from the Field and ${componentClassName} components.
  *
- * @name ${componentClassName}Field
+ * @name ${componentClassName.replace(/^UI/, '')}Field
  * @phase UXReview
  *
  * @generated

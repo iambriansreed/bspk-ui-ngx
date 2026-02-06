@@ -27,3 +27,23 @@ export async function pretty(filePath: string) {
     // delete temp file
     // execSync(`rm "${tempPath}"`);
 }
+
+export function slugify(value: string | string[]) {
+    let slug = [value]
+        .flat()
+        .join('-')
+        .toLowerCase()
+        .replace(/[\s| |_/]/g, '-')
+        .replace(/[^a-z0-9-]+/g, '')
+        .replace(/[-]+/g, '-')
+        .replace(/^[-]+/g, '')
+        .replace(/[-]+$/g, '');
+
+    const slugSegments = slug.split('-');
+    slug = slugSegments.filter((segment, index) => segment !== slugSegments[index - 1]).join('-');
+
+    // fix double segments like brand-on-brand -> on-brand, shadow-*-shadow -> shadow-*
+    slug = slug.replace(/shadow-([^-]+)-shadow/, 'shadow-$1').replace(/brand-on-brand/, 'brand-on');
+
+    return slug;
+}

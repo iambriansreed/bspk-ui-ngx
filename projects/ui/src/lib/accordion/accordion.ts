@@ -17,9 +17,7 @@ export interface AccordionProps {
  * reveal or hide their content.
  *
  * @example
- *     ```html
  *     <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
- *     ```;
  *
  * @name Accordion
  * @phase Dev

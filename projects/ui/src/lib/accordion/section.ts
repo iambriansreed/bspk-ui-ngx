@@ -4,7 +4,9 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { IconKeyboardArrowDown, IconKeyboardArrowUp } from '../icons';
 
-export interface AccordionSectionProps extends Pick<CommonProps, 'id'> {
+export interface AccordionSectionProps {
+    id?: CommonProps['id'];
+
     /**
      * The title of the accordion.
      *
@@ -41,7 +43,11 @@ export interface AccordionSectionProps extends Pick<CommonProps, 'id'> {
     disabled?: boolean;
 }
 
-/** A utility component representing a single section within an accordion. */
+/**
+ * A utility component representing a single section within an accordion.
+ *
+ * @ignore
+ */
 @Component({
     selector: 'ui-accordion-section',
     standalone: true,

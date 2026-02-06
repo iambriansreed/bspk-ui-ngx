@@ -25,20 +25,6 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-/**
- * | 'ariaDescribedBy'
- *
- *     | 'ariaErrorMessage'
- *     | 'ariaLabel'
- *     | 'ariaLabelledBy'
- *     | 'disabled'
- *     | 'id'
- *     | 'invalid'
- *     | 'name'
- *     | 'readOnly'
- *     | 'required'
- */
-
 export interface DatePickerProps extends FieldControlProps<Date | string | undefined> {
     /**
      * If the calendar should close when a date is selected.

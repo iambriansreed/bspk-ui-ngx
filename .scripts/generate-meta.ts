@@ -1,66 +1,190 @@
 /**
- * Generates metadata for component demos by parsing documentation JSON.
+ * Generates metadata by parsing @compodoc documentation JSON, and JSDocs.
+ *
+ * - Documentation site uses meta to build component reference pages
+ * - Documentation site component pages use meta to display prop tables, examples, and descriptions
+ * - Lint UI uses the metadata to ensure that all components have documentation, examples, and properly documented inputs.
  *
  * $ npx tsx .scripts/generate-meta.ts --write
  */
 
 import { execSync } from 'child_process';
-import { toPascalCase } from './utils';
+import { slugify } from './utils';
 import fs from 'fs';
 import path from 'path';
-import { ComponentDemo, Meta } from '../projects/demo/src/types';
+import { ComponentMeta, Meta } from '../projects/shared/src/types';
+import compodocData from '../.tmp/documentation.json';
+
+// remove <p> and </p>\n from text
+const stripCompodocMarkup = (str?: string) => str?.replace(/<\/?p>/g, '').trim() || str;
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-const documentationPath = path.join(__dirname, '../.tmp/documentation.json');
+type CompodocInterface = (typeof compodocData.interfaces)[0];
+
+type CompodocInterfaceProp = CompodocInterface['properties'][0];
+
+type InternalInterface = Record<string, CompodocInterfaceProp>;
+
+// creates a dictionary of interfaces and props for easy lookup, merges all extended interfaces
+const INTERFACES = (() => {
+    const findRootProp = (maybeProp: CompodocInterfaceProp): CompodocInterfaceProp => {
+        let prop = maybeProp;
+
+        const maybeInterface = compodocData.interfaces.find((i) => i.name === maybeProp.type);
+        const maybeProperty = maybeInterface?.properties.find((p) => p.name === maybeProp.name);
+
+        return maybeProperty ? findRootProp(maybeProperty) : prop;
+    };
+
+    const resolveAllExtends = () => {
+        const interfacesWithExtends = compodocData.interfaces.filter((def) => def.extends.length > 0);
+
+        if (!interfacesWithExtends.length) return;
+
+        // Resolve all extends first
+        interfacesWithExtends.forEach((def) => {
+            def.extends.forEach((ext) => {
+                const extendedInterface = compodocData.interfaces.find((i) => i.name === ext);
+
+                if (!extendedInterface) {
+                    console.warn(`Unable to find extended interface ${ext} for interface ${def.name}`);
+                    return [];
+                }
+
+                (def.properties as CompodocInterfaceProp[]).push(...extendedInterface.properties);
+            });
+
+            def.extends = [];
+        });
+
+        resolveAllExtends();
+    };
+
+    resolveAllExtends();
+
+    const interfaceDictionary: Record<string, InternalInterface> = {};
+
+    // Build dictionary
+    compodocData.interfaces.forEach((def) => {
+        const props = def.properties;
+
+        interfaceDictionary[def.name] = {};
+
+        def.properties.forEach((property) => {
+            let actualProperty = findRootProp(property);
+            interfaceDictionary[def.name][property.name] = actualProperty;
+        });
+    });
+
+    return interfaceDictionary;
+})();
+
+fs.writeFileSync('.tmp/interfaces.json', JSON.stringify(INTERFACES, null, 4));
 
 export const generatedMetaPath = 'projects/demo/src/meta.ts';
 
-export function generateMeta(dev?: boolean): Meta {
-    execSync('npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp');
+export function generateMeta(): Meta {
+    // const compodocData2 = getDocumentationJson(true);
 
-    const metadata = JSON.parse(fs.readFileSync(documentationPath, 'utf-8'));
+    let components: ComponentMeta[] = [];
+    let version = '0.0.0';
+    let branch = 'unknown';
+    let commit = 'unknown';
 
-    // find components that end with 'ComponentNameExample' and their base component 'ComponentName'
+    /**
+     * Find components that end with 'ComponentNameExample' and their base component 'ComponentName'
+     *
+     * If a component does not have an example, it is not included in the metadata. This ensures that all components in
+     * the metadata have a corresponding example.
+     */
 
-    const exampleComponents = [
-        metadata.components.filter((comp: any) => comp.name.endsWith('Example') && comp.name.startsWith('UI')),
-    ].flat();
+    if (!compodocData.components || !compodocData.directives) {
+        throw new Error(
+            'No components or directives found in documentation JSON. Please ensure Compodoc has run correctly.',
+        );
+    }
 
-    const components: ComponentDemo[] = [...metadata.components, ...metadata.directives]
-        .flatMap((comp: any): ComponentDemo | [] => {
+    const exampleComponents = compodocData.components.filter(
+        (comp: any) => comp.name.startsWith('UI') && comp.name.endsWith('Example'),
+    );
+
+    components = [...compodocData.components, ...compodocData.directives]
+        .flatMap((comp): ComponentMeta | [] => {
+            if (!comp.name.startsWith('UI') || comp.name.endsWith('Example')) return [];
+
+            const name = comp.name.replace(/^UI/, '').replace(/Directive$/, '');
+            const slug = slugify(name);
+
             const exampleComp = exampleComponents.find(
                 (exComp: any) =>
                     exComp.name === `${comp.name}Example` ||
                     exComp.name === `${comp.name.replace(/Directive$/, '')}Example`,
             );
 
-            if (!exampleComp) return [];
+            const content = comp.sourceCode;
 
-            const name = toPascalCase(comp.name.replace(/^UI/, '').replace(/Directive$/, ''));
+            const jsdoc = content
+                .match(/\/\*\*\s*\n([^*]|(\*(?!\/)))*\*\//g)
+                ?.map(jsDocParse)
+                .find((c) => c.name === name);
 
-            const slug = name.replace(/([a-z])([A-Z])/g, (_: any, a: any, b: string) => `${a}-${b}`).toLowerCase();
+            // TODO: move to lint ui
+            // inputs.forEach((input: any) => {
+            //     if (!('type' in input)) {
+            //         throw new Error(
+            //             `Input ${input.name} in component ${comp.name} is missing type information in the documentation JSON. Please ensure it is properly documented.`,
+            //         );
+            //     }
+            // });
 
-            const example = comp.rawdescription.match(/```html([\s\S]*?)```;/)?.[1]?.trim() || '';
+            const componentRootDir = path.dirname(comp.file) + '/';
 
-            // remove code from rawdescription
-            const description = comp.rawdescription.split('```html')[0].trim();
+            if (!jsdoc?.phase) {
+                console.warn(`Component ${comp.name} is missing a phase in its JSDoc comment, skipping.`);
 
-            const phase = comp.sourceCode.match(/@phase\s+(\w+)/)?.[1] || 'Dev';
+                return [];
+            }
 
             return {
                 name,
+                file: comp.file,
+                // for css, we look for styleUrlsData in the comp object, which can be a string, an array of objects with a data property, or an object with values that have a data property. We extract the CSS file paths from these structures.
+                css: (() => {
+                    if (!('styleUrlsData' in comp)) return '';
+
+                    if (typeof comp.styleUrlsData === 'string') return comp.styleUrlsData;
+
+                    if (Array.isArray(comp.styleUrlsData)) return comp.styleUrlsData.map(({ data }) => data).join(', ');
+
+                    if (typeof comp.styleUrlsData === 'object' && comp.styleUrlsData !== null) {
+                        return Object.values(comp.styleUrlsData)
+                            .map((styleObj: any) => styleObj.data)
+                            .join(', ');
+                    }
+
+                    return '';
+                })(),
                 className: comp.name,
                 slug,
-                descriptionExample: comp.description,
-                description,
-                phase,
+                example: jsdoc?.example,
+                description: jsdoc?.description || '',
+                phase: jsdoc?.phase as ComponentMeta['phase'],
                 directive: comp.name.endsWith('Directive'),
-                example: {
-                    name: exampleComp.name,
-                    path: exampleComp.file,
-                },
-                inputs: comp.inputsClass,
+                exampleComponent: exampleComp
+                    ? {
+                          name: exampleComp.name,
+                          path: exampleComp.file,
+                      }
+                    : undefined,
+                props: generateMetaProps(name + 'Props') || [],
+                associatedTypes: compodocData.interfaces
+                    .filter((i) => i.file.startsWith(componentRootDir) && i.name !== `${name}Props`)
+                    .map((i) => ({
+                        name: i.name,
+                        file: i.file,
+                        props: generateMetaProps(i.name) || [],
+                    })),
             };
         })
         .sort((a, b) => {
@@ -73,18 +197,82 @@ export function generateMeta(dev?: boolean): Meta {
             return !prevName || prevName !== value.name;
         });
 
-    const branch = execSync(`git branch --show-current`, { encoding: 'utf-8' }).trim();
+    branch = execSync(`git branch --show-current`, { encoding: 'utf-8' }).trim();
 
-    const commit = execSync('git rev-parse --short HEAD', { encoding: 'utf-8' }).trim();
+    commit = execSync('git rev-parse --short HEAD', { encoding: 'utf-8' }).trim();
 
-    const version: string = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8')).version || '';
+    version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8')).version || '';
 
     return { components, version, hash: branch === 'main' ? commit : branch };
 }
 
-export function writeMetaToFile(dev?: boolean): Meta {
-    const meta = generateMeta(dev);
-    fs.writeFileSync(generatedMetaPath, 'export const META = ' + JSON.stringify(meta, null, 4));
+/** Generates metadata props for a given interface name. */
+export function generateMetaProps(interfaceName: string): ComponentMeta['props'] | null {
+    // TODO: handle TYPESCRIPT TYPES like Exclude<"a" | "b" | "c", "b">, Omit<"a" | "b" | "c", "b">, and Record<string, any>, FabContainer, FabIconType
+
+    const interfaceProps = INTERFACES[interfaceName];
+
+    if (!interfaceProps) return null;
+
+    return (
+        Object.values(interfaceProps).flatMap((prop) => {
+            const name = prop.name;
+
+            if (!prop || typeof prop !== 'object') {
+                console.warn(`Unable to find prop ${name} in interface ${interfaceName}`);
+                return [];
+            }
+
+            const defaultValue = stripCompodocMarkup(
+                'jsdoctags' in prop
+                    ? prop.jsdoctags?.find((tag) => tag.tagName.escapedText === 'default')?.comment
+                    : undefined,
+            );
+
+            const description = (() => {
+                const desc = 'rawdescription' in prop ? prop.rawdescription : undefined;
+
+                // remove ```.*``` blocks from description
+                return desc?.replace(/```[\s\S]*?```/g, '').trim();
+            })();
+
+            const type = (() => {
+                // split, remove surrounding quotes, and trim each type if it's a union type
+
+                let parsedType: string | string[] = prop.type.trim();
+
+                if (
+                    // types that include '|' but are not union types (e.g. generics like Omit<"a" | "b" | "c", "b">) should be left as-is
+                    prop.type.includes('|') &&
+                    // exclude generics
+                    !['Omit<', 'Exclude<', 'Record<'].some((generic) => prop.type.startsWith(generic))
+                ) {
+                    parsedType = parsedType.split('|').map((t) => t.replace(/['"]/g, '').trim());
+                }
+
+                return parsedType.length === 1 ? parsedType[0] : parsedType;
+            })();
+
+            return {
+                name,
+                description,
+                type,
+                default: defaultValue,
+                required: !prop.optional,
+            };
+        }) || []
+    );
+}
+
+export function writeMetaToFile(): Meta {
+    const meta = generateMeta();
+    fs.writeFileSync(
+        generatedMetaPath,
+        `import { Meta } from '@shared/types';\n\nexport const META: Meta = ` + JSON.stringify(meta, null, 4),
+    );
+
+    execSync(`npx prettier --write "${generatedMetaPath}"`);
+
     return meta;
 }
 
@@ -92,5 +280,52 @@ export function writeMetaToFile(dev?: boolean): Meta {
 if (process.argv.includes('--write')) {
     writeMetaToFile();
 
-    console.log(`\n\x1b[32m✅ Generated component metadata at ${generatedMetaPath} 📄\x1b[0m\n`);
+    const size = (fs.statSync(generatedMetaPath).size / 1024).toFixed(2);
+    console.log(
+        `\n\x1b[32m✅ Generated component metadata at ${generatedMetaPath} (${size} KB) from .tmp/documentation.json 📄\x1b[0m\n`,
+    );
+}
+
+// Simple JSDoc parser to extract tags and description
+function jsDocParse(content: string) {
+    try {
+        const contentTrimmed = content
+            .trim()
+            .replace(/^\/\*\*/, '')
+            .replace(/\*\/$/, '');
+
+        const chunks: string[] = contentTrimmed.replace(/\n\s*\* @/g, '&&split&&%%variable%%').split('&&split&&');
+
+        const data: Record<string, string> = {};
+
+        chunks.forEach((chunk) => {
+            if (chunk.startsWith('%%variable%%')) {
+                const chunkMatch = [...(chunk.match(/^%%variable%%([^\s]+)\s(.*)/s) || [])];
+
+                if (!chunkMatch) throw new Error(`Unable to process chunk.`);
+
+                const [, key, value] = chunkMatch;
+
+                if (!value) return;
+
+                data[key] = value
+                    .replace(/\n[ ]+\*([ ]*)/g, '\n')
+                    .replace(/^\s+\*\s+/, '')
+                    .trim()
+                    .replace(/;$/, '');
+
+                return;
+            }
+
+            data.description = chunk
+                .replace(/\n[ ]+\*([ ]*)/g, '\n')
+                .replace(/(\S)\n(\S)/g, (_, a, b) => `${a} ${b}`)
+                .trim();
+        });
+
+        return data;
+    } catch (error) {
+        console.error(error);
+        return {};
+    }
 }

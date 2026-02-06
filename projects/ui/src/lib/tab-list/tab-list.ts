@@ -78,7 +78,7 @@ export interface TabListProps<O extends TabOption = TabOption> {
      *         { value: '3', label: 'Option 3' },
      *     ];
      *
-     * @type Array<TabOption>
+     * @type TabOption[]
      * @required
      */
     options: O[];
@@ -128,6 +128,8 @@ export interface TabListProps<O extends TabOption = TabOption> {
  * Navigation tool that organizes content across different screens and views.
  *
  * See TabGroup or SegmentedControl for examples.
+ *
+ * @ignore
  */
 @Component({
     template: '',

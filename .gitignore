@@ -48,7 +48,6 @@ nj-bspk-ui
 
 # Generated files
 projects/demo/src/routes/generated.ts
-pretty.ts
 *.tgz
 meta
 projects/demo/src/meta.ts

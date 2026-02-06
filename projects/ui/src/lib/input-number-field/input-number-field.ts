@@ -9,9 +9,9 @@ export type InputNumberFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 /**
  * A field wrapper for the UIInputNumber component.
  *
- * This component takes properties from the FormField and UIInputNumber components.
+ * This component takes properties from the Field and InputNumber components.
  *
- * @name UIInputNumberField
+ * @name InputNumberField
  * @phase UXReview
  *
  * @generated

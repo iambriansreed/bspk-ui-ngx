@@ -9,8 +9,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { META } from '../projects/demo/src/meta';
-import { Meta } from '../projects/demo/src/types';
+import { Meta } from '../projects/shared/src/types';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const uiLibPath = path.join(__dirname, '../projects/ui/src/lib');
@@ -25,7 +24,13 @@ export const getExamples = (): string[] =>
         .map((dirent) => dirent.name)
         .sort();
 
-export function generateComponentRoutes(meta: Meta = META): void {
+export async function generateComponentRoutes(meta?: Meta): Promise<void> {
+    if (!meta) {
+        // import generated meta
+        const { META } = await import('../projects/demo/src/meta');
+        meta = META;
+    }
+
     const generatedRoutesPath = path.join(__dirname, '..', 'projects/demo/src/routes/generated.ts');
 
     fs.rmSync(generatedRoutesPath, { force: true });
@@ -37,10 +42,13 @@ import { ComponentPage } from '../components/component-page';
 import { NavRoute } from '../types';
 
 export const componentItems: NavRoute[] = [
- ${meta.components
-     .map(
+ ${meta!.components
+     .flatMap(
          // add an entry for each example
-         ({ name, slug, example }) => `
+         ({ name, slug, exampleComponent: example }) =>
+             !example
+                 ? []
+                 : `
             {
                 title: '${name}',
                 path: '${slug}',

@@ -6,6 +6,11 @@ import { UIFloatingDirective } from '../floating';
 import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 
+/**
+ * Props for the AvatarGroupOverflow component.
+ *
+ * @ignore
+ */
 export interface AvatarGroupOverflowProps {
     /**
      * The unique identifier for the overflow menu.
@@ -47,7 +52,11 @@ export interface AvatarGroupOverflowProps {
     size?: AvatarProps['size'];
 }
 
-/** A component to display overflow avatars in an avatar group. */
+/**
+ * A component to display overflow avatars in an avatar group.
+ *
+ * @ignore
+ */
 @Component({
     selector: 'ui-avatar-group-overflow',
     standalone: true,

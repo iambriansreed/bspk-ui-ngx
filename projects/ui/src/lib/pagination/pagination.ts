@@ -31,9 +31,7 @@ export interface PaginationProps {
  * multiple micro pages.
  *
  * @example
- *     ```html
  *     <ui-pagination [value]="currentPage" [numPages]="10" (onChange)="currentPage = $event"></ui-pagination>
- *     ```;
  *
  * @name Pagination
  * @phase Dev
@@ -106,8 +104,8 @@ export class UIPagination implements OnChanges, AsSignal<PaginationProps> {
     /** Called when the page changes. */
     @Output() onChange = new EventEmitter<number>();
 
-    readonly numPages = input(2);
-    readonly value = input(1);
+    readonly numPages = input<PaginationProps['numPages']>(2);
+    readonly value = input<PaginationProps['value']>(1);
 
     // Internal string representation for the input field when large page counts.
     inputValue = '1';

@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation, computed, input, model, output } from '@angular/core';
 import { CommonProps, FieldControlProps, AsSignal } from '../../types/common';
 
-export interface TextareaProps extends Pick<CommonProps, 'size'>, FieldControlProps {
+export interface TextareaProps extends FieldControlProps {
+    size?: CommonProps['size'];
+
     /** The placeholder of the field. */
     placeholder?: string;
     /**
