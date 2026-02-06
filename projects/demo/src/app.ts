@@ -5,11 +5,12 @@ import { IconDarkMode } from '@ui/icons/dark-mode';
 import { IconDarkModeFill } from '@ui/icons/dark-mode-fill';
 import { ThemeService } from '@ui/services/theme';
 import { AppNavComponent } from './components/app-nav';
+import { AppNavContents } from './components/nav-contents';
 import { META } from './meta';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, AppNavComponent, UIButton],
+    imports: [RouterOutlet, AppNavComponent, UIButton, AppNavContents],
     template: `<div data-body-width="true" data-navbar="true">
             <span data-backdrop="true"></span>
             <div data-header="true">
@@ -35,6 +36,7 @@ import { META } from './meta';
             <div data-component-page data-page>
                 <router-outlet />
             </div>
+            <app-nav-contents />
         </main> `,
     encapsulation: ViewEncapsulation.None,
 })

@@ -6,7 +6,7 @@ import { marked } from 'marked';
     imports: [],
     template: ``,
     host: {
-        '[innerHTML]': 'marked(source()!)',
+        '[innerHTML]': 'source() ? marked(source()!) : ""',
     },
 })
 export class Markup {

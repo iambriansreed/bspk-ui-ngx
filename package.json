@@ -27,7 +27,7 @@
         "ng": "ng",
         "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/dev...$(git symbolic-ref --short HEAD)\"",
         "routes": "npx tsx .scripts/generate-component-routes.ts --write",
-        "pre:meta": "if [ ! -f \".tmp/documentation.json\" ]; then npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp",
+        "pre:meta": "if [ ! -f \".tmp/documentation.json\" ]; then npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp; fi",
         "meta": "npm run pre:meta && npx tsx .scripts/generate-meta.ts --write",
         "start": "npm run prebuild && ng serve",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

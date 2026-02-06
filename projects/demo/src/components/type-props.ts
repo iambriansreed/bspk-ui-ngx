@@ -1,4 +1,5 @@
-import { Component, computed, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { ComponentMetaProp } from '@shared/types';
 import { TableColumn, TableRow, UITable, UITableCell } from '@ui/table';
 import { UITag } from '@ui/tag';
@@ -7,10 +8,45 @@ import { Markup } from './markup';
 
 interface PropRow extends ComponentMetaProp, TableRow {}
 
+/*
+ *  
+typeof prop.libraryDefault === 'undefined' ? (
+    <Tag color="yellow" label="None" size="x-small" variant="flat" />
+) : (
+    <Tag
+        color="green"
+        label={prop.libraryDefault != null ? prop.libraryDefault.toString() : ''}
+        size="x-small"
+        variant="flat"
+    />
+),
+ */
+
+@Component({
+    selector: 'app-default-cell',
+    imports: [CommonModule, UITag],
+    template: `@if (row().default === undefined) {
+            <ui-tag color="yellow" label="None" size="x-small" variant="flat" />
+        } @else {
+            <ui-tag color="green" [label]="row().default || ''" size="x-small" variant="flat" />
+        }`,
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'style.display': 'contents',
+    },
+})
+class DefaultCell extends UITableCell<PropRow> {}
+
 @Component({
     selector: 'app-name-cell',
     imports: [UITxtDirective],
     template: `<span ui-txt="labels-small"> {{ row().name }} </span> `,
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'style.display': 'contents',
+    },
 })
 class NameCell extends UITableCell<PropRow> {}
 
@@ -50,14 +86,20 @@ todo: add
             </div>
         }
     `,
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'style.display': 'contents',
+    },
 })
 class DescriptionTypeCell extends UITableCell<PropRow> {}
 
 @Component({
     selector: 'app-type-props',
-    standalone: true,
     imports: [UITable],
     template: ` <ui-table [columns]="propColumns" [data]="propsData()" /> `,
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
     host: {
         'data-type-props': '',
     },
@@ -90,6 +132,7 @@ export class TypeProps {
             label: 'Default',
             width: 'auto',
             valign: 'top',
+            component: DefaultCell,
         },
         // !!onChange && {
         //     key: 'controls',

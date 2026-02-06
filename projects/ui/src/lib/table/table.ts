@@ -80,7 +80,6 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
  */
 @Component({
     selector: 'ui-table',
-    standalone: true,
     imports: [CommonModule, UIPagination, IconArrowUpward, IconArrowDownward],
     template: `<div [attr.data-has-pagination]="hasPagination ? true : null" [attr.data-size]="size() || 'medium'">
         <div data-scroll-container>
@@ -167,6 +166,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
         </div>
     </div>`,
     styleUrls: ['./table.scss'],
+    standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'table',

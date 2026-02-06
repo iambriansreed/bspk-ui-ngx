@@ -12,16 +12,32 @@ import { execSync } from 'child_process';
 import { slugify } from './utils';
 import fs from 'fs';
 import path from 'path';
-import { ComponentMeta, InputsClassItem, Meta } from '../projects/shared/src/types';
+import { ComponentMeta, Meta } from '../projects/shared/src/types';
+import compodocData from '../.tmp/documentation.json';
 
 // remove <p> and </p>\n from text
 const stripCompodocMarkup = (str?: string) => str?.replace(/<\/?p>/g, '').trim() || str;
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-export const generatedMetaPath = 'projects/demo/src/meta.ts';
+const INTERFACES = (() => {
+    const interfaceDictionary: Record<
+        string,
+        Record<string, (typeof compodocData.interfaces)[0]['properties'][0]>
+    > = {};
 
-import compodocData from '../.tmp/documentation.json';
+    compodocData.interfaces.forEach((prop) => {
+        interfaceDictionary[prop.name] = {};
+
+        prop.properties.forEach((property) => {
+            interfaceDictionary[prop.name][property.name] = property;
+        });
+    });
+
+    return interfaceDictionary;
+})();
+
+export const generatedMetaPath = 'projects/demo/src/meta.ts';
 
 export function generateMeta(): Meta {
     // const compodocData2 = getDocumentationJson(true);
@@ -80,7 +96,6 @@ export function generateMeta(): Meta {
                 name,
                 file: comp.file,
                 // for css, we look for styleUrlsData in the comp object, which can be a string, an array of objects with a data property, or an object with values that have a data property. We extract the CSS file paths from these structures.
-
                 css: (() => {
                     if (!('styleUrlsData' in comp)) return '';
 
@@ -108,7 +123,14 @@ export function generateMeta(): Meta {
                           path: exampleComp.file,
                       }
                     : undefined,
-                props: generateMetaProps(name),
+                props: generateMetaProps(name + 'Props'),
+                associatedTypes: compodocData.interfaces
+                    .filter((i) => i.file === comp.file && i.name !== `${name}Props`)
+                    .map((i) => ({
+                        name: i.name,
+                        file: i.file,
+                        props: generateMetaProps(i.name),
+                    })),
             };
         })
         .sort((a, b) => {
@@ -130,11 +152,16 @@ export function generateMeta(): Meta {
     return { components, version, hash: branch === 'main' ? commit : branch };
 }
 
-export function generateMetaProps(name: string) {
+export function generateMetaProps(interfaceName: string): ComponentMeta['props'] {
     return (
         compodocData.interfaces
-            .find((i: any) => i.name === `${name}Props`)
-            ?.properties.map((prop) => {
+            .find((i: any) => i.name === interfaceName)
+            ?.properties.map((maybeProp) => {
+                let prop = maybeProp;
+
+                if (maybeProp.type in INTERFACES && maybeProp.name in INTERFACES[maybeProp.type])
+                    prop = INTERFACES[maybeProp.type][maybeProp.name];
+
                 const defaultValue = stripCompodocMarkup(
                     'jsdoctags' in prop
                         ? prop.jsdoctags?.find((tag) => tag.tagName.escapedText === 'default')?.comment
@@ -154,7 +181,6 @@ export function generateMetaProps(name: string) {
                     type: prop.type,
                     default: defaultValue,
                     required: !prop.optional,
-                    exampleType: prop.type,
                 };
             }) || []
     );

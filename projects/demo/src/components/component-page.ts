@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ComponentMeta } from '@shared/types';
 import { TableColumn } from '@ui/table';
 import { UITag } from '@ui/tag';
+import { UIFlexDirective } from '../../../ui/src';
 import { META } from '../meta';
 import { COMPONENT_PHASE_COLORS } from '../utils';
 import { TypeProps } from './type-props';
@@ -10,14 +11,16 @@ import { TypeProps } from './type-props';
 @Component({
     selector: 'app-component-page',
     standalone: true,
-    imports: [RouterOutlet, UITag, TypeProps],
+    imports: [RouterOutlet, UITag, TypeProps, UIFlexDirective],
     template: ` @if (!component()) {
             <h2>Component Not Found</h2>
         } @else {
-            <h2 style="display: flex; align-items: center; gap: 1rem;">
-                {{ component()!.name }}
+            <div ui-flex>
+                <h2 style="display: flex; align-items: center; gap: 1rem;">
+                    {{ component()!.name }}
+                </h2>
                 <span style="margin-left: auto;"><ui-tag [color]="phaseColor()" [label]="component()!.phase!" /></span>
-            </h2>
+            </div>
 
             @for (line of description(); track $index) {
                 <p>{{ line }}</p>
@@ -26,7 +29,15 @@ import { TypeProps } from './type-props';
             <h3>Inputs</h3>
             <app-type-props [props]="component()?.props || []" />
 
-            <h3>Example</h3>
+            @if (component()?.associatedTypes?.length) {
+                <h3>Associated Types</h3>
+                @for (type of component()?.associatedTypes; track $index) {
+                    <h4>{{ type.name }}</h4>
+                    <app-type-props [props]="type.props" />
+                }
+            }
+
+            <h3>Examples</h3>
             <router-outlet name="example"></router-outlet>
         }`,
 })
@@ -64,4 +75,3 @@ export class ComponentPage {
         });
     }
 }
-// title = this.route.snapshot.data['title'] || '';

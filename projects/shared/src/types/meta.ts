@@ -26,6 +26,11 @@ export interface ComponentMeta {
     props: ComponentMetaProp[];
     file: string;
     css: string;
+    associatedTypes?: {
+        name: string;
+        file: string;
+        props: ComponentMetaProp[];
+    }[];
 }
 
 export interface ComponentMetaProp {
@@ -33,7 +38,7 @@ export interface ComponentMetaProp {
     description?: string;
     type?: string;
     exampleType?: string;
-    default?: unknown;
+    default?: string;
     required?: boolean;
     options?: number[] | string[];
     variants?: string[];
@@ -42,7 +47,6 @@ export interface ComponentMetaProp {
     maximum?: number;
     example?: string;
     arrayType?: string;
-    libraryDefault?: unknown;
     label?: string;
     disabled?: boolean;
 }
