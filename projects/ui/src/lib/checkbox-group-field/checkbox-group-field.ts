@@ -1,25 +1,25 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
+import { UICheckboxGroup } from '../checkbox-group';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
 
-export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'> {}
+export type CheckboxGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the UICheckboxGroup component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the FormField and UICheckboxGroup components.
  *
- * @name UIInputField
+ * @name UICheckboxGroupField
  * @phase UXReview
  *
  * @generated
  */
 @Component({
-    selector: 'ui-input-field',
+    selector: 'ui-checkbox-group-field',
     standalone: true,
-    imports: [UIField, UIInput],
+    imports: [UIField, UICheckboxGroup],
     template: `
         <ui-field
             [errorMessage]="errorMessage()"
@@ -29,7 +29,7 @@ export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'>
             [controlId]="controlId()"
             [style]="style()"
             [required]="required()">
-            <ui-input
+            <ui-checkbox-group
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -41,23 +41,22 @@ export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'>
                 [name]="name()"
                 [readOnly]="readOnly()"
                 [value]="value()"
-                [required]="required()"
-                [size]="size()" />
+                [required]="required()" />
         </ui-field>
     `,
     host: {
-        'data-bspk': 'input-field',
+        'data-bspk': 'checkbox-group-field',
         '[id]': 'controlId()+"-field"',
     },
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
-    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+export class UICheckboxGroupField extends UICheckboxGroup implements AsSignal<CheckboxGroupFieldProps> {
+    readonly errorMessage = input<CheckboxGroupFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
-    readonly helperText = input<InputFieldProps['helperText']>(undefined);
-    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
-    readonly style = input<InputFieldProps['style']>(undefined);
+    readonly helperText = input<CheckboxGroupFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<CheckboxGroupFieldProps['labelTrailing']>(undefined);
+    readonly style = input<CheckboxGroupFieldProps['style']>(undefined);
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(
@@ -67,5 +66,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.id() || uniqueId('UICheckboxGroupField-'));
 }

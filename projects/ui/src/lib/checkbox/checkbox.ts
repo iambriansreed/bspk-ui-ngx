@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, input, ElementRef, output, viewChild, eff
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
-export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'readOnly' | 'value'> & {
+export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'value'> & {
     /**
      * If the checkbox is partially checked or
      * [indeterminate](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes).
@@ -59,6 +59,7 @@ export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'readOnly' | 'v
             [id]="id()"
             [name]="name()"
             [required]="required()"
+            [readOnly]="readOnly()"
             [value]="value()"
             type="checkbox"
             (change)="onInputChange()"
@@ -98,6 +99,7 @@ export class UICheckbox implements AsSignal<CheckboxProps> {
     readonly disabled = input<CheckboxProps['disabled']>(false);
     readonly invalid = input<CheckboxProps['invalid']>(false);
     readonly required = input<CheckboxProps['required']>(false);
+    readonly readOnly = input<CheckboxProps['readOnly']>(false);
     readonly ariaDescribedBy = input<CheckboxProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<CheckboxProps['ariaErrorMessage']>(undefined);
 

@@ -188,12 +188,8 @@ export interface FieldControlProps<ValueType = string> extends Pick<
     | 'readOnly'
     | 'required'
 > {
-    /**
-     * The value of the field control.
-     *
-     * @required
-     */
-    value: ValueType | undefined;
+    /** The value of the field control. */
+    value?: ValueType | undefined;
 }
 
 export type Brand =

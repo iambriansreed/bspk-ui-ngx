@@ -10,6 +10,7 @@ import {
     viewChild,
     AfterViewInit,
     OnDestroy,
+    output,
 } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
@@ -165,6 +166,8 @@ export interface SelectProps extends Pick<CommonProps, 'size'>, FieldControlProp
 export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy {
     keyNavigation = new KeyNavigationUtility();
 
+    valueChange = output<string>();
+
     readonly value = model<SelectProps['value']>('');
     readonly name = input.required<SelectProps['name']>();
 
@@ -178,6 +181,7 @@ export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy
     readonly menuWidth = input<SelectProps['menuWidth']>(undefined);
     readonly ariaDescribedBy = input<SelectProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<SelectProps['ariaErrorMessage']>(undefined);
+    readonly ariaLabelledBy = input<SelectProps['ariaLabelledBy']>(undefined);
     readonly items = input.required<SelectProps['items']>();
 
     readonly reference = viewChild('reference', { read: ElementRef });
@@ -203,6 +207,12 @@ export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy
             width: this.menuWidth() || 'fit-content',
         };
     });
+
+    constructor() {
+        this.value.subscribe((val) => {
+            this.valueChange.emit(val || '');
+        });
+    }
 
     get offset() {
         // Reads the CSS variable value at runtime, offsetOptions requires a number

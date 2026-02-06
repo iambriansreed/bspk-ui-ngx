@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, model, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, input, model, output, viewChild, ViewEncapsulation } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { IconAdd, IconRemove } from '../icons';
 
@@ -110,6 +110,8 @@ export interface InputNumberProps extends Pick<CommonProps, 'owner' | 'size'>, F
     encapsulation: ViewEncapsulation.None,
 })
 export class UIInputNumber implements AsSignal<InputNumberProps> {
+    valueChange = output<string>();
+
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
     readonly value = model<InputNumberProps['value']>('');
     readonly name = input.required<InputNumberProps['name']>();
@@ -128,6 +130,9 @@ export class UIInputNumber implements AsSignal<InputNumberProps> {
     readonly ariaLabelledBy = input<InputNumberProps['ariaLabelledBy']>(undefined);
     readonly ariaDescribedBy = input<InputNumberProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputNumberProps['ariaErrorMessage']>(undefined);
+
+    readonly iconAdd = IconAdd;
+    readonly iconRemove = IconRemove;
 
     get centered() {
         return this.align() === 'center';

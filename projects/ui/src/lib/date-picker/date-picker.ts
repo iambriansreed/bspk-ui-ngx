@@ -11,7 +11,7 @@ import {
     OnChanges,
 } from '@angular/core';
 import { format, startOfToday, parse } from 'date-fns';
-import { AsSignal, CommonProps } from '../../types/common';
+import { AsSignal, FieldControlProps } from '../../types/common';
 import { UIButton } from '../button';
 import { UICalendar } from '../calendar';
 import { UIFloatingDirective } from '../floating';
@@ -25,18 +25,21 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-export interface DatePickerProps extends Pick<
-    CommonProps,
-    | 'ariaDescribedBy'
-    | 'ariaErrorMessage'
-    | 'ariaLabel'
-    | 'disabled'
-    | 'id'
-    | 'invalid'
-    | 'name'
-    | 'readOnly'
-    | 'required'
-> {
+/**
+ * | 'ariaDescribedBy'
+ *
+ *     | 'ariaErrorMessage'
+ *     | 'ariaLabel'
+ *     | 'ariaLabelledBy'
+ *     | 'disabled'
+ *     | 'id'
+ *     | 'invalid'
+ *     | 'name'
+ *     | 'readOnly'
+ *     | 'required'
+ */
+
+export interface DatePickerProps extends FieldControlProps<Date | string | undefined> {
     /**
      * If the calendar should close when a date is selected.
      *
@@ -88,6 +91,7 @@ export interface DatePickerProps extends Pick<
                 #reference
                 [ariaDescribedBy]="ariaDescribedBy()"
                 [ariaErrorMessage]="ariaErrorMessage()"
+                [ariaLabelledBy]="ariaLabelledBy()"
                 [ariaLabel]="ariaLabel()"
                 [disabled]="disabled()"
                 [id]="id()"
@@ -152,7 +156,7 @@ export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps
     readonly ariaLabel = input<DatePickerProps['ariaLabel']>('Enter or choose date');
     readonly ariaDescribedBy = input<DatePickerProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<DatePickerProps['ariaErrorMessage']>(undefined);
-
+    readonly ariaLabelledBy = input<DatePickerProps['ariaLabelledBy']>(undefined);
     // State
     readonly calendarVisible = signal(false);
     readonly floatingStyles = signal<Record<string, string>>({});
