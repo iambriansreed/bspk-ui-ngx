@@ -7,12 +7,13 @@ import { UIFlexDirective } from '../../../ui/src';
 import { META } from '../meta';
 import { COMPONENT_PHASE_COLORS } from '../utils';
 import { Markup } from './markup';
+import { Syntax } from './syntax';
 import { TypeProps } from './type-props';
 
 @Component({
     selector: 'app-component-page',
     standalone: true,
-    imports: [RouterOutlet, UITag, TypeProps, UIFlexDirective, Markup],
+    imports: [RouterOutlet, UITag, TypeProps, UIFlexDirective, Markup, Syntax],
     template: ` @if (!component()) {
             <h2>Component Not Found</h2>
         } @else {
@@ -38,6 +39,24 @@ import { TypeProps } from './type-props';
 
             <h3>Examples</h3>
             <router-outlet name="example"></router-outlet>
+
+            <h3>Stylesheet</h3>
+            @if (component()?.css) {
+                <p>
+                    This is the CSS for the component. The css variables used within are available in the styles
+                    package.
+                </p>
+            } @else if (!component()?.css) {
+                <p>This component does not have any specific styles.</p>
+            }
+
+            @if (component()?.css) {
+                <app-syntax
+                    [source]="component()?.css!"
+                    [language]="'css'"
+                    style="margin-top: 2rem;"
+                    [pretty]="true"></app-syntax>
+            }
         }`,
 })
 export class ComponentPage {

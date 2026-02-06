@@ -40,12 +40,15 @@ class DefaultCell extends UITableCell<PropRow> {}
 
 @Component({
     selector: 'app-name-cell',
-    imports: [UITxtDirective],
-    template: `<span ui-txt="labels-small"> {{ row().name }} </span> `,
+    imports: [UITxtDirective, UITag],
+    template: `<span ui-txt="labels-small"> {{ row().name }} </span>
+        @if (row().required) {
+            <ui-tag color="red" size="x-small" variant="flat" label="required" />
+        }`,
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {
-        'style.display': 'contents',
+        style: 'display: flex; flex-direction: column; gap: var(--spacing-sizing-02);',
     },
 })
 class NameCell extends UITableCell<PropRow> {}
@@ -91,7 +94,7 @@ todo: add
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {
-        'style.display': 'contents',
+        style: 'display: flex; flex-direction: column; gap: var(--spacing-sizing-02);',
     },
 })
 class DescriptionTypeCell extends UITableCell<PropRow> {}
@@ -150,6 +153,37 @@ export class TypeProps {
                 ...prop,
                 id: `${index}`,
             })) || []
-        );
+        ).sort((a, b) => {
+            // todo:  add controls
+            // if (!a.haveControl !== !b.haveControl) return !a.haveControl > !b.haveControl ? 1 : -1;
+
+            if (!a.required !== !b.required) return !a.required > !b.required ? 1 : -1;
+
+            if (!a.disabled !== !b.disabled) return !a.disabled < !b.disabled ? 1 : -1;
+
+            // ensure value props are always first
+            if (a.name === 'value') return -1;
+            if (b.name === 'value') return 1;
+
+            const propertyNameSort = PROPERTY_NAME_CUSTOM_SORT.find(
+                (arr) => arr.includes(a.name) && arr.includes(b.name),
+            );
+
+            if (propertyNameSort) {
+                const aIndex = propertyNameSort.indexOf(a.name);
+                const bIndex = propertyNameSort.indexOf(b.name);
+                return aIndex - bIndex;
+            }
+
+            return a.name.localeCompare(b.name);
+        });
     });
 }
+
+export const PROPERTY_NAME_CUSTOM_SORT = [
+    //
+    ['minRows', 'maxRows'],
+    ['min', 'max'],
+    ['header', 'body'],
+    ['variant', 'width', 'height'],
+];

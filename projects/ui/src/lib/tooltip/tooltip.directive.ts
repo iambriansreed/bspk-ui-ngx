@@ -161,7 +161,7 @@ export class UITooltipDirective implements OnDestroy, OnInit {
         });
 
         this.autoUpdateCleanup = autoUpdate(this.referenceEl!, this.tooltipEl!, () => {
-            this.floating.compute(floatingProps);
+            requestAnimationFrame(() => this.floating.compute(floatingProps));
         });
     }
 

@@ -1,11 +1,11 @@
-import { Component, computed, inject, signal, ViewEncapsulation, OnInit, ElementRef } from '@angular/core';
+import { Component, computed, inject, signal, ViewEncapsulation, OnInit, ElementRef, effect } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { UIButton } from '@ui/button';
 import { IconDarkMode } from '@ui/icons/dark-mode';
 import { IconDarkModeFill } from '@ui/icons/dark-mode-fill';
 import { ThemeService } from '@ui/services/theme';
 import { Subscription } from 'rxjs';
-import { AppNavComponent } from './components/app-nav';
+import { AppNavComponent } from './components/nav';
 import { AppNavContents } from './components/nav-contents';
 import { META } from './meta';
 
@@ -37,7 +37,7 @@ import { META } from './meta';
             <div data-component-page data-page>
                 <router-outlet />
             </div>
-            @if (false) {
+            @if (true) {
                 <app-nav-contents />
             }
         </main> `,
@@ -63,6 +63,17 @@ export class App implements OnInit {
     private routeSubscription: Subscription | null = null;
     private fragmentSubscription: Subscription | null = null;
 
+    constructor() {
+        effect(() => {
+            const current = document.querySelector(`[data-syntax-theme='${this.themeService.value()}']`);
+            const other = document.querySelector(
+                `[data-syntax-theme]:not([data-syntax-theme='${this.themeService.value()}'])`,
+            );
+            current?.removeAttribute('disabled');
+            other?.setAttribute('disabled', 'true');
+        });
+    }
+
     get location() {
         return globalThis.location;
     }
@@ -77,7 +88,12 @@ export class App implements OnInit {
         });
 
         this.fragmentSubscription = this.route.fragment.subscribe((fragment: string | null) => {
-            if (fragment) document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.querySelector(`[id="${fragment}"]`);
+            if (fragment && element) {
+                console.log('Fragment changed:', fragment, element);
+
+                requestAnimationFrame(() => element.scrollIntoView({ behavior: 'smooth' }));
+            }
         });
     }
 
