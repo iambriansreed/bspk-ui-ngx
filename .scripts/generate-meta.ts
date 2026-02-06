@@ -203,7 +203,7 @@ export function generateMeta(): Meta {
 
     version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8')).version || '';
 
-    return { components, version, hash: branch === 'main' ? commit : branch };
+    return { components, version, hash: branch === 'main' ? version : branch };
 }
 
 /** Generates metadata props for a given interface name. */
