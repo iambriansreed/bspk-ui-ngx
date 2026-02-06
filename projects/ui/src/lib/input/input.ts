@@ -27,11 +27,8 @@ export interface InputProps extends Pick<CommonProps, 'owner' | 'size'>, FieldCo
      *
      * @default text
      */
-    type?: 'number' | 'password' | 'tel' | 'text'; /**
-     * The inputmode attribute for the input.
-     *
-     * @default undefined
-     */
+    type?: 'number' | 'password' | 'tel' | 'text';
+    /** The inputmode attribute for the input. */
     inputMode?: 'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url';
     /**
      * Specifies if user agent has any permission to provide automated assistance in filling out form field values
@@ -140,27 +137,27 @@ export class UIInput implements AsSignal<InputProps> {
         return validSizes.includes(sizeValue as ButtonSize) ? (sizeValue as ButtonSize) : 'medium';
     });
 
-    readonly value = model<InputProps['value']>(undefined);
+    readonly value = model<InputProps['value']>();
     readonly name = input.required<InputProps['name']>();
 
-    readonly inputMode = input<InputProps['inputMode']>(undefined);
+    readonly inputMode = input<InputProps['inputMode']>();
     readonly showClearButton = input<InputProps['showClearButton']>(true);
     readonly disabled = input<InputProps['disabled']>(false);
     readonly invalid = input<InputProps['invalid']>(false);
-    readonly placeholder = input<InputProps['placeholder']>(undefined);
+    readonly placeholder = input<InputProps['placeholder']>();
     readonly readOnly = input<InputProps['readOnly']>(false);
     readonly required = input<InputProps['required']>(false);
     readonly type = input<InputProps['type']>('text');
     readonly size = input<InputProps['size']>('medium');
-    readonly leading = input<InputProps['leading']>(undefined);
-    readonly trailing = input<InputProps['trailing']>(undefined);
-    readonly autoComplete = input<InputProps['autoComplete']>(undefined);
-    readonly id = input<InputProps['id']>(undefined);
-    readonly owner = input<InputProps['owner']>(undefined);
-    readonly ariaLabel = input<InputProps['ariaLabel']>(undefined);
-    readonly ariaLabelledBy = input<InputProps['ariaLabelledBy']>(undefined);
-    readonly ariaDescribedBy = input<InputProps['ariaDescribedBy']>(undefined);
-    readonly ariaErrorMessage = input<InputProps['ariaErrorMessage']>(undefined);
+    readonly leading = input<InputProps['leading']>();
+    readonly trailing = input<InputProps['trailing']>();
+    readonly autoComplete = input<InputProps['autoComplete']>('off');
+    readonly id = input<InputProps['id']>();
+    readonly owner = input<InputProps['owner']>();
+    readonly ariaLabel = input<InputProps['ariaLabel']>();
+    readonly ariaLabelledBy = input<InputProps['ariaLabelledBy']>();
+    readonly ariaDescribedBy = input<InputProps['ariaDescribedBy']>();
+    readonly ariaErrorMessage = input<InputProps['ariaErrorMessage']>();
 
     get trailingValue(): TemplateRef<any> | undefined {
         const value = this.trailing();

@@ -8,6 +8,7 @@ import {
     viewChild,
     AfterViewInit,
     OnInit,
+    effect,
 } from '@angular/core';
 import {
     addMonths,
@@ -154,7 +155,6 @@ export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps
     readonly id = input<CalendarProps['id']>(undefined);
 
     activeDate: Date = startOfToday();
-    focusDay = false;
 
     format = format;
     isSameDay = isSameDay;
@@ -164,6 +164,12 @@ export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps
     private readonly firstButton = viewChild<ElementRef<HTMLButtonElement>>('firstButton');
     private readonly lastButton = viewChild<ElementRef<HTMLButtonElement>>('lastButton');
     private readonly grid = viewChild<ElementRef<HTMLElement>>('grid');
+
+    constructor() {
+        effect(() => {
+            if (this.focusTrap()) setTimeout(() => this.setFocus(), 0);
+        });
+    }
 
     get rows(): Date[][] {
         const start = startOfWeek(startOfMonth(this.activeDate), { weekStartsOn: 0 });
@@ -184,17 +190,16 @@ export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps
         this.activeDate = this.value() && isValid(this.value()) ? (this.value() as Date) : startOfToday();
     }
 
+    setFocus() {
+        setTimeout(() => {
+            const selectedDateId = this.generateOptionId(this.activeDate);
+            const selectedDateElement = this.grid()?.nativeElement?.querySelector<HTMLElement>(`#${selectedDateId}`);
+            selectedDateElement?.focus();
+        }, 0);
+    }
+
     ngAfterViewInit() {
-        if (this.focusDay) {
-            setTimeout(() => {
-                const selectedDateId = this.generateOptionId(this.activeDate);
-                const selectedDateElement = this.grid()?.nativeElement?.querySelector<HTMLElement>(
-                    `#${selectedDateId}`,
-                );
-                selectedDateElement?.focus();
-                this.focusDay = false;
-            }, 0);
-        }
+        if (this.focusTrap()) this.setFocus();
     }
 
     setActiveDate(date: Date) {
@@ -209,7 +214,6 @@ export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps
         if (this.focusTrap() && event.shiftKey && event.key === 'Tab') {
             event.preventDefault();
             event.stopPropagation();
-            this.focusDay = true;
             setTimeout(() => this.grid?.()?.nativeElement?.focus(), 0);
         }
     }
@@ -223,14 +227,12 @@ export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps
             },
             this.rows,
             () => {
-                this.focusDay = true;
                 setTimeout(() => {
                     const selectedDateId = this.generateOptionId(this.activeDate);
                     const selectedDateElement = this.grid()?.nativeElement?.querySelector<HTMLElement>(
                         `#${selectedDateId}`,
                     );
                     selectedDateElement?.focus();
-                    this.focusDay = false;
                 }, 0);
             },
         )(event);

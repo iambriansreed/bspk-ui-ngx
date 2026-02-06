@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { UISwitchOption } from '../..';
 import { sendSnackbar } from '../../utils/send-snackbar';
 import { UICalendar } from './calendar';
 
 @Component({
     selector: 'ui-calendar-example',
     standalone: true,
-    imports: [CommonModule, UICalendar],
+    imports: [CommonModule, UICalendar, UISwitchOption],
     template: `
         <h4>Default</h4>
         <ui-calendar (onChange)="handleChange($event)" />
@@ -15,13 +16,27 @@ import { UICalendar } from './calendar';
         <ui-calendar [value]="initialDate()" (onChange)="handleChange($event, 'With Initial Value')" />
 
         <h4>With Focus Trap</h4>
-        <ui-calendar [focusTrap]="true" (onChange)="handleChange($event, 'With Focus Trap')" />
+        <p>
+            Focus is trapped within the calendar when it opens. This is especially useful when the calendar is used
+            within a popover like in the DatePicker component.
+        </p>
+        <ui-switch-option
+            value="enabled"
+            name="enableFocusTrap"
+            [checked]="focusTrapEnabled()"
+            (checkedChange)="focusTrapEnabled.set($event)"
+            label="Enable Focus Trap" />
+
+        <ui-calendar [focusTrap]="focusTrapEnabled()" (onChange)="handleChange($event, 'With Focus Trap')" />
 
         <h4>With Custom ID</h4>
         <ui-calendar id="custom-calendar" (onChange)="handleChange($event, 'With Custom ID')" />
     `,
 })
 export class UICalendarExample {
+    // Signal for focus trap toggle
+    readonly focusTrapEnabled = signal(false);
+
     // Signal for initial value example
     readonly initialDate = signal(new Date(2026, 0, 15)); // January 15, 2026
 
