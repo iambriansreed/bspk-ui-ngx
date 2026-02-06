@@ -193,17 +193,6 @@ export interface FieldControlProps<ValueType = string> {
     value?: ValueType | undefined;
 }
 
-export type Brand =
-    | 'anywhere'
-    | 'better-homes-gardens'
-    | 'cartus'
-    | 'century-21'
-    | 'coldwell-banker'
-    | 'corcoran'
-    | 'denali-boss'
-    | 'era'
-    | 'sothebys';
-
 // All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions
 export type AriaRole =
     | 'alert'

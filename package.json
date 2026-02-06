@@ -91,7 +91,7 @@
         "watch": "^0.13.0"
     },
     "peerDependencies": {
-        "@bspk/styles": "^1.0.2",
+        "@bspk/styles": "^1.1.7",
         "@floating-ui/dom": "^1.7.4"
     }
 }
