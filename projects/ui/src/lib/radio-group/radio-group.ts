@@ -3,10 +3,10 @@ import { AsSignal, FieldControlProps } from '../../types/common';
 import { RadioProps } from '../radio/radio';
 import { RadioOptionProps, UIRadioOption } from '../radio-option/radio-option';
 
-export type RadioGroupOption = Pick<RadioOptionProps, 'checked' | 'description' | 'disabled' | 'label'> &
-    Pick<RadioProps, 'value'>;
+export interface RadioGroupOption
+    extends Pick<RadioOptionProps, 'checked' | 'description' | 'disabled' | 'label'>, Pick<RadioProps, 'value'> {}
 
-export type RadioGroupProps = FieldControlProps & {
+export interface RadioGroupProps extends FieldControlProps {
     /**
      * The options for the radios.
      *
@@ -28,7 +28,7 @@ export type RadioGroupProps = FieldControlProps & {
      * @required
      */
     options: RadioGroupOption[];
-};
+}
 /**
  * A group of radios that allows users to choose one or more items from a list or turn an feature on or off.
  *

@@ -2,14 +2,14 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angu
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
-export type RadioProps = Omit<FieldControlProps<string>, 'onChange'> & {
+export interface RadioProps extends Omit<FieldControlProps<string>, 'onChange'> {
     /**
      * Marks the radio as checked.
      *
      * @default false
      */
     checked?: boolean;
-};
+}
 
 /**
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you

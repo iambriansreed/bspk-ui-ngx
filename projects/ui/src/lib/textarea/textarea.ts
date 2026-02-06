@@ -1,35 +1,34 @@
 import { Component, ViewEncapsulation, computed, input, model, output } from '@angular/core';
 import { CommonProps, FieldControlProps, AsSignal } from '../../types/common';
 
-export type TextareaProps = CommonProps<'size'> &
-    FieldControlProps & {
-        /** The placeholder of the field. */
-        placeholder?: string;
-        /**
-         * The maximum number of characters that the field will accept.
-         *
-         * @minimum 1
-         */
-        maxLength?: number;
-        /**
-         * The minimum number of rows that the textarea will show.
-         *
-         * @default 3
-         * @minimum 3
-         * @maximum 10
-         */
-        minRows?: number;
-        /**
-         * The maximum number of rows that the textarea will show.
-         *
-         * When set the textarea will automatically adjust its height to fit the content up to this limit.
-         *
-         * @default 10
-         * @minimum 3
-         * @maximum 10
-         */
-        maxRows?: number;
-    };
+export interface TextareaProps extends Pick<CommonProps, 'size'>, FieldControlProps {
+    /** The placeholder of the field. */
+    placeholder?: string;
+    /**
+     * The maximum number of characters that the field will accept.
+     *
+     * @minimum 1
+     */
+    maxLength?: number;
+    /**
+     * The minimum number of rows that the textarea will show.
+     *
+     * @default 3
+     * @minimum 3
+     * @maximum 10
+     */
+    minRows?: number;
+    /**
+     * The maximum number of rows that the textarea will show.
+     *
+     * When set the textarea will automatically adjust its height to fit the content up to this limit.
+     *
+     * @default 10
+     * @minimum 3
+     * @maximum 10
+     */
+    maxRows?: number;
+}
 
 /**
  * A component that allows users to input large amounts of text that could span multiple lines.

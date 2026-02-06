@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { sendSnackbar } from '@ui/utils/send-snackbar';
 import { UIInputNumber } from './input-number';
 
 @Component({
@@ -9,13 +10,13 @@ import { UIInputNumber } from './input-number';
     template: `
         <h4>Default</h4>
         <ui-input-number
-            [value]="values()['default']"
             (valueChange)="update('default', $event)"
             id="default-input"
             name="default-input"
             ariaLabel="Input Label" />
+        <div>valueChange, id, name, ariaLabel</div>
 
-        <h4>Max set</h4>
+        <h4>max = 5</h4>
         <ui-input-number
             [value]="values()['max']"
             (valueChange)="update('max', $event)"
@@ -24,13 +25,24 @@ import { UIInputNumber } from './input-number';
             name="max-input"
             ariaLabel="Input Label" />
 
-        <h4>Min set</h4>
+        <h4>min = 7</h4>
         <ui-input-number
             [value]="values()['min']"
             (valueChange)="update('min', $event)"
-            [min]="1"
+            [min]="7"
             id="min-input"
             name="min-input"
+            ariaLabel="Input Label" />
+
+        <h4>min = 4, max = 52, step = 4</h4>
+        <ui-input-number
+            [value]="values()['minMax']"
+            (valueChange)="update('minMax', $event)"
+            [min]="4"
+            [max]="52"
+            [step]="4"
+            id="min-max-input"
+            name="min-max-input"
             ariaLabel="Input Label" />
 
         <h4>Align Left</h4>
@@ -41,6 +53,7 @@ import { UIInputNumber } from './input-number';
             id="left-input"
             name="left-input"
             ariaLabel="Input Label" />
+
         <h4>Disabled</h4>
         <ui-input-number
             [value]="values()['disabled']"
@@ -72,6 +85,7 @@ import { UIInputNumber } from './input-number';
             name="read-only-input"
             ariaLabel="Input Label"
             [readOnly]="true" />
+
         <h4>Small Size</h4>
         <ui-input-number
             [value]="values()['small']"
@@ -80,6 +94,7 @@ import { UIInputNumber } from './input-number';
             name="small-input"
             ariaLabel="Input Label"
             size="small" />
+
         <h4>Medium Size</h4>
         <ui-input-number
             [value]="values()['medium']"
@@ -88,6 +103,7 @@ import { UIInputNumber } from './input-number';
             name="medium-input"
             ariaLabel="Input Label"
             size="medium" />
+
         <h4>Large Size</h4>
         <ui-input-number
             [value]="values()['large']"
@@ -96,21 +112,50 @@ import { UIInputNumber } from './input-number';
             name="large-input"
             ariaLabel="Input Label"
             size="large" />
+
+        <h4>aria-describedby</h4>
+        <ui-input-number
+            [value]="values()['describedBy']"
+            (valueChange)="update('describedBy', $event)"
+            id="aria-describedby-input"
+            name="aria-describedby-input"
+            ariaLabel="Input Label"
+            ariaDescribedBy="described-by-example" />
+        <div id="described-by-example">This is an example of aria-describedby text.</div>
+
+        <h4>aria-errormessage</h4>
+        <ui-input-number
+            [value]="values()['errorMessage']"
+            (valueChange)="update('errorMessage', $event)"
+            id="aria-errormessage-input"
+            name="aria-errormessage-input"
+            ariaLabel="Input Label"
+            ariaErrorMessage="error message example"
+            [invalid]="true" />
+        <div id="error message example">This is an example of aria-errormessage text.</div>
+
+        <h4>step 0.25</h4>
+        <ui-input-number
+            [value]="values()['stepQuarter']"
+            (valueChange)="update('stepQuarter', $event)"
+            id="step-quarter"
+            name="step-quartert"
+            ariaLabel="Input Label"
+            [step]="0.25" />
+
+        <h4>step 3</h4>
+        <ui-input-number
+            [value]="values()['step3']"
+            (valueChange)="update('step3', $event)"
+            id="step-3-input"
+            name="step-3-input"
+            ariaLabel="Input Label"
+            [step]="3" />
     `,
 })
 export class UIInputNumberExample {
     readonly values = signal<Record<string, string | undefined>>({
-        default: '0',
-        max: '0',
-        min: '1',
-        left: '0',
-        disabled: '0',
-        invalid: '0',
-        required: '0',
-        readOnly: '0',
-        small: '0',
-        medium: '0',
-        large: '0',
+        left: '5',
     });
 
     readonly defaultValue = signal<string | undefined>('0');
@@ -120,5 +165,6 @@ export class UIInputNumberExample {
             ...current,
             [key]: next,
         }));
+        sendSnackbar(`Updated ${key}: ${next}`);
     };
 }

@@ -3,7 +3,8 @@ import { Component, Output, EventEmitter, ViewEncapsulation, input, computed } f
 import { AsSignal, CommonProps } from '../../types/common';
 import { UITooltipDirective } from '../tooltip';
 
-export type ListItemProps = CommonProps<
+export interface ListItemProps extends Pick<
+    CommonProps,
     | 'active'
     | 'ariaDisabled'
     | 'ariaLabel'
@@ -17,7 +18,7 @@ export type ListItemProps = CommonProps<
     | 'readOnly'
     | 'style'
     | 'tabIndex'
-> & {
+> {
     /**
      * The element type to render as.
      *
@@ -48,7 +49,7 @@ export type ListItemProps = CommonProps<
      * @default fill
      */
     width?: 'fill' | 'hug';
-};
+}
 
 /**
  * A hybrid interactive component that is used frequently to organize content and offers a wide range of control and

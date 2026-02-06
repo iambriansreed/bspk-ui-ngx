@@ -4,7 +4,7 @@ import { TabListProps, TabOption, UITabList, UITabListUtility } from '../tab-lis
 
 export type TabGroupSize = 'large' | 'medium' | 'small';
 
-export type TabGroupProps = Omit<TabListProps<TabOption>, 'iconsOnly'> & {
+export interface TabGroupProps extends Omit<TabListProps<TabOption>, 'iconsOnly'> {
     /**
      * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
      * property isn't applicable.
@@ -12,7 +12,7 @@ export type TabGroupProps = Omit<TabListProps<TabOption>, 'iconsOnly'> & {
      * @default false
      */
     showTrail?: boolean;
-};
+}
 
 /**
  * Navigation tool that organizes content across different screens and views.

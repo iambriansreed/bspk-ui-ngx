@@ -3,12 +3,12 @@ import { AsSignal } from '../../types/common';
 import { UIListItem } from '../list-item';
 import { RadioProps, UIRadio } from '../radio/radio';
 
-export type RadioOptionProps = RadioProps & {
+export interface RadioOptionProps extends RadioProps {
     /** The label of the option. Also used as the aria-label of the control. */
     label: string;
     /** The description of the option. */
     description?: string;
-};
+}
 
 /**
  * A control that allows users to choose one or more items from a list or turn an feature on or off.

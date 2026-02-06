@@ -12,7 +12,7 @@ export type FabContainer = 'local' | 'page';
 
 export type FabIconType = BspkIcon;
 
-export type FabProps = CommonProps<'ariaLabel' | 'owner' | 'style'> & {
+export interface FabProps extends Pick<CommonProps, 'ariaLabel' | 'owner' | 'style'> {
     /** The label of the button. */
     label?: string;
     /**
@@ -56,7 +56,7 @@ export type FabProps = CommonProps<'ariaLabel' | 'owner' | 'style'> & {
     iconOnly?: boolean;
     /** The tool tip text that appears when hovered. */
     tooltip?: string;
-};
+}
 
 /**
  * A button that highlights a primary action that is elevated above the body content of a page; normally fixed to the

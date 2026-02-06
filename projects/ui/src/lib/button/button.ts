@@ -20,9 +20,10 @@ export type ButtonWidth = 'fill' | 'hug';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
-export type ButtonProps = CommonProps<
+export interface ButtonProps extends Pick<
+    CommonProps,
     'ariaControls' | 'ariaExpanded' | 'ariaHaspopup' | 'ariaLabel' | 'class' | 'disabled' | 'owner' | 'style'
-> & {
+> {
     type?: 'button' | 'reset' | 'submit';
     /**
      * The label of the button.
@@ -75,7 +76,7 @@ export type ButtonProps = CommonProps<
     width?: 'fill' | 'hug';
     /** The tool tip text that appears when hovered. */
     tooltip?: string;
-};
+}
 
 /**
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.

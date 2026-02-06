@@ -23,51 +23,53 @@ import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 import { UIOutsideClickDirective } from '../outside-click';
 
-export type SelectOption = CommonProps<'disabled'> & { label: string; value: string };
+export interface SelectOption extends Pick<CommonProps, 'disabled'> {
+    label: string;
+    value: string;
+}
 export type SelectItem = SelectOption & { id: string; ariaLabel?: string; ariaSelected?: boolean };
 
-export type SelectProps = CommonProps<'size'> &
-    FieldControlProps<string> & {
-        /**
-         * Array of options to display in the select
-         *
-         * @example
-         *     [
-         *         { id: '1', label: 'Option 1' },
-         *         { id: '2', label: 'Option 2' },
-         *         { id: '3', label: 'Option 3' },
-         *         { id: '4', label: 'Option 4' },
-         *         { id: '5', label: 'Option 5' },
-         *         { id: '6', label: 'Option 6' },
-         *         { id: '7', label: 'Option 7' },
-         *         { id: '8', label: 'Option 8' },
-         *         { id: '9', label: 'Option 9' },
-         *         { id: '10', label: 'Option 10' },
-         *     ];
-         *
-         * @type Array<SelectOption>
-         * @required
-         */
-        items: SelectOption[];
-        /**
-         * Placeholder for the select
-         *
-         * @default Select one
-         */
-        placeholder?: string;
-        /**
-         * The width of the menu.
-         *
-         * If not provided, the menu will match the width of the select control.
-         */
-        menuWidth?: HTMLElement['style']['width'];
-        /**
-         * The maximum number of ListItems to show before scrolling is enabled.
-         *
-         * Used in conjunction with scrollListItemsStyle utility.
-         */
-        scrollLimit?: number;
-    };
+export interface SelectProps extends Pick<CommonProps, 'size'>, FieldControlProps<string> {
+    /**
+     * Array of options to display in the select
+     *
+     * @example
+     *     [
+     *         { id: '1', label: 'Option 1' },
+     *         { id: '2', label: 'Option 2' },
+     *         { id: '3', label: 'Option 3' },
+     *         { id: '4', label: 'Option 4' },
+     *         { id: '5', label: 'Option 5' },
+     *         { id: '6', label: 'Option 6' },
+     *         { id: '7', label: 'Option 7' },
+     *         { id: '8', label: 'Option 8' },
+     *         { id: '9', label: 'Option 9' },
+     *         { id: '10', label: 'Option 10' },
+     *     ];
+     *
+     * @type Array<SelectOption>
+     * @required
+     */
+    items: SelectOption[];
+    /**
+     * Placeholder for the select
+     *
+     * @default Select one
+     */
+    placeholder?: string;
+    /**
+     * The width of the menu.
+     *
+     * If not provided, the menu will match the width of the select control.
+     */
+    menuWidth?: HTMLElement['style']['width'];
+    /**
+     * The maximum number of ListItems to show before scrolling is enabled.
+     *
+     * Used in conjunction with scrollListItemsStyle utility.
+     */
+    scrollLimit?: number;
+}
 
 /**
  * A field element that allows users to select one option from a list of available choices.

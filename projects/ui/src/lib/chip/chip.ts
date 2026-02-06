@@ -4,7 +4,7 @@ import { AsSignal } from '../../types/common';
 import { BadgeProps, UIBadge } from '../badge';
 import { UIIcon } from '../icon';
 
-export type BadgeItem = Pick<BadgeProps, 'count' | 'size' | 'surfaceBorder'>;
+export interface BadgeItem extends Pick<BadgeProps, 'count' | 'size' | 'surfaceBorder'> {}
 
 export interface ChipProps {
     /**

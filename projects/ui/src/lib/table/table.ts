@@ -116,6 +116,8 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
                                             }
                                         </span>
                                     </button>
+                                } @else if (column.hideHeader) {
+                                    <span data-invisible>{{ column.label }}</span>
                                 } @else {
                                     {{ column.label }}
                                 }
@@ -131,11 +133,19 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
                                     [attr.data-align]="column.align || 'left'"
                                     [attr.data-cell]="column.key"
                                     [attr.data-valign]="column.valign || 'center'">
-                                    {{
-                                        formatCell(
-                                            column.formatter ? column.formatter(row, sizeSafe) : $any(row)[column.key]
-                                        )
-                                    }}
+                                    @if (column.component) {
+                                        <ng-container
+                                            [ngComponentOutlet]="column.component"
+                                            [ngComponentOutletInputs]="{ row: row, size: sizeSafe }"></ng-container>
+                                    } @else {
+                                        {{
+                                            formatCell(
+                                                column.formatter
+                                                    ? column.formatter(row, sizeSafe)
+                                                    : $any(row)[column.key]
+                                            )
+                                        }}
+                                    }
                                 </td>
                             }
                         </tr>

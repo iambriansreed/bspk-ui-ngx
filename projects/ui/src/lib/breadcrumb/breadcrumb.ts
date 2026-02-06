@@ -10,32 +10,31 @@ import { UITxtDirective } from '../txt';
 import { UIBreadcrumbDropdown } from './breadcrumb-dropdown';
 import { BreadcrumbItem } from './utils';
 
-export type BreadcrumbProps = CommonProps<'ariaLabel' | 'id'> &
-    ScrollLimitStyleProps & {
-        /**
-         * The array of breadcrumb items.
-         *
-         * If **less than 2** items are provided, the component will not render.
-         *
-         * @example
-         *     [
-         *         { label: 'Level 1', href: '#level-1' },
-         *         { label: 'Level 2', href: '#level-2' },
-         *         { label: 'Level 3', href: '#level-3' },
-         *         { label: 'Level 4', href: '#level-4' },
-         *         { label: 'Level 5', href: '#level-5' },
-         *         { label: 'Level 6', href: '#level-6' },
-         *         { label: 'Level 7', href: '#level-7' },
-         *         { label: 'Level 8', href: '#level-8' },
-         *         { label: 'Level 9', href: '#level-9' },
-         *         { label: 'Level 10', href: '#level-10' },
-         *     ];
-         *
-         * @type Array<BreadcrumbItem>
-         * @required
-         */
-        items: BreadcrumbItem[];
-    };
+export interface BreadcrumbProps extends Pick<CommonProps, 'ariaLabel' | 'id'>, ScrollLimitStyleProps {
+    /**
+     * The array of breadcrumb items.
+     *
+     * If **less than 2** items are provided, the component will not render.
+     *
+     * @example
+     *     [
+     *         { label: 'Level 1', href: '#level-1' },
+     *         { label: 'Level 2', href: '#level-2' },
+     *         { label: 'Level 3', href: '#level-3' },
+     *         { label: 'Level 4', href: '#level-4' },
+     *         { label: 'Level 5', href: '#level-5' },
+     *         { label: 'Level 6', href: '#level-6' },
+     *         { label: 'Level 7', href: '#level-7' },
+     *         { label: 'Level 8', href: '#level-8' },
+     *         { label: 'Level 9', href: '#level-9' },
+     *         { label: 'Level 10', href: '#level-10' },
+     *     ];
+     *
+     * @type Array<BreadcrumbItem>
+     * @required
+     */
+    items: BreadcrumbItem[];
+}
 
 /**
  * Used to indicate the current page's location within a navigational hierarchy.

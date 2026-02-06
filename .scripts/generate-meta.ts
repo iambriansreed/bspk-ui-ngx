@@ -60,6 +60,7 @@ export function generateMeta(dev?: boolean): Meta {
                     name: exampleComp.name,
                     path: exampleComp.file,
                 },
+                inputs: comp.inputsClass,
             };
         })
         .sort((a, b) => {

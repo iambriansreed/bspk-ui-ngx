@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation, inject, ViewContainerRef, input, effect, ComponentRef } from '@angular/core';
+import { NgComponentOutlet } from '@angular/common';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { BspkIcon } from '../../types/bspk-icon';
 import { AsSignal } from '../../types/common';
 
@@ -18,32 +19,15 @@ export interface IconProps {
  */
 @Component({
     selector: 'ui-icon',
-    template: '',
+    imports: [NgComponentOutlet],
+    template: `@if (icon()) {
+        <ng-container [ngComponentOutlet]="icon()" [ngComponentOutletInputs]="{ width: width() }"></ng-container>
+    }`,
     styles: 'ui-icon { display: contents; }',
     encapsulation: ViewEncapsulation.None,
+    standalone: true,
 })
 export class UIIcon implements AsSignal<IconProps> {
     readonly icon = input.required<IconProps['icon']>();
     readonly width = input<IconProps['width']>();
-
-    viewContainerRef = inject(ViewContainerRef);
-
-    componentRef?: ComponentRef<any>;
-    currentIcon?: BspkIcon;
-
-    constructor() {
-        effect(() => {
-            const nextIcon = this.icon();
-
-            if (typeof nextIcon !== 'function') return;
-
-            if (this.currentIcon !== nextIcon) {
-                this.viewContainerRef.clear();
-                this.componentRef = this.viewContainerRef.createComponent(nextIcon);
-                this.currentIcon = nextIcon;
-            }
-
-            if (this.componentRef) this.componentRef.instance.width = this.width();
-        });
-    }
 }

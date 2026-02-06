@@ -11,7 +11,7 @@ import {
     OnChanges,
 } from '@angular/core';
 import { format, startOfToday, parse } from 'date-fns';
-import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
+import { AsSignal, FieldControlProps } from '../../types/common';
 import { UIButton } from '../button';
 import { UICalendar } from '../calendar';
 import { UIFloatingDirective } from '../floating';
@@ -25,45 +25,48 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-export type DatePickerProps = CommonProps<
-    | 'ariaDescribedBy'
-    | 'ariaErrorMessage'
-    | 'ariaLabel'
-    | 'disabled'
-    | 'id'
-    | 'invalid'
-    | 'name'
-    | 'readOnly'
-    | 'required'
-> &
-    Pick<FieldControlProps<string>, 'ariaLabelledBy'> & {
-        /**
-         * If the calendar should close when a date is selected.
-         *
-         * @default true
-         */
-        closeCalendarOnChange?: boolean;
-        /**
-         * The currently selected date
-         *
-         * String formatted as 'MM/dd/yyyy'.
-         *
-         * @type string
-         */
-        value?: Date | string | undefined;
-        /**
-         * The placeholder text for the date input field.
-         *
-         * @default mm/dd/yyyy
-         */
-        placeholder?: string;
-        /**
-         * The size of the element.
-         *
-         * @default 'medium'
-         */
-        size?: 'large' | 'medium' | 'small';
-    };
+/**
+ * | 'ariaDescribedBy'
+ *
+ *     | 'ariaErrorMessage'
+ *     | 'ariaLabel'
+ *     | 'ariaLabelledBy'
+ *     | 'disabled'
+ *     | 'id'
+ *     | 'invalid'
+ *     | 'name'
+ *     | 'readOnly'
+ *     | 'required'
+ */
+
+export interface DatePickerProps extends FieldControlProps<Date | string | undefined> {
+    /**
+     * If the calendar should close when a date is selected.
+     *
+     * @default true
+     */
+    closeCalendarOnChange?: boolean;
+    /**
+     * The currently selected date
+     *
+     * String formatted as 'MM/dd/yyyy'.
+     *
+     * @type string
+     */
+    value?: Date | string | undefined;
+    /**
+     * The placeholder text for the date input field.
+     *
+     * @default mm/dd/yyyy
+     */
+    placeholder?: string;
+    /**
+     * The size of the element.
+     *
+     * @default 'medium'
+     */
+    size?: 'large' | 'medium' | 'small';
+}
 
 /**
  * An input that allows a customer to manually type in a specific date or triggers a the Calendar component to select a

@@ -75,7 +75,7 @@ export interface PaginationProps {
             <ng-template #pageButtons>
                 @for (page of pages(); track $index) {
                     <ui-button
-                        [attr.aria-label]="'Page ' + page"
+                        [ariaLabel]="'Page ' + page"
                         [label]="page.toString()"
                         (onClick)="emit(page)"
                         size="small"
