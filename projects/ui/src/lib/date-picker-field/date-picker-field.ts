@@ -9,9 +9,9 @@ export type DatePickerFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 /**
  * A field wrapper for the UIDatePicker component.
  *
- * This component takes properties from the FormField and UIDatePicker components.
+ * This component takes properties from the Field and DatePicker components.
  *
- * @name UIDatePickerField
+ * @name DatePickerField
  * @phase UXReview
  *
  * @generated

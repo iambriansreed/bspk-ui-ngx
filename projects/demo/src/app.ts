@@ -1,9 +1,10 @@
-import { Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, inject, signal, ViewEncapsulation, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { UIButton } from '@ui/button';
 import { IconDarkMode } from '@ui/icons/dark-mode';
 import { IconDarkModeFill } from '@ui/icons/dark-mode-fill';
 import { ThemeService } from '@ui/services/theme';
+import { Subscription } from 'rxjs';
 import { AppNavComponent } from './components/app-nav';
 import { AppNavContents } from './components/nav-contents';
 import { META } from './meta';
@@ -36,11 +37,13 @@ import { META } from './meta';
             <div data-component-page data-page>
                 <router-outlet />
             </div>
-            <app-nav-contents />
+            @if (false) {
+                <app-nav-contents />
+            }
         </main> `,
     encapsulation: ViewEncapsulation.None,
 })
-export class App {
+export class App implements OnInit {
     version = META.version;
     hash = META.hash;
     toggleDarkModeLabel = computed(() => {
@@ -51,11 +54,35 @@ export class App {
         return this.themeService.value() === 'light' ? IconDarkMode : IconDarkModeFill;
     });
 
-    protected readonly themeService = inject(ThemeService);
-
     protected readonly title = signal('demo');
+    protected readonly themeService = inject(ThemeService);
+    protected readonly router = inject(Router);
+    protected readonly route = inject(ActivatedRoute);
+    protected readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+    private routeSubscription: Subscription | null = null;
+    private fragmentSubscription: Subscription | null = null;
+
+    get location() {
+        return globalThis.location;
+    }
 
     toggleDarkMode() {
         this.themeService.toggle();
+    }
+
+    ngOnInit() {
+        this.routeSubscription = this.router.events.subscribe(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        });
+
+        this.fragmentSubscription = this.route.fragment.subscribe((fragment: string | null) => {
+            if (fragment) document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    onDestroy() {
+        this.routeSubscription?.unsubscribe();
+        this.fragmentSubscription?.unsubscribe();
     }
 }

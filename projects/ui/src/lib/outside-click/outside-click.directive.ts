@@ -2,23 +2,23 @@ import { Directive, input, AfterViewInit, inject, ElementRef, OnDestroy } from '
 import { AsSignal } from '../../types/common';
 import { OutsideClickUtility, OutsideClickUtilityProps } from './outside-click';
 
-interface OutsideClickDirectiveProps {
+interface OutsideClickProps {
     props: OutsideClickUtilityProps;
 }
 
 /**
  * A directive to detect clicks outside a specified element and execute a callback.
  *
- * @name UIOutsideClickDirective
+ * @name OutsideClick
  * @phase Utility
  */
 @Directive({
     selector: '[ui-outside-click]',
 })
-export class UIOutsideClickDirective implements AfterViewInit, OnDestroy, AsSignal<OutsideClickDirectiveProps> {
+export class UIOutsideClickDirective implements AfterViewInit, OnDestroy, AsSignal<OutsideClickProps> {
     host = inject<ElementRef<HTMLElement>>(ElementRef<HTMLElement>);
 
-    readonly props = input<OutsideClickDirectiveProps['props']>(
+    readonly props = input<OutsideClickProps['props']>(
         {
             disabled: false,
             handleTabs: true,

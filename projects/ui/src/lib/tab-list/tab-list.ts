@@ -78,7 +78,7 @@ export interface TabListProps<O extends TabOption = TabOption> {
      *         { value: '3', label: 'Option 3' },
      *     ];
      *
-     * @type Array<TabOption>
+     * @type TabOption[]
      * @required
      */
     options: O[];

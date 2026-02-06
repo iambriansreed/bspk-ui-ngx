@@ -6,12 +6,13 @@ import { UITag } from '@ui/tag';
 import { UIFlexDirective } from '../../../ui/src';
 import { META } from '../meta';
 import { COMPONENT_PHASE_COLORS } from '../utils';
+import { Markup } from './markup';
 import { TypeProps } from './type-props';
 
 @Component({
     selector: 'app-component-page',
     standalone: true,
-    imports: [RouterOutlet, UITag, TypeProps, UIFlexDirective],
+    imports: [RouterOutlet, UITag, TypeProps, UIFlexDirective, Markup],
     template: ` @if (!component()) {
             <h2>Component Not Found</h2>
         } @else {
@@ -22,9 +23,7 @@ import { TypeProps } from './type-props';
                 <span style="margin-left: auto;"><ui-tag [color]="phaseColor()" [label]="component()!.phase!" /></span>
             </div>
 
-            @for (line of description(); track $index) {
-                <p>{{ line }}</p>
-            }
+            <app-markup [source]="component()?.description" />
 
             <h3>Inputs</h3>
             <app-type-props [props]="component()?.props || []" />

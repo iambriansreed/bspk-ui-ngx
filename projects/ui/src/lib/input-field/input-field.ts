@@ -7,11 +7,11 @@ import { UIInput } from '../input';
 export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'> {}
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the Input component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the Field and Input components.
  *
- * @name UIInputField
+ * @name InputField
  * @phase UXReview
  *
  * @generated

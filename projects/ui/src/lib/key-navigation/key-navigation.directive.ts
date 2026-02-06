@@ -9,7 +9,7 @@ export interface KeyNavigationProps {
 /**
  * A directive to enable key navigation on an element.
  *
- * @name UIKeyNavigationDirective
+ * @name KeyNavigation
  * @phase Utility
  */
 @Directive({

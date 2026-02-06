@@ -24,6 +24,11 @@ import { UIMenu } from '../menu';
 import { UIOutsideClickDirective } from '../outside-click';
 import { BreadcrumbItem } from './utils';
 
+/**
+ * Props for the BreadcrumbDropdown component.
+ *
+ * @ignore
+ */
 export interface BreadcrumbDropdownProps extends ScrollLimitStyleProps {
     items: BreadcrumbItem[];
     id?: string;

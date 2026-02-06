@@ -2,16 +2,16 @@ import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UITextarea } from '../textarea';
+import { TextareaProps, UITextarea } from '../textarea';
 
-export type TextareaFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface TextareaFieldProps extends FieldProps, TextareaProps {}
 
 /**
  * A field wrapper for the UITextarea component.
  *
- * This component takes properties from the FormField and UITextarea components.
+ * This component takes properties from the Field and Textarea components.
  *
- * @name UITextareaField
+ * @name TextareaField
  * @phase UXReview
  *
  * @generated

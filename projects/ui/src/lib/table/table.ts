@@ -27,7 +27,7 @@ export interface TableProps<R extends TableRow> {
      *
      * @type Array<TableColumn>
      */
-    columns: (TableColumn<R> | boolean)[];
+    columns: TableColumn<R>[];
     /** The title of the table. */
     title?: string;
     /**

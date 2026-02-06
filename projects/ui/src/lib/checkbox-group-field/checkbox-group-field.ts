@@ -9,9 +9,9 @@ export type CheckboxGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 /**
  * A field wrapper for the UICheckboxGroup component.
  *
- * This component takes properties from the FormField and UICheckboxGroup components.
+ * This component takes properties from the Field and CheckboxGroup components.
  *
- * @name UICheckboxGroupField
+ * @name CheckboxGroupField
  * @phase UXReview
  *
  * @generated

@@ -36,7 +36,7 @@ export interface ComponentMeta {
 export interface ComponentMetaProp {
     name: string;
     description?: string;
-    type?: string;
+    type?: string[] | string;
     exampleType?: string;
     default?: string;
     required?: boolean;

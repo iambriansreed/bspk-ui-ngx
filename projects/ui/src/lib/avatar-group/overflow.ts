@@ -6,6 +6,11 @@ import { UIFloatingDirective } from '../floating';
 import { UIListItem } from '../list-item/list-item';
 import { UIMenu } from '../menu/menu';
 
+/**
+ * Props for the AvatarGroupOverflow component.
+ *
+ * @ignore
+ */
 export interface AvatarGroupOverflowProps {
     /**
      * The unique identifier for the overflow menu.

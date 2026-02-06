@@ -4,6 +4,7 @@ import { CheckboxProps, UICheckbox } from '../checkbox/checkbox';
 import { UIListItem } from '../list-item';
 
 export interface CheckboxOptionProps extends CheckboxProps {
+    /** The style of the option. */
     style?: CommonProps['style'];
     /**
      * The label of the option. Also used as the aria-label of the control.

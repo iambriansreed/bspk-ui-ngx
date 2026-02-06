@@ -80,11 +80,13 @@ todo: add
     imports: [UITag, Markup],
     template: `
         <app-markup data-description [source]="row().description" />
-        @if (row().type) {
-            <div data-type-options>
-                <ui-tag color="blue" [label]="row().type!" size="x-small" variant="flat" />
-            </div>
-        }
+        <div data-type-options>
+            @for (typeLabel of [row().type].flat(); track typeLabel) {
+                @if (typeLabel) {
+                    <ui-tag color="blue" [label]="typeLabel" size="x-small" variant="flat" />
+                }
+            }
+        </div>
     `,
     standalone: true,
     encapsulation: ViewEncapsulation.None,
@@ -97,7 +99,7 @@ class DescriptionTypeCell extends UITableCell<PropRow> {}
 @Component({
     selector: 'app-type-props',
     imports: [UITable],
-    template: ` <ui-table [columns]="propColumns" [data]="propsData()" /> `,
+    template: ` <ui-table [pageSize]="99" [columns]="propColumns" [data]="propsData()" /> `,
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {

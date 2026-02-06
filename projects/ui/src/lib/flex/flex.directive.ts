@@ -51,6 +51,9 @@ export interface FlexProps {
  *
  * Usage examples: <div uiFlex></div> <div [uiFlex]="'inline'" direction="column" justify="between" align="center"
  * wrap="wrap" gap="8px"></div>
+ *
+ * @name Flex
+ * @phase Utility
  */
 @Directive({
     selector: '[ui-flex]',
