@@ -7,7 +7,19 @@ import chalk from 'chalk';
 import fs from 'fs';
 
 const SCRIPTS = {
-    /** Generates the metadata file used for documentation generation. */
+    /**
+     * Generates the metadata file used for documentation generation.
+     *
+     * This should be run after any changes to the codebase that may affect the documentation, such as adding new
+     * components or changing existing ones. It is also run as part of the release process to ensure that the
+     * documentation is up to date with the latest changes.
+     *
+     * This script checks if the 'f' argument is included or if the documentation.json file does not exist, and if so,
+     * it runs the compodoc command to generate the documentation in JSON format. Then it runs the generate-meta.ts
+     * script to write the metadata file.
+     *
+     * $ npm run meta
+     */
     meta() {
         if (args.includes('f') || !fs.existsSync('.tmp/documentation.json'))
             exec('npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp');
@@ -15,6 +27,15 @@ const SCRIPTS = {
         exec('npx tsx .scripts/generate-meta.ts --write');
     },
 
+    /**
+     * Updates the version in package.json and projects/ui/package.json to match the latest tag in the repo, then
+     * commits and pushes the changes.
+     *
+     * This is intended to be run as part of the release process after a new version has been tagged, to ensure that the
+     * version in package.json matches the latest tag.
+     *
+     * $ npm run update-version
+     */
     'update-version'() {
         // get the latest tag in the format X.Y.Z - no v or other prefix or suffix
         const latestVersion = execSyncBase('git fetch --tags && git tag -l --sort=-creatordate | head -n 1', {
@@ -36,12 +57,12 @@ const SCRIPTS = {
 
         // update the version in package.json and projects/ui/package.json to match the latest tag
 
-        exec('git add package.json projects/ui/package.json');
+        // exec('git add package.json projects/ui/package.json');
 
-        // commit the changes and push to the repo
+        // // commit the changes and push to the repo
 
-        exec(`git commit -m "chore: update version to ${latestVersion} [skip ci]"`);
-        exec('git push');
+        // exec(`git commit -m "chore: update version to ${latestVersion} [skip ci]"`);
+        // exec('git push');
     },
 };
 
