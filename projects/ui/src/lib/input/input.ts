@@ -14,38 +14,37 @@ import { AsSignal, ButtonSize, CommonProps, FieldControlProps } from '../../type
 import { UIButton } from '../button/button';
 import { IconCancel } from '../icons/cancel';
 
-export type InputProps = CommonProps<'owner' | 'size'> &
-    FieldControlProps & {
-        /** The trailing element to display in the field. */
-        trailing?: TemplateRef<any> | string;
-        /** The leading element to display in the field. */
-        leading?: string;
-        /** The placeholder of the field. */
-        placeholder?: string;
-        /**
-         * The type of the input.
-         *
-         * @default text
-         */
-        type?: 'number' | 'password' | 'tel' | 'text'; /**
-         * The inputmode attribute for the input.
-         *
-         * @default undefined
-         */
-        inputMode?: 'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url';
-        /**
-         * Specifies if user agent has any permission to provide automated assistance in filling out form field values
-         *
-         * @default off
-         */
-        autoComplete?: 'off' | 'on';
-        /**
-         * Specifies if the clear button should be shown. This should almost always be true, but can be set to false.
-         *
-         * @default true
-         */
-        showClearButton?: boolean;
-    };
+export interface InputProps extends Pick<CommonProps, 'owner' | 'size'>, FieldControlProps {
+    /** The trailing element to display in the field. */
+    trailing?: TemplateRef<any> | string;
+    /** The leading element to display in the field. */
+    leading?: string;
+    /** The placeholder of the field. */
+    placeholder?: string;
+    /**
+     * The type of the input.
+     *
+     * @default text
+     */
+    type?: 'number' | 'password' | 'tel' | 'text'; /**
+     * The inputmode attribute for the input.
+     *
+     * @default undefined
+     */
+    inputMode?: 'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url';
+    /**
+     * Specifies if user agent has any permission to provide automated assistance in filling out form field values
+     *
+     * @default off
+     */
+    autoComplete?: 'off' | 'on';
+    /**
+     * Specifies if the clear button should be shown. This should almost always be true, but can be set to false.
+     *
+     * @default true
+     */
+    showClearButton?: boolean;
+}
 
 /**
  * An input that allows users to enter text, numbers or symbols in a singular line. This is a utility element and is not

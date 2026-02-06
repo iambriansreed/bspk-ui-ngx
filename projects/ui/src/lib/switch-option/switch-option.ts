@@ -3,21 +3,20 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { UIListItem } from '../list-item';
 import { SwitchProps, UISwitch } from '../switch';
 
-export type SwitchOptionProps = CommonProps<'style'> &
-    SwitchProps & {
-        /**
-         * The label of the option. Also used as the aria-label of the control.
-         *
-         * @required
-         */
-        label: string;
-        /**
-         * The description of the option.
-         *
-         * @type multiline
-         */
-        description?: string;
-    };
+export interface SwitchOptionProps extends Pick<CommonProps, 'style'>, SwitchProps {
+    /**
+     * The label of the option. Also used as the aria-label of the control.
+     *
+     * @required
+     */
+    label: string;
+    /**
+     * The description of the option.
+     *
+     * @type multiline
+     */
+    description?: string;
+}
 
 /**
  * A control that allows users to choose one or more items from a list or turn an feature on or off.

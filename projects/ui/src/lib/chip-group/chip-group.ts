@@ -2,10 +2,10 @@ import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { UIChip, ChipProps } from '../chip/chip';
 
-export type ChipGroupItemProps = ChipProps & {
+export interface ChipGroupItemProps extends ChipProps {
     /** Optional click handler for the chip item. */
     click?: () => void;
-};
+}
 
 export interface ChipGroupProps {
     /**

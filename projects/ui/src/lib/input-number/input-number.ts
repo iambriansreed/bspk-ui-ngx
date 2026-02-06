@@ -1,8 +1,6 @@
 import { Component, ElementRef, input, model, viewChild, ViewEncapsulation } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
-import { UIIcon } from '../icon';
 import { IconAdd, IconRemove } from '../icons';
-import { IconCancel } from '../icons/cancel';
 
 function isNumber(value: unknown): number | undefined;
 function isNumber(value: unknown, fallbackValue: number): number;
@@ -13,33 +11,28 @@ function isNumber(value: unknown, fallbackValue?: number): number | undefined {
     return isNaN(num) ? fallbackValue : num;
 }
 
-export type InputNumberProps = CommonProps<'owner' | 'size'> &
-    FieldControlProps & {
-        /**
-         * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
-         *
-         * @default center
-         */
-        align?: 'center' | 'left';
-        /**
-         * Defines the [maximum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) value that is
-         * accepted.
-         */
-        max?: number;
-        /**
-         * Defines the [minimum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) value that is
-         * accepted.
-         *
-         * @default 0
-         */
-        min?: number;
-        /**
-         * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
-         *
-         * @default 1
-         */
-        step?: number;
-    };
+export interface InputNumberProps extends Pick<CommonProps, 'owner' | 'size'>, FieldControlProps {
+    /**
+     * The alignment of the input box. Centered between the plus and minus buttons or to the left of the buttons.
+     *
+     * @default center
+     */
+    align?: 'center' | 'left';
+    /** Defines the [maximum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) value that is accepted. */
+    max?: number;
+    /**
+     * Defines the [minimum](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) value that is accepted.
+     *
+     * @default 0
+     */
+    min?: number;
+    /**
+     * The amount to increment or decrement the value by when the (+) or (-) buttons are pressed.
+     *
+     * @default 1
+     */
+    step?: number;
+}
 
 /**
  * A input element that allows users to either input a numerical value or singularly increase or decrease the values by
@@ -62,7 +55,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
  */
 @Component({
     selector: 'ui-input-number',
-    imports: [UIIcon],
+    imports: [IconAdd, IconRemove],
     template: `
         <input
             data-main-input
@@ -72,7 +65,7 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
             [attr.aria-label]="ariaLabel() || null"
             [attr.aria-invalid]="invalid() || null"
             [attr.data-invalid]="invalid() || null"
-            [disabled]="this.disabled()"
+            [disabled]="disabled()"
             [attr.id]="id() || null"
             [attr.name]="name() || null"
             [readOnly]="readOnly() || null"
@@ -90,19 +83,17 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
         <div aria-hidden="true" data-divider></div>
         <button
             aria-label="Decrease value"
-            kind="remove"
-            (click)="incrementHandler('remove')"
-            [disabled]="decrementDisabled"
+            (click)="decrementHandler()"
+            [disabled]="disabled() || readOnly() || decrementDisabled"
             tabindex="-1">
-            <ui-icon [icon]="iconRemove"></ui-icon>
+            <icon-remove />
         </button>
         <button
             aria-label="Increase value"
-            kind="add"
-            (click)="incrementHandler('add')"
-            [disabled]="incrementDisabled"
+            (click)="incrementHandler()"
+            [disabled]="disabled() || readOnly() || incrementDisabled"
             tabindex="-1">
-            <ui-icon [icon]="iconAdd"></ui-icon>
+            <icon-add />
         </button>
     `,
     styleUrl: './input-number.scss',
@@ -112,20 +103,16 @@ export type InputNumberProps = CommonProps<'owner' | 'size'> &
         '[attr.data-size]': 'size()',
         '[attr.data-invalid]': 'invalid() || null',
         '[attr.data-centered]': 'centered || null',
-        '[attr.data-disabled]': 'this.disabled() || null',
+        '[attr.data-disabled]': 'disabled() || null',
         '[attr.data-readonly]': 'readOnly() || null',
         '[attr.data-stepper-input]': 'true',
     },
     encapsulation: ViewEncapsulation.None,
 })
 export class UIInputNumber implements AsSignal<InputNumberProps> {
-    public IconCancel = IconCancel;
-
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
-
     readonly value = model<InputNumberProps['value']>('');
     readonly name = input.required<InputNumberProps['name']>();
-
     readonly disabled = input<InputNumberProps['disabled']>(false);
     readonly invalid = input<InputNumberProps['invalid']>(false);
     readonly readOnly = input<InputNumberProps['readOnly']>(false);
@@ -142,45 +129,44 @@ export class UIInputNumber implements AsSignal<InputNumberProps> {
     readonly ariaDescribedBy = input<InputNumberProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputNumberProps['ariaErrorMessage']>(undefined);
 
-    readonly iconAdd = IconAdd;
-    readonly iconRemove = IconRemove;
-
     get centered() {
         return this.align() === 'center';
     }
 
     get decrementDisabled() {
-        if (this.min() === undefined) {
-            return false;
+        if (Number(this.value()) <= Number(this.min())) {
+            return true;
         }
-        const currentValue = this.value() ? Number(this.value()) : 0;
-        return currentValue <= this.min()!;
+        return false;
     }
 
     get incrementDisabled() {
-        if (this.max() === undefined) {
-            return false;
+        if (Number(this.value()) >= Number(this.max())) {
+            return true;
         }
-        const currentValue = this.value() ? Number(this.value()) : 0;
-        return currentValue >= this.max()!;
+        return false;
     }
 
-    incrementHandler(kind: 'add' | 'remove') {
-        if (this.readOnly() || this.disabled()) {
-            return;
+    get existingValue(): number {
+        if (this.value() === undefined && Number(this.min())) {
+            this.value.set(this.min()!.toString());
         }
+        return this.value() ? Number(this.value()) : 0;
+    }
 
-        const existingValue = this.value() ? Number(this.value()) : 0;
-        const newValue = kind === 'add' ? existingValue + (this.step() || 1) : existingValue - (this.step() || 1);
-
-        if (this.max() !== undefined && newValue > this.max()!) {
-            return;
-        }
-
+    decrementHandler() {
+        const newValue = this.existingValue - (this.step() || 1);
         if (this.min() !== undefined && newValue < this.min()!) {
             return;
         }
+        this.value.set(newValue.toString());
+    }
 
+    incrementHandler() {
+        const newValue = this.existingValue + (this.step() || 1);
+        if (this.max() !== undefined && newValue > this.max()!) {
+            return;
+        }
         this.value.set(newValue.toString());
     }
 

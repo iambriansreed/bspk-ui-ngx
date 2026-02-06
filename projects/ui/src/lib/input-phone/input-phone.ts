@@ -11,11 +11,12 @@ import {
     AfterViewInit,
     OnDestroy,
     effect,
+    OnInit,
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
 import { AsSignal, FieldControlProps } from '../../types/common';
-import { countryCodeData, countryCodes, SupportedCountryCode } from '../../utils/country-codes';
+import { countryCodeData, countryCodes, SupportedCountryCode, guessUserCountryCode } from '../../utils/country-codes';
 import { uniqueId } from '../../utils/random';
 import { scrollLimitStyle, ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
@@ -50,30 +51,28 @@ export interface CountryCodeItem extends CountryCodeOption {
     id: string;
 }
 
-export type InputPhoneProps = FieldControlProps<string> &
-    ScrollLimitStyleProps & {
-        /**
-         * The default country code to select when the component is rendered. If not provided, it will attempt to guess
-         * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
-         * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
-         *
-         * @type string
-         */
-        initialCountryCode?: SupportedCountryCode;
-        /**
-         * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always
-         * unformatted.
-         *
-         * @type boolean
-         */
-        disableFormatting?: boolean;
-        /**
-         * The size of the component
-         *
-         * @default medium
-         */
-        size?: 'large' | 'medium' | 'small';
-    };
+export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitStyleProps {
+    /**
+     * The default country code to select when the component is rendered. If not provided, it will attempt to guess
+     * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
+     * [ISO](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) 2-digit country codes.
+     *
+     * @type string
+     */
+    initialCountryCode?: SupportedCountryCode;
+    /**
+     * Disables formatting of the phone number input in the UI. values returned by `valueChange` are always unformatted.
+     *
+     * @type boolean
+     */
+    disableFormatting?: boolean;
+    /**
+     * The size of the component
+     *
+     * @default medium
+     */
+    size?: 'large' | 'medium' | 'small';
+}
 
 /**
  * An input that allows users to enter text phone numbers and select country codes for the phone number.
@@ -95,7 +94,7 @@ export type InputPhoneProps = FieldControlProps<string> &
  *     </div>
  *
  * @name InputPhone
- * @phase Stable
+ * @phase Dev
  */
 @Component({
     selector: 'ui-input-phone',
@@ -193,7 +192,7 @@ export type InputPhoneProps = FieldControlProps<string> &
         }
     `,
 })
-export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy, OnInit {
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<InputPhoneProps['value']>('');
@@ -264,6 +263,12 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
             this.previousValue.set(reformatted);
             this.value.set(reformatted);
         });
+    }
+
+    ngOnInit(): void {
+        // Set initial country code on init
+        // Priority: initialCountryCode prop > guessed country code > default to 'US'
+        this.countryCode.set(this.initialCountryCode() || guessUserCountryCode() || 'US');
     }
 
     ngAfterViewInit(): void {

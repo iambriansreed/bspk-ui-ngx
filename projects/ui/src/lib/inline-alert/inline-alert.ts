@@ -4,7 +4,7 @@ import { IconCheckCircleFill, IconErrorFill, IconInfoFill } from '../icons';
 import { UITxtDirective } from '../txt/txt.directive';
 import { UIWarningTwoTone } from './warning-two-tone';
 
-export type InlineAlertProps = CommonProps<'owner'> & {
+export interface InlineAlertProps extends Pick<CommonProps, 'owner'> {
     /**
      * The content of the inline alert.
      *
@@ -20,7 +20,7 @@ export type InlineAlertProps = CommonProps<'owner'> & {
     variant?: AlertVariant;
     /** The id of the inline alert. */
     id?: string;
-};
+}
 
 /**
  * Inline alerts provide contextual feedback messages for typical user actions with a handful of available and flexible

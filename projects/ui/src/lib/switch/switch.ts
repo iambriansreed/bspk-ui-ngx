@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 
-export type SwitchProps = CommonProps<'ariaLabel' | 'disabled' | 'id' | 'name'> & {
+export interface SwitchProps extends Pick<CommonProps, 'ariaLabel' | 'disabled' | 'id' | 'name'> {
     /**
      * Marks the control as checked.
      *
@@ -10,7 +10,7 @@ export type SwitchProps = CommonProps<'ariaLabel' | 'disabled' | 'id' | 'name'> 
     checked?: boolean;
     /** The value of the switch. */
     value: string;
-};
+}
 
 /**
  * A control element that allows users to toggle between two states, typically representing on/off. This is the base

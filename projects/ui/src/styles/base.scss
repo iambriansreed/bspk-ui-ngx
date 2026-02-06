@@ -229,6 +229,19 @@ body[data-bspk] {
     display: none !important;
 }
 
+/* This is used for content that should be visually hidden but still accessible to screen readers. */
+[data-invisible] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 [data-bspk='link'] {
     @extend %link;
 }

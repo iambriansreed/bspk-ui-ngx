@@ -37,11 +37,11 @@ export interface KeyNavigationUtilityProps {
     activeElementId: string | null;
 }
 
-export type ArrowKeyNavigationCallbackParams = Pick<KeyNavigationUtilityProps, 'activeElementId'> & {
+export interface ArrowKeyNavigationCallbackParams extends Pick<KeyNavigationUtilityProps, 'activeElementId'> {
     increment: number;
     key: ArrowKeyNames;
     event: KeyboardEvent;
-};
+}
 
 /**
  * A hook to manage arrow key navigation for a list of elements.

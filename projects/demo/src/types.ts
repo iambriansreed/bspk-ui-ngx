@@ -26,4 +26,17 @@ export interface ComponentDemo {
         name: string;
         path: string;
     };
+    inputs: {
+        name: string;
+        defaultValue: string;
+        deprecated: boolean;
+        deprecationMessage: string;
+        type: string;
+        indexKey: string;
+        optional: boolean;
+        description: string;
+        line: number;
+        modifierKind: number[];
+        required: boolean;
+    }[];
 }

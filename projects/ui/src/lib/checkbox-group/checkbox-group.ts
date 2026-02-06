@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angu
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
-export type CheckboxGroupOption = Omit<CheckboxOptionProps, 'name' | 'onChange'>;
+export interface CheckboxGroupOption extends Omit<CheckboxOptionProps, 'name' | 'onChange'> {}
 
-export type CheckboxGroupProps = Omit<FieldControlProps<string[]>, 'readOnly'> & {
+export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'readOnly'> {
     /**
      * The options for the checkboxes.
      *
@@ -27,7 +27,7 @@ export type CheckboxGroupProps = Omit<FieldControlProps<string[]>, 'readOnly'> &
     selectAll?: boolean;
     /** The props for the select all checkbox. */
     selectAllProps?: Pick<CheckboxOptionProps, 'ariaLabel' | 'description' | 'label'>;
-};
+}
 
 /**
  * A group of checkboxes that allows users to choose one or more items from a list or turn an feature on or off.

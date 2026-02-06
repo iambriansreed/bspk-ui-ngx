@@ -34,7 +34,7 @@ export type AlertVariant = 'error' | 'informational' | 'success' | 'warning';
 /** Sets a ref to the given element. */
 export type SetRef<T> = (instance: T | null) => void;
 
-export type DataProps = Record<`data-${string}`, string>;
+export interface DataProps extends Record<`data-${string}`, string> {}
 
 export type ButtonSize = 'large' | 'medium' | 'small' | 'x-small';
 
@@ -55,7 +55,7 @@ export interface CallToActionButton {
     size?: ButtonSize;
 }
 
-export interface CommonPropsLibrary {
+export interface CommonProps {
     /**
      * Indicates that the element is in an invalid state and displays the error theme.
      *
@@ -175,11 +175,8 @@ export interface CommonPropsLibrary {
     class?: string;
 }
 
-export type CommonProps<K extends keyof CommonPropsLibrary> = Pick<CommonPropsLibrary, K>;
-
-export type RequiredCommonProps<K extends keyof CommonPropsLibrary> = Required<Pick<CommonPropsLibrary, K>>;
-
-export type FieldControlProps<ValueType = string> = CommonProps<
+export interface FieldControlProps<ValueType = string> extends Pick<
+    CommonProps,
     | 'ariaDescribedBy'
     | 'ariaErrorMessage'
     | 'ariaLabel'
@@ -190,14 +187,14 @@ export type FieldControlProps<ValueType = string> = CommonProps<
     | 'name'
     | 'readOnly'
     | 'required'
-> & {
+> {
     /**
      * The value of the field control.
      *
      * @required
      */
     value: ValueType | undefined;
-};
+}
 
 export type Brand =
     | 'anywhere'

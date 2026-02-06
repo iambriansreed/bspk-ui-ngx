@@ -24,10 +24,10 @@ import { UIMenu } from '../menu';
 import { UIOutsideClickDirective } from '../outside-click';
 import { BreadcrumbItem } from './utils';
 
-export type BreadcrumbDropdownProps = ScrollLimitStyleProps & {
+export interface BreadcrumbDropdownProps extends ScrollLimitStyleProps {
     items: BreadcrumbItem[];
     id?: string;
-};
+}
 
 /**
  * The BreadcrumbDropdown component is used to display a dropdown menu within a breadcrumb navigation.

@@ -25,7 +25,8 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-export type DatePickerProps = CommonProps<
+export interface DatePickerProps extends Pick<
+    CommonProps,
     | 'ariaDescribedBy'
     | 'ariaErrorMessage'
     | 'ariaLabel'
@@ -35,7 +36,7 @@ export type DatePickerProps = CommonProps<
     | 'name'
     | 'readOnly'
     | 'required'
-> & {
+> {
     /**
      * If the calendar should close when a date is selected.
      *
@@ -62,7 +63,7 @@ export type DatePickerProps = CommonProps<
      * @default 'medium'
      */
     size?: 'large' | 'medium' | 'small';
-};
+}
 
 /**
  * An input that allows a customer to manually type in a specific date or triggers a the Calendar component to select a

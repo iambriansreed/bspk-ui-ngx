@@ -3,21 +3,20 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { CheckboxProps, UICheckbox } from '../checkbox/checkbox';
 import { UIListItem } from '../list-item';
 
-export type CheckboxOptionProps = CheckboxProps &
-    CommonProps<'style'> & {
-        /**
-         * The label of the option. Also used as the aria-label of the control.
-         *
-         * @required
-         */
-        label: string;
-        /**
-         * The description of the option.
-         *
-         * @type multiline
-         */
-        description?: string;
-    };
+export interface CheckboxOptionProps extends CheckboxProps, Pick<CommonProps, 'style'> {
+    /**
+     * The label of the option. Also used as the aria-label of the control.
+     *
+     * @required
+     */
+    label: string;
+    /**
+     * The description of the option.
+     *
+     * @type multiline
+     */
+    description?: string;
+}
 
 /**
  * A control that allows users to choose one or more items from a list or turn a feature on or off.
