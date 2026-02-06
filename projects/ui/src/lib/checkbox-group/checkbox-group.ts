@@ -12,7 +12,6 @@ export interface CheckboxGroupOption {
     disabled?: CheckboxOptionProps['disabled'];
     id?: CheckboxOptionProps['id'];
     invalid?: CheckboxOptionProps['invalid'];
-    name: CheckboxOptionProps['name'];
     readOnly?: CheckboxOptionProps['readOnly'];
     required?: CheckboxOptionProps['required'];
     indeterminate?: CheckboxOptionProps['indeterminate'];
