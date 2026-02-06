@@ -16,7 +16,7 @@ import {
     signal,
     viewChild,
 } from '@angular/core';
-import { Placement } from '@floating-ui/dom';
+import { autoUpdate, Placement } from '@floating-ui/dom';
 import { AsSignal } from '../../types/common';
 import { addComponent } from '../../utils/add-component';
 import { uniqueId } from '../../utils/random';
@@ -99,6 +99,7 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
     private readonly computedPlacement = signal<TooltipPlacement | null>(null);
     private tooltipComponent?: ComponentRef<UITooltip> | null;
+    private autoUpdateCleanup?: () => void;
 
     constructor() {
         effect(() => {
@@ -145,22 +146,28 @@ export class UITooltipDirective implements OnDestroy, OnInit {
 
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'block');
 
-        this.floating
-            .compute({
-                placement: this.props()?.placement || 'top',
-                reference: this.referenceEl,
-                floating: this.tooltipEl,
-                arrow: this.arrowEl,
-                offsetOptions: this.arrowEl ? 8 : 4,
-                refWidth: false,
-            })
-            .then(({ placement }) => {
-                if (this.tooltipEl && placement !== this.props()?.placement)
-                    this.computedPlacement.set(placement as TooltipPlacement);
-            });
+        const floatingProps = {
+            placement: this.props()?.placement || 'top',
+            reference: this.referenceEl,
+            floating: this.tooltipEl,
+            arrow: this.arrowEl,
+            offsetOptions: this.arrowEl ? 8 : 4,
+            refWidth: false,
+        };
+
+        this.floating.compute(floatingProps).then(({ placement }) => {
+            if (this.tooltipEl && placement !== this.props()?.placement)
+                this.computedPlacement.set(placement as TooltipPlacement);
+        });
+
+        this.autoUpdateCleanup = autoUpdate(this.referenceEl!, this.tooltipEl!, () => {
+            this.floating.compute(floatingProps);
+        });
     }
 
     handleCloseEvent() {
+        this.autoUpdateCleanup?.();
+
         const { label, truncated } = this.props();
         if (!label) return;
 

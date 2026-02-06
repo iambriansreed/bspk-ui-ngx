@@ -1,4 +1,4 @@
-import { Renderer2, signal } from '@angular/core';
+import { Renderer2 } from '@angular/core';
 import {
     arrow,
     computePosition,
@@ -11,7 +11,6 @@ import {
     size,
     Strategy,
 } from '@floating-ui/dom';
-import { UtilityBase } from '../../types/common';
 
 export interface FloatingUtilityProps {
     /**
@@ -57,41 +56,11 @@ export interface FloatingUtilityProps {
  *
  * Should be used in components that require floating element positioning.
  */
-export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
-    readonly props = signal<FloatingUtilityProps>({});
-
+export class FloatingUtility {
     constructor(private render: Renderer2) {}
-    destroy(): void {
-        // No-op
-    }
 
-    updateProps(props: Partial<FloatingUtilityProps>) {
-        this.props.set({
-            ...this.props(),
-            ...props,
-        });
-    }
-
-    init(
-        props: Omit<FloatingUtilityProps, 'floating' | 'reference'> &
-            Required<Pick<FloatingUtilityProps, 'floating' | 'reference'>>,
-    ) {
-        this.updateProps(props);
-    }
-
-    async compute(nextProps?: Partial<FloatingUtilityProps>) {
-        const {
-            placement,
-            strategy,
-            offsetOptions,
-            refWidth,
-            floating,
-            reference,
-            arrow: arrowEl,
-        } = {
-            ...this.props(),
-            ...nextProps,
-        };
+    async compute(props: FloatingUtilityProps) {
+        const { placement, strategy, offsetOptions, refWidth, floating, reference, arrow: arrowEl } = props;
 
         if (
             // Missing required elements
@@ -101,7 +70,6 @@ export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
             return {} as ComputePositionReturn;
 
         this.render.setStyle(floating, 'position', strategy || 'fixed');
-        this.render.setStyle(floating, 'opacity', '0');
         this.render.setStyle(floating, 'pointerEvents', 'none');
 
         const returnValue = await computePosition(reference, floating, {
@@ -132,7 +100,6 @@ export class FloatingUtility implements UtilityBase<FloatingUtilityProps> {
         this.render.setStyle(floating, 'top', `${y}px`);
 
         setTimeout(() => {
-            this.render.setStyle(floating, 'opacity', '1');
             this.render.setStyle(floating, 'pointerEvents', 'auto');
         }, 10);
 
