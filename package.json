@@ -1,6 +1,6 @@
 {
     "name": "bspk-ui-ngx",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "license": "CC-BY-4.0",
     "type": "module",
     "repository": {
@@ -34,7 +34,8 @@
         "publish:test": "ng build ui && npm pack ./dist/ui",
         "semantic-release": "semantic-release",
         "preview": "npm run gh-build && npx http-server ./dist/browser",
-        "clean": "rm -rf ./dist ./coverage ./.angular projects/demo/src/meta.ts projects/demo/src/routes/generated.ts"
+        "clean": "rm -rf ./dist ./coverage ./.angular projects/demo/src/meta.ts projects/demo/src/routes/generated.ts",
+        "update-version": "npx tsx .scripts/all.ts update-version"
     },
     "overrides": {
         "glob": "^11.0.1"

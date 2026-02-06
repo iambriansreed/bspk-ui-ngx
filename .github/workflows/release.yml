@@ -36,3 +36,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
               run: npm run semantic-release
+            - name: Update Source
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+              run: npm run update-version
