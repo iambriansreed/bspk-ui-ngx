@@ -119,7 +119,7 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
             [owner]="'input-phone'"
             [size]="size() || 'medium'"
             [invalid]="invalid() || false"
-            [id]="id() || safeId()"
+            [id]="safeId()"
             [name]="name()"
             [disabled]="disabled() || false"
             [readOnly]="readOnly() || false"

@@ -43,8 +43,8 @@ import { UIInputPhone } from './input-phone';
         <ui-input-phone
             (valueChange)="update('Multiple props', $event)"
             name="multiple-props-phone"
-            value="1235556789"
-            id="multiple-props-phone"
+            value="235556789"
+            [id]="'multiple-props-phone'"
             ariaLabel="Phone Number of disabled formatting example"
             [disableFormatting]="true"
             ariaErrorMessage="error message example" />
@@ -55,7 +55,7 @@ import { UIInputPhone } from './input-phone';
             (valueChange)="update('Disabled Formatting', $event)"
             name="aria-describedby-example"
             ariaDescribedBy="described-by-example"
-            id="aria-describedby-example" />
+            [id]="'aria-describedby-example'" />
         <div id="described-by-example">This is an example of aria-describedby text.</div>
 
         <h4>Different Sizes</h4>
