@@ -134,7 +134,7 @@ import { UIButton } from './button';
 
         <h4>Custom Content</h4>
         <ui-button
-            label="Custom can have label now"
+            label="Custom can have label now, Custom Content Example"
             (click)="handleClick('Custom Content')"
             style="padding: 0 var(--spacing-sizing-03)">
             <svg
