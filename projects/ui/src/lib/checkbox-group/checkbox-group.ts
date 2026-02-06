@@ -1,10 +1,10 @@
-import { Component, ViewEncapsulation, input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, input, output } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
 export interface CheckboxGroupOption extends Omit<CheckboxOptionProps, 'name' | 'onChange'> {}
 
-export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'readOnly'> {
+export interface CheckboxGroupProps extends FieldControlProps<string[]> {
     /**
      * The options for the checkboxes.
      *
@@ -47,6 +47,9 @@ export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'r
             @if (selectAll()) {
                 <ui-checkbox-option
                     name="select-all"
+                    [attr.aria-labelledby]="ariaLabelledBy() || null"
+                    [attr.aria-describedby]="ariaDescribedBy() || null"
+                    [attr.ariaErrorMessage]="ariaErrorMessage() || null"
                     [label]="selectAllProps()?.label ?? selectAllLabel"
                     [ariaLabel]="selectAllProps()?.ariaLabel ?? selectAllLabel"
                     [description]="selectAllProps()?.description"
@@ -54,6 +57,8 @@ export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'r
                     [indeterminate]="someChecked() && !allChecked()"
                     [disabled]="disabled()"
                     [invalid]="invalid()"
+                    [required]="required()"
+                    [readOnly]="readOnly()"
                     [value]="'all'"
                     (checkedChange)="onSelectAllChange($event)">
                 </ui-checkbox-option>
@@ -61,12 +66,17 @@ export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'r
             @for (option of options(); track option.value) {
                 <ui-checkbox-option
                     name="checkbox-group-option-{{ option.value }}"
+                    [attr.aria-labelledby]="ariaLabelledBy() || null"
+                    [attr.aria-describedby]="ariaDescribedBy() || null"
+                    [attr.ariaErrorMessage]="ariaErrorMessage() || null"
                     [label]="option.label"
                     [value]="option.value"
                     [checked]="isChecked(option.value)"
                     [description]="option.description"
                     [disabled]="disabled() || option.disabled"
                     [invalid]="invalid()"
+                    [required]="required()"
+                    [readOnly]="readOnly()"
                     (checkedChange)="onOptionChange(option.value, $event)">
                 </ui-checkbox-option>
             }
@@ -74,15 +84,24 @@ export interface CheckboxGroupProps extends Omit<FieldControlProps<string[]>, 'r
     `,
 })
 export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
-    @Output() valueChange = new EventEmitter<string[]>();
+    valueChange = output<string[]>();
 
     readonly name = input.required<CheckboxGroupProps['name']>();
     readonly options = input<CheckboxGroupProps['options']>([]);
     readonly value = input<CheckboxGroupProps['value']>([]);
     readonly selectAll = input<CheckboxGroupProps['selectAll']>(false);
     readonly selectAllProps = input<CheckboxGroupProps['selectAllProps']>(undefined);
+
+    readonly id = input<CheckboxGroupProps['id']>(undefined);
     readonly disabled = input<CheckboxGroupProps['disabled']>(false);
     readonly invalid = input<CheckboxGroupProps['invalid']>(false);
+    readonly required = input<CheckboxGroupProps['required']>(false);
+    readonly readOnly = input<CheckboxGroupProps['readOnly']>(false);
+    readonly ariaLabel = input<CheckboxGroupProps['ariaLabel']>(undefined);
+
+    readonly ariaLabelledBy = input<CheckboxGroupProps['ariaLabelledBy']>(undefined);
+    readonly ariaDescribedBy = input<CheckboxGroupProps['ariaDescribedBy']>(undefined);
+    readonly ariaErrorMessage = input<CheckboxGroupProps['ariaErrorMessage']>(undefined);
 
     selectAllLabel = 'All';
 
