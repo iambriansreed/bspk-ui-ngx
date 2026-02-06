@@ -5,7 +5,8 @@ import { uniqueId } from '../../utils/random';
 import { IconKeyboardArrowDown, IconKeyboardArrowUp } from '../icons';
 
 export interface AccordionSectionProps {
-    id: CommonProps['id'];
+    id?: CommonProps['id'];
+
     /**
      * The title of the accordion.
      *

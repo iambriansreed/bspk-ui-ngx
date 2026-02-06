@@ -23,7 +23,7 @@ import { TypeProps } from './type-props';
                 <p>{{ line }}</p>
             }
 
-            <h3>Properties</h3>
+            <h3>Inputs</h3>
             <app-type-props [props]="component()?.props || []" />
 
             <h3>Example</h3>

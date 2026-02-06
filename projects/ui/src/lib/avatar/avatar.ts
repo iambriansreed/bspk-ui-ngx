@@ -28,7 +28,7 @@ export type SizeVariant =
     | 'xxxxx-large';
 
 export interface AvatarProps {
-    disabled: CommonProps['disabled'];
+    disabled?: CommonProps['disabled'];
 
     /**
      * The name of the person or entity represented by the avatar. This is used for accessibility purposes.
@@ -86,6 +86,27 @@ export interface AvatarProps {
     hideTooltip?: boolean;
 }
 
+/**
+ * An avatar is a visual representation of a user or entity. It can be used to display an initials, icon, or image.
+ *
+ * @example
+ *     <ui-avatar
+ *     [color]="'blue'"
+ *     [image]="'/avatar-01.png'"
+ *     [initials]="'AR'"
+ *     [name]="'Andre Giant'"
+ *     [size]="'large'"
+ *     [disabled]="false"
+ *     (onClick)="action('Launch avatar popover')"
+ *     [showIcon]="false"
+ *     [hideTooltip]="true"
+ *     />;
+ *
+ * @exampleDescription The image if provided is displayed first, followed by the icon if provided, and finally the initials. If no initials are provided, the first two letters of the name will be used as initials.
+ *
+ * @name Avatar
+ * @phase Dev
+ */
 @Component({
     selector: 'ui-avatar',
     standalone: true,

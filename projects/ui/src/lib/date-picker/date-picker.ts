@@ -32,7 +32,7 @@ export interface DatePickerProps {
     disabled?: CommonProps['disabled'];
     id?: CommonProps['id'];
     invalid?: CommonProps['invalid'];
-    name?: CommonProps['name'];
+    name: CommonProps['name'];
     readOnly?: CommonProps['readOnly'];
     required?: CommonProps['required'];
 
