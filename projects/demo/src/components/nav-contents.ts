@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, signal, OnDestroy } from '@angular/core';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { UIFab } from '@ui/fab';
 import { IconLink } from '@ui/icons/link';
 import { IconMenu } from '@ui/icons/menu';
@@ -102,10 +102,12 @@ export class AppNavContents implements OnInit, OnDestroy {
     reference = signal<HTMLElement | null>(null);
 
     router = inject(Router);
+    route = inject(ActivatedRoute);
 
     host = inject<ElementRef<HTMLElement>>(ElementRef);
 
     private routeSubscription: Subscription | null = null;
+    private fragmentSubscription: Subscription | null = null;
 
     get location() {
         return globalThis.location;
@@ -148,12 +150,6 @@ export class AppNavContents implements OnInit, OnDestroy {
         }, 1000);
     }
 
-    scrollToHash(hash: string = location.hash) {
-        const id = hash.startsWith('#') ? hash.substring(1) : hash;
-        const element = document.getElementById(id);
-        element?.scrollIntoView({ behavior: 'smooth' });
-    }
-
     ngOnInit() {
         const button = this.host.nativeElement.querySelector<HTMLElement>('button');
         this.reference.set(button);
@@ -161,19 +157,19 @@ export class AppNavContents implements OnInit, OnDestroy {
 
         this.routeSubscription = this.router.events.subscribe(() => {
             this.open.set(false);
-
             this.setMenuItems();
         });
 
         this.setMenuItems();
 
-        window.addEventListener('hashchange', () => this.scrollToHash());
+        this.fragmentSubscription = this.route.fragment.subscribe((fragment: string | null) => {
+            if (fragment) document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
+        });
     }
 
     ngOnDestroy() {
         this.routeSubscription?.unsubscribe();
-
-        window.removeEventListener('hashchange', () => this.scrollToHash());
+        this.fragmentSubscription?.unsubscribe();
     }
 }
 
@@ -185,7 +181,7 @@ export function slugify(value: string) {
         .join('-')
         .toLowerCase()
         .replace(/[\s| |_/]/g, '-')
-        .replace(/[^a-z0-9-]+/g, '')
+        .replace(/[^a-z0-9-]+/g, '-')
         .replace(/[-]+/g, '-')
         .replace(/^[-]+/g, '')
         .replace(/[-]+$/g, '');
