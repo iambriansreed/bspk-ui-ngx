@@ -11,7 +11,7 @@ import {
     AfterViewInit,
     OnDestroy,
     effect,
-    OnInit,
+    output,
 } from '@angular/core';
 import { getCountryCallingCode, AsYouType } from 'libphonenumber-js';
 import { BspkIcon } from '../../types/bspk-icon';
@@ -126,9 +126,10 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
             [required]="required() || false"
             [placeholder]="''"
             [value]="value()"
-            (valueChange)="onValueChange($event)"
+            (valueChange)="handleValueChange($event)"
             [ariaLabel]="ariaLabel() || 'Phone number input'"
             [ariaDescribedBy]="ariaDescribedBy()"
+            [ariaLabelledBy]="ariaLabelledBy()"
             [ariaErrorMessage]="ariaErrorMessage()"
             [autoComplete]="'off'"
             [inputMode]="'tel'"
@@ -192,7 +193,9 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
         }
     `,
 })
-export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy, OnInit {
+export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, OnDestroy {
+    valueChange = output<string>();
+
     keyNavigation = new KeyNavigationUtility();
 
     readonly value = model<InputPhoneProps['value']>('');
@@ -204,6 +207,8 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
     readonly readOnly = input<InputPhoneProps['readOnly']>(false);
     readonly required = input<InputPhoneProps['required']>(false);
     readonly ariaLabel = input<InputPhoneProps['ariaLabel']>(undefined);
+    readonly ariaLabelledBy = input<InputPhoneProps['ariaLabelledBy']>(undefined);
+
     readonly ariaDescribedBy = input<InputPhoneProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputPhoneProps['ariaErrorMessage']>(undefined);
     readonly id = input<InputPhoneProps['id']>(undefined);
@@ -335,11 +340,12 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
         }
     }
 
-    onValueChange(newValue?: string): void {
+    handleValueChange(newValue?: string): void {
         const formatted = this.formatValueIfNeeded(newValue || '');
 
         this.previousValue.set(formatted);
         this.value.set(formatted);
+        this.valueChange.emit(formatted);
     }
 
     private formatValueIfNeeded(newValue: string): string {

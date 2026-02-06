@@ -2,24 +2,24 @@ import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
+import { UIInputPhone } from '../input-phone';
 
-export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'> {}
+export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 
 /**
- * A field wrapper for the UIInput component.
+ * A field wrapper for the UIInputPhone component.
  *
- * This component takes properties from the FormField and UIInput components.
+ * This component takes properties from the FormField and UIInputPhone components.
  *
- * @name UIInputField
+ * @name UIInputPhoneField
  * @phase UXReview
  *
  * @generated
  */
 @Component({
-    selector: 'ui-input-field',
+    selector: 'ui-input-phone-field',
     standalone: true,
-    imports: [UIField, UIInput],
+    imports: [UIField, UIInputPhone],
     template: `
         <ui-field
             [errorMessage]="errorMessage()"
@@ -29,7 +29,7 @@ export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'>
             [controlId]="controlId()"
             [style]="style()"
             [required]="required()">
-            <ui-input
+            <ui-input-phone
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
@@ -46,18 +46,18 @@ export interface InputFieldProps extends Omit<FieldProps, 'controlId' | 'label'>
         </ui-field>
     `,
     host: {
-        'data-bspk': 'input-field',
+        'data-bspk': 'input-phone-field',
         '[id]': 'controlId()+"-field"',
     },
     styleUrl: '../field/field.scss',
     encapsulation: ViewEncapsulation.None,
 })
-export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
-    readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
+export class UIInputPhoneField extends UIInputPhone implements AsSignal<InputPhoneFieldProps> {
+    readonly errorMessage = input<InputPhoneFieldProps['errorMessage']>(undefined);
     readonly label = input.required<FieldProps['label']>();
-    readonly helperText = input<InputFieldProps['helperText']>(undefined);
-    readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
-    readonly style = input<InputFieldProps['style']>(undefined);
+    readonly helperText = input<InputPhoneFieldProps['helperText']>(undefined);
+    readonly labelTrailing = input<InputPhoneFieldProps['labelTrailing']>(undefined);
+    readonly style = input<InputPhoneFieldProps['style']>(undefined);
     readonly labelledById = computed(() => labelledById(this.controlId()));
 
     readonly describedById = computed(
@@ -67,5 +67,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.id() || uniqueId('UIInputPhoneField-'));
 }

@@ -9,6 +9,7 @@ import {
     ViewEncapsulation,
     TemplateRef,
     signal,
+    output,
 } from '@angular/core';
 import { AsSignal, ButtonSize, CommonProps, FieldControlProps } from '../../types/common';
 import { UIButton } from '../button/button';
@@ -93,6 +94,7 @@ export interface InputProps extends FieldControlProps {
             (input)="handleInput($event)"
             (focus)="hasFocus.set(true)"
             (blur)="hasFocus.set(false)"
+            (change)="valueChange.emit($event.target.value)"
             #inputEl />
         <ng-content select="[data-trailing]"></ng-content>
         @if (trailing()) {
@@ -125,6 +127,8 @@ export interface InputProps extends FieldControlProps {
     encapsulation: ViewEncapsulation.None,
 })
 export class UIInput implements AsSignal<InputProps> {
+    valueChange = output<string>();
+
     public IconCancel = IconCancel;
     readonly hasFocus = signal(false);
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');

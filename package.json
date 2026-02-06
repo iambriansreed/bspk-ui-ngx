@@ -29,6 +29,7 @@
         "routes": "npx tsx .scripts/generate-component-routes.ts --write",
         "pre:meta": "if [ ! -f \".tmp/documentation.json\" ]; then npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp; fi",
         "meta": "npm run pre:meta && npx tsx .scripts/generate-meta.ts --write",
+        "fields": "npx tsx .scripts/generate-fields.ts",
         "start": "npm run prebuild && ng serve",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "publish:test": "ng build ui && npm pack ./dist/ui",
