@@ -73,7 +73,6 @@ export interface InputProps extends FieldControlProps {
                 <span data-leading>{{ leading() }}</span>
             }
         </ng-content>
-
         <input
             data-main-input
             [attr.aria-labelledby]="ariaLabelledBy() || null"
@@ -83,7 +82,7 @@ export interface InputProps extends FieldControlProps {
             [attr.aria-invalid]="invalid() || null"
             [attr.data-invalid]="invalid() || null"
             [disabled]="this.disabled()"
-            [attr.id]="id() || null"
+            [attr.id]="inputId() || null"
             [attr.placeholder]="placeholder() || null"
             [attr.name]="name() || null"
             [attr.autocomplete]="autoComplete() || null"
@@ -158,7 +157,7 @@ export class UIInput implements AsSignal<InputProps> {
     readonly leading = input<InputProps['leading']>(undefined);
     readonly trailing = input<InputProps['trailing']>(undefined);
     readonly autoComplete = input<InputProps['autoComplete']>(undefined);
-    readonly id = input<InputProps['id']>(undefined);
+    readonly inputId = input<InputProps['inputId']>(undefined);
     readonly owner = input<InputProps['owner']>(undefined);
     readonly ariaLabel = input<InputProps['ariaLabel']>(undefined);
     readonly ariaLabelledBy = input<InputProps['ariaLabelledBy']>(undefined);

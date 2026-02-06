@@ -56,7 +56,7 @@ export type CheckboxProps = Omit<FieldControlProps, 'onChange' | 'value'> & {
             [checked]="checked()"
             [attr.data-indeterminate]="indeterminate() || undefined"
             [disabled]="disabled()"
-            [id]="id()"
+            [id]="inputId()"
             [name]="name()"
             [required]="required()"
             [readOnly]="readOnly()"
@@ -93,7 +93,7 @@ export class UICheckbox implements AsSignal<CheckboxProps> {
     readonly name = input.required<CheckboxProps['name']>();
     readonly value = input.required<CheckboxProps['value']>();
     readonly ariaLabel = input<CheckboxProps['ariaLabel']>(undefined);
-    readonly id = input<CheckboxProps['id']>(uniqueId('checkbox'));
+    readonly inputId = input<CheckboxProps['inputId']>(uniqueId('checkbox'));
     readonly checked = input<CheckboxProps['checked']>(false);
     readonly indeterminate = input<CheckboxProps['indeterminate']>(false);
     readonly disabled = input<CheckboxProps['disabled']>(false);

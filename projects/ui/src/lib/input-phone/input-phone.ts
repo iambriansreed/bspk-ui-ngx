@@ -212,7 +212,7 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
 
     readonly ariaDescribedBy = input<InputPhoneProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<InputPhoneProps['ariaErrorMessage']>(undefined);
-    readonly id = input<InputPhoneProps['id']>(undefined);
+    readonly inputId = input<InputPhoneProps['inputId']>(undefined);
     readonly initialCountryCode = input<InputPhoneProps['initialCountryCode']>(undefined);
     readonly disableFormatting = input<InputPhoneProps['disableFormatting']>(false);
     readonly scrollLimit = input<InputPhoneProps['scrollLimit']>(5);
@@ -220,7 +220,7 @@ export class UIInputPhone implements AsSignal<InputPhoneProps>, AfterViewInit, O
     readonly reference = viewChild('inputEl', { read: ElementRef });
     readonly containerRef = viewChild('inputEl', { read: ElementRef });
 
-    readonly safeId = computed(() => this.id() || uniqueId('input-phone'));
+    readonly safeId = computed(() => this.inputId() || uniqueId('input-phone'));
     readonly menuId = computed(() => `${this.safeId()}-menu`);
     readonly referenceEl = computed(() => this.reference()?.nativeElement);
 

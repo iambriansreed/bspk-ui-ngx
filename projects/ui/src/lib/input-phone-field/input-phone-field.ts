@@ -67,5 +67,5 @@ export class UIInputPhoneField extends UIInputPhone implements AsSignal<InputPho
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputPhoneField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UIInputPhoneField-'));
 }

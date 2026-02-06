@@ -40,7 +40,7 @@ export interface CheckboxOptionProps extends CheckboxProps {
         as="label">
         <span data-leading>
             <ui-checkbox
-                [id]="id()"
+                [inputId]="inputId()"
                 [name]="name()"
                 [value]="value()"
                 [checked]="checked()"

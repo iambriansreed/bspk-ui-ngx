@@ -67,7 +67,7 @@ export interface TextareaProps extends FieldControlProps {
             [attr.aria-label]="ariaLabel() || null"
             [attr.aria-invalid]="invalid() || null"
             [disabled]="disabled()"
-            [id]="id()"
+            [id]="inputId()"
             [attr.name]="name() || null"
             [attr.placeholder]="placeholder() || null"
             [attr.maxLength]="maxLength() ?? null"
@@ -101,7 +101,7 @@ export class UITextarea implements AsSignal<TextareaProps> {
 
     readonly ariaLabel = input<TextareaProps['ariaLabel']>(undefined);
     readonly disabled = input<TextareaProps['disabled']>(false);
-    readonly id = input<TextareaProps['id']>(undefined);
+    readonly inputId = input<TextareaProps['inputId']>(undefined);
     readonly invalid = input<TextareaProps['invalid']>(false);
     readonly maxLength = input<TextareaProps['maxLength']>(undefined);
     readonly maxRows = input<TextareaProps['maxRows']>(10);

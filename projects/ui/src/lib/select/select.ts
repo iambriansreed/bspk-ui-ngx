@@ -190,8 +190,8 @@ export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy
 
     readonly reference = viewChild('reference', { read: ElementRef });
 
-    readonly id = input<SelectProps['id']>(uniqueId('dropdown'));
-    readonly safeId = computed(() => this.id() || uniqueId('dropdown'));
+    readonly inputId = input<SelectProps['inputId']>(uniqueId('dropdown'));
+    readonly safeId = computed(() => this.inputId() || uniqueId('dropdown'));
     readonly menuId = computed(() => `${this.safeId()}-menu`);
     readonly scrollLimit = input<SelectProps['scrollLimit']>();
     readonly ids = computed(() => this.menuItems().map((item) => item.id));

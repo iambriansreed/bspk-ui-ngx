@@ -67,5 +67,5 @@ export class UIDatePickerField extends UIDatePicker implements AsSignal<DatePick
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIDatePickerField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UIDatePickerField-'));
 }

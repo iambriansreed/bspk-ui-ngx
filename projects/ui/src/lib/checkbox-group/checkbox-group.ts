@@ -98,7 +98,7 @@ export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
     readonly selectAll = input<CheckboxGroupProps['selectAll']>(false);
     readonly selectAllProps = input<CheckboxGroupProps['selectAllProps']>(undefined);
 
-    readonly id = input<CheckboxGroupProps['id']>(undefined);
+    readonly inputId = input<CheckboxGroupProps['inputId']>(undefined);
     readonly disabled = input<CheckboxGroupProps['disabled']>(false);
     readonly invalid = input<CheckboxGroupProps['invalid']>(false);
     readonly required = input<CheckboxGroupProps['required']>(false);

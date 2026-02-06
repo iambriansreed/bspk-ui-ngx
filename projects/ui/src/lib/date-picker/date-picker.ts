@@ -72,56 +72,56 @@ export interface DatePickerProps extends FieldControlProps<Date | string | undef
     standalone: true,
     imports: [UIButton, UICalendar, UIInput, UIFloatingDirective, UIOutsideClickDirective],
     template: `
-        <div data-bspk="date-picker" #root>
-            <ui-input
-                #reference
-                [ariaDescribedBy]="ariaDescribedBy()"
-                [ariaErrorMessage]="ariaErrorMessage()"
-                [ariaLabelledBy]="ariaLabelledBy()"
-                [ariaLabel]="ariaLabel()"
-                [disabled]="disabled()"
-                [id]="id()"
-                [invalid]="invalid()"
-                [name]="name() || 'DatePickerInput'"
-                [placeholder]="placeholder() || 'mm/dd/yyyy'"
-                [readOnly]="readOnly()"
-                [required]="required()"
-                [showClearButton]="false"
-                [size]="size() || 'medium'"
-                [value]="internalValueAsString"
-                (valueChange)="onInputChange($event)"
-                [trailing]="calendarButton"></ui-input>
-
-            <ng-template #calendarButton>
-                @if (!disabled() && !readOnly()) {
-                    <ui-button
-                        [icon]="IconEvent"
-                        [iconOnly]="true"
-                        label="Toggle calendar"
-                        variant="tertiary"
-                        (onClick)="toggleCalendar()"></ui-button>
-                }
-            </ng-template>
-            @if (calendarVisible()) {
-                <div
-                    aria-label="Choose Date"
-                    aria-modal="true"
-                    data-bspk="calendar-popup"
-                    role="dialog"
-                    [ui-floating]="{ reference: referenceEl, offsetOptions: offset }"
-                    [ui-outside-click]="{
-                        callback: handleOutsideClick.bind(this),
-                    }"
-                    #calendarPopup>
-                    <ui-calendar
-                        [focusTrap]="true"
-                        [id]="calendarId"
-                        [value]="activeDate()"
-                        (onChange)="onCalendarChange($event)"></ui-calendar>
-                </div>
+        <ui-input
+            #reference
+            [ariaDescribedBy]="ariaDescribedBy()"
+            [ariaErrorMessage]="ariaErrorMessage()"
+            [ariaLabelledBy]="ariaLabelledBy()"
+            [ariaLabel]="ariaLabel()"
+            [disabled]="disabled()"
+            [inputId]="inputId()"
+            [invalid]="invalid()"
+            [name]="name() || 'DatePickerInput'"
+            [placeholder]="placeholder() || 'mm/dd/yyyy'"
+            [readOnly]="readOnly()"
+            [required]="required()"
+            [showClearButton]="false"
+            [size]="size() || 'medium'"
+            [value]="internalValueAsString"
+            (valueChange)="onInputChange($event)"
+            [trailing]="calendarButton"></ui-input>
+        <ng-template #calendarButton>
+            @if (!disabled() && !readOnly()) {
+                <ui-button
+                    [icon]="IconEvent"
+                    [iconOnly]="true"
+                    label="Toggle calendar"
+                    variant="tertiary"
+                    (onClick)="toggleCalendar()"></ui-button>
             }
-        </div>
+        </ng-template>
+        @if (calendarVisible()) {
+            <div
+                aria-label="Choose Date"
+                aria-modal="true"
+                data-bspk="calendar-popup"
+                role="dialog"
+                [ui-floating]="{ reference: referenceEl, offsetOptions: offset }"
+                [ui-outside-click]="{
+                    callback: handleOutsideClick.bind(this),
+                }"
+                #calendarPopup>
+                <ui-calendar
+                    [focusTrap]="true"
+                    [id]="calendarId"
+                    [value]="activeDate()"
+                    (onChange)="onCalendarChange($event)"></ui-calendar>
+            </div>
+        }
     `,
+    host: {
+        'data-bspk': 'date-picker',
+    },
     styleUrl: './date-picker.scss',
     encapsulation: ViewEncapsulation.None,
 })
@@ -138,7 +138,7 @@ export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps
     readonly invalid = input<DatePickerProps['invalid']>(false);
     readonly required = input<DatePickerProps['required']>(false);
     readonly size = input<DatePickerProps['size']>('medium');
-    readonly id = input<DatePickerProps['id']>(undefined);
+    readonly inputId = input<DatePickerProps['inputId']>(undefined);
     readonly ariaLabel = input<DatePickerProps['ariaLabel']>('Enter or choose date');
     readonly ariaDescribedBy = input<DatePickerProps['ariaDescribedBy']>(undefined);
     readonly ariaErrorMessage = input<DatePickerProps['ariaErrorMessage']>(undefined);
@@ -153,7 +153,7 @@ export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps
     IconEvent = IconEvent;
 
     get calendarId() {
-        return `${this.id() || 'date-picker'}-calendar`;
+        return `${this.inputId() || 'date-picker'}-calendar`;
     }
 
     get referenceEl() {

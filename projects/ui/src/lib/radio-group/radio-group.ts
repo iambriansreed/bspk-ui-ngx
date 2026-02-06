@@ -54,28 +54,20 @@ export interface RadioGroupProps extends FieldControlProps {
     standalone: true,
     imports: [UIRadioOption],
     template: `
-        <div
-            [attr.aria-describedby]="ariaDescribedBy() || null"
-            [attr.aria-errormessage]="ariaErrorMessage() || null"
-            [attr.id]="id()"
-            role="radiogroup"
-            data-bspk="radio-group"
-            style="display: flex; flex-direction: column; gap: 0; max-width: 100%; --list-item-height: auto;">
-            @for (option of options(); track option.value) {
-                <ui-radio-option
-                    [label]="option.label"
-                    [description]="option.description"
-                    [name]="name()"
-                    [value]="option.value"
-                    [checked]="value() === option.value"
-                    [disabled]="disabled() || option.disabled"
-                    [required]="required()"
-                    [invalid]="invalid()"
-                    [readOnly]="readOnly()"
-                    (checkedChange)="onRadioChange(option.value || '', $event)">
-                </ui-radio-option>
-            }
-        </div>
+        @for (option of options(); track option.value) {
+            <ui-radio-option
+                [label]="option.label"
+                [description]="option.description"
+                [name]="name()"
+                [value]="option.value"
+                [checked]="value() === option.value"
+                [disabled]="disabled() || option.disabled"
+                [required]="required()"
+                [invalid]="invalid()"
+                [readOnly]="readOnly()"
+                (checkedChange)="onRadioChange(option.value || '', $event)">
+            </ui-radio-option>
+        }
     `,
     host: {
         'data-bspk': 'radio-group',
@@ -84,13 +76,17 @@ export interface RadioGroupProps extends FieldControlProps {
         'style.gap': '0',
         'style.max-width': '100%',
         'style.--list-item-height': 'auto',
+        '[attr.aria-describedby]': 'ariaDescribedBy() || null',
+        '[attr.aria-errormessage]': 'ariaErrorMessage() || null',
+        '[attr.id]': 'inputId()',
+        role: 'radiogroup',
     },
     encapsulation: ViewEncapsulation.None,
 })
 export class UIRadioGroup implements AsSignal<RadioGroupProps> {
     valueChange = output<string>();
 
-    readonly id = input<RadioGroupProps['id']>(undefined);
+    readonly inputId = input<RadioGroupProps['inputId']>(undefined);
     readonly name = input.required<RadioGroupProps['name']>();
     readonly value = model<RadioGroupProps['value']>('');
     readonly disabled = input<RadioGroupProps['disabled']>(false);

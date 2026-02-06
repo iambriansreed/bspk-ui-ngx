@@ -69,7 +69,7 @@ export interface InputNumberProps extends FieldControlProps {
             [attr.aria-invalid]="invalid() || null"
             [attr.data-invalid]="invalid() || null"
             [disabled]="disabled()"
-            [attr.id]="id() || null"
+            [attr.id]="inputId() || null"
             [attr.name]="name() || null"
             [readOnly]="readOnly() || null"
             [required]="required() || null"
@@ -123,7 +123,7 @@ export class UIInputNumber implements AsSignal<InputNumberProps> {
     readonly readOnly = input<InputNumberProps['readOnly']>(false);
     readonly required = input<InputNumberProps['required']>(false);
     readonly size = input<InputNumberProps['size']>('medium');
-    readonly id = input<InputNumberProps['id']>(undefined);
+    readonly inputId = input<InputNumberProps['inputId']>(undefined);
     readonly owner = input<InputNumberProps['owner']>(undefined);
     readonly ariaLabel = input<InputNumberProps['ariaLabel']>(undefined);
     readonly step = input<InputNumberProps['step']>(1);

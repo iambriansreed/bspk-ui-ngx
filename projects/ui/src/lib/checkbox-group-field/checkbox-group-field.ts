@@ -66,5 +66,5 @@ export class UICheckboxGroupField extends UICheckboxGroup implements AsSignal<Ch
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UICheckboxGroupField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UICheckboxGroupField-'));
 }

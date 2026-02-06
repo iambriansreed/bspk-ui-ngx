@@ -67,5 +67,5 @@ export class UIInputNumberField extends UIInputNumber implements AsSignal<InputN
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputNumberField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UIInputNumberField-'));
 }

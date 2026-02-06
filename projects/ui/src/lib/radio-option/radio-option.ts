@@ -30,7 +30,7 @@ export interface RadioOptionProps extends RadioProps {
         as="label">
         <span data-leading>
             <ui-radio
-                [id]="id()"
+                [inputId]="inputId()"
                 [name]="name()"
                 [value]="value()"
                 [checked]="checked()"

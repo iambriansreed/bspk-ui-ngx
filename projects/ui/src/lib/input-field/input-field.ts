@@ -67,5 +67,5 @@ export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIInputField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UIInputField-'));
 }

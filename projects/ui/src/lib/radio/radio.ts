@@ -29,7 +29,7 @@ export interface RadioProps extends Omit<FieldControlProps<string>, 'onChange'> 
     imports: [],
     template: `<input
             [attr.name]="name()"
-            [attr.id]="id()"
+            [attr.id]="inputId()"
             [attr.aria-label]="ariaLabel()"
             type="radio"
             [attr.value]="value()"
@@ -54,7 +54,7 @@ export class UIRadio implements AsSignal<RadioProps> {
     readonly ariaLabel = input<RadioProps['ariaLabel']>(undefined);
     readonly checked = input<RadioProps['checked']>(false);
     readonly disabled = input<RadioProps['disabled']>(false);
-    readonly id = input<RadioProps['id']>(uniqueId('radio'));
+    readonly inputId = input<RadioProps['inputId']>(uniqueId('radio'));
     readonly invalid = input<RadioProps['invalid']>(false);
     readonly required = input<RadioProps['required']>(false);
     readonly readOnly = input<RadioProps['readOnly']>(false);

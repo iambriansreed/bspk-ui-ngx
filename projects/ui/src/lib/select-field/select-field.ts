@@ -69,5 +69,5 @@ export class UISelectField extends UISelect implements AsSignal<SelectFieldProps
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UISelectField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UISelectField-'));
 }

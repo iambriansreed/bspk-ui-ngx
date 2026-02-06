@@ -66,5 +66,5 @@ export class UIRadioGroupField extends UIRadioGroup implements AsSignal<RadioGro
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UIRadioGroupField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UIRadioGroupField-'));
 }

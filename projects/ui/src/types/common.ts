@@ -181,12 +181,13 @@ export interface FieldControlProps<ValueType = string> {
     ariaLabel?: CommonProps['ariaLabel'];
     ariaLabelledBy?: CommonProps['ariaLabelledBy'];
     disabled?: CommonProps['disabled'];
-    id?: CommonProps['id'];
     invalid?: CommonProps['invalid'];
     name: CommonProps['name'];
     readOnly?: CommonProps['readOnly'];
     required?: CommonProps['required'];
 
+    /** The id of the input element. If not provided one will be generated. */
+    inputId?: string;
     /**
      * The value of the field control.
      *

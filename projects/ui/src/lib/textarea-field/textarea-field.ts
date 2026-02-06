@@ -67,5 +67,5 @@ export class UITextareaField extends UITextarea implements AsSignal<TextareaFiel
         () => this.ariaErrorMessage() || (this.errorMessage() && errorMessageId(this.controlId())) || undefined,
     );
 
-    readonly controlId = computed(() => this.id() || uniqueId('UITextareaField-'));
+    readonly controlId = computed(() => this.inputId() || uniqueId('UITextareaField-'));
 }
