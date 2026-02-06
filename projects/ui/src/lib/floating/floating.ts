@@ -59,7 +59,7 @@ export interface FloatingUtilityProps {
 export class FloatingUtility {
     constructor(private render: Renderer2) {}
 
-    async compute(props: Partial<FloatingUtilityProps>) {
+    async compute(props: FloatingUtilityProps) {
         const { placement, strategy, offsetOptions, refWidth, floating, reference, arrow: arrowEl } = props;
 
         if (
