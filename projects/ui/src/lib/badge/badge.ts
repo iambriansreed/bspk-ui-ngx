@@ -61,7 +61,6 @@ export interface BadgeProps {
     styleUrls: ['./badge.scss'],
     encapsulation: ViewEncapsulation.None,
     host: {
-        'data-bspk': 'badge-wrapper',
         'data-attachment-wrapper': '',
     },
 })
