@@ -57,12 +57,12 @@ const SCRIPTS = {
 
         // update the version in package.json and projects/ui/package.json to match the latest tag
 
-        // exec('git add package.json projects/ui/package.json');
+        exec('git add package.json projects/ui/package.json');
 
-        // // commit the changes and push to the repo
+        // commit the changes and push to the repo
 
-        // exec(`git commit -m "chore: update version to ${latestVersion} [skip ci]"`);
-        // exec('git push');
+        exec(`git commit -m "chore: update version to ${latestVersion} [skip ci]"`);
+        exec('git push');
     },
 };
 
