@@ -20,13 +20,16 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
     imports: [CommonModule, UITooltipDirective, UIButton],
     template: `
         <div ngx-example>
-            <ui-button label="Hover me" tooltip="I explain what this button does" tooltipId="button"></ui-button>
+            <ui-button
+                label="Hover me"
+                tooltip="Hover me, I explain what this button does"
+                tooltipId="button"></ui-button>
         </div>
         <p>This is a button with a tooltip but not using the ui-tooltip directive directly.</p>
 
         @for (placement of placements; track $index) {
             <h4>{{ placement | titlecase }}</h4>
-            <span [ui-tooltip]="{ label: placement + ' side tooltip', placement: placement }"
+            <span role="note" [ui-tooltip]="{ label: placement + ' side tooltip', placement: placement }"
                 >Hover me ({{ placement }})</span
             >
         }
@@ -37,17 +40,18 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             is fully visible, no tooltip will appear.
         </p>
         <div style="width: 200px; border: 1px solid #ccc; padding: 8px; margin-bottom: 16px;">
-            <span style="width: 100%" [ui-tooltip]="{ truncated: true }"
+            <span role="note" style="width: 100%" [ui-tooltip]="{ truncated: true }"
                 >This is some really long text that might be truncated when displayed in a small container.</span
             >
             <br />
             <br />
-            <span style="width: 100%" [ui-tooltip]="{ truncated: true }">This is some text.</span>
+            <span role="note" style="width: 100%" [ui-tooltip]="{ truncated: true }">This is some text.</span>
         </div>
 
         <h4>Dynamic Placement</h4>
         <div style="text-align: right;">
             <span
+                role="note"
                 [ui-tooltip]="{
                     label: 'I change placement based on available space',
                     placement: 'right',
@@ -59,6 +63,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
 
         <h4>No tail</h4>
         <span
+            role="note"
             [ui-tooltip]="{
                 label: 'No tail',
                 showTail: false,
@@ -68,6 +73,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
 
         <h4>Disabled</h4>
         <span
+            role="note"
             [ui-tooltip]="{
                 label: 'Disabled tooltip',
                 disabled: true,
@@ -78,6 +84,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
         <h4>Updated Live</h4>
         <p>This demonstrates that the tooltip responds to dynamic updates.</p>
         <span
+            role="note"
             [ui-tooltip]="{
                 label: 'Updated tooltip (' + counter() + ')',
             }"
@@ -90,7 +97,7 @@ import { TooltipPlacement, UITooltipDirective } from './tooltip.directive';
             the DOM.
         </p>
         @if (counter() % 10 < 5) {
-            <span [ui-tooltip]="'Hello There'"
+            <span role="note" [ui-tooltip]="'Hello There'"
                 >I will disappear in {{ 5 - (counter() % 10) }} second{{ 5 - (counter() % 10) === 1 ? '' : 's' }}</span
             >
         } @else {
