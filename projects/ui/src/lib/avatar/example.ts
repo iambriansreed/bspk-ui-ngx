@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { sendSnackbar } from '@ui/utils/send-snackbar';
 import { UIAvatar } from './avatar';
 
 @Component({
@@ -8,6 +8,8 @@ import { UIAvatar } from './avatar';
     standalone: true,
     imports: [CommonModule, UIAvatar],
     template: `
+        <h4>Default</h4>
+        <ui-avatar name="Default Example" />
         <h4>Basic Usage with color</h4>
         <ui-avatar color="blue" initials="JD" name="John Doe" size="xxxxx-large" />
         <ui-avatar color="teal" initials="KA" name="Kate Anders" size="xxxxx-large" />
@@ -55,8 +57,12 @@ import { UIAvatar } from './avatar';
         <h4>[hideTooltip]="true"</h4>
         <ui-avatar initials="TM" name="Tim Meadows" [hideTooltip]="true" size="xxxxx-large" />
 
-        <h4>[disabled]="true"</h4>
-        <ui-avatar name="Andre Giant" [disabled]="true" size="xxxx-large" />
+        <h4>onCLick</h4>
+        <p>when inspecting the element role should be button, not img</p>
+        <ui-avatar name="Jane Smith" (click)="handleClick()" />
+
+        <h4>onClick, [disabled]="true"</h4>
+        <ui-avatar name="Andre Giant" (click)="handleClick()" [disabled]="true" />
 
         <h4>with click prop set</h4>
         <p>when inspecting the element role should be button, not img</p>
@@ -69,6 +75,6 @@ import { UIAvatar } from './avatar';
 })
 export class UIAvatarExample {
     protected handleClick(): void {
-        console.log('Avatar clicked');
+        sendSnackbar('Avatar clicked');
     }
 }

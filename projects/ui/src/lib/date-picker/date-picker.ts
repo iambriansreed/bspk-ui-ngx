@@ -89,10 +89,19 @@ export interface DatePickerProps extends FieldControlProps<Date | string | undef
                 [showClearButton]="false"
                 [size]="size() || 'medium'"
                 [value]="internalValueAsString"
-                (valueChange)="onInputChange($event)"
-                [trailing]="calendarButton"></ui-input>
+                (valueChange)="onInputChange($event)">
+                @if (!disabled() && !readOnly()) {
+                    <ui-button
+                        data-trailing
+                        [icon]="IconEvent"
+                        [iconOnly]="true"
+                        label="Toggle calendar"
+                        variant="tertiary"
+                        (onClick)="toggleCalendar()"></ui-button>
+                }
+            </ui-input>
 
-            <ng-template #calendarButton>
+            <!-- <ng-template #calendarButton>
                 @if (!disabled() && !readOnly()) {
                     <ui-button
                         [icon]="IconEvent"
@@ -101,7 +110,7 @@ export interface DatePickerProps extends FieldControlProps<Date | string | undef
                         variant="tertiary"
                         (onClick)="toggleCalendar()"></ui-button>
                 }
-            </ng-template>
+            </ng-template> -->
             @if (calendarVisible()) {
                 <div
                     aria-label="Choose Date"

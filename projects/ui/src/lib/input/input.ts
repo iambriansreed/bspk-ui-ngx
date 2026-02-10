@@ -7,7 +7,6 @@ import {
     model,
     viewChild,
     ViewEncapsulation,
-    TemplateRef,
     signal,
     output,
 } from '@angular/core';
@@ -18,10 +17,17 @@ import { IconCancel } from '../icons/cancel';
 export interface InputProps extends FieldControlProps {
     owner?: CommonProps['owner'];
     size?: CommonProps['size'];
-
-    /** The trailing element to display in the field. */
-    trailing?: TemplateRef<any> | string;
-    /** The leading element to display in the field. */
+    /**
+     * The trailing element to display in the field.
+     *
+     * May be passed as string or use <span data-trailing> for non-string content.
+     */
+    trailing?: string;
+    /**
+     * The leading element to display in the field.
+     *
+     * May be passed as string or use <span data-leading> for non-string content.
+     */
     leading?: string;
     /** The placeholder of the field. */
     placeholder?: string;
@@ -93,14 +99,11 @@ export interface InputProps extends FieldControlProps {
             (blur)="hasFocus.set(false)"
             (change)="valueChange.emit($event.target.value)"
             #inputEl />
-        <ng-content select="[data-trailing]"></ng-content>
-        @if (trailing()) {
-            @if (trailingValue) {
-                <ng-container [ngTemplateOutlet]="trailingValue"></ng-container>
-            } @else {
+        <ng-content select="[data-trailing]">
+            @if (trailing()) {
                 <span data-trailing>{{ trailing() }}</span>
             }
-        }
+        </ng-content>
         @if (displayClearButton()) {
             <ui-button
                 data-clear-button
@@ -162,11 +165,6 @@ export class UIInput implements AsSignal<InputProps> {
     readonly ariaDescribedBy = input<InputProps['ariaDescribedBy']>();
     readonly ariaErrorMessage = input<InputProps['ariaErrorMessage']>();
 
-    get trailingValue(): TemplateRef<any> | undefined {
-        const value = this.trailing();
-        return value instanceof TemplateRef ? value : undefined;
-    }
-
     onClearMouseDown(event: MouseEvent) {
         event.preventDefault();
     }
@@ -178,9 +176,5 @@ export class UIInput implements AsSignal<InputProps> {
 
     handleInput(event: Event) {
         this.value.set((event.target as HTMLInputElement).value);
-    }
-
-    isTemplateRef(value: any): value is TemplateRef<any> {
-        return value instanceof TemplateRef;
     }
 }

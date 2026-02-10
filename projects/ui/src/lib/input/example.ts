@@ -76,14 +76,9 @@ import { UIInput } from './input';
             trailing="%" />
 
         <h3>Placeholder with trailing UIButton</h3>
-        <ng-template #trailingButton>
-            <ui-button label="Go" size="small" (onClick)="onTrailingButtonClick()"></ui-button>
-        </ng-template>
-        <ui-input
-            name="placeholder-trailing-button"
-            ariaLabel="Input Label"
-            placeholder="Type something..."
-            [trailing]="trailingButton" />
+        <ui-input name="placeholder-trailing-button" ariaLabel="Input Label" placeholder="Type something...">
+            <ui-button data-trailing label="Go" size="small" (onClick)="onTrailingButtonClick()"></ui-button>
+        </ui-input>
     `,
 })
 export class UIInputExample {

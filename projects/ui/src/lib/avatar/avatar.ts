@@ -145,7 +145,7 @@ export class UIAvatar implements AfterViewInit, AsSignal<AvatarProps> {
     readonly size = input<AvatarProps['size']>('small');
     readonly color = input<AvatarProps['color']>('grey');
     readonly initials = input<AvatarProps['initials']>();
-    readonly showIcon = input<AvatarProps['showIcon']>(false);
+    readonly showIcon = input<AvatarProps['showIcon']>(true);
     readonly image = input<AvatarProps['image']>();
     readonly hideTooltip = input<AvatarProps['hideTooltip']>(false);
     readonly disabled = input<AvatarProps['disabled']>(false);

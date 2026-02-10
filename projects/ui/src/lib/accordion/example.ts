@@ -53,6 +53,29 @@ import { UIAccordion, UIAccordionSection } from './';
             </ui-accordion>
         </ui-example>
 
+        <h4>section props: id, isOpen, disabled, title, subtitle, leading, trailing</h4>
+        <ui-example>
+            <ui-accordion>
+                <ui-accordion-section
+                    id="open-section"
+                    title="Open Section"
+                    subtitle="This section is open by default"
+                    leading="Leading"
+                    trailing="Trailing"
+                    [isOpen]="true">
+                    Open Children
+                </ui-accordion-section>
+
+                <ui-accordion-section title="Disabled Section" subtitle="This section is disabled" [disabled]="true">
+                    Disabled Children
+                </ui-accordion-section>
+
+                <ui-accordion-section title="Regular Section" subtitle="This section is closed by default">
+                    Regular Children
+                </ui-accordion-section>
+            </ui-accordion>
+        </ui-example>
+
         <h4>With No Items (hidden)</h4>
         <ui-example>
             <ui-accordion></ui-accordion>
