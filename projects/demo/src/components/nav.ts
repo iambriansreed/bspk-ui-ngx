@@ -39,13 +39,9 @@ import { META } from '../meta';
             }
         </div>
     `,
-    styles: [
-        `
-            :host {
-                display: contents;
-            }
-        `,
-    ],
+    host: {
+        style: 'display: contents;',
+    },
 })
 export class AppNavComponent {
     routes = routes;

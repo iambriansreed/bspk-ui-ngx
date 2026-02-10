@@ -10,6 +10,7 @@ import {
     Renderer2,
     ViewEncapsulation,
     computed,
+    createComponent,
     effect,
     inject,
     model,
@@ -18,7 +19,6 @@ import {
 } from '@angular/core';
 import { autoUpdate, Placement } from '@floating-ui/dom';
 import { AsSignal } from '../../types/common';
-import { addComponent } from '../../utils/add-component';
 import { uniqueId } from '../../utils/random';
 import { FloatingUtility } from '../floating/floating';
 
@@ -200,7 +200,13 @@ export class UITooltipDirective implements OnDestroy, OnInit {
             return false;
         }
 
-        this.tooltipComponent = addComponent(this.env, UITooltip, 'ui-tooltip')!;
+        const componentElement = this.document.createElement('ui-tooltip');
+        this.document.body.appendChild(componentElement);
+
+        this.tooltipComponent = createComponent(UITooltip, {
+            environmentInjector: this.env,
+            hostElement: componentElement,
+        });
 
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
         this.tooltipComponent.instance.id.set(this.tooltipId);

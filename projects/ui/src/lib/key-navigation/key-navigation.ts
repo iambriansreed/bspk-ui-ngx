@@ -1,4 +1,4 @@
-import { computed, effect, signal } from '@angular/core';
+import { computed, DOCUMENT, effect, inject, signal } from '@angular/core';
 import { UtilityBase } from '../../types/common';
 import { KeyboardEventCode } from '../../utils/keyboard';
 import { keydownHandler, KeysCallback } from '../../utils/keydown-handler';
@@ -91,6 +91,8 @@ export class KeyNavigationUtility implements UtilityBase<KeyNavigationUtilityPro
         ) as KeysCallback;
     });
 
+    private document = inject(DOCUMENT);
+
     constructor() {
         effect(() => {
             const { ids, activeElementId } = this.props();
@@ -107,7 +109,7 @@ export class KeyNavigationUtility implements UtilityBase<KeyNavigationUtilityPro
     }
 
     get activeElement(): HTMLElement | null {
-        return (this.activeElementId && document.querySelector(`[id="${this.activeElementId}"]`)) || null;
+        return (this.activeElementId && this.document.querySelector(`[id="${this.activeElementId}"]`)) || null;
     }
 
     /**
@@ -128,7 +130,7 @@ export class KeyNavigationUtility implements UtilityBase<KeyNavigationUtilityPro
         this.updateProps({ activeElementId: id });
 
         if (id)
-            document.querySelector(`[id="${id}"]`)?.scrollIntoView({
+            this.document.querySelector(`[id="${id}"]`)?.scrollIntoView({
                 block: 'nearest',
                 behavior: 'smooth',
                 inline: 'nearest',

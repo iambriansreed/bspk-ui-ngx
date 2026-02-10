@@ -11,6 +11,8 @@ import {
     AfterViewInit,
     OnDestroy,
     output,
+    DOCUMENT,
+    inject,
 } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
@@ -212,6 +214,8 @@ export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy
         };
     });
 
+    private document = inject(DOCUMENT);
+
     constructor() {
         this.value.subscribe((val) => {
             this.valueChange.emit(val || '');
@@ -220,7 +224,7 @@ export class UISelect implements AsSignal<SelectProps>, AfterViewInit, OnDestroy
 
     get offset() {
         // Reads the CSS variable value at runtime, offsetOptions requires a number
-        return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spacing-sizing-01'));
+        return parseInt(getComputedStyle(this.document.documentElement).getPropertyValue('--spacing-sizing-01'));
     }
 
     get selectedItem(): SelectItem | undefined {

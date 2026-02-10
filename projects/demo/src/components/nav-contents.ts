@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, OnDestroy, ViewEncapsulation, DOCUMENT } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { UIFab } from '@ui/fab';
 import { IconLink } from '@ui/icons/link';
@@ -30,6 +30,7 @@ interface NavItem {
 @Component({
     selector: 'app-nav-contents',
     standalone: true,
+    encapsulation: ViewEncapsulation.None,
     imports: [
         UIFab,
         UITxtDirective,
@@ -60,7 +61,7 @@ interface NavItem {
                 (onMouseLeave)="open.set(false)">
                 <div ui-txt="body-small">On this page</div>
                 <nav>
-                    @for (link of menuItems; track link.hash) {
+                    @for (link of menuItems(); track link.hash) {
                         <a
                             ui-link
                             data-link
@@ -80,32 +81,35 @@ interface NavItem {
             </ui-card>
         }
 
-        @for (link of menuItems; track link.hash) {
-            <a
-                [ui-portal]="link.element"
-                [attr.aria-label]="link.title"
-                data-nav-link
-                [routerLink]="location.pathname"
-                [fragment]="link.hash"
-                [id]="link.hash.substring(1)">
-                <icon-link />
-            </a>
-        } `,
+        @for (link of menuItems(); track link.hash) {
+            @if (link.element) {
+                <a
+                    [ui-portal]="link.element"
+                    [attr.aria-label]="link.title"
+                    data-nav-link
+                    [routerLink]="location.pathname"
+                    [fragment]="link.hash"
+                    [id]="link.hash.substring(1)">
+                    <icon-link />
+                </a>
+            }
+        }
+        <!-- x --> `,
 })
 export class AppNavContents implements OnInit, OnDestroy {
     IconMenu = IconMenu;
 
-    menuItems: NavItem[] = [];
+    menuItems = signal<NavItem[]>([]);
 
     open = signal(false);
-
     reference = signal<HTMLElement | null>(null);
 
-    router = inject(Router);
-    route = inject(ActivatedRoute);
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
+    private document = inject(DOCUMENT);
+    private host = inject<ElementRef<HTMLElement>>(ElementRef);
 
-    host = inject<ElementRef<HTMLElement>>(ElementRef);
-
+    private timeout: ReturnType<typeof setTimeout> | null = null;
     private routeSubscription: Subscription | null = null;
     private fragmentSubscription: Subscription | null = null;
 
@@ -119,7 +123,7 @@ export class AppNavContents implements OnInit, OnDestroy {
 
     setMenuItems() {
         setTimeout(() => {
-            const mainElement = document.querySelector<HTMLElement>('[data-main]')!;
+            const mainElement = this.document.querySelector<HTMLElement>('[data-main]')!;
 
             const nextMenuItems: NavItem[] = Array.from(
                 mainElement.querySelectorAll<HTMLElement>(`h1, h2, h3, h4, h5, h6`) || [],
@@ -146,7 +150,7 @@ export class AppNavContents implements OnInit, OnDestroy {
             // @ts-expect-error - ok
             globalThis.mainElement = mainElement;
 
-            this.menuItems = nextMenuItems;
+            this.menuItems.set(nextMenuItems);
         }, 1000);
     }
 
@@ -157,19 +161,25 @@ export class AppNavContents implements OnInit, OnDestroy {
 
         this.routeSubscription = this.router.events.subscribe(() => {
             this.open.set(false);
-            this.setMenuItems();
+            this.menuItems.set([]);
+
+            if (this.timeout) clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.setMenuItems();
+            }, 1000);
         });
 
         this.setMenuItems();
 
         this.fragmentSubscription = this.route.fragment.subscribe((fragment: string | null) => {
-            if (fragment) document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
+            if (fragment) this.document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
         });
     }
 
     ngOnDestroy() {
         this.routeSubscription?.unsubscribe();
         this.fragmentSubscription?.unsubscribe();
+        if (this.timeout) clearTimeout(this.timeout);
     }
 }
 

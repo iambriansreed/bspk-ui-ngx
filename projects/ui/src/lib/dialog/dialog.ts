@@ -9,6 +9,8 @@ import {
     OnChanges,
     OnDestroy,
     viewChild,
+    inject,
+    DOCUMENT,
 } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 import { UIFocusTrapDirective } from '../focus-trap';
@@ -131,12 +133,14 @@ export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
     readonly ariaLabel = input<DialogProps['ariaLabel']>(undefined);
     readonly ariaDescription = input<DialogProps['ariaDescription']>(undefined);
 
+    private document = inject(DOCUMENT);
+
     private readonly keydownBound = signal(false);
 
     ngOnChanges() {
         const isOpen = this.open();
         // Lock page scroll when open (like React)
-        document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+        this.document.documentElement.style.overflow = isOpen ? 'hidden' : '';
         if (isOpen && !this.keydownBound()) {
             window.addEventListener('keydown', this._onKeydown);
             this.keydownBound.set(true);
@@ -147,7 +151,7 @@ export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
     }
 
     ngOnDestroy() {
-        document.documentElement.style.overflow = '';
+        this.document.documentElement.style.overflow = '';
         if (this.keydownBound()) {
             window.removeEventListener('keydown', this._onKeydown);
             this.keydownBound.set(false);

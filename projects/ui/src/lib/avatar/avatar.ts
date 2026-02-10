@@ -10,6 +10,7 @@ import {
     inject,
     EnvironmentInjector,
     ElementRef,
+    DOCUMENT,
 } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 import { ColorVariant } from '../../utils/color-variants';
@@ -153,6 +154,7 @@ export class UIAvatar implements AfterViewInit, AsSignal<AvatarProps> {
     private renderer = inject(Renderer2);
     private env = inject(EnvironmentInjector);
     private host = inject(ElementRef<HTMLElement>);
+    private document = inject(DOCUMENT);
 
     private tooltipUtility: TooltipUtility | undefined;
 
@@ -173,11 +175,16 @@ export class UIAvatar implements AfterViewInit, AsSignal<AvatarProps> {
 
     ngAfterViewInit() {
         if (!this.hideTooltip()) {
-            this.tooltipUtility = new TooltipUtility(this.renderer, this.env, {
-                label: this.name(),
-                reference: this.host.nativeElement,
-                placement: 'top',
-            });
+            this.tooltipUtility = new TooltipUtility(
+                this.renderer,
+                this.env,
+                {
+                    label: this.name(),
+                    reference: this.host.nativeElement,
+                    placement: 'top',
+                },
+                this.document,
+            );
         }
     }
 

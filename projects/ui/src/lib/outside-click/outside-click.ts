@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { DOCUMENT, inject, signal } from '@angular/core';
 import { UtilityBase } from '../../types/common';
 
 export interface OutsideClickUtilityProps {
@@ -39,6 +39,8 @@ export class OutsideClickUtility implements UtilityBase<OutsideClickUtilityProps
         handleTabs: false,
     });
 
+    private document = inject(DOCUMENT);
+
     updateProps(next: Partial<OutsideClickUtilityProps>) {
         this.props.set({
             ...this.props(),
@@ -52,15 +54,15 @@ export class OutsideClickUtility implements UtilityBase<OutsideClickUtilityProps
         this.updateProps(props);
 
         if (this.props().elements?.length) {
-            document.addEventListener('mousedown', this.handleClickOutside);
-            document.addEventListener('keydown', this.handleOutsideTab);
+            this.document.addEventListener('mousedown', this.handleClickOutside);
+            this.document.addEventListener('keydown', this.handleOutsideTab);
         }
     }
 
     destroy() {
         if (typeof document === 'undefined') return;
-        document.removeEventListener('mousedown', this.handleClickOutside);
-        document.removeEventListener('keydown', this.handleOutsideTab);
+        this.document.removeEventListener('mousedown', this.handleClickOutside);
+        this.document.removeEventListener('keydown', this.handleOutsideTab);
     }
 
     private handleClickOutside = (event: MouseEvent) => {
@@ -75,7 +77,7 @@ export class OutsideClickUtility implements UtilityBase<OutsideClickUtilityProps
         if (!handleTabs || event.key !== 'Tab' || disabled) return;
 
         setTimeout(() => {
-            if (elements?.some?.((element) => element?.contains?.(document.activeElement))) return;
+            if (elements?.some?.((element) => element?.contains?.(this.document.activeElement))) return;
             callback?.(event);
         }, 0);
     };

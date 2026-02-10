@@ -9,6 +9,8 @@ import {
     viewChild,
     AfterViewInit,
     OnDestroy,
+    inject,
+    DOCUMENT,
 } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { keydownHandler } from '../../utils/keydown-handler';
@@ -124,9 +126,11 @@ export class UIBreadcrumbDropdown implements AsSignal<BreadcrumbDropdownProps>, 
         };
     });
 
+    private document = inject(DOCUMENT);
+
     get offset() {
         // Reads the CSS variable value at runtime, offsetOptions requires a number
-        return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spacing-sizing-01'));
+        return parseInt(getComputedStyle(this.document.documentElement).getPropertyValue('--spacing-sizing-01'));
     }
 
     get referenceEl() {

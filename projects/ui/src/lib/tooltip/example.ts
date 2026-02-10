@@ -9,6 +9,7 @@ import {
     inject,
     EnvironmentInjector,
     Renderer2,
+    DOCUMENT,
 } from '@angular/core';
 import { UIButton } from '../button/button';
 import { TooltipUtility } from './tooltip';
@@ -128,19 +129,25 @@ export class UITooltipExample implements AfterViewInit, OnDestroy {
 
     tooltip?: TooltipUtility;
 
-    renderer = inject(Renderer2);
-    env = inject(EnvironmentInjector);
+    private renderer = inject(Renderer2);
+    private env = inject(EnvironmentInjector);
+    private document = inject(DOCUMENT);
 
     ngAfterViewInit() {
         this.interval = setInterval(() => {
             this.counter.set(this.counter() + 1);
         }, 1000);
 
-        this.tooltip = new TooltipUtility(this.renderer, this.env, {
-            label: 'Tooltip Utility says hello!',
-            placement: 'top',
-            reference: this.tooltipUtil()?.nativeElement,
-        });
+        this.tooltip = new TooltipUtility(
+            this.renderer,
+            this.env,
+            {
+                label: 'Tooltip Utility says hello!',
+                placement: 'top',
+                reference: this.tooltipUtil()?.nativeElement,
+            },
+            this.document,
+        );
     }
 
     ngOnDestroy() {

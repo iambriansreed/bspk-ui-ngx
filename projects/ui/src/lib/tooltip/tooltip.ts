@@ -1,6 +1,5 @@
-import { ComponentRef, Renderer2, signal } from '@angular/core';
+import { ComponentRef, createComponent, Renderer2, signal } from '@angular/core';
 
-import { addComponent } from '../../utils/add-component';
 import { uniqueId } from '../../utils/random';
 import { FloatingUtility } from '../floating/floating';
 import { TooltipProps, TooltipPlacement, UITooltip } from './';
@@ -27,6 +26,7 @@ export class TooltipUtility {
         private renderer: Renderer2,
         private env: any,
         props: Partial<TooltipUtilityProps>,
+        private document: Document,
     ) {
         this.updateProps(props);
 
@@ -98,7 +98,13 @@ export class TooltipUtility {
             return false;
         }
 
-        this.tooltipComponent = addComponent(this.env, UITooltip, 'ui-tooltip')!;
+        const componentElement = this.document.createElement('ui-tooltip');
+        this.document.body.appendChild(componentElement);
+
+        this.tooltipComponent = createComponent(UITooltip, {
+            environmentInjector: this.env,
+            hostElement: componentElement,
+        });
 
         if (this.tooltipEl) this.renderer.setStyle(this.tooltipEl, 'display', 'none');
         this.tooltipComponent.instance.id.set(this.tooltipId);
