@@ -90,7 +90,7 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
             </ol>
         </nav>
     }`,
-    styleUrls: ['./breadcrumb.scss'],
+    styleUrl: './breadcrumb.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, UITxtDirective, UIBreadcrumbDropdown, IconChevronRight, UILinkDirective],
     encapsulation: ViewEncapsulation.None,

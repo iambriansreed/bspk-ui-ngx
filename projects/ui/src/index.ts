@@ -63,4 +63,5 @@ export * from './lib/textarea';
 export * from './lib/textarea-field';
 export * from './lib/tooltip';
 export * from './lib/txt';
+export * from './services/brand';
 export * from './services/theme';

@@ -25,7 +25,7 @@ export interface ScrimProps {
     selector: 'ui-scrim',
     standalone: true,
     template: '',
-    styleUrls: ['./scrim.scss'],
+    styleUrl: './scrim.scss',
     encapsulation: ViewEncapsulation.None,
     host: {
         'aria-hidden': 'true',

@@ -70,7 +70,7 @@ export interface ListItemProps {
     standalone: true,
     imports: [NgTemplateOutlet, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./list-item.scss'],
+    styleUrl: './list-item.scss',
     template: `
         <ng-template #inner>
             <ng-content select="[data-leading]"></ng-content>

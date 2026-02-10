@@ -108,7 +108,7 @@ export interface ChipProps {
         }
         <span data-touch-target></span>
     </button>`,
-    styleUrls: ['./chip.scss'],
+    styleUrl: './chip.scss',
     host: {
         style: 'display: contents;',
     },

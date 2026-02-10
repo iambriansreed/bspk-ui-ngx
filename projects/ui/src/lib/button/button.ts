@@ -7,7 +7,8 @@ import {
     ChangeDetectionStrategy,
     ViewEncapsulation,
     input,
-    viewChild,
+    OnInit,
+    inject,
 } from '@angular/core';
 
 import { BspkIcon } from '../../types/bspk-icon';
@@ -140,7 +141,7 @@ export interface ButtonProps {
         </ng-content>
         <span [attr.aria-hidden]="true" [attr.data-touch-target]="true"></span>
     </button>`,
-    styleUrls: ['./button.scss'],
+    styleUrl: './button.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, UIIcon, UITooltipDirective],
     encapsulation: ViewEncapsulation.None,
@@ -148,7 +149,7 @@ export interface ButtonProps {
         style: 'display: contents;',
     },
 })
-export class UIButton implements AsSignal<ButtonProps> {
+export class UIButton implements AsSignal<ButtonProps>, OnInit {
     /** Event emitted when the button is clicked. */
     @Output() onClick = new EventEmitter<MouseEvent>();
 
@@ -163,8 +164,6 @@ export class UIButton implements AsSignal<ButtonProps> {
 
     /** Event emitted when mouse leaves the button. */
     @Output() onMouseLeave = new EventEmitter<MouseEvent>();
-
-    readonly buttonElement = viewChild.required<ElementRef<HTMLButtonElement>>('buttonElement');
 
     readonly style = input<ButtonProps['style']>();
     readonly label = input.required<ButtonProps['label']>();
@@ -184,8 +183,10 @@ export class UIButton implements AsSignal<ButtonProps> {
     readonly owner = input<ButtonProps['owner']>();
     readonly class = input<ButtonProps['class']>();
 
+    host = inject<ElementRef<HTMLElement>>(ElementRef);
+
     get nativeElement(): HTMLButtonElement {
-        return this.buttonElement().nativeElement!;
+        return this.host.nativeElement.firstElementChild as HTMLButtonElement;
     }
 
     get shouldShowLabel(): boolean {
@@ -204,6 +205,15 @@ export class UIButton implements AsSignal<ButtonProps> {
         }
 
         return classes.join(' ');
+    }
+
+    ngOnInit() {
+        // Pass through data- attributes from host to native button element
+        this.host.nativeElement.getAttributeNames().forEach((attr) => {
+            if (attr.startsWith('data-')) {
+                this.nativeElement.setAttribute(attr, this.host.nativeElement.getAttribute(attr)!);
+            }
+        });
     }
 
     handleClick(event: MouseEvent): void {

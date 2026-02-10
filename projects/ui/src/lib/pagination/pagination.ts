@@ -93,7 +93,7 @@ export interface PaginationProps {
                 owner="pagination"></ui-button>
         </ng-container>
     }`,
-    styleUrls: ['./pagination.scss'],
+    styleUrl: './pagination.scss',
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'pagination',

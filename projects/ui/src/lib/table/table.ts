@@ -165,7 +165,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
             }
         </div>
     </div>`,
-    styleUrls: ['./table.scss'],
+    styleUrl: './table.scss',
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     host: {

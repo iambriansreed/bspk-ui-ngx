@@ -43,7 +43,7 @@ export interface TagProps {
         @if (variant() === 'corner-wrap') {
             <div data-triangle></div>
         }`,
-    styleUrls: ['./tag.scss'],
+    styleUrl: './tag.scss',
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'tag',

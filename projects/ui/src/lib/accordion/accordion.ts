@@ -27,7 +27,7 @@ export interface AccordionProps {
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
-    styleUrls: ['./accordion.scss'],
+    styleUrl: './accordion.scss',
     encapsulation: ViewEncapsulation.None,
     host: {
         'data-bspk': 'accordion',

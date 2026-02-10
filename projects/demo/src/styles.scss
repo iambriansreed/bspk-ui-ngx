@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@use '@bspk/styles/anywhere.css';
 @use '../../../projects/ui/src/styles/base';
 @use '../../../projects/ui/src/styles/colors';
 
@@ -13,6 +12,16 @@ router-outlet {
 
 [data-theme='light'] {
     color-scheme: light;
+}
+
+/* This is used to help make F.O.U.C. less noticeable */
+body > * {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+body.loaded > * {
+    opacity: 1;
 }
 
 h1,
@@ -65,20 +74,6 @@ p {
 
 [data-axe-pass] {
     margin: 0 0 1.5rem;
-}
-
-#root {
-    display: contents;
-
-    /* This is used to help make F.O.U.C. less noticeable */
-    & > * {
-        transition: opacity 0.5s ease-in-out;
-        opacity: 0;
-    }
-
-    &.loaded > * {
-        opacity: 1;
-    }
 }
 
 :root {
@@ -198,7 +193,7 @@ p {
         width: 100%;
         border-bottom: solid 1px var(--stroke-neutral-low-contrast);
         padding: var(--spacing-sizing-04);
-        position: relative; // for absolute children
+        position: relative; /* for absolute children */
         background-color: var(--background-shade);
     }
 
@@ -338,7 +333,7 @@ p {
                 padding: var(--spacing-sizing-02) var(--spacing-sizing-04);
             }
 
-            // actually last shown - column-reverse
+            /* actually last shown - column-reverse */
             [data-variant='informational']:first-child {
                 position: relative;
                 animation: slide-in 0.5s ease-in-out forwards;
@@ -407,7 +402,7 @@ p {
             margin: 0;
         }
 
-        // ok
+        /* ok */
     }
 }
 
