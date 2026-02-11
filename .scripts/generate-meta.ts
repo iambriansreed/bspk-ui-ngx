@@ -151,18 +151,24 @@ export function generateMeta(): Meta {
                 file: comp.file,
                 // for css, we look for styleUrlsData in the comp object, which can be a string, an array of objects with a data property, or an object with values that have a data property. We extract the CSS file paths from these structures.
                 css: (() => {
-                    if (!('styleUrlsData' in comp)) return '';
+                    if ('styleUrlsData' in comp && comp.styleUrlsData) {
+                        if (typeof comp.styleUrlsData === 'string') return comp.styleUrlsData;
 
-                    if (typeof comp.styleUrlsData === 'string') return comp.styleUrlsData;
+                        if (Array.isArray(comp.styleUrlsData))
+                            return comp.styleUrlsData.map(({ data }) => data).join(', ');
 
-                    if (Array.isArray(comp.styleUrlsData)) return comp.styleUrlsData.map(({ data }) => data).join(', ');
-
-                    if (typeof comp.styleUrlsData === 'object' && comp.styleUrlsData !== null) {
-                        return Object.values(comp.styleUrlsData)
-                            .map((styleObj: any) => styleObj.data)
-                            .join(', ');
+                        if (typeof comp.styleUrlsData === 'object' && comp.styleUrlsData !== null) {
+                            return Object.values(comp.styleUrlsData)
+                                .map((styleObj: any) => styleObj.data)
+                                .join(', ');
+                        }
                     }
 
+                    if ('styleUrl' in comp && comp.styleUrl) {
+                        const stylePath = path.join(componentRootDir, comp.styleUrl);
+
+                        if (fs.existsSync(stylePath)) return fs.readFileSync(stylePath, 'utf-8');
+                    }
                     return '';
                 })(),
                 className: comp.name,
