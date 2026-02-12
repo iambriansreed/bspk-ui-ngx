@@ -10,7 +10,7 @@ import { UIFab } from './fab';
     standalone: true,
     imports: [CommonModule, UIFab, UISwitchOption],
     template: `
-        <h4>Default</h4>
+        <h4>Default: label and onClick</h4>
         <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
             <ui-fab label="Default FAB" (onClick)="handleClick('Default')" />
         </div>
@@ -26,24 +26,28 @@ import { UIFab } from './fab';
                 (onMouseEnter)="log('Mouse Enter')" />
         </div>
 
-        <h4>Size: Small</h4>
-        <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
-            <ui-fab label="Small FAB" size="small" (onClick)="handleClick('Small')" />
-        </div>
-
-        <h4>Size: Small with icon</h4>
-        <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
-            <ui-fab label="Small FAB" size="small" (onClick)="handleClick('Small with icon')" [icon]="iconCloud" />
-        </div>
-
-        <h4>Size: Medium</h4>
+        <h4>Size: medium</h4>
         <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
             <ui-fab label="Medium FAB" size="medium" (onClick)="handleClick('Medium')" />
         </div>
 
-        <h4>Size: Medium with Icon</h4>
+        <h4>Size: Medium with icon</h4>
         <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
             <ui-fab label="Medium FAB" size="medium" (onClick)="handleClick('Medium with icon')" [icon]="iconCloud" />
+        </div>
+
+        <h4>Size: x-large</h4>
+        <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
+            <ui-fab label="x-large FAB" size="x-large" (onClick)="handleClick('x-large')" />
+        </div>
+
+        <h4>Size: x-large with Icon</h4>
+        <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
+            <ui-fab
+                label="x-large FAB"
+                size="x-large"
+                (onClick)="handleClick('x-large with icon')"
+                [icon]="iconCloud" />
         </div>
 
         <h4>Variant: Neutral</h4>
@@ -140,15 +144,15 @@ import { UIFab } from './fab';
                 (onClick)="handleClick('Secondary Icon Only')" />
         </div>
 
-        <h4>Icon Only, size: medium</h4>
+        <h4>Icon Only, size: x-large</h4>
         <div style="height: 200px; position: relative; border: 1px solid #ccc; margin-bottom: 16px;">
             <ui-fab
                 label="Icon Only FAB"
                 [icon]="iconCloud"
                 [iconOnly]="true"
                 aria-label="Icon Only FAB"
-                size="medium"
-                (onClick)="handleClick('Medium Icon Only')" />
+                size="x-large"
+                (onClick)="handleClick('x-large Icon Only')" />
         </div>
 
         <h4>With Tooltip</h4>

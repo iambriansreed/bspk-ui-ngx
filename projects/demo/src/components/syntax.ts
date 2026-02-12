@@ -27,7 +27,7 @@ import { pretty } from '../utils/pretty';
             [label]="copyLabel()"
             (onClick)="copyCode()"
             placement="top-right"
-            size="small"
+            size="medium"
             style="margin-top: -10px; margin-right: -10px"
             variant="neutral" />
         <pre><code>{{source()}}</code></pre>

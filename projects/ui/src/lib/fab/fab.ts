@@ -5,7 +5,7 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { UIIcon } from '../icon';
 import { UITooltipDirective } from '../tooltip';
 
-export type FabSize = 'medium' | 'small';
+export type FabSize = 'medium' | 'x-large';
 export type FabVariant = 'neutral' | 'primary' | 'secondary';
 export type FabPlacement = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 export type FabContainer = 'local' | 'page';
@@ -14,7 +14,6 @@ export type FabIconType = BspkIcon;
 
 export interface FabProps {
     ariaLabel?: CommonProps['ariaLabel'];
-    owner?: CommonProps['owner'];
     style?: CommonProps['style'];
 
     /** The label of the button. */
@@ -28,7 +27,7 @@ export interface FabProps {
     /**
      * The size of the button.
      *
-     * @default small
+     * @default medium
      */
     size?: FabSize;
     /**
@@ -136,7 +135,7 @@ export class UIFab implements AsSignal<FabProps> {
     readonly label = input<FabProps['label']>('');
     readonly icon = input<FabProps['icon']>();
     readonly tooltip = input<FabProps['tooltip']>();
-    readonly size = input<FabProps['size']>('small');
+    readonly size = input<FabProps['size']>('medium');
     readonly variant = input<FabProps['variant']>('primary');
     readonly placement = input<FabProps['placement']>('bottom-right');
     readonly container = input<FabProps['container']>('local');
