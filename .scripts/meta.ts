@@ -7,7 +7,7 @@
  * - To provide information about which phase each component is in for the roadmap page
  * - To provide information about which components are in the library for the package readme
  *
- * $ npx tsx .scripts/meta/main.ts --write
+ * $ npx tsx .scripts/meta.ts --write
  */
 
 import { execSync } from 'child_process';

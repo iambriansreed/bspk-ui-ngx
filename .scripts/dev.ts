@@ -9,7 +9,7 @@ const uiSrcPath = path.join(__dirname, '../projects/ui/src');
 
 console.log('\x1b[33mWatching for changes to regenerate component metadata...\x1b[0m');
 
-const generateMetaScriptPath = path.join(__dirname, 'meta/main.ts');
+const generateMetaScriptPath = path.join(__dirname, 'meta.ts');
 
 let lastEvent = {
     filename: '',
