@@ -79,6 +79,7 @@ export class Syntax implements AfterViewInit {
 
             const makePretty =
                 this.pretty() ||
+                this.language() === 'html' ||
                 this.language() === 'typescript' ||
                 this.language().endsWith('css') ||
                 this.language().endsWith('script');

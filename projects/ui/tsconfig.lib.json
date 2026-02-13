@@ -12,9 +12,5 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/lib/scrim/example.ts",
-    ],
-    "exclude": [
-        "**/*.spec.ts"
     ]
 }

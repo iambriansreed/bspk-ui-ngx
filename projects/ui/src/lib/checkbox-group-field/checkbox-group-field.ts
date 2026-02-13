@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { UICheckboxGroup } from '../checkbox-group';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { CheckboxGroupProps, UICheckboxGroup } from '../checkbox-group';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 
-export type CheckboxGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface CheckboxGroupFieldProps extends ControlFieldProps, CheckboxGroupProps {}
 
 /**
  * A field wrapper for the UICheckboxGroup component.
@@ -53,7 +53,7 @@ export type CheckboxGroupFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 })
 export class UICheckboxGroupField extends UICheckboxGroup implements AsSignal<CheckboxGroupFieldProps> {
     readonly errorMessage = input<CheckboxGroupFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<CheckboxGroupFieldProps['label']>();
     readonly helperText = input<CheckboxGroupFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<CheckboxGroupFieldProps['labelTrailing']>(undefined);
     readonly style = input<CheckboxGroupFieldProps['style']>(undefined);

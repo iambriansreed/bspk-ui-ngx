@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
-import { ComponentMetaProp } from '@shared/types';
+import { ComponentMetaInput } from '@shared/types';
 import { TableColumn, TableRow, UITable, UITableCell } from '@ui/table';
 import { UITag } from '@ui/tag';
 import { UITxtDirective } from '@ui/txt';
 import { Markup } from './markup';
 
-interface PropRow extends ComponentMetaProp, TableRow {}
+interface PropRow extends ComponentMetaInput, TableRow {}
 
 /*
  *  
@@ -110,7 +110,7 @@ class DescriptionTypeCell extends UITableCell<PropRow> {}
     },
 })
 export class TypeProps {
-    props = input<ComponentMetaProp[]>();
+    props = input<ComponentMetaInput[]>();
 
     propColumns: TableColumn<PropRow>[] = [
         {

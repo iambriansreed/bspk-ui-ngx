@@ -11,10 +11,10 @@
         "node": ">=22"
     },
     "scripts": {
-        "prebuild": "npm run - meta && npx tsx .scripts/pre-build.ts",
+        "prebuild": "npm run meta && npx tsx .scripts/pre-build.ts",
         "build": "ng build --project=demo --configuration=production && ng build --project=ui --configuration=production",
         "checks": "npm run build && npm run lint:all && npm run test",
-        "dev": "npm run - meta && npm run routes && run-p dev:serve dev:watch",
+        "dev": "npm run meta && run-p dev:serve dev:watch",
         "dev:serve": "ng serve",
         "dev:watch": "npx tsx .scripts/dev.ts",
         "gh-build": "npm run lint && npm run build && npm run test && cp -r ./dist/browser/index.html ./dist/browser/404.html",
@@ -22,11 +22,10 @@
         "lint:all": "npm run lint && npm run lint:ui && npm run lint:css",
         "lint:css": "npx stylelint '**/*.scss'",
         "lint:css:fix": "npx stylelint '**/*.scss' --fix",
-        "lint:ui": "npm run - meta && npx tsx .scripts/lint.ts",
+        "lint:ui": "npm run meta && npx tsx .scripts/lint.ts",
         "newc": "ng generate component --project=ui && npx tsx .scripts/generate-new-component.ts",
         "ng": "ng",
         "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/dev...$(git symbolic-ref --short HEAD)\"",
-        "routes": "npx tsx .scripts/generate-component-routes.ts --write",
         "fields": "npx tsx .scripts/generate-fields.ts",
         "start": "npm run prebuild && ng serve",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
@@ -34,7 +33,7 @@
         "semantic-release": "semantic-release",
         "preview": "npm run gh-build && npx http-server ./dist/browser",
         "clean": "rm -rf ./dist ./coverage ./.angular projects/demo/src/meta.ts projects/demo/src/routes/generated.ts",
-        "-": "npx tsx .scripts/all.ts"
+        "meta": "npx tsx .scripts/meta/pre.ts --write && npx tsx .scripts/meta.ts --write"
     },
     "overrides": {
         "glob": "^11.0.1"

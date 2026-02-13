@@ -1,9 +1,11 @@
+import { Type } from '@angular/core';
 import { ComponentPhase } from '.';
 
 export interface Meta {
     version: string;
     components: ComponentMeta[];
     hash: string;
+    interfaces: Record<string, Record<string, ComponentMetaInput>>;
 }
 
 export interface ComponentMeta {
@@ -19,28 +21,29 @@ export interface ComponentMeta {
      * If the component has an associated example component, this will include the name and path to that component for
      * use in the documentation site.
      */
-    exampleComponent?: {
+    exampleComponent?: string | (() => Promise<Type<any>>);
+    inputs: ComponentMetaInput[];
+    outputs?: {
         name: string;
-        path: string;
-    };
-    props: ComponentMetaProp[];
+        description?: string;
+    }[];
     file: string;
     css: string;
     associatedTypes?: {
         name: string;
         file: string;
-        props: ComponentMetaProp[];
+        props: ComponentMetaInput[];
     }[];
+    hasContent: boolean;
 }
 
-export interface ComponentMetaProp {
+export interface ComponentMetaInput {
     name: string;
     description?: string;
     type?: string[] | string;
     exampleType?: string;
     default?: string;
     required?: boolean;
-    options?: number[] | string[];
     variants?: string[];
     references?: string[];
     minimum?: number;

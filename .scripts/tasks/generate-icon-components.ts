@@ -7,8 +7,8 @@
  *
  * $ npx tsx .scripts/generate-icon-components.ts
  */
-import { toPascalCase } from './utils';
-import { toKebabCase } from '../projects/shared/src/utils';
+import { toPascalCase } from '../utils';
+import { toKebabCase } from '../../projects/shared/src/utils';
 
 const componentTemplate = (svg: string, slug: string, name: string) => `
 import { Component, Input, ViewEncapsulation } from '@angular/core';

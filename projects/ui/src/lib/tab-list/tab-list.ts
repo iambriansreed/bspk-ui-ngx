@@ -65,7 +65,7 @@ const TAB_BADGE_SIZES: Record<TabSize, 'small' | 'x-small'> = {
     small: 'x-small',
 };
 
-export interface TabListProps<O extends TabOption = TabOption> {
+export interface TabListBaseProps<O extends TabOption = TabOption> {
     /**
      * The tabs to display.
      *
@@ -115,6 +115,9 @@ export interface TabListProps<O extends TabOption = TabOption> {
     label: string;
     /** The id of the tab utility, used for accessibility. */
     id?: string;
+}
+
+export interface TabListProps<O extends TabOption = TabOption> extends TabListBaseProps<O> {
     /**
      * Determines if the labels of the options should be displayed. If icons are not provided for every option this is
      * ignored and labels are shown.
@@ -129,7 +132,8 @@ export interface TabListProps<O extends TabOption = TabOption> {
  *
  * See TabGroup or SegmentedControl for examples.
  *
- * @ignore
+ * @name TabList
+ * @phase Utility
  */
 @Component({
     template: '',

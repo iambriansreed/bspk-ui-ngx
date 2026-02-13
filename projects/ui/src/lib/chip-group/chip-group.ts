@@ -15,8 +15,12 @@ export interface ChipGroupProps {
      * @default wrap
      */
     overflow?: 'scroll' | 'wrap';
-    /** Only Chip components should be used as items. */
-    items?: ChipGroupItemProps[];
+    /**
+     * Only Chip components should be used as items.
+     *
+     * @required
+     */
+    items: ChipGroupItemProps[];
 }
 
 /**
@@ -51,5 +55,5 @@ export interface ChipGroupProps {
 })
 export class UIChipGroup implements AsSignal<ChipGroupProps> {
     readonly overflow = input<ChipGroupProps['overflow']>('wrap');
-    readonly items = input<ChipGroupProps['items']>();
+    readonly items = input.required<ChipGroupProps['items']>();
 }

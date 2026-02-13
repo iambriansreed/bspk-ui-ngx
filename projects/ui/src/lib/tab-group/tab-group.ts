@@ -1,17 +1,10 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal } from '../../types/common';
-import { TabListProps, TabOption, UITabList, UITabListUtility } from '../tab-list/tab-list';
+import { TabListBaseProps, TabOption, UITabList, UITabListUtility } from '../tab-list/tab-list';
 
 export type TabGroupSize = 'large' | 'medium' | 'small';
 
-export interface TabGroupProps {
-    options: TabListProps<TabOption>['options'];
-    value: TabListProps<TabOption>['value'];
-    size?: TabListProps<TabOption>['size'];
-    width?: TabListProps<TabOption>['width'];
-    label: TabListProps<TabOption>['label'];
-    id?: TabListProps<TabOption>['id'];
-
+export interface TabGroupProps extends TabListBaseProps<TabOption> {
     /**
      * When width is 'hug' this determines if the trailing underline should be showing. When width is 'fill' this
      * property isn't applicable.

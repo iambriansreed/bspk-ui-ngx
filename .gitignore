@@ -47,7 +47,6 @@ Thumbs.db
 nj-bspk-ui
 
 # Generated files
-projects/demo/src/routes/generated.ts
 *.tgz
-meta
 projects/demo/src/meta.ts
+projects/demo/src/generated/

@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UILinkDirective } from '@ui/link';
 import { routes } from '../app.routes';
-import { META } from '../meta';
 
 @Component({
     selector: 'app-nav',
@@ -46,16 +45,12 @@ import { META } from '../meta';
 export class AppNavComponent {
     routes = routes;
 
-    allComponents = this.routes
-        .filter((route) => route.data?.['component'])
-        .sort(({ title: a }, { title: b }) => a!.localeCompare(b!));
-
-    componentRoutes = this.allComponents.filter((r) => {
-        return META.components.find((c) => c.name === r.data!['component'])?.phase !== 'Utility';
+    componentRoutes = this.routes.filter((r) => {
+        return r.data?.phase && r.data?.phase !== 'Utility';
     });
 
-    utilityRoutes = this.allComponents.filter((r) => {
-        return META.components.find((c) => c.name === r.data!['component'])?.phase === 'Utility';
+    utilityRoutes = this.routes.filter((r) => {
+        return r.data?.phase === 'Utility';
     });
 
     trackByPath(_: number, route: any) {

@@ -7,5 +7,10 @@
     },
     "angularCompilerOptions": {
         "compilationMode": "partial"
-    }
+    },
+    "exclude": [
+        "**/*.spec.ts",
+        "**/example.ts",
+        "**/settings.ts",
+    ]
 }

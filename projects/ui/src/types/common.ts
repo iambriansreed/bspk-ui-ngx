@@ -54,14 +54,6 @@ export interface CallToActionButton {
 }
 
 export interface CommonProps {
-    /**
-     * Indicates that the element is in an invalid state and displays the error theme.
-     *
-     * If set to true, an accompanying error message should be provided.
-     *
-     * @default false
-     */
-    invalid?: boolean;
     /** The id of the element. If not provided one will be generated. */
     id?: string;
     /**
@@ -94,12 +86,6 @@ export interface CommonProps {
      * @default false
      */
     readOnly?: boolean;
-    /**
-     * The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control.
-     *
-     * @required
-     */
-    name: string;
     /**
      * The value of the control.
      *
@@ -180,11 +166,23 @@ export interface FieldControlProps<ValueType = string> {
     ariaLabelledBy?: CommonProps['ariaLabelledBy'];
     disabled?: CommonProps['disabled'];
     id?: CommonProps['id'];
-    invalid?: CommonProps['invalid'];
-    name: CommonProps['name'];
     readOnly?: CommonProps['readOnly'];
     required?: CommonProps['required'];
 
+    /**
+     * The [name](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name) of the control.
+     *
+     * @required
+     */
+    name: string;
+    /**
+     * Indicates that the element is in an invalid state and displays the error theme.
+     *
+     * If set to true, an accompanying error message should be provided.
+     *
+     * @default false
+     */
+    invalid?: boolean;
     /**
      * The value of the field control.
      *

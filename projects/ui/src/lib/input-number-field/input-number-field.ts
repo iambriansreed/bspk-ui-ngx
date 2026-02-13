@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInputNumber } from '../input-number';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { InputNumberProps, UIInputNumber } from '../input-number';
 
-export type InputNumberFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface InputNumberFieldProps extends InputNumberProps, ControlFieldProps {}
 
 /**
  * A field wrapper for the UIInputNumber component.
@@ -54,7 +54,7 @@ export type InputNumberFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 })
 export class UIInputNumberField extends UIInputNumber implements AsSignal<InputNumberFieldProps> {
     readonly errorMessage = input<InputNumberFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<InputNumberFieldProps['label']>();
     readonly helperText = input<InputNumberFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<InputNumberFieldProps['labelTrailing']>(undefined);
     readonly style = input<InputNumberFieldProps['style']>(undefined);

@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, input } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 import { UIInlineAlert } from '../inline-alert/inline-alert';
 
-export interface FieldProps {
+export interface ControlFieldProps {
     style?: CommonProps['style'];
 
     /** Displays an error message and marks the field as invalid. */
@@ -23,6 +23,9 @@ export interface FieldProps {
     labelTrailing?: string;
     /** Marks the field as required. */
     required?: boolean;
+}
+
+export interface FieldProps extends ControlFieldProps {
     /**
      * The id attribute of the form control rendered in children (e.g., Input, Select, Textarea). Used to associate the
      * label (htmlFor) with the control for accessibility. Must exactly match the control's id.

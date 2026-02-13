@@ -17,7 +17,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { getIndexFileContent } from './update-index.js';
+import { getIndexFileContent } from './tasks/update-index.js';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 

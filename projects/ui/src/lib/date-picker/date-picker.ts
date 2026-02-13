@@ -51,7 +51,7 @@ export interface DatePickerProps extends FieldControlProps<Date | string | undef
     /**
      * The size of the element.
      *
-     * @default 'medium'
+     * @default medium
      */
     size?: 'large' | 'medium' | 'small';
 }

@@ -1,16 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInput } from '../input';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { InputProps, UIInput } from '../input';
 
-export interface InputFieldProps {
-    style?: FieldProps['style'];
-    errorMessage?: FieldProps['errorMessage'];
-    helperText?: FieldProps['helperText'];
-    labelTrailing?: FieldProps['labelTrailing'];
-    required?: FieldProps['required'];
-}
+export interface InputFieldProps extends InputProps, ControlFieldProps {}
 
 /**
  * A field wrapper for the Input component.
@@ -60,7 +54,7 @@ export interface InputFieldProps {
 })
 export class UIInputField extends UIInput implements AsSignal<InputFieldProps> {
     readonly errorMessage = input<InputFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<InputFieldProps['label']>();
     readonly helperText = input<InputFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<InputFieldProps['labelTrailing']>(undefined);
     readonly style = input<InputFieldProps['style']>(undefined);

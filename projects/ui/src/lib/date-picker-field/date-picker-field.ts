@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { UIDatePicker } from '../date-picker';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { DatePickerProps, UIDatePicker } from '../date-picker';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 
-export type DatePickerFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface DatePickerFieldProps extends ControlFieldProps, DatePickerProps {}
 
 /**
  * A field wrapper for the UIDatePicker component.
@@ -54,7 +54,7 @@ export type DatePickerFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 })
 export class UIDatePickerField extends UIDatePicker implements AsSignal<DatePickerFieldProps> {
     readonly errorMessage = input<DatePickerFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<DatePickerFieldProps['label']>();
     readonly helperText = input<DatePickerFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<DatePickerFieldProps['labelTrailing']>(undefined);
     readonly style = input<DatePickerFieldProps['style']>(undefined);

@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIInputPhone } from '../input-phone';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { InputPhoneProps, UIInputPhone } from '../input-phone';
 
-export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface InputPhoneFieldProps extends ControlFieldProps, InputPhoneProps {}
 
 /**
  * A field wrapper for the UIInputPhone component.
@@ -54,7 +54,7 @@ export type InputPhoneFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 })
 export class UIInputPhoneField extends UIInputPhone implements AsSignal<InputPhoneFieldProps> {
     readonly errorMessage = input<InputPhoneFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<InputPhoneFieldProps['label']>();
     readonly helperText = input<InputPhoneFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<InputPhoneFieldProps['labelTrailing']>(undefined);
     readonly style = input<InputPhoneFieldProps['style']>(undefined);

@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
 import { TextareaProps, UITextarea } from '../textarea';
 
-export interface TextareaFieldProps extends FieldProps, TextareaProps {}
+export interface TextareaFieldProps extends ControlFieldProps, TextareaProps {}
 
 /**
  * A field wrapper for the UITextarea component.
@@ -54,7 +54,7 @@ export interface TextareaFieldProps extends FieldProps, TextareaProps {}
 })
 export class UITextareaField extends UITextarea implements AsSignal<TextareaFieldProps> {
     readonly errorMessage = input<TextareaFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<TextareaFieldProps['label']>();
     readonly helperText = input<TextareaFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<TextareaFieldProps['labelTrailing']>(undefined);
     readonly style = input<TextareaFieldProps['style']>(undefined);

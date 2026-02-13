@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UIRadioGroup } from '../radio-group';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { RadioGroupProps, UIRadioGroup } from '../radio-group';
 
-export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label' | 'size'>;
+export interface RadioGroupFieldProps extends ControlFieldProps, RadioGroupProps {}
 
 /**
  * A field wrapper for the UIRadioGroup component.
@@ -53,7 +53,7 @@ export type RadioGroupFieldProps = Omit<FieldProps, 'controlId' | 'label' | 'siz
 })
 export class UIRadioGroupField extends UIRadioGroup implements AsSignal<RadioGroupFieldProps> {
     readonly errorMessage = input<RadioGroupFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<RadioGroupFieldProps['label']>();
     readonly helperText = input<RadioGroupFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<RadioGroupFieldProps['labelTrailing']>(undefined);
     readonly style = input<RadioGroupFieldProps['style']>(undefined);

@@ -1,6 +1,6 @@
-import { componentItems } from './routes/generated';
+import { NavRoute } from '@shared/types';
+import { componentItems } from './generated/routes';
 import { HomeRouteComponent } from './routes/home';
-import { NavRoute } from './types';
 
 export const routes: NavRoute[] = [
     { path: '', component: HomeRouteComponent, hide: true, title: 'BSPK' },

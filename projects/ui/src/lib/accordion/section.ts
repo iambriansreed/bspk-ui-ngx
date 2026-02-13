@@ -46,7 +46,8 @@ export interface AccordionSectionProps {
 /**
  * A utility component representing a single section within an accordion.
  *
- * @ignore
+ * @name AccordionSection
+ * @phase Utility
  */
 @Component({
     selector: 'ui-accordion-section',

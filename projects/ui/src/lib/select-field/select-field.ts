@@ -1,10 +1,10 @@
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { uniqueId } from '../../utils/random';
-import { FieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
-import { UISelect } from '../select';
+import { ControlFieldProps, UIField, describedById, errorMessageId, labelledById } from '../field';
+import { SelectProps, UISelect } from '../select';
 
-export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
+export interface SelectFieldProps extends SelectProps, ControlFieldProps {}
 
 /**
  * A field wrapper for the UISelect component.
@@ -55,7 +55,7 @@ export type SelectFieldProps = Omit<FieldProps, 'controlId' | 'label'>;
 })
 export class UISelectField extends UISelect implements AsSignal<SelectFieldProps> {
     readonly errorMessage = input<SelectFieldProps['errorMessage']>(undefined);
-    readonly label = input.required<FieldProps['label']>();
+    readonly label = input.required<SelectFieldProps['label']>();
     readonly helperText = input<SelectFieldProps['helperText']>(undefined);
     readonly labelTrailing = input<SelectFieldProps['labelTrailing']>(undefined);
     readonly style = input<SelectFieldProps['style']>(undefined);

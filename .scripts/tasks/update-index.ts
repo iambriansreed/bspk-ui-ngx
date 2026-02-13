@@ -5,9 +5,9 @@ import * as path from 'path';
 export function getIndexFileContent() {
     const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-    const libDir = path.join(__dirname, '../projects/ui/src/lib');
-    const servicesDir = path.join(__dirname, '../projects/ui/src/services');
-    const indexPath = path.join(__dirname, '../projects/ui/src/index.ts');
+    const libDir = path.join(__dirname, '../../projects/ui/src/lib');
+    const servicesDir = path.join(__dirname, '../../projects/ui/src/services');
+    const indexPath = path.join(__dirname, '../../projects/ui/src/index.ts');
 
     const exportLines: string[] = [];
 
