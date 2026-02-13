@@ -9,16 +9,12 @@ import { UIIcon } from './icon';
     standalone: true,
     imports: [CommonModule, UIIcon, UIRadioGroup],
     template: `
-        <h4>Using prop width = 24</h4>
-        <div>
-            <ui-icon [icon]="iconIcecream" width="24" />
-        </div>
+        <h4>Default</h4>
+        <ui-icon [icon]="iconIcecream" />
 
-        <h4>Not using width prop</h4>
-        <p>Parent div has a width of 50px</p>
-        <div style="width: 50px">
-            <ui-icon [icon]="iconIcecream" />
-        </div>
+        <h4>width = 40</h4>
+
+        <ui-icon [icon]="iconIcecream" width="40" />
 
         <h4>Change icon</h4>
         <div>

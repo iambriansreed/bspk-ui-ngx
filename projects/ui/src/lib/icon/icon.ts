@@ -6,7 +6,11 @@ import { AsSignal } from '../../types/common';
 export interface IconProps {
     /** The icon to display from the BSPK icon library. */
     icon: BspkIcon;
-    /** Optional width for the icon. */
+    /**
+     * Optional width for the icon.
+     *
+     * @default '24'
+     */
     width?: string;
 }
 
@@ -29,5 +33,5 @@ export interface IconProps {
 })
 export class UIIcon implements AsSignal<IconProps> {
     readonly icon = input.required<IconProps['icon']>();
-    readonly width = input<IconProps['width']>();
+    readonly width = input<IconProps['width']>('24');
 }

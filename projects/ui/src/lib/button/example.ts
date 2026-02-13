@@ -19,28 +19,45 @@ import { UIButton } from './button';
         <ui-button (click)="handleClick('Default')" label="Default" />
 
         <h4>Primary</h4>
+        <ui-button (onClick)="handleClick('Primary')" label="Example Label" variant="primary" [icon]="iconGTranslate" />
+
+        <h4>Secondary</h4>
+        <ui-button (onClick)="handleClick('Secondary')" label="Example Label" variant="secondary" [icon]="iconBrail" />
+
+        <h4>Tertiary</h4>
+        <ui-button (onClick)="handleClick('Tertiary')" label="Example Label" variant="tertiary" [icon]="iconBarn" />
+
+        <h4>size = x-small</h4>
         <ui-button
-            (onClick)="handleClick('Primary')"
+            (onClick)="handleClick('x-small')"
+            label="Example Label"
+            size="x-small"
+            variant="primary"
+            [icon]="iconGTranslate" />
+
+        <h4>size = small</h4>
+        <ui-button
+            (onClick)="handleClick('small')"
+            label="Example Label"
+            size="small"
+            variant="primary"
+            [icon]="iconGTranslate" />
+
+        <h4>size = medium</h4>
+        <ui-button
+            (onClick)="handleClick('medium')"
+            label="Example Label"
+            size="medium"
+            variant="primary"
+            [icon]="iconGTranslate" />
+
+        <h4>size = large</h4>
+        <ui-button
+            (onClick)="handleClick('large')"
             label="Example Label"
             size="large"
             variant="primary"
             [icon]="iconGTranslate" />
-
-        <h4>Secondary</h4>
-        <ui-button
-            (onClick)="handleClick('Secondary')"
-            label="Example Label"
-            size="medium"
-            variant="secondary"
-            [icon]="iconBrail" />
-
-        <h4>Tertiary</h4>
-        <ui-button
-            (onClick)="handleClick('Tertiary')"
-            label="Example Label"
-            size="small"
-            variant="tertiary"
-            [icon]="iconBarn" />
 
         <h4>Primary with Tooltip</h4>
         <ui-button
