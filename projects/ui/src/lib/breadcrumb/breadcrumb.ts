@@ -69,7 +69,7 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
         <nav [attr.aria-label]="ariaLabel() || 'Breadcrumb'" [attr.data-bspk]="'breadcrumb'" [attr.id]="id()">
             <ol>
                 <li>
-                    <a ui-link [href]="firstItem().href">{{ firstItem().label }}</a>
+                    <a ui-link size="small" variant="subtle" [href]="firstItem().href">{{ firstItem().label }}</a>
                     <icon-chevron-right aria-hidden="true" width="24" />
                 </li>
                 @if (items().length > 5) {
@@ -79,12 +79,12 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
                 } @else {
                     @for (item of middleItems(); track item.href) {
                         <li>
-                            <a ui-link [href]="item.href">{{ item.label }}</a>
+                            <a ui-link size="small" variant="subtle" [href]="item.href">{{ item.label }}</a>
                             <icon-chevron-right aria-hidden="true" width="24" />
                         </li>
                     }
                 }
-                <li [attr.aria-current]="'page'" [ui-txt]="'body-base'">
+                <li [attr.aria-current]="'page'" [ui-txt]="'labels-small'">
                     {{ lastItem().label }}
                 </li>
             </ol>
