@@ -172,8 +172,8 @@ export class UICheckboxExample {
         'checkbox-11': true,
     };
 
-    setChecked(name: string, checked: boolean) {
-        this.checked[name] = checked;
+    setChecked(name: string, checked: boolean | undefined) {
+        this.checked[name] = !!checked;
         sendSnackbar(`Checkbox "${name}" checked: ${checked}`);
     }
 

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, input, ElementRef, output, viewChild, effect } from '@angular/core';
+import { Component, ViewEncapsulation, input, ElementRef, viewChild, effect, model } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
@@ -98,14 +98,11 @@ export interface CheckboxProps {
     },
 })
 export class UICheckbox implements AsSignal<CheckboxProps> {
-    /** Emits the new checked state (true or false) */
-    checkedChange = output<boolean>();
-
     readonly name = input.required<CheckboxProps['name']>();
     readonly value = input.required<CheckboxProps['value']>();
     readonly ariaLabel = input<CheckboxProps['ariaLabel']>(undefined);
     readonly id = input<CheckboxProps['id']>(uniqueId('checkbox'));
-    readonly checked = input<CheckboxProps['checked']>(false);
+    readonly checked = model<CheckboxProps['checked']>(false);
     readonly indeterminate = input<CheckboxProps['indeterminate']>(false);
     readonly disabled = input<CheckboxProps['disabled']>(false);
     readonly invalid = input<CheckboxProps['invalid']>(false);
@@ -125,6 +122,6 @@ export class UICheckbox implements AsSignal<CheckboxProps> {
     }
 
     onInputChange() {
-        this.checkedChange.emit(this.inputEl().nativeElement.checked);
+        this.checked.set(this.inputEl().nativeElement.checked);
     }
 }

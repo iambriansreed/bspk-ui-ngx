@@ -1,14 +1,13 @@
 import {
     Component,
     input,
-    Output,
-    EventEmitter,
     ViewEncapsulation,
     ElementRef,
     viewChild,
     AfterViewInit,
     OnInit,
     effect,
+    model,
 } from '@angular/core';
 import {
     addMonths,
@@ -54,7 +53,7 @@ export interface CalendarProps {
  * Allows customers to select the date, month, and year.
  *
  * @example
- *     <ui-calendar (onChange)="handleChange($event)" />
+ *     <ui-calendar (valueChange)="handleChange($event)" />
  *
  * @name Calendar
  * @phase Dev
@@ -123,7 +122,7 @@ export interface CalendarProps {
                                     [attr.aria-label]="format(date, 'do MMMM yyyy')"
                                     [attr.data-selected]="isSameDay(date, activeDate) ? true : null"
                                     [id]="generateOptionId(date)"
-                                    (click)="onChange.emit(date)"
+                                    (click)="value.set(date)"
                                     [attr.role]="isSameDay(date, activeDate) ? 'gridcell' : null"
                                     [attr.tabindex]="isSameDay(date, activeDate) ? 0 : -1">
                                     {{ format(date, 'd') }}
@@ -143,14 +142,12 @@ export interface CalendarProps {
     },
 })
 export class UICalendar implements AfterViewInit, OnInit, AsSignal<CalendarProps> {
-    @Output() onChange = new EventEmitter<Date>();
-
     IconKeyboardDoubleArrowLeft = IconKeyboardDoubleArrowLeft;
     IconKeyboardDoubleArrowRight = IconKeyboardDoubleArrowRight;
     IconChevronLeft = IconChevronLeft;
     IconChevronRight = IconChevronRight;
 
-    readonly value = input<CalendarProps['value']>(undefined);
+    readonly value = model<CalendarProps['value']>(undefined);
     readonly focusTrap = input<CalendarProps['focusTrap']>(false);
     readonly id = input<CalendarProps['id']>(undefined);
 

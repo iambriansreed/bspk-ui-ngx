@@ -14,7 +14,7 @@ import { UIField } from './field';
                 id="example-input"
                 name="example-input"
                 [value]="value"
-                (valueChange)="onChange($event)"
+                (valueChange)="valueChange($event)"
                 ariaLabel="Example input"
                 placeholder="Type here" />
         </ui-field>
@@ -29,7 +29,7 @@ import { UIField } from './field';
                 id="error-input"
                 name="error-input"
                 [value]="value"
-                (valueChange)="onChange($event)"
+                (valueChange)="valueChange($event)"
                 ariaLabel="Error input"
                 placeholder="Type here"
                 [invalid]="true" />
@@ -41,7 +41,7 @@ import { UIField } from './field';
                 id="req-input"
                 name="req-input"
                 [value]="value"
-                (valueChange)="onChange($event)"
+                (valueChange)="valueChange($event)"
                 ariaLabel="Required input"
                 placeholder="Type here" />
         </ui-field>
@@ -50,7 +50,7 @@ import { UIField } from './field';
 export class UIFieldExample {
     value: string | undefined = '';
 
-    onChange = (next: string | undefined) => {
+    valueChange = (next: string | undefined) => {
         this.value = next ?? '';
     };
 }

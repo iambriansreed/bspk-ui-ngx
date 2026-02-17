@@ -33,7 +33,7 @@ export interface CheckboxGroupFieldProps extends ControlFieldProps, CheckboxGrou
                 [ariaLabelledBy]="labelledById()"
                 [ariaDescribedBy]="describedById()"
                 [ariaErrorMessage]="errorMessageId()"
-                (valueChange)="valueChange.emit($event)"
+                (valueChange)="value.set($event)"
                 [ariaLabel]="ariaLabel()"
                 [disabled]="disabled()"
                 [id]="controlId()"

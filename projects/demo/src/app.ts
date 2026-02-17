@@ -130,8 +130,8 @@ export class App implements OnInit {
         return globalThis.location;
     }
 
-    handleBrandChange(brand: string) {
-        this.brandService.value.set(brand as Brand);
+    handleBrandChange(brand: string | undefined) {
+        this.brandService.value.set((brand as Brand) || 'anywhere');
     }
 
     toggleDarkMode() {

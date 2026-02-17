@@ -75,7 +75,7 @@ export interface SegmentedControlProps extends TabListProps<SegmentedControlOpti
         data-bspk="segmented-control"
         [options]="options()"
         [value]="value()"
-        (valueChange)="valueChange.emit($event)"
+        (valueChange)="value.set($event)"
         [label]="label()"
         [size]="size()"
         [width]="width()"

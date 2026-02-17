@@ -160,7 +160,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
                     <ui-pagination
                         [value]="pageIndex + 1"
                         [numPages]="totalPages"
-                        (onChange)="setPageIndex($event - 1)"></ui-pagination>
+                        (valueChange)="setPageIndex($event - 1)"></ui-pagination>
                 </div>
             }
         </div>

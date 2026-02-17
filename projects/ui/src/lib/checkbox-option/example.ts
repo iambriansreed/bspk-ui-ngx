@@ -88,8 +88,8 @@ export class UICheckboxOptionExample {
         ...config,
     }));
 
-    onCheckedChange(idx: number, checked: boolean) {
-        this.examples[idx].checked = checked;
+    onCheckedChange(idx: number, checked: boolean | undefined) {
+        this.examples[idx].checked = !!checked;
         sendSnackbar(`Checkbox ${idx} checked: ${checked}`);
     }
 }

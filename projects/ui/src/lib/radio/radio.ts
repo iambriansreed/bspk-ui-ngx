@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { Component, ViewEncapsulation, input, model } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 
@@ -46,12 +46,10 @@ export interface RadioProps extends FieldControlProps {
     },
 })
 export class UIRadio implements AsSignal<RadioProps> {
-    @Output() checkedChange = new EventEmitter<boolean>();
-
     readonly name = input.required<RadioProps['name']>();
     readonly value = input.required<RadioProps['value']>();
     readonly ariaLabel = input<RadioProps['ariaLabel']>(undefined);
-    readonly checked = input<RadioProps['checked']>(false);
+    readonly checked = model<RadioProps['checked']>(false);
     readonly disabled = input<RadioProps['disabled']>(false);
     readonly id = input<RadioProps['id']>(uniqueId('radio'));
     readonly invalid = input<RadioProps['invalid']>(false);
@@ -60,6 +58,6 @@ export class UIRadio implements AsSignal<RadioProps> {
 
     onInputChange(event: Event) {
         const inputElement = event.target as HTMLInputElement;
-        this.checkedChange.emit(inputElement.checked);
+        this.checked.set(inputElement.checked);
     }
 }

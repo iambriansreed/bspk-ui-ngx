@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, input, output } from '@angular/core';
+import { Component, ViewEncapsulation, input, model } from '@angular/core';
 import { AsSignal, FieldControlProps } from '../../types/common';
 import { CheckboxOptionProps, UICheckboxOption } from '../checkbox-option';
 
@@ -105,11 +105,9 @@ export interface CheckboxGroupProps extends FieldControlProps<string[]> {
     `,
 })
 export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
-    valueChange = output<string[]>();
-
     readonly name = input.required<CheckboxGroupProps['name']>();
     readonly options = input<CheckboxGroupProps['options']>([]);
-    readonly value = input<CheckboxGroupProps['value']>([]);
+    readonly value = model<CheckboxGroupProps['value']>([]);
     readonly selectAll = input<CheckboxGroupProps['selectAll']>(false);
     readonly selectAllProps = input<CheckboxGroupProps['selectAllProps']>(undefined);
 
@@ -143,17 +141,17 @@ export class UICheckboxGroup implements AsSignal<CheckboxGroupProps> {
         const val = this.value();
         return Array.isArray(val) && opts.some((o) => val.includes(o.value));
     }
-    onSelectAllChange(checked: boolean) {
+    onSelectAllChange(checked: boolean | undefined) {
         const opts = this.availableOptions();
-        this.valueChange.emit(checked ? opts.map((o) => o.value) : []);
+        this.value.set(checked ? opts.map((o) => o.value) : []);
     }
-    onOptionChange(optionValue: string, checked: boolean) {
+    onOptionChange(optionValue: string, checked: boolean | undefined) {
         const value = this.value();
         const current: string[] = Array.isArray(value) ? value : [];
         if (checked) {
-            this.valueChange.emit([...current, optionValue]);
+            this.value.set([...current, optionValue]);
         } else {
-            this.valueChange.emit(current.filter((v) => v !== optionValue));
+            this.value.set(current.filter((v) => v !== optionValue));
         }
     }
 }

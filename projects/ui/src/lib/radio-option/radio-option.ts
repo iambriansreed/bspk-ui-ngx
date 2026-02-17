@@ -39,7 +39,7 @@ export interface RadioOptionProps extends RadioProps {
                 [invalid]="invalid()"
                 [readOnly]="readOnly()"
                 [ariaLabel]="ariaLabel() || computedAriaLabel()"
-                (checkedChange)="checkedChange.emit($event)">
+                (checkedChange)="checked.set($event)">
             </ui-radio>
         </span>
     </ui-list-item>`,

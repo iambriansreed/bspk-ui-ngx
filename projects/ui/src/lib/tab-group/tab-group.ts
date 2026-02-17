@@ -42,7 +42,7 @@ export interface TabGroupProps extends TabListBaseProps<TabOption> {
         data-bspk="tab-group"
         [options]="options()"
         [value]="value()"
-        (valueChange)="valueChange.emit($event)"
+        (valueChange)="value.set($event)"
         [label]="label()"
         [size]="size()"
         [width]="width()"

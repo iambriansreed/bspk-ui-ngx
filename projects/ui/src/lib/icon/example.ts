@@ -52,6 +52,6 @@ export class UIIconExample {
     iconDog = IconDog;
 
     readonly iconCurrent = computed<BspkIcon>(() => (this.iconName() === 'cat' ? this.iconCat : this.iconDog));
-    readonly iconName = model('cat');
-    readonly iconWidth = model('50px');
+    readonly iconName = model<string | undefined>('cat');
+    readonly iconWidth = model<string | undefined>('50px');
 }

@@ -55,16 +55,7 @@ import { UIDatePicker } from './date-picker';
 export class UIDatePickerExample {
     readonly initialDate = signal(new Date(2026, 0, 15)); // January 15, 2026
 
-    handleChange(value: Date | string, label = 'Default') {
-        sendSnackbar(`onChange (${label}): ${typeof value === 'string' ? value : (value?.toDateString?.() ?? value)}`);
-    }
-
-    handleValueChange(event: any, label = 'Default') {
-        let value = event;
-        // If it's an event, extract the value
-        if (event && event.target && typeof event.target.value === 'string') {
-            value = event.target.value;
-        }
+    handleValueChange(value: Date | string | undefined, label = 'Default') {
         sendSnackbar(
             `valueChange (${label}): ${typeof value === 'string' ? value : (value?.toDateString?.() ?? value)}`,
         );

@@ -36,11 +36,11 @@ export class UICheckboxGroupExample {
     selectedBasic: string[] = [];
     selectedAll: string[] = [];
 
-    onBasicValueChange(newValue: string[]) {
-        this.selectedBasic = newValue;
+    onBasicValueChange(newValue: string[] | undefined) {
+        this.selectedBasic = newValue ?? [];
     }
 
-    onAllValueChange(newValue: string[]) {
-        this.selectedAll = newValue;
+    onAllValueChange(newValue: string[] | undefined) {
+        this.selectedAll = newValue ?? [];
     }
 }

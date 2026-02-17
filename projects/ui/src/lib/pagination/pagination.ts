@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ViewEncapsulation, input, model } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
 import { UIButton } from '../button/button';
@@ -31,7 +31,7 @@ export interface PaginationProps {
  * multiple micro pages.
  *
  * @example
- *     <ui-pagination [value]="currentPage" [numPages]="10" (onChange)="currentPage = $event"></ui-pagination>
+ *     <ui-pagination [value]="currentPage" [numPages]="10" (valueChange)="currentPage = $event"></ui-pagination>
  *
  * @name Pagination
  * @phase Dev
@@ -101,11 +101,8 @@ export interface PaginationProps {
     },
 })
 export class UIPagination implements OnChanges, AsSignal<PaginationProps> {
-    /** Called when the page changes. */
-    @Output() onChange = new EventEmitter<number>();
-
     readonly numPages = input<PaginationProps['numPages']>(2);
-    readonly value = input<PaginationProps['value']>(1);
+    readonly value = model<PaginationProps['value']>(1);
 
     // Internal string representation for the input field when large page counts.
     inputValue = '1';
@@ -123,7 +120,7 @@ export class UIPagination implements OnChanges, AsSignal<PaginationProps> {
 
     emit(page: number) {
         const next = this.clamp(page);
-        this.onChange.emit(next);
+        this.value.set(next);
         sendAriaLiveMessage(`Page ${page} of ${this.numPages()}`);
     }
 

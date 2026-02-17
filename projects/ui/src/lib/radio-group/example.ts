@@ -83,10 +83,10 @@ export class UIRadioGroupExample {
         { value: 'd', label: 'Normal' },
     ];
 
-    selectedBasic = '1';
-    selectedDisabled = '2';
-    selectedInvalid = '3';
-    selectedRequired = 'C';
-    selectedAria = '2';
-    selectedMixed = 'a';
+    selectedBasic: string | undefined = '1';
+    selectedDisabled: string | undefined = '2';
+    selectedInvalid: string | undefined = '3';
+    selectedRequired: string | undefined = 'C';
+    selectedAria: string | undefined = '2';
+    selectedMixed: string | undefined = 'a';
 }

@@ -95,7 +95,7 @@ export class UIRadioOptionExample {
         return () => this.onCheckedChange(idx, !this.examples[idx].checked);
     }
 
-    onCheckedChange(idx: number, checked: boolean) {
+    onCheckedChange(idx: number, checked: boolean | undefined) {
         this.examples[idx].checked = checked;
         sendSnackbar(`Radio ${idx} checked: ${checked}`);
     }

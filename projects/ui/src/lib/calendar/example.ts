@@ -10,10 +10,10 @@ import { UICalendar } from './calendar';
     imports: [CommonModule, UICalendar, UISwitchOption],
     template: `
         <h4>Default</h4>
-        <ui-calendar (onChange)="handleChange($event)" />
+        <ui-calendar (valueChange)="handleChange($event)" />
 
         <h4>With Initial Value</h4>
-        <ui-calendar [value]="initialDate()" (onChange)="handleChange($event, 'With Initial Value')" />
+        <ui-calendar [value]="initialDate()" (valueChange)="handleChange($event, 'With Initial Value')" />
 
         <h4>With Focus Trap</h4>
         <p>
@@ -27,10 +27,10 @@ import { UICalendar } from './calendar';
             (checkedChange)="focusTrapEnabled.set($event)"
             label="Enable Focus Trap" />
 
-        <ui-calendar [focusTrap]="focusTrapEnabled()" (onChange)="handleChange($event, 'With Focus Trap')" />
+        <ui-calendar [focusTrap]="focusTrapEnabled()" (valueChange)="handleChange($event, 'With Focus Trap')" />
 
         <h4>With Custom ID</h4>
-        <ui-calendar id="custom-calendar" (onChange)="handleChange($event, 'With Custom ID')" />
+        <ui-calendar id="custom-calendar" (valueChange)="handleChange($event, 'With Custom ID')" />
     `,
 })
 export class UICalendarExample {
@@ -40,7 +40,8 @@ export class UICalendarExample {
     // Signal for initial value example
     readonly initialDate = signal(new Date(2026, 0, 15)); // January 15, 2026
 
-    handleChange(date: Date, label = 'Default') {
-        sendSnackbar(`onChange (${label}): ${date.toDateString()}`);
+    handleChange(date: Date | undefined, label = 'Default') {
+        if (date) sendSnackbar(`valueChange (${label}): ${date.toDateString()}`);
+        else sendSnackbar(`valueChange (${label}): undefined`);
     }
 }

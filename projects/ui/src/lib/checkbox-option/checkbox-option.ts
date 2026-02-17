@@ -50,7 +50,7 @@ export interface CheckboxOptionProps extends CheckboxProps {
                 [required]="required()"
                 [invalid]="invalid()"
                 [ariaLabel]="ariaLabel() || computedAriaLabel()"
-                (checkedChange)="checkedChange.emit($event)"
+                (checkedChange)="checked.set($event)"
                 #input>
             </ui-checkbox>
         </span>
