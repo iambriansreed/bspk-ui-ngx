@@ -15,6 +15,21 @@ import { UIBreadcrumb, BreadcrumbItem } from './';
         <p>Standard breadcrumb with 5 items</p>
         <ui-breadcrumb ariaLabel="Standard breadcrumb with 5 items" [items]="fiveItems" />
 
+        <h4>5 Items, variant = subtle</h4>
+        <ui-breadcrumb ariaLabel="breadcrumb with 5 items - variant = subtle" [items]="fiveItems" [variant]="'subtle'" />
+
+        <h4>5 Items, variant = subtle-inverse</h4>
+        <p>
+            The subtle-inverse variant is not currently supported in Breadcrumb. The Breadcrumb background is set to
+            surface-neutral-inverse.
+        </p>
+        <div style="background-color: var(--surface-neutral-inverse); padding: 16px">
+            <ui-breadcrumb
+                ariaLabel="Standard breadcrumb with 5 items  - variant = subtle-inverse"
+                [items]="fiveItems"
+                [variant]="'subtle-inverse'" />
+        </div>
+
         <h4>With Dropdown (6+ Items)</h4>
         <p>When more than 5 items are provided, the middle items collapse into a dropdown menu</p>
         <ui-breadcrumb ariaLabel="Breadcrumb with dropdown for middle items" [items]="manyItems" [scrollLimit]="5" />

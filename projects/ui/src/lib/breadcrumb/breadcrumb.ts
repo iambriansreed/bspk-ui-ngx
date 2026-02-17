@@ -5,7 +5,7 @@ import { AsSignal, CommonProps } from '../../types/common';
 import { uniqueId } from '../../utils/random';
 import { ScrollLimitStyleProps } from '../../utils/scroll-limit-style';
 import { IconChevronRight } from '../icons/chevron-right';
-import { UILinkDirective } from '../link';
+import { UILinkDirective, LinkProps } from '../link';
 import { UITxtDirective } from '../txt';
 import { UIBreadcrumbDropdown } from './breadcrumb-dropdown';
 import { BreadcrumbItem } from './utils';
@@ -13,7 +13,7 @@ import { BreadcrumbItem } from './utils';
 export interface BreadcrumbProps extends ScrollLimitStyleProps {
     ariaLabel?: CommonProps['ariaLabel'];
     id?: CommonProps['id'];
-
+    variant?: LinkProps['variant'];
     /**
      * The array of breadcrumb items.
      *
@@ -69,7 +69,7 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
         <nav [attr.aria-label]="ariaLabel() || 'Breadcrumb'" [attr.data-bspk]="'breadcrumb'" [attr.id]="id()">
             <ol>
                 <li>
-                    <a ui-link size="small" variant="subtle" [href]="firstItem().href">{{ firstItem().label }}</a>
+                    <a ui-link size="small" [variant]="variant()" [href]="firstItem().href">{{ firstItem().label }}</a>
                     <icon-chevron-right aria-hidden="true" width="24" />
                 </li>
                 @if (items().length > 5) {
@@ -79,7 +79,7 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
                 } @else {
                     @for (item of middleItems(); track item.href) {
                         <li>
-                            <a ui-link size="small" variant="subtle" [href]="item.href">{{ item.label }}</a>
+                            <a ui-link size="small" [variant]="variant()" [href]="item.href">{{ item.label }}</a>
                             <icon-chevron-right aria-hidden="true" width="24" />
                         </li>
                     }
@@ -100,6 +100,7 @@ export class UIBreadcrumb implements AsSignal<BreadcrumbProps> {
     readonly items = input.required<BreadcrumbProps['items']>();
     readonly id = input<BreadcrumbProps['id']>(uniqueId('breadcrumb-'));
     readonly scrollLimit = input<BreadcrumbProps['scrollLimit']>();
+    readonly variant = input<BreadcrumbProps['variant']>('default');
 
     readonly shouldRender = computed(() => this.items().length >= 2);
     readonly firstItem = computed(() => this.items()[0]);
