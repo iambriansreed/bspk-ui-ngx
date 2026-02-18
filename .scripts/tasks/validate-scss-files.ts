@@ -8,16 +8,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-const ngxDir = path.join(__dirname, '../projects/ui/src/lib');
+const ngxDir = 'projects/ui/src/lib';
 
 const ngxFiles = execSync(`find ${ngxDir} -type f -name "*.scss"`)
     .toString()
     .split('\n')
     .filter((l) => Boolean(l.trim));
 
-const localReactBaseDir = path.join(__dirname, '../../bspk-ui');
+const localReactBaseDir = '../../bspk-ui';
 
 const reactBaseDir = fs.existsSync(localReactBaseDir)
     ? localReactBaseDir

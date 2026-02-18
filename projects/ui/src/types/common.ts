@@ -92,13 +92,7 @@ export interface CommonProps {
      * @required
      */
     optionValue?: string;
-    /**
-     * The aria-label for the element.
-     *
-     * This is used to provide an accessible name for the element when a visible label is not present.
-     *
-     * Ensure this is provided when using the element in isolation to maintain accessibility.
-     */
+    /** The aria-label for the element. */
     ariaLabel?: string;
     /** Identifies the parent component. Helps with styling, debugging, and/or testing purposes. */
     owner?: string;
@@ -108,11 +102,7 @@ export interface CommonProps {
      * @type string
      */
     ariaRole?: AriaRole;
-    /**
-     * Inline styles to apply to the element.
-     *
-     * Allows for CSS variables to be passed in as well.
-     */
+    /** Inline styles to apply to the element. */
     style?: string;
     /** Inline styles object to apply to the element. */
     ngStyle?: CSS.Properties;

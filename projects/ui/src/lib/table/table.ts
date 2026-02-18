@@ -86,7 +86,7 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
             <table
                 [attr.aria-colcount]="totalColumns"
                 [attr.aria-rowcount]="data().length"
-                [style.gridTemplateColumns]="gridTemplateColumns()">
+                [style.--template-columns]="gridTemplateColumns()">
                 @if (title()) {
                     <caption>
                         {{
