@@ -29,9 +29,9 @@ import { UISegmentedControl } from './segmented-control';
         <ui-segmented-control
             [label]="'Segments with Disabled'"
             [options]="optionsWithDisabled"
-            [value]="selected"
-            (valueChange)="selected = $event" />
-        <p>Selected: {{ selected }}</p>
+            [value]="selectedDisabled"
+            (valueChange)="selectedDisabled = $event" />
+        <p>Selected: {{ selectedDisabled }}</p>
     `,
 })
 export class UISegmentedControlExample {
@@ -58,4 +58,5 @@ export class UISegmentedControlExample {
 
     selected = '1';
     selectedIcon = '3';
+    selectedDisabled = '1';
 }
