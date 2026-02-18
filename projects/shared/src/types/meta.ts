@@ -23,10 +23,7 @@ export interface ComponentMeta {
      */
     exampleComponent?: string | (() => Promise<Type<any>>);
     inputs: ComponentMetaInput[];
-    outputs?: {
-        name: string;
-        description?: string;
-    }[];
+    outputs: ComponentMetaOutput[];
     file: string;
     css: string;
     associatedTypes?: {
@@ -35,6 +32,13 @@ export interface ComponentMeta {
         props: ComponentMetaInput[];
     }[];
     hasContent: boolean;
+}
+
+export interface ComponentMetaOutput {
+    name: string;
+    description?: string;
+    type?: string[] | string;
+    required?: boolean;
 }
 
 export interface ComponentMetaInput {

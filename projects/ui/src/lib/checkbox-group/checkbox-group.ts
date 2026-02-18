@@ -25,7 +25,7 @@ export interface SelectAllProps {
     label?: CheckboxOptionProps['label'];
 }
 
-export interface CheckboxGroupProps extends FieldControlProps<string[]> {
+export interface CheckboxGroupProps extends FieldControlProps {
     /**
      * The options for the checkboxes.
      *
@@ -48,6 +48,12 @@ export interface CheckboxGroupProps extends FieldControlProps<string[]> {
     selectAll?: boolean;
     /** The props for the select all checkbox. */
     selectAllProps?: SelectAllProps;
+    /**
+     * The value of the selected checkboxes.
+     *
+     * @required
+     */
+    value?: string[];
 }
 
 /**

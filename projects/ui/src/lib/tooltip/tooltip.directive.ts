@@ -70,6 +70,16 @@ export interface TooltipProps {
     },
 })
 export class UITooltipDirective implements OnDestroy, OnInit {
+    /**
+     * The value of the tooltip directive. Can be a string for simple usage or an object for more control.
+     *
+     * When using the truncated option, the tooltip will only show when the content is truncated and will use the text
+     * content of the reference element as the label. This is useful for cases like table cells where you want to show a
+     * tooltip only when the content is too long to fit.
+     *
+     * Note: When using the truncated option, the directive will add a data-truncated attribute to the host element.
+     * This can be used for styling purposes.
+     */
     readonly value = model<TooltipProps | string | { truncated: true } | undefined>(undefined, {
         alias: 'ui-tooltip',
     });
@@ -226,7 +236,11 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     }
 }
 
-/** Single use component to display tooltip content. */
+/**
+ * Single use component to display tooltip content.
+ *
+ * @ignore
+ */
 @Component({
     selector: 'ui-tooltip',
     standalone: true,

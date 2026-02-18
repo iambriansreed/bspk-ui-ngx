@@ -13,7 +13,7 @@ import { UICalendar } from './calendar';
         <ui-calendar (valueChange)="handleChange($event)" />
 
         <h4>With Initial Value</h4>
-        <ui-calendar [value]="initialDate()" (valueChange)="handleChange($event, 'With Initial Value')" />
+        <ui-calendar [value]="initialDate()" (valueChange)="initialDate.set($event!)" />
 
         <h4>With Focus Trap</h4>
         <p>
@@ -24,7 +24,7 @@ import { UICalendar } from './calendar';
             value="enabled"
             name="enableFocusTrap"
             [checked]="focusTrapEnabled()"
-            (checkedChange)="focusTrapEnabled.set($event)"
+            (checkedChange)="focusTrapEnabled.set(!!$event)"
             label="Enable Focus Trap" />
 
         <ui-calendar [focusTrap]="focusTrapEnabled()" (valueChange)="handleChange($event, 'With Focus Trap')" />
@@ -38,7 +38,7 @@ export class UICalendarExample {
     readonly focusTrapEnabled = signal(false);
 
     // Signal for initial value example
-    readonly initialDate = signal(new Date(2026, 0, 15)); // January 15, 2026
+    readonly initialDate = signal(new Date(1985, 6, 3)); // July 3, 1985
 
     handleChange(date: Date | undefined, label = 'Default') {
         if (date) sendSnackbar(`valueChange (${label}): ${date.toDateString()}`);

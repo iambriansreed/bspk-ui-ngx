@@ -36,6 +36,8 @@ export interface TabOption {
      * The value of the tab sent to valueChange when selected.
      *
      * If not provided, the label will be used as the value.
+     *
+     * @type string
      */
     value: string;
     /**
@@ -137,10 +139,10 @@ export interface TabListProps<O extends TabOption = TabOption> extends TabListBa
     template: '',
 })
 export class UITabListUtility<O extends TabOption = TabOption> implements AsSignal<TabListProps<O>> {
-    readonly options = input<TabListProps<O>['options']>([]);
     readonly value = model.required<TabListProps<O>['value']>();
     readonly width = input<TabListProps<O>['width']>('hug');
     readonly label = input.required<TabListProps<O>['label']>();
+    readonly options = input<TabListProps<O>['options']>([]);
     readonly id = input<TabListProps<O>['id']>(undefined);
     readonly iconsOnly = input<TabListProps<O>['iconsOnly']>(false);
     // eslint-disable-next-line @angular-eslint/no-input-rename

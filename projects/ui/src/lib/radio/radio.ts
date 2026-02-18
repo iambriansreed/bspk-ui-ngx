@@ -9,6 +9,8 @@ export interface RadioProps extends FieldControlProps {
      * @default false
      */
     checked?: boolean;
+    /** The value of the radio input. */
+    value: string;
 }
 
 /**

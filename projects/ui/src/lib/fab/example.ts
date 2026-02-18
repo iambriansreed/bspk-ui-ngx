@@ -171,7 +171,7 @@ import { UIFab } from './fab';
                 name="containerToggle"
                 value="container"
                 [checked]="isPage"
-                (checkedChange)="isPage = $event"
+                (checkedChange)="isPage = !!$event"
                 label="Toggle Container prop" />
         </div>
         <div style="height: 200px; position: relative; border: 1px solid #ccc;">

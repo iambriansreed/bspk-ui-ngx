@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewEncapsulation, input } from '@angular/core';
+import { Component, ViewEncapsulation, input, model } from '@angular/core';
 import { AsSignal, CommonProps, FieldControlProps } from '../../types/common';
 
 export interface SwitchProps {
@@ -46,10 +46,8 @@ export interface SwitchProps {
     },
 })
 export class UISwitch implements AsSignal<SwitchProps> {
-    @Output() checkedChange = new EventEmitter<boolean>();
-
     readonly value = input.required<SwitchProps['value']>();
-    readonly checked = input<SwitchProps['checked']>();
+    readonly checked = model<SwitchProps['checked']>();
     readonly ariaLabel = input<SwitchProps['ariaLabel']>(undefined);
     readonly name = input.required<SwitchProps['name']>();
     readonly id = input<SwitchProps['id']>(undefined);
@@ -57,6 +55,6 @@ export class UISwitch implements AsSignal<SwitchProps> {
 
     onInputChange(event: Event) {
         const inputElement = event.target as HTMLInputElement;
-        this.checkedChange.emit(inputElement.checked);
+        this.checked.set(inputElement.checked);
     }
 }

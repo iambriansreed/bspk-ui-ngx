@@ -117,6 +117,7 @@ export interface FabProps {
     },
 })
 export class UIFab implements AsSignal<FabProps> {
+    /** Event emitted when the button is clicked. */
     @Output() onClick = new EventEmitter<Event>();
 
     /** Event emitted when the button receives focus. */

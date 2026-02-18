@@ -32,7 +32,7 @@ export interface SelectOption {
 }
 export type SelectItem = SelectOption & { id: string; ariaLabel?: string; ariaSelected?: boolean };
 
-export interface SelectProps extends FieldControlProps<string> {
+export interface SelectProps extends FieldControlProps {
     size?: CommonProps['size'];
 
     /**
@@ -74,6 +74,8 @@ export interface SelectProps extends FieldControlProps<string> {
      * Used in conjunction with scrollListItemsStyle utility.
      */
     scrollLimit?: number;
+    /** The value of the select control. */
+    value?: string;
 }
 
 /**

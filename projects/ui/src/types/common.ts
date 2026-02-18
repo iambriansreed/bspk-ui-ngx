@@ -159,7 +159,7 @@ export interface CommonProps {
     class?: string;
 }
 
-export interface FieldControlProps<ValueType = string> {
+export interface FieldControlProps {
     ariaDescribedBy?: CommonProps['ariaDescribedBy'];
     ariaErrorMessage?: CommonProps['ariaErrorMessage'];
     ariaLabel?: CommonProps['ariaLabel'];
@@ -183,14 +183,6 @@ export interface FieldControlProps<ValueType = string> {
      * @default false
      */
     invalid?: boolean;
-    /**
-     * The value of the field control.
-     *
-     * This should use the model signal.
-     *
-     * @required
-     */
-    value?: ValueType | undefined;
 }
 
 // All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions

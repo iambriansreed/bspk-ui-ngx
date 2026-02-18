@@ -10,16 +10,21 @@ import { UIInput } from './input';
     imports: [CommonModule, UIInput, UIButton],
     template: `
         <h4>Default</h4>
-        <ui-input name="default" ariaLabel="Input Label" />
+        <ui-input
+            name="default"
+            ariaLabel="Input Label"
+            [value]="valueDefault()"
+            (valueChange)="valueDefault.set($event)" />
 
         <h4>Default with preset Value</h4>
+
         <ui-input
-            [value]="values()['default']"
-            (valueChange)="update('default', $event)"
+            [value]="valueDefaultPreset()"
+            (valueChange)="valueDefaultPreset.set($event)"
             id="default-input"
             name="default-preset-value"
             ariaLabel="Input Label" />
-        <p>The value of the default input is: {{ values()['default'] || 'null' }}</p>
+        <p>The value of the default input is: {{ valueDefaultPreset() || 'null' }}</p>
 
         <h4>Disabled</h4>
         <ui-input name="disabled-input" ariaLabel="Input Label" [disabled]="true" />
@@ -34,7 +39,12 @@ import { UIInput } from './input';
         <ui-input name="read-only-input" ariaLabel="Input Label" [readOnly]="true" />
 
         <h4>Read Only & preset Value</h4>
-        <ui-input name="read-only-input" ariaLabel="Input Label" [readOnly]="true" [value]="values()['default']" />
+        <ui-input
+            name="read-only-input"
+            ariaLabel="Input Label"
+            [readOnly]="true"
+            (valueChange)="valueReadOnlyPreset.set($event)"
+            [value]="valueReadOnlyPreset()" />
 
         <h4>showClearButton = true</h4>
         <p>The clear button will only show when there is a value present.</p>
@@ -69,8 +79,8 @@ import { UIInput } from './input';
 
         <h4>trailing</h4>
         <ui-input
-            [value]="values()['trailing-example']"
-            (valueChange)="update('trailing-example', $event)"
+            [value]="valueTrailing()"
+            (valueChange)="valueTrailing.set($event)"
             name="trailing-example"
             ariaLabel="Input Label"
             trailing="%" />
@@ -82,19 +92,10 @@ import { UIInput } from './input';
     `,
 })
 export class UIInputExample {
-    readonly values = signal<Record<string, string | undefined>>({
-        default: 'Default value example',
-        'value-example': 'I am an example value',
-    });
-
-    readonly defaultValue = signal<string | undefined>('Default value example');
-
-    update = (key: string, next: string | undefined) => {
-        this.values.update((current) => ({
-            ...current,
-            [key]: next,
-        }));
-    };
+    protected readonly valueDefault = signal<string | undefined>('');
+    protected readonly valueDefaultPreset = signal<string | undefined>('I am a default value');
+    protected readonly valueReadOnlyPreset = signal<string | undefined>('I am read only');
+    protected readonly valueTrailing = signal<string | undefined>('');
 
     onTrailingButtonClick() {
         sendSnackbar('Trailing UIButton clicked!');

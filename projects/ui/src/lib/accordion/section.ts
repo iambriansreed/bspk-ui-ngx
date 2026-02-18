@@ -102,13 +102,19 @@ export interface AccordionSectionProps {
     `,
 })
 export class UIAccordionSection implements AsSignal<AccordionSectionProps> {
+    /**
+     * Emits the id of the accordion section when its header is clicked to toggle open/closed state. The parent
+     * accordion component listens for this event to manage which sections are open.
+     */
     toggleOpen = output<string>();
 
     readonly title = input<AccordionSectionProps['title']>('');
     readonly subtitle = input<AccordionSectionProps['subtitle']>(undefined);
-    readonly isOpen = model<AccordionSectionProps['isOpen']>(false);
     readonly disabled = input<AccordionSectionProps['disabled']>(false);
     readonly id = input<AccordionSectionProps['id']>(uniqueId('accordion-section'));
     readonly leading = input<AccordionSectionProps['leading']>(undefined);
     readonly trailing = input<AccordionSectionProps['trailing']>(undefined);
+
+    /** Whether the accordion section is open or closed. This is managed internally by the component, but can be set */
+    readonly isOpen = model<AccordionSectionProps['isOpen']>(false);
 }

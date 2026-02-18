@@ -51,7 +51,7 @@ export interface CountryCodeItem extends CountryCodeOption {
     id: string;
 }
 
-export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitStyleProps {
+export interface InputPhoneProps extends FieldControlProps, ScrollLimitStyleProps {
     /**
      * The default country code to select when the component is rendered. If not provided, it will attempt to guess
      * based on the user's locale. If the guessed country code is not supported, it will default to 'US'. Based on
@@ -72,6 +72,12 @@ export interface InputPhoneProps extends FieldControlProps<string>, ScrollLimitS
      * @default medium
      */
     size?: 'large' | 'medium' | 'small';
+    /**
+     * The value of the input phone field. This should be an unformatted phone number string (e.g. "4155552671").
+     *
+     * @type string
+     */
+    value?: string;
 }
 
 /**

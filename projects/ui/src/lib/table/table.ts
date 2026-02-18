@@ -158,9 +158,9 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
                         Showing {{ startRow() }}-{{ endRow() }} of {{ data().length }} results
                     </div>
                     <ui-pagination
-                        [value]="pageIndex + 1"
+                        [value]="pageIndex() + 1"
                         [numPages]="totalPages"
-                        (valueChange)="setPageIndex($event - 1)"></ui-pagination>
+                        (valueChange)="pageIndex.set($event - 1)"></ui-pagination>
                 </div>
             }
         </div>
@@ -192,7 +192,7 @@ export class UITable<R extends TableRow> implements AsSignal<TableProps<R>> {
             });
         }
 
-        const start = this.pageIndex * this.pageSizeSafe;
+        const start = this.pageIndex() * this.pageSizeSafe;
         const end = start + this.pageSizeSafe;
         return result.slice(start, end);
     });
@@ -212,7 +212,7 @@ export class UITable<R extends TableRow> implements AsSignal<TableProps<R>> {
     readonly size = input<TableProps<R>['size']>('medium');
     readonly pageSize = input<TableProps<R>['pageSize']>(10);
 
-    pageIndex = 0;
+    readonly pageIndex = signal(0);
 
     get sizeSafe(): TableSize {
         return this.size() || 'medium';
@@ -260,17 +260,13 @@ export class UITable<R extends TableRow> implements AsSignal<TableProps<R>> {
         return row.id;
     }
 
-    setPageIndex(idx: number) {
-        this.pageIndex = idx;
-    }
-
     startRow(): number {
         const total = this.data().length;
-        return total === 0 ? 0 : this.pageIndex * this.pageSizeSafe + 1;
+        return total === 0 ? 0 : this.pageIndex() * this.pageSizeSafe + 1;
     }
 
     endRow(): number {
-        const end = this.pageIndex * this.pageSizeSafe + this.pageSizeSafe;
+        const end = this.pageIndex() * this.pageSizeSafe + this.pageSizeSafe;
         return Math.min(end, this.data().length);
     }
 

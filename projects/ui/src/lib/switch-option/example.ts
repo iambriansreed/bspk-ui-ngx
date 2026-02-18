@@ -19,7 +19,7 @@ import { UISwitchOption } from './switch-option';
                 [checked]="ex.checked"
                 [disabled]="ex.disabled"
                 [ariaLabel]="ex.ariaLabel"
-                (checkedChange)="onCheckedChange($index, $event)" />
+                (checkedChange)="onCheckedChange($index, !!$event)" />
             <div>Demo checked: {{ ex.checked }}</div>
         }
 

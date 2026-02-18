@@ -166,6 +166,7 @@ export interface ListItemProps {
     },
 })
 export class UIListItem implements AsSignal<ListItemProps> {
+    /** Emits when the ListItem is activated by click or keyboard interaction. */
     @Output() onClick = new EventEmitter<Event>();
 
     readonly active = input<ListItemProps['active']>();

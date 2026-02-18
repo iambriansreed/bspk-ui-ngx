@@ -26,7 +26,7 @@ function parseDate(value?: string): Date | undefined {
     return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
-export interface DatePickerProps extends FieldControlProps<Date | string | undefined> {
+export interface DatePickerProps extends FieldControlProps {
     /**
      * If the calendar should close when a date is selected.
      *
@@ -225,7 +225,6 @@ export class UIDatePicker implements OnInit, OnChanges, AsSignal<DatePickerProps
             this.value.set(undefined);
             return;
         }
-
         const formatted = format(date, 'MM/dd/yyyy');
         this.internalValue.set(formatted);
         this.activeDate.set(date);

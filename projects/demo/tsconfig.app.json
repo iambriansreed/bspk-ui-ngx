@@ -10,6 +10,11 @@
         "sourceMap": true,
         "types": []
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["**/*.spec.ts"]
+    "include": [
+        "src/**/*.ts",
+        "../shared/src/utils/pretty.ts"
+    ],
+    "exclude": [
+        "**/*.spec.ts"
+    ]
 }

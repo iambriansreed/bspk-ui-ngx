@@ -1,3 +1,6 @@
+import { ColorVariant } from '@ui/utils/color-variants';
+import { ComponentPhase } from '../types';
+
 export function toKebabCase(name: string) {
     return name
         .replace(/([a-z0-9])([A-Z])/g, '$1-$2') // aB -> a-B, 0B -> 0-B
@@ -46,6 +49,10 @@ export function toTitleCase(str: string) {
     });
 }
 
-export function removeComponentQuotes(str: string): string {
-    return str.replace(/"component": "([^"]+)"/g, '"component": $1');
-}
+export const COMPONENT_PHASE_COLORS: Record<ComponentPhase, ColorVariant> = {
+    Backlog: 'grey',
+    Dev: 'blue',
+    UXReview: 'purple',
+    Stable: 'green',
+    Utility: 'magenta',
+};

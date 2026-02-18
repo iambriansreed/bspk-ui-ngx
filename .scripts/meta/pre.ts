@@ -24,37 +24,19 @@ export function preMeta(force = false) {
 
     // merge all settings.ts files into a single file for easier importing in the meta script, excluding any settings files in the icons directory since those are not used for generating documentation
     const output = execSync(`find projects/ui/src/lib -type f -name "settings.ts"`, { encoding: 'utf-8' });
-    fs.writeFileSync(
-        '.tmp/component-settings.ts',
-        `import { ComponentSettings } from "../projects/shared/src/types";` +
-            output
-                .split('\n')
-                .filter((line) => line.trim().length && !line.includes('icons'))
 
-                .flatMap((file): string | string[] => {
-                    const content = fs.readFileSync(file, 'utf-8');
+    const files = output
+        .split('\n')
+        .filter((line) => line.trim().length && !line.includes('icons'))
+        .map((file) => {
+            const slug = file.match(/lib\/([^\/]+)\/settings\.ts/)?.[1] || '';
+            return `export { ${toPascalCase(slug)} } from '../projects/ui/src/lib/${slug}/settings';`;
+        })
+        .join('\n');
 
-                    // only include settings that export a correctly named variable of type ComponentSettings
+    fs.writeFileSync('.tmp/component-settings.ts', files);
 
-                    const slug = file.match(/lib\/([^\/]+)\/settings\.ts/)?.[1] || '';
-
-                    const formattedCorrectly = content.includes(
-                        `export const ${toPascalCase(slug)}: ComponentSettings`,
-                    );
-
-                    if (!formattedCorrectly) {
-                        console.warn(
-                            `\x1b[33m⚠️ Skipping settings file ${file} because it does not export a correctly named variable of type ComponentSettings.\x1b[0m\n\tExpected export: export const ${toPascalCase(slug)}: ComponentSettings = { ... }\n`,
-                        );
-                    }
-
-                    return formattedCorrectly ? content : [];
-                })
-                .join('')
-                .replace(/import.*;/g, '')
-                .replace(/<[^>]+Props>/g, '')
-                .replace(/\n\n/g, '\n'),
-    );
+    execSync('npx prettier --write .tmp/component-settings.ts', { stdio: 'inherit' });
 
     console.log('\x1b[32m✅ Metadata pre-processing complete.\x1b[0m');
 }

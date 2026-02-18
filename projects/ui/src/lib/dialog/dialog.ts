@@ -118,6 +118,10 @@ export interface DialogProps {
     },
 })
 export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
+    /**
+     * Emits when the dialog should be closed, such as when the scrim is clicked or the escape key is pressed. The
+     * parent component should handle this event and set `open` to false to close the dialog.
+     */
     @Output() onClose = new EventEmitter<void>();
 
     readonly box = viewChild('box', { read: ElementRef });

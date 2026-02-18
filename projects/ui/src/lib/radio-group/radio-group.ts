@@ -33,6 +33,8 @@ export interface RadioGroupProps extends FieldControlProps {
      * @required
      */
     options: RadioGroupOption[];
+    /** The value of the selected radio. */
+    value?: string;
 }
 /**
  * A group of radios that allows users to choose one or more items from a list or turn an feature on or off.

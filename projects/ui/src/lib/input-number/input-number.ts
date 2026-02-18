@@ -35,11 +35,22 @@ export interface InputNumberProps extends FieldControlProps {
      * @default 1
      */
     step?: number;
+    /**
+     * The value of the number input.
+     *
+     * While the value is a string, it is recommended to only use numerical values. The component will attempt to parse
+     * the string to a number and will ignore non-numerical input. The value is clamped to the min and max values if
+     * they are provided.
+     *
+     * @type string
+     */
+
+    value?: string;
 }
 
 /**
  * A input element that allows users to either input a numerical value or singularly increase or decrease the values by
- * pressing the (+) or (-).
+ * pressing the (+) or (-) buttons.
  *
  * The value of the input is a number. The value is clamped to the min and max values if they are provided.
  *

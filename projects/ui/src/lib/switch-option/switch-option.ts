@@ -44,7 +44,7 @@ export interface SwitchOptionProps extends SwitchProps {
                 [checked]="checked()"
                 [disabled]="disabled()"
                 [ariaLabel]="ariaLabel() || computedAriaLabel()"
-                (checkedChange)="checkedChange.emit($event)">
+                (checkedChange)="checked.set($event)">
             </ui-switch
         ></span>
     </ui-list-item>`,

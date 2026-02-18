@@ -12,6 +12,8 @@ export interface TooltipUtilityProps extends TooltipProps {
  * Utility to manage tooltip properties and behavior.
  *
  * Should be used in components that require tooltip functionality.
+ *
+ * @ignore
  */
 export class TooltipUtility {
     readonly props = signal<TooltipUtilityProps>({});

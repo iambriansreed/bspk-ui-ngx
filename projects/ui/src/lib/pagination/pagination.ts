@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, SimpleChanges, ViewEncapsulation, input, model } from '@angular/core';
+import { Component, ViewEncapsulation, computed, input, model, signal } from '@angular/core';
 import { AsSignal } from '../../types/common';
 import { sendAriaLiveMessage } from '../../utils/send-aria-live-message';
 import { UIButton } from '../button/button';
@@ -47,21 +47,21 @@ export interface PaginationProps {
                 [icon]="ChevronLeft"
                 [iconOnly]="true"
                 [label]="value() === 1 ? 'First page' : 'Previous page (' + (value() - 1) + ')'"
-                (onClick)="previousPage()"
+                (onClick)="updateValue(value() - 1)"
                 size="small"
                 variant="tertiary"
                 owner="pagination"></ui-button>
 
             @if (numPages() > INPUT_TYPE_THRESHOLD) {
                 <ng-container>
-                    <form data-input-form (submit)="submitManual($event)">
+                    <form data-input-form (submit)="updateValue(inputValue(), $event)">
                         <ui-input
                             ariaLabel="Page number"
                             [type]="'number'"
                             [showClearButton]="false"
-                            [value]="inputValue"
-                            (valueChange)="inputValue = $event!"
-                            (blur)="submitManual()"
+                            [value]="inputValue() || '1'"
+                            (valueChange)="this.inputValue.set($event!)"
+                            (blur)="updateValue(inputValue())"
                             name="page-number" />
                         <span>of {{ numPages() }}</span>
                     </form>
@@ -75,7 +75,7 @@ export interface PaginationProps {
                     <ui-button
                         [ariaLabel]="'Page ' + page"
                         [label]="page.toString()"
-                        (onClick)="emit(page)"
+                        (onClick)="updateValue(page)"
                         size="small"
                         [variant]="value() === page ? 'primary' : 'tertiary'"
                         owner="pagination"></ui-button>
@@ -87,7 +87,7 @@ export interface PaginationProps {
                 [icon]="ChevronRight"
                 [iconOnly]="true"
                 [label]="value() === numPages() ? 'Last page' : 'Next page (' + (value() + 1) + ')'"
-                (onClick)="nextPage()"
+                (onClick)="updateValue(value() + 1)"
                 size="small"
                 variant="tertiary"
                 owner="pagination"></ui-button>
@@ -100,60 +100,31 @@ export interface PaginationProps {
         role: 'group',
     },
 })
-export class UIPagination implements OnChanges, AsSignal<PaginationProps> {
+export class UIPagination implements AsSignal<PaginationProps> {
     readonly numPages = input<PaginationProps['numPages']>(2);
     readonly value = model<PaginationProps['value']>(1);
 
-    // Internal string representation for the input field when large page counts.
-    inputValue = '1';
+    readonly inputValue = signal<string>(this.value().toString());
 
     readonly INPUT_TYPE_THRESHOLD = INPUT_TYPE_THRESHOLD;
 
     ChevronRight = IconChevronRight;
     ChevronLeft = IconChevronLeft;
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['value']) {
-            this.inputValue = String(this.value());
-        }
-    }
+    readonly pages = computed<number[]>(() => Array.from({ length: this.numPages() }, (_, i) => i + 1));
 
-    emit(page: number) {
-        const next = this.clamp(page);
-        this.value.set(next);
-        sendAriaLiveMessage(`Page ${page} of ${this.numPages()}`);
-    }
+    readonly label = computed<string>(() => `Go to page ${this.value()}`);
 
-    previousPage() {
-        if (this.value() > 1) this.emit(this.value() - 1);
-    }
-
-    nextPage() {
-        if (this.value() < this.numPages()) this.emit(this.value() + 1);
-    }
-
-    submitManual(event?: Event) {
+    updateValue(value: number | string, event?: Event) {
         if (event) event.preventDefault();
-        const parsedValue = parseInt(this.inputValue || '', 10);
-        if (isNaN(parsedValue)) {
-            this.inputValue = String(this.value());
-            return;
-        }
-        const next = this.clamp(parsedValue);
-        this.emit(next);
-        if (next !== parsedValue) this.inputValue = String(next);
+        const next = this.clamp(Number(value));
+        this.value.set(next);
+        sendAriaLiveMessage(`Page ${next} of ${this.numPages()}`);
+        this.inputValue.set(next.toString());
     }
 
     inBounds(n: number): boolean {
         return n >= 1 && n <= this.numPages();
-    }
-
-    pages(): number[] {
-        return Array.from({ length: this.numPages() }, (_, i) => i + 1);
-    }
-
-    label(): string {
-        return `Go to page ${this.value()}`;
     }
 
     private clamp(page: number): number {

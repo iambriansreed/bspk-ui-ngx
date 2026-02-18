@@ -17,7 +17,7 @@ import { UISwitch } from './switch';
                 [value]="ex.value"
                 [checked]="ex.checked"
                 [disabled]="ex.disabled"
-                (checkedChange)="onCheckedChange($index, $event)">
+                (checkedChange)="onCheckedChange($index, !!$event)">
             </ui-switch>
             <div>Demo checked: {{ ex.checked }}</div>
         }

@@ -99,7 +99,7 @@ export interface CheckboxProps {
 })
 export class UICheckbox implements AsSignal<CheckboxProps> {
     readonly name = input.required<CheckboxProps['name']>();
-    readonly value = input.required<CheckboxProps['value']>();
+    readonly value = model.required<CheckboxProps['value']>();
     readonly ariaLabel = input<CheckboxProps['ariaLabel']>(undefined);
     readonly id = input<CheckboxProps['id']>(uniqueId('checkbox'));
     readonly checked = model<CheckboxProps['checked']>(false);

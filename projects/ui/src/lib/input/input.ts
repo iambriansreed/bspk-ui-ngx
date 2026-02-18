@@ -41,6 +41,13 @@ export interface InputProps extends FieldControlProps {
      * @default true
      */
     showClearButton?: boolean;
+    /**
+     * The value of the input field.
+     *
+     * @type string
+     */
+
+    value?: string;
 }
 
 /**
@@ -83,7 +90,7 @@ export interface InputProps extends FieldControlProps {
             [readOnly]="readOnly() || null"
             [required]="required() || null"
             [type]="type()"
-            [value]="value() || ''"
+            [value]="value()"
             (input)="handleInput($event)"
             (focus)="hasFocus.set(true)"
             (blur)="hasFocus.set(false)"
@@ -131,7 +138,7 @@ export class UIInput implements AsSignal<InputProps> {
         return validSizes.includes(sizeValue as ButtonSize) ? (sizeValue as ButtonSize) : 'medium';
     });
 
-    readonly value = model<InputProps['value']>();
+    readonly value = model<InputProps['value']>('');
     readonly name = input.required<InputProps['name']>();
 
     readonly inputMode = input<InputProps['inputMode']>();
