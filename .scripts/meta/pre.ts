@@ -14,7 +14,7 @@ import { toPascalCase } from '../utils';
 /** Functionality that needs to run before running meta script */
 export function preMeta(force = false) {
     if (force || !fs.existsSync('.tmp/documentation.json')) {
-        execSync('npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp', { stdio: 'inherit' });
+        execSync('npx @compodoc/compodoc -p tsconfig.doc.json -e json -d ./.tmp --silent', { stdio: 'inherit' });
         fs.writeFileSync(
             '.tmp/documentation.ts',
             `export const documentation = ${fs.readFileSync('.tmp/documentation.json', 'utf-8')}`,

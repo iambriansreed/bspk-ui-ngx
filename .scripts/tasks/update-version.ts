@@ -22,16 +22,20 @@ const latestVersion = execSync('git fetch --tags && git tag -l --sort=-creatorda
 // update the version in package.json and projects/ui/package.json to match the latest tag
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const uiPackageJson = JSON.parse(fs.readFileSync('projects/ui/package.json', 'utf-8'));
+const packageLockJson = JSON.parse(fs.readFileSync('package-lock.json', 'utf-8'));
 
 packageJson.version = latestVersion;
 uiPackageJson.version = latestVersion;
+packageLockJson.version = latestVersion;
+packageLockJson.packages[''].version = latestVersion;
 
 fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 4));
 fs.writeFileSync('projects/ui/package.json', JSON.stringify(uiPackageJson, null, 4));
+fs.writeFileSync('package-lock.json', JSON.stringify(packageLockJson, null, 4));
 
 // update the version in package.json and projects/ui/package.json to match the latest tag
 
-execSync('git add package.json projects/ui/package.json', { stdio: 'inherit' });
+execSync('git add package.json projects/ui/package.json package-lock.json', { stdio: 'inherit' });
 
 // commit the changes and push to the repo
 

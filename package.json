@@ -11,7 +11,7 @@
         "node": ">=22"
     },
     "scripts": {
-        "prebuild": "npm run meta && npx tsx .scripts/pre-build.ts",
+        "prebuild": "npm run meta f && npx tsx .scripts/pre-build.ts",
         "build": "ng build --project=demo --configuration=production && ng build --project=ui --configuration=production",
         "checks": "npm run build && npm run lint:all && npm run test",
         "dev": "npm run meta && run-p dev:serve dev:watch",

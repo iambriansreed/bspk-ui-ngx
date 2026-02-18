@@ -1,7 +1,7 @@
 /**
  * Compare scss files with bspk-ui scss files of the same name
  *
- * $ npx tsx .scripts/validate-scss-files.ts
+ * $ npx tsx .scripts/tasks/validate-scss-files.ts
  */
 
 import * as fs from 'fs';
@@ -15,13 +15,15 @@ const ngxFiles = execSync(`find ${ngxDir} -type f -name "*.scss"`)
     .split('\n')
     .filter((l) => Boolean(l.trim));
 
-const localReactBaseDir = '../../bspk-ui';
+const localReactBaseDir = '../bspk-ui';
 
-const reactBaseDir = fs.existsSync(localReactBaseDir)
-    ? localReactBaseDir
-    : execSync('npm explore @bspk/ui -- pwd').toString().trim();
+if (!fs.existsSync(localReactBaseDir)) {
+    throw new Error(
+        `Local React base directory not found at ${localReactBaseDir}. Please ensure the path is correct (../bspk-ui) from the current working directory.`,
+    );
+}
 
-const reactDir = path.join(reactBaseDir, 'src/components');
+const reactDir = path.join(localReactBaseDir, 'src/components');
 
 const reactFiles = execSync(`find ${reactDir} -type f -name "*.scss"`)
     .toString()

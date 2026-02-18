@@ -167,7 +167,7 @@ export function generateComponentDocs(component: ComponentMeta, overrides?: Comp
     let defaultCode = '';
 
     const missingRequired = component.inputs?.filter(
-        (prop) => prop.required && prop.type !== 'string' && !overrides?.defaultValues?.[prop.name],
+        (prop) => prop.required && prop.type !== 'string' && !(prop.name in (overrides?.defaultValues || {})),
     );
 
     const inputControlProps = component.inputs.filter((prop) => prop.name === 'checked' || prop.name === 'onChange');
