@@ -50,6 +50,7 @@ export interface SwitchOptionProps extends SwitchProps {
     </ui-list-item>`,
     host: {
         'data-bspk': 'switch-option',
+        style: 'display: contents;',
     },
 })
 export class UISwitchOption extends UISwitch implements AsSignal<SwitchOptionProps> {

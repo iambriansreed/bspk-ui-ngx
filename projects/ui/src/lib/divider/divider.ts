@@ -42,12 +42,13 @@ const insetToVariable = (insetProp: number | string) => {
  *
  * Vertical thin lines that separates grouped content or other visual elements within a container.
  *
- * @example
- *     <div style="width: 320px">
+ * ```html
+ * <div style="width: 320px">
  *     <div>Content above the divider</div>
- *     <ui-divider orientation="horizontal"></ui-divider>
+ *     <ui-divider orientation="horizontal" />
  *     <div>Content below the divider</div>
- *     </div>
+ * </div>
+ * ```
  *
  * @name Divider
  * @phase Dev

@@ -42,23 +42,24 @@ export interface BreadcrumbProps extends ScrollLimitStyleProps {
 /**
  * Used to indicate the current page's location within a navigational hierarchy.
  *
- * @example
- *     <ui-breadcrumb
+ * ```html
+ * <ui-breadcrumb
  *     [items]="[
- *     { label: 'Brioche', href: '#brioche' },
- *     { label: 'Whole Wheat', href: '#whole-wheat' },
- *     { label: 'Sourdough', href: '#sourdough' },
- *     { label: 'Rye', href: '#rye' },
- *     { label: 'Multigrain', href: '#multigrain' },
- *     { label: 'Baguette', href: '#baguette' },
- *     { label: 'Focaccia', href: '#focaccia' },
- *     { label: 'Ciabatta', href: '#ciabatta' },
- *     { label: 'Pita', href: '#pita' },
- *     { label: 'Naan', href: '#naan' },
- *     { label: 'Flatbread', href: '#flatbread' }
+ *     { label: 'Brioche', href: '/breadcrumb/#brioche' },
+ *     { label: 'Whole Wheat', href: '/breadcrumb/#whole-wheat' },
+ *     { label: 'Sourdough', href: '/breadcrumb/#sourdough' },
+ *     { label: 'Rye', href: '/breadcrumb/#rye' },
+ *     { label: 'Multigrain', href: '/breadcrumb/#multigrain' },
+ *     { label: 'Baguette', href: '/breadcrumb/#baguette' },
+ *     { label: 'Focaccia', href: '/breadcrumb/#focaccia' },
+ *     { label: 'Ciabatta', href: '/breadcrumb/#ciabatta' },
+ *     { label: 'Pita', href: '/breadcrumb/#pita' },
+ *     { label: 'Naan', href: '/breadcrumb/#naan' },
+ *     { label: 'Flatbread', href: '/breadcrumb/#flatbread' }
  *     ]"
  *     [scrollLimit]="5">
- *     </ui-breadcrumb>
+ * </ui-breadcrumb>
+ * ```
  *
  * @name Breadcrumb
  * @phase Dev

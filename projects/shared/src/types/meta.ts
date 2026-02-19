@@ -1,27 +1,23 @@
 import { Type } from '@angular/core';
-import { ComponentPhase } from '.';
+import { ComponentPhase, ComponentSettings } from '.';
 
 export interface Meta {
     version: string;
-    components: ComponentMeta[];
+    components: MetaComponent[];
     hash: string;
-    interfaces: Record<string, Record<string, ComponentMetaInput>>;
 }
+
+export type MetaComponent = Pick<ComponentMeta, 'name' | 'phase' | 'slug'> & {
+    meta?: () => Promise<ComponentMeta>;
+};
 
 export interface ComponentMeta {
     name: string;
     className: string;
-    /** The code sample provided in the component's JSDoc @example. */
-    example?: string;
     description: string;
     phase?: ComponentPhase;
     slug: string;
     directive: boolean;
-    /**
-     * If the component has an associated example component, this will include the name and path to that component for
-     * use in the documentation site.
-     */
-    exampleComponent?: string | (() => Promise<Type<any>>);
     inputs: ComponentMetaInput[];
     outputs: ComponentMetaOutput[];
     file: string;
@@ -32,6 +28,23 @@ export interface ComponentMeta {
         props: ComponentMetaInput[];
     }[];
     hasContent: boolean;
+    basicUsage?: {
+        template: string;
+        classCode?: string;
+        component: Type<any>;
+    };
+    variants?: {
+        name: string;
+        options: {
+            name: string;
+            template: string;
+            classCode?: string;
+            component: Type<any>;
+        }[];
+    }[];
+    /** Deprecated */
+    exampleComponent?: Type<any>;
+    settings?: ComponentSettings;
 }
 
 export interface ComponentMetaOutput {

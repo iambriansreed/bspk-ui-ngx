@@ -46,11 +46,11 @@ export class AppNavComponent {
     routes = routes;
 
     componentRoutes = this.routes.filter((r) => {
-        return r.data?.phase && r.data?.phase !== 'Utility';
+        return r.data?.['phase'] && r.data['phase'] !== 'Utility';
     });
 
     utilityRoutes = this.routes.filter((r) => {
-        return r.data?.phase === 'Utility';
+        return r.data?.['phase'] === 'Utility';
     });
 
     trackByPath(_: number, route: any) {

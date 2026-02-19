@@ -41,12 +41,16 @@ export interface RadioGroupProps extends FieldControlProps {
  *
  * For a more complete example with field usage, see the RadioGroupField component.
  *
- * @example
- *     <ui-radio-group
- *     [options]="options"
- *     [value]="selectedValue"
- *     (valueChange)="onValueChange($event)">
- *     </ui-radio-group>
+ * ```html
+ * <ui-radio-group
+ *     name="example-radio-group"
+ *     [options]=" [
+ *     { value: '1', label: 'Option 1' },
+ *     { value: '2', label: 'Option 2', description: 'Description here' },
+ *     { value: '3', label: 'Option 3' },
+ * ]"
+ *     [(value)]="selectedValue" />
+ * ```
  *
  * @name RadioGroup
  * @phase Dev

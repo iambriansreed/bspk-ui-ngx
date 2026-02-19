@@ -65,11 +65,14 @@ export interface FabProps {
  * A button that highlights a primary action that is elevated above the body content of a page; normally fixed to the
  * bottom right of a screen.
  *
- * @example
+ * ```html
+ * <div style="position: relative; height: 100px; width: 100%">
  *     <ui-fab
- *     label="Floating Action Button"
- *     [icon]="iconCloud"
- *     (onClick)="handleClick()" />
+ *         label="Floating Action Button"
+ *         [icon]="IconCloud"
+ *         (onClick)="sendSnackbar('Floating Action Button clicked')" />
+ * </div>
+ * ```
  *
  * @name Fab
  * @phase Dev

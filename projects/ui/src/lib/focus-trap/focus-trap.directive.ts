@@ -27,13 +27,6 @@ export interface FocusTrapProps {
 /**
  * Utility that traps keyboard focus within its projected content when enabled.
  *
- * @example
- *     <ui-focus-trap>
- *     <!-- interactive content -->
- *     <button>One</button>
- *     <button>Two</button>
- *     </ui-focus-trap>
- *
  * @name FocusTrap
  * @phase Utility
  */

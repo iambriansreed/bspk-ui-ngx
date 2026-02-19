@@ -11,7 +11,7 @@
         "node": ">=22"
     },
     "scripts": {
-        "prebuild": "npm run meta f && npx tsx .scripts/pre-build.ts",
+        "prebuild": "npm run meta f && npx tsx .scripts/tasks/update-index.ts --write",
         "build": "ng build --project=demo --configuration=production && ng build --project=ui --configuration=production",
         "checks": "npm run build && npm run lint:all && npm run test",
         "dev": "npm run meta && run-p dev:serve dev:watch",
@@ -22,7 +22,7 @@
         "lint:all": "npm run lint && npm run lint:ui && npm run lint:css",
         "lint:css": "npx stylelint '**/*.scss'",
         "lint:css:fix": "npx stylelint '**/*.scss' --fix",
-        "lint:ui": "npm run meta && npx tsx .scripts/lint.ts",
+        "lint:ui": "npx tsx .scripts/lint.ts",
         "newc": "ng generate component --project=ui && npx tsx .scripts/generate-new-component.ts",
         "ng": "ng",
         "pr": "npm run checks && git push --set-upstream origin $(git symbolic-ref --short HEAD) && open \"https://github.com/Anywhererealestate/bspk-ui-ngx/compare/dev...$(git symbolic-ref --short HEAD)\"",

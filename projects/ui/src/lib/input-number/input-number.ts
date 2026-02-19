@@ -52,17 +52,18 @@ export interface InputNumberProps extends FieldControlProps {
  * A input element that allows users to either input a numerical value or singularly increase or decrease the values by
  * pressing the (+) or (-) buttons.
  *
- * The value of the input is a number. The value is clamped to the min and max values if they are provided.
+ * The value of the input is a string representation of a number. The value is clamped to the min and max values if they
+ * are provided.
  *
  * For a more complete example with field usage, see the InputNumberField component.
  *
- * @example
- *     <ui-input-number
- *     [value]="inputValue()"
- *     (valueChange)="updateInput($event)"
+ * ```html
+ * <ui-input-number
+ *     [(value)]="value"
  *     id="default-input-number"
  *     name="default-input-number"
- *     ariaLabel="Input Number Label "/>
+ *     ariaLabel="Input Number Label " />
+ * ```
  *
  * @name InputNumber
  * @phase UXReview
@@ -125,7 +126,9 @@ export interface InputNumberProps extends FieldControlProps {
 })
 export class UIInputNumber implements AsSignal<InputNumberProps> {
     readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+
     readonly value = model<InputNumberProps['value']>('');
+
     readonly name = input.required<InputNumberProps['name']>();
     readonly disabled = input<InputNumberProps['disabled']>(false);
     readonly invalid = input<InputNumberProps['invalid']>(false);

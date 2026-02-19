@@ -15,18 +15,17 @@ export interface SegmentedControlProps extends TabListProps<SegmentedControlOpti
 /**
  * Navigation tool that organizes content across different screens and views.
  *
- * @example
- *     <!-- Angular example -->
- *     <ui-segmented-control
+ * ```html
+ * <ui-segmented-control
  *     [label]="'Example Segments'"
  *     [options]="[
  *     { value: '1', label: 'Option 1' },
  *     { value: '2', label: 'Option 2' },
  *     { value: '3', label: 'Option 3' },
  *     ]"
- *     [value]="selected"
- *     (valueChange)="selected = $event">
- *     </ui-segmented-control>
+ *     [(value)]="selectedOption">
+ * </ui-segmented-control>
+ * ```
  *
  * @name SegmentedControl
  * @phase Dev

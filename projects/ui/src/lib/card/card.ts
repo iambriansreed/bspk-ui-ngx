@@ -17,13 +17,12 @@ export interface CardProps {
  * They are similar in size and shape to playing cards and are intended to encourage users to click or tap to view more
  * details.
  *
- * @example
- *     import { Card } from '@bspk/ui/card';
- *
- *     <Card variant="elevated" style={{ padding: 'var(--spacing-sizing-04)', maxWidth: '100%', width: '400px' }}>
+ * ```html
+ * <ui-card variant="elevated" style="padding: var(--spacing-sizing-04); max-width: 100%; width: 400px">
  *     <h3>Card Title</h3>
  *     <p>This is some content inside the card.</p>
- *     </Card>;
+ * </ui-card>
+ * ```
  *
  * @name Card
  * @phase Dev

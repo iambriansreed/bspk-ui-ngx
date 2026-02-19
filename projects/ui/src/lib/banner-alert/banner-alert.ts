@@ -56,6 +56,20 @@ export interface CallToActionButton {
  * A visual and contextual message used to communicate an important message or notification to users relating to a
  * status or the body content of a page.
  *
+ * ```html
+ * <ui-banner-alert
+ *     variant="error"
+ *     header="Error Banner Alert"
+ *     body="This is an error banner alert. Please take action to resolve the issue."
+ *     [callToAction]="callToAction"
+ *     [elevated]="true"
+ *     (onClose)="sendSnackbar('Banner alert closed!')" />
+ * ```
+ *
+ * ```typescript
+ * callToAction = { label: 'Take Action', onClick: () => sendSnackbar('Action taken!') };
+ * ```
+ *
  * @name BannerAlert
  * @phase UXReview
  */

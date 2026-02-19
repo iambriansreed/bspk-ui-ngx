@@ -36,10 +36,9 @@ export interface BadgeProps {
 /**
  * Visual indicator for new items within a parent page represented with a numerical count of new items.
  *
- * @example
- *     import { Badge } from '@bspk/ui/Badge';
- *
- *     <Badge count={5} size="small" color="primary" surfaceBorder={true} />;
+ * ```html
+ * <ui-badge [count]="5" size="small" color="primary" [surfaceBorder]="true" />
+ * ```
  *
  * @exampleDescription This example shows a badge with a count of 5, size small, and primary variant.
  *

@@ -2,6 +2,10 @@
 @use '../../../projects/ui/src/styles/base';
 @use '../../../projects/ui/src/styles/colors';
 
+ng-component {
+    display: contents;
+}
+
 router-outlet {
     display: contents;
 }

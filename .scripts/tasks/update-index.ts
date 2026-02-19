@@ -1,4 +1,8 @@
-/** Generates new projects/ui/src/index.ts with all exports from lib folder */
+/**
+ * Generates new projects/ui/src/index.ts with all exports from lib folder
+ *
+ * $ npx tsx .scripts/tasks/update-index.ts --write
+ */
 import * as fs from 'fs';
 import * as path from 'path';
 

@@ -54,13 +54,9 @@ export interface InputProps extends FieldControlProps {
  * An input that allows users to enter text, numbers or symbols in a singular line. This is a utility element and is not
  * intended to be used directly but rather through the Input, and other components.
  *
- * @example
- *     <ui-input
- *     [value]="inputValue()"
- *     (valueChange)="updateInput($event)"
- *     id="default-input"
- *     name="default-input"
- *     ariaLabel="Input Label "/>
+ * ```html
+ * <ui-input [(value)]="inputValue" id="default-input" name="default-input" ariaLabel="Input Label " />
+ * ```
  *
  * @name Input
  * @phase UXReview

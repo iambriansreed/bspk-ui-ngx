@@ -46,11 +46,20 @@ export interface FlexProps {
     full?: boolean;
 }
 
+interface FlexUtilityProps {
+    flex: FlexProps | string | undefined;
+}
+
 /**
  * Apply flexbox layout to an element.
  *
- * Usage examples: <div uiFlex></div> <div [uiFlex]="'inline'" direction="column" justify="between" align="center"
- * wrap="wrap" gap="8px"></div>
+ * ```html
+ * <div [ui-flex]="{ direction: 'column', justify: 'between', align: 'center', wrap: 'wrap', gap: '8' }">
+ *     <ui-tag label="Child 1" color="red" />
+ *     <ui-tag label="Child 2" color="blue" />
+ *     <ui-tag label="Child 3" color="green" />
+ * </div>
+ * ```
  *
  * @name Flex
  * @phase Utility
@@ -62,21 +71,21 @@ export interface FlexProps {
         '[style]': 'computedStyle()',
     },
 })
-export class UIFlexDirective implements AsSignal<FlexProps> {
-    readonly computedStyle = computed(() => ({
-        display: 'flex',
-        flexDirection: this.direction(),
-        justifyContent: this.normalizeJustify(this.justify()),
-        alignItems: this.normalizeAlign(this.align()),
-        flexWrap: this.wrap(),
-        gap: this.gap() ?? null,
-    }));
+export class UIFlexDirective implements AsSignal<FlexUtilityProps> {
+    readonly computedStyle = computed(() => {
+        const flex = typeof this.flex() === 'string' ? {} : (this.flex() as FlexProps);
 
-    readonly direction = input<FlexProps['direction']>('row');
-    readonly justify = input<FlexProps['justify']>('flex-start');
-    readonly align = input<FlexProps['align']>('stretch');
-    readonly wrap = input<FlexProps['wrap']>('nowrap');
-    readonly gap = input<FlexProps['gap']>();
+        return {
+            display: 'flex',
+            flexDirection: flex?.direction,
+            justifyContent: this.normalizeJustify(flex?.justify),
+            alignItems: this.normalizeAlign(flex?.align),
+            flexWrap: flex?.wrap,
+            gap: this.normalizeGap(flex?.gap),
+        };
+    });
+
+    readonly flex = input<FlexUtilityProps['flex']>({}, { alias: 'ui-flex' });
 
     private normalizeJustify(v: FlexProps['justify']): string {
         switch (v) {
@@ -104,5 +113,11 @@ export class UIFlexDirective implements AsSignal<FlexProps> {
             default:
                 return v || 'stretch';
         }
+    }
+
+    private normalizeGap(v: FlexProps['gap']): string {
+        if (v === 'auto') return 'var(--spacing-sizing-02)';
+        if (v && (typeof v === 'number' || /^\d+$/.test(v))) return `${v}px`;
+        return v || '';
     }
 }

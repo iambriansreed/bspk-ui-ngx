@@ -47,15 +47,9 @@ export interface TextareaProps extends FieldControlProps {
  *
  * For a more complete example with field usage, see the TextareaField component.
  *
- * @example
- *     <ui-textarea
- *     [value]="textareaValue()"
- *     (valueChange)="updateTextarea($event)"
- *     id="default-textarea"
- *     name="default-textarea"
- *     ariaLabel="Textarea Label "/>
- *
- * @element
+ * ```html
+ * <ui-textarea id="default-textarea" name="default-textarea" ariaLabel="Textarea Label " />
+ * ```
  *
  * @name Textarea
  * @phase UXReview

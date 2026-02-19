@@ -11,7 +11,7 @@ import { UIInputField } from './input-field';
         <ui-input-field
             [value]="values()['default']"
             (valueChange)="update('default', $event)"
-            id="default-input"
+            [id]="'default-input'"
             name="default-input"
             label="Input Label"
             helperText="The value of the default input is: {{ values()['default'] || 'null' }}" />

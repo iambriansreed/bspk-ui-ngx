@@ -30,8 +30,9 @@ export interface PaginationProps {
  * A navigation component that allows customers to move between a range of listed content within a page into smaller
  * multiple micro pages.
  *
- * @example
- *     <ui-pagination [value]="currentPage" [numPages]="10" (valueChange)="currentPage = $event"></ui-pagination>
+ * ```html
+ * <ui-pagination [(value)]="page" [numPages]="10"></ui-pagination>
+ * ```
  *
  * @name Pagination
  * @phase Dev

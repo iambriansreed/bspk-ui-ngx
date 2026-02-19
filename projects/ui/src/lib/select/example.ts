@@ -19,7 +19,7 @@ import { SelectOption, UISelect } from './select';
                 [placeholder]="'Select an option'"
                 [scrollLimit]="5"
                 [size]="'medium'"
-                [(value)]="selected">
+                [(value)]="selectedValue">
             </ui-select>
         </ui-field>
     `,
@@ -39,5 +39,5 @@ export class UISelectExample {
         { label: 'Option 11', value: '11' },
         { label: 'Option 12', value: '12' },
     ];
-    selected: string | undefined = undefined;
+    selectedValue: string | undefined = undefined;
 }

@@ -87,17 +87,21 @@ export interface InputPhoneProps extends FieldControlProps, ScrollLimitStyleProp
  *
  * For a more complete example with field usage, see the InputPhoneField component.
  *
- * @example
- *     <div style="width: 320px">
- *     <ui-field controlId="example-input-phone" helperText="The phone input allows you to enter a phone number with country code." label="Example Input Phone">
- *     <ui-input-phone
- *     [id]="'example-input-phone'"
- *     [name]="'example-name'"
- *     [(value)]="phoneValue"
- *     [initialCountryCode]="'US'"
- *     ariaLabel="Phone Number" />
+ * ```html
+ * <div style="width: 320px">
+ *     <ui-field
+ *         controlId="example-input-phone"
+ *         helperText="The phone input allows you to enter a phone number with country code."
+ *         label="Example Input Phone">
+ *         <ui-input-phone
+ *             [id]="'example-input-phone'"
+ *             [name]="'example-name'"
+ *             [(value)]="phoneValue"
+ *             [initialCountryCode]="'US'"
+ *             ariaLabel="Phone Number" />
  *     </ui-field>
- *     </div>
+ * </div>
+ * ```
  *
  * @name InputPhone
  * @phase Dev

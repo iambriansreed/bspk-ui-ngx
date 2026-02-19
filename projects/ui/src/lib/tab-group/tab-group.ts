@@ -17,18 +17,17 @@ export interface TabGroupProps extends TabListBaseProps<TabOption> {
 /**
  * Navigation tool that organizes content across different screens and views.
  *
- * @example
- *     <!-- Angular example -->
- *     <ui-tab-group
+ * ```html
+ * <ui-tab-group
  *     [label]="'Example Tabs'"
  *     [options]="[
  *     { value: '1', label: 'Option 1' },
  *     { value: '2', label: 'Option 2' },
  *     { value: '3', label: 'Option 3' },
  *     ]"
- *     [value]="selected"
- *     (valueChange)="selected = $event">
- *     </ui-tab-group>
+ *     [(value)]="selected">
+ * </ui-tab-group>
+ * ```
  *
  * @name TabGroup
  * @phase Dev

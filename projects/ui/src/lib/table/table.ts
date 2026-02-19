@@ -66,14 +66,32 @@ const BUILT_IN_COLUMN_SORTERS: Record<BuiltInColumnSorters, TableColumnSortingFn
 /**
  * A component that displays data in a tabular format with support for sorting and pagination.
  *
- * @example
- *     <ui-table
- *     [data]="[{ id: 'ca', name: 'California', capital: 'Sacramento' }, { id: 'tx', name: 'Texas', capital: 'Austin' }, { id: 'fl', name: 'Florida', capital:'Tallahassee' }]"
- *     [columns]="[{ key: 'state', label: 'State', width: '160px', sort: 'string' },{ key: 'capital', label: 'Capital', width: '140px' }]"
+ * ```html
+ * <ui-table
+ *     [data]="[
+ * { id: 'ca', name: 'California', capital: 'Sacramento', population: 39538223 },
+ * { id: 'tx', name: 'Texas', capital: 'Austin', population: 29145505 },
+ * { id: 'fl', name: 'Florida', capital:'Tallahassee', population: 21538187 }
+ * ]"
+ *     [columns]="columns"
  *     [pageSize]="5"
  *     size="medium"
- *     title="Sample State Capital Table">
- *     </ui-table>
+ *     title="Sample State Capital Table" />
+ * ```
+ *
+ * ```typescript
+ *  columns: any[] = [
+ *         { key: 'name', label: 'State', width: '160px', sort: 'string' },
+ *         { key: 'capital', label: 'Capital' },
+ *         {
+ *             key: 'population',
+ *             label: 'Population',
+ *             align: 'right',
+ *             sort: 'number',
+ *             formatter: (value: { population: number }) => value.population.toLocaleString(),
+ *         },
+ *     ];
+ * ```
  *
  * @name Table
  * @phase Dev

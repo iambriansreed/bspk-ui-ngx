@@ -57,11 +57,9 @@ export interface DatePickerProps extends FieldControlProps {
  * An input that allows a customer to manually type in a specific date or triggers a the Calendar component to select a
  * date.
  *
- * @example
- *     <ui-date-picker
- *     [value]="selectedDate"
- *     (valueChange)="handleDateChange($event)"
- *     ></ui-date-picker>
+ * ```html
+ * <ui-date-picker [(value)]="selectedDate" />
+ * ```
  *
  * @name DatePicker
  * @phase Dev

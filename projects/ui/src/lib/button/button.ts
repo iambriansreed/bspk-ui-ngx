@@ -92,14 +92,14 @@ export interface ButtonProps {
 /**
  * A clickable component that allows users to perform an action, make a choice or trigger a change in state.
  *
- * @example
- *     <bspk-button
+ * ```html
+ * <ui-button
  *     label="Click Me"
  *     size="medium"
  *     variant="primary"
- *     (onClick)="handleClick($event)"
- *     icon="iconTemplate">
- *     </bspk-button>
+ *     (onClick)="sendSnackbar('Button clicked!')"
+ *     [icon]="IconAdd" />
+ * ```
  *
  * @name Button
  * @phase Dev

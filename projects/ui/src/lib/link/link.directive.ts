@@ -37,8 +37,9 @@ export interface LinkProps {
 /**
  * This is the standalone link directive. Apply to an `a` element.
  *
- * @example
- *     <a ui-link href="https://anywhere.re" [label]="'Example label'" trailingIcon="external"></a>
+ * ```html
+ * <a ui-link href="https://anywhere.re" trailingIcon="external">Link</a>
+ * ```
  *
  * @name Link
  * @phase Stable

@@ -17,9 +17,16 @@ export interface RadioProps extends FieldControlProps {
  * A round control that allows user to choose one option from a set. This is the base element and if used directly you
  * must wrap it with a label. This will more often be used in the RadioOption or RadioGroup component.
  *
- * @example
- *     <ui-radio name="example" [value]="'option1'" (checkedChange)="selected = $event ? 'option1' : selected"
- *     [disabled]="false" [invalid]="false" [required]="true" aria-label="Option 1" />
+ * ```html
+ * <ui-radio
+ *     name="example"
+ *     [value]="'option1'"
+ *     (checkedChange)="sendSnackbar('Radio checked: ' + !!$event)"
+ *     [disabled]="false"
+ *     [invalid]="false"
+ *     [required]="true"
+ *     aria-label="Option 1" />
+ * ```
  *
  * @name Radio
  * @phase Utility

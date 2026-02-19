@@ -90,18 +90,18 @@ export interface AvatarProps {
 /**
  * An avatar is a visual representation of a user or entity. It can be used to display an initials, icon, or image.
  *
- * @example
- *     <ui-avatar
+ * ```html
+ * <ui-avatar
  *     [color]="'blue'"
  *     [image]="'/avatar-01.png'"
  *     [initials]="'AR'"
  *     [name]="'Andre Giant'"
  *     [size]="'large'"
  *     [disabled]="false"
- *     (onClick)="action('Launch avatar popover')"
+ *     (onClick)="sendSnackbar('Launch avatar popover')"
  *     [showIcon]="false"
- *     [hideTooltip]="true"
- *     />;
+ *     [hideTooltip]="true" />
+ * ```
  *
  * @exampleDescription The image if provided is displayed first, followed by the icon if provided, and finally the initials. If no initials are provided, the first two letters of the name will be used as initials.
  *

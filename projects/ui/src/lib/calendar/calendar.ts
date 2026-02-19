@@ -53,8 +53,9 @@ export interface CalendarProps {
 /**
  * Allows customers to select the date, month, and year.
  *
- * @example
- *     <ui-calendar (valueChange)="handleChange($event)" />
+ * ```html
+ * <ui-calendar (valueChange)="sendSnackbar('Date changed: ' + $event)" />
+ * ```
  *
  * @name Calendar
  * @phase Dev

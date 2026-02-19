@@ -1,8 +1,6 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
-    Output,
     ViewEncapsulation,
     input,
     signal,
@@ -11,6 +9,7 @@ import {
     viewChild,
     inject,
     DOCUMENT,
+    model,
 } from '@angular/core';
 import { AsSignal, CommonProps } from '../../types/common';
 import { UIFocusTrapDirective } from '../focus-trap';
@@ -67,13 +66,16 @@ export interface DialogProps {
  *
  * Also known as: Tray, Drawer, Flyout, Sheet
  *
- * @example
- *     <ui-dialog [open]="open" (onClose)="open=false">
+ * ```html
+ * <ui-button (click)="dialogOpen=true" label="Open Dialog"></ui-button>
+ *
+ * <ui-dialog [(open)]="dialogOpen">
  *     <div style="padding: var(--spacing-sizing-04)">
- *     <h4>Dialog Title</h4>
- *     <p>This is the content of the dialog.</p>
+ *         <h4>Dialog Title</h4>
+ *         <p>This is the content of the dialog.</p>
  *     </div>
- *     </ui-dialog>
+ * </ui-dialog>
+ * ```
  *
  * @name Dialog
  * @phase Dev
@@ -118,15 +120,9 @@ export interface DialogProps {
     },
 })
 export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
-    /**
-     * Emits when the dialog should be closed, such as when the scrim is clicked or the escape key is pressed. The
-     * parent component should handle this event and set `open` to false to close the dialog.
-     */
-    @Output() onClose = new EventEmitter<void>();
-
     readonly box = viewChild('box', { read: ElementRef });
+    readonly open = model<DialogProps['open']>(false);
 
-    readonly open = input<DialogProps['open']>(false);
     readonly placement = input<DialogProps['placement']>('center');
     readonly showScrim = input<DialogProps['showScrim']>(true);
     readonly widthFull = input<DialogProps['widthFull']>(false);
@@ -163,7 +159,7 @@ export class UIDialog implements OnChanges, OnDestroy, AsSignal<DialogProps> {
     }
 
     handleClose() {
-        this.onClose.emit();
+        this.open.set(false);
     }
 
     private _onKeydown = (e: KeyboardEvent) => {

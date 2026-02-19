@@ -21,7 +21,7 @@ import { UIInput } from './input';
         <ui-input
             [value]="valueDefaultPreset()"
             (valueChange)="valueDefaultPreset.set($event)"
-            id="default-input"
+            id="default-preset-value"
             name="default-preset-value"
             ariaLabel="Input Label" />
         <p>The value of the default input is: {{ valueDefaultPreset() || 'null' }}</p>

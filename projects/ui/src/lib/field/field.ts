@@ -41,16 +41,11 @@ export interface FieldProps extends ControlFieldProps {
  * Children should be one of the following: DatePicker, Input, InputNumber, InputPhone, Password, Select, Textarea,
  * RadioGroup, CheckboxGroup, or TimePicker.
  *
- * @example
- *     <ui-field
- *     controlId="example-control-id"
- *     helperText="This is an example description."
- *     label="Example label">
- *     <input
- *     aria-label="example aria-label"
- *     id="example-control-id"
- *     name="example-text" />
- *     </ui-field>
+ * ```html
+ * <ui-field controlId="example-control" helperText="This is an example description." label="Example label">
+ *     <ui-input aria-label="example aria-label" [id]="'example-control'" name="example-control" />
+ * </ui-field>
+ * ```
  *
  * @name Field
  * @phase Utility

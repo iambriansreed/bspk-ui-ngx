@@ -5,7 +5,7 @@ import { UIButton } from '../button';
 import { UIFocusTrapDirective } from './focus-trap.directive';
 
 @Component({
-    selector: 'ui-focus-trap-example',
+    selector: 'ui-focus-trap-directive-example',
     standalone: true,
     imports: [CommonModule, UIFocusTrapDirective, UIButton],
     encapsulation: ViewEncapsulation.None,
@@ -43,7 +43,7 @@ import { UIFocusTrapDirective } from './focus-trap.directive';
         </p>
     `,
 })
-export class UIFocusTrapExample {
+export class UIFocusTrapDirectiveExample {
     enabled = true;
 
     send = sendSnackbar;

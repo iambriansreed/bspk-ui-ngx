@@ -37,21 +37,19 @@ export interface CheckboxProps {
  * A control that allows users to choose one or more items from a list or turn a feature on or off. This is the base
  * element and if used directly you must wrap it with a label. More often used in CheckboxOption or CheckboxGroup.
  *
- * @example
- *     <label>
+ * ```html
+ * <label for="sample-checkbox" [ui-flex]="{gap: '8', align: 'center'}">
  *     <ui-checkbox
- *     [checked]="checked"
- *     [indeterminate]="indeterminate"
- *     [id]="'sample-checkbox'"
- *     [name]="'sample-checkbox'"
- *     (checkedChange)="checked = $event"
- *     [value]="'sample'"
- *     aria-label="Sample"
- *     />
+ *         [(checked)]="sampleChecked"
+ *         [indeterminate]="false"
+ *         [id]="'sample-checkbox'"
+ *         [name]="'sample-checkbox'"
+ *         [value]="'sample'"
+ *         aria-label="Sample" />
  *     Checkbox Label
- *     </label>
+ * </label>
+ * ```
  *
- * @element
  * @name Checkbox
  * @phase Dev
  */

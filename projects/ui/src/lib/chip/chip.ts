@@ -64,12 +64,9 @@ export interface ChipProps {
 /**
  * Dynamically generated options that are suggested to the user as responses or prompts.
  *
- * @example
- *     import { Chip } from '@bspk/ui/Chip';
- *
- *     <Chip label="Label" click={() => sendSnackbar('Chip clicked!')}>
- *     Example Chip
- *     </Chip>;
+ * ```html
+ * <ui-chip label="Label" (onClick)="sendSnackbar('Chip clicked!')">Example Chip</ui-chip>
+ * ```
  *
  * @name Chip
  * @phase Dev

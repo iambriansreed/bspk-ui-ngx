@@ -50,11 +50,16 @@ export interface TooltipProps {
 /**
  * Brief message that provide additional guidance and helps users perform an action if needed.
  *
- * @example
- *     <span [ui-tooltip]="{
+ * ```html
+ * <span
+ *     role="note"
+ *     [ui-tooltip]="{
  *     label: 'I explain what this button does',
  *     placement: 'top',
- *     }">Hover me</span>
+ *     }"
+ *     >Hover me</span
+ * >
+ * ```
  *
  * @name Tooltip
  * @phase Dev
@@ -89,7 +94,9 @@ export class UITooltipDirective implements OnDestroy, OnInit {
     readonly props = computed(() => {
         const value = this.value();
 
-        const next: TooltipProps & { truncated?: true } = {};
+        const next: TooltipProps & { truncated?: true } = {
+            showTail: true,
+        };
 
         if (!value) return next;
 
@@ -265,7 +272,7 @@ export class UITooltip implements AsSignal<TooltipProps> {
     readonly disabled = model<TooltipProps['disabled']>(false);
     readonly label = model<TooltipProps['label']>();
     readonly placement = model<TooltipProps['placement']>();
-    readonly showTail = model<TooltipProps['showTail']>();
+    readonly showTail = model<TooltipProps['showTail']>(true);
 
     get arrowElement(): HTMLElement | null {
         return this.arrow()?.nativeElement || null;

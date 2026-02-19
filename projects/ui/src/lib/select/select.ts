@@ -83,18 +83,23 @@ export interface SelectProps extends FieldControlProps {
  *
  * For a more complete example with field usage, see the SelectField component.
  *
- * @example
- *     <ui-field controlId="example-select" helperText="Choose one option" label="Select an option">
+ * ```html
+ * <ui-field controlId="example-select" helperText="Choose one option" label="Select an option">
  *     <ui-select
- *     [id]="'example-select'"
- *     [name]="'example-select'"
- *     [options]="OPTIONS"
- *     [placeholder]="'Select an option'"
- *     [scrollLimit]="5"
- *     [size]="'medium'"
- *     [(value)]="selected">
- *     </ui-select>
- *     </ui-field>
+ *         [id]="'example-select'"
+ *         [name]="'example-select'"
+ *         [items]="[
+ * { value: '1', label: 'Option 1' },
+ * { value: '2', label: 'Option 2' },
+ * { value: '3', label: 'Option 3' },
+ *  { value: '4', label: 'Option 4' },
+ * ]"
+ *         [placeholder]="'Select an option'"
+ *         [scrollLimit]="5"
+ *         [size]="'medium'"
+ *         [(value)]="selectedValue" />
+ * </ui-field>
+ * ```
  *
  * @name Select
  * @phase Stable

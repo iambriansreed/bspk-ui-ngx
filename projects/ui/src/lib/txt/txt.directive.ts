@@ -48,8 +48,9 @@ export interface TxtProps {
 /**
  * A directive that applies the correct font styles based on the variant and size.
  *
- * @example
- *     <div ui-txt="heading-h3">This is a heading</div>
+ * ```html
+ * <div ui-txt="heading-h3">This is a heading</div>
+ * ```
  *
  * @name Txt
  * @phase UXReview

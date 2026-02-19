@@ -14,7 +14,9 @@ import { Placement, UIDialog } from './dialog';
 
         <ui-dialog [open]="open" (onClose)="open = false" placement="center">
             <div style="padding: var(--spacing-sizing-04)">
-                <div ui-flex direction="row" justify="between" style="margin-bottom: var(--spacing-sizing-04)">
+                <div
+                    [ui-flex]="{ direction: 'row', justify: 'between' }"
+                    style="margin-bottom: var(--spacing-sizing-04)">
                     <h4>Dialog Title</h4>
                     <ui-button
                         label="Close"
@@ -40,7 +42,9 @@ import { Placement, UIDialog } from './dialog';
                 [container]="container"
                 placement="right">
                 <div style="padding: var(--spacing-sizing-04)">
-                    <div ui-flex align="baseline" justify="between" style="margin-bottom: var(--spacing-sizing-04)">
+                    <div
+                        [ui-flex]="{ align: 'baseline', justify: 'between' }"
+                        style="margin-bottom: var(--spacing-sizing-04)">
                         <h4>Contained</h4>
                         <ui-button
                             label="Close"
@@ -63,7 +67,9 @@ import { Placement, UIDialog } from './dialog';
                 (onClose)="openPlacement[placement] = false"
                 [placement]="placement">
                 <div style="padding: var(--spacing-sizing-04)">
-                    <div ui-flex align="baseline" justify="between" style="margin-bottom: var(--spacing-sizing-04)">
+                    <div
+                        [ui-flex]="{ align: 'baseline', justify: 'between' }"
+                        style="margin-bottom: var(--spacing-sizing-04)">
                         <h4>Dialog Title</h4>
                         <ui-button
                             label="Close"
@@ -86,7 +92,9 @@ import { Placement, UIDialog } from './dialog';
 
         <ui-dialog [open]="openNoScrim" (onClose)="openNoScrim = false" placement="center" [showScrim]="false">
             <div style="padding: var(--spacing-sizing-04)">
-                <div ui-flex align="baseline" justify="between" style="margin-bottom: var(--spacing-sizing-04)">
+                <div
+                    [ui-flex]="{ align: 'baseline', justify: 'between' }"
+                    style="margin-bottom: var(--spacing-sizing-04)">
                     <h4>Dialog Title</h4>
                     <ui-button
                         label="Close"
@@ -105,7 +113,9 @@ import { Placement, UIDialog } from './dialog';
 
         <ui-dialog [open]="openWidthFull" (onClose)="openWidthFull = false" placement="center" [widthFull]="true">
             <div style="padding: var(--spacing-sizing-04)">
-                <div ui-flex align="baseline" justify="between" style="margin-bottom: var(--spacing-sizing-04)">
+                <div
+                    [ui-flex]="{ align: 'baseline', justify: 'between' }"
+                    style="margin-bottom: var(--spacing-sizing-04)">
                     <h4>Dialog Title</h4>
                     <ui-button
                         label="Close"

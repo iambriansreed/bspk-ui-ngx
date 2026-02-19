@@ -19,12 +19,13 @@ export interface MenuProps {
 /**
  * A container housing a simple list of options presented to the customer to select one option at a time.
  *
- * @example
- *     <ui-menu>
+ * ```html
+ * <ui-menu>
  *     <ui-list-item label="List Item"></ui-list-item>
  *     <ui-list-item label="List Item"></ui-list-item>
  *     <ui-list-item label="List Item"></ui-list-item>
- *     </ui-menu>
+ * </ui-menu>
+ * ```
  *
  * @name Menu
  * @phase Dev

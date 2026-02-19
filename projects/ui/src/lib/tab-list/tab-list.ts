@@ -261,19 +261,6 @@ export interface UITabListProps {
  *
  * See TabGroup or SegmentedControl for examples.
  *
- * @example
- *     <!-- Angular example -->
- *     <ui-tab-list
- *     [label]="'Example Tabs'"
- *     [options]="[
- *     { value: '1', label: 'Option 1' },
- *     { value: '2', label: 'Option 2' },
- *     { value: '3', label: 'Option 3' },
- *     ]"
- *     [value]="selected"
- *     (valueChange)="selected = $event">
- *     </ui-tab-list>
- *
  * @name TabList
  * @phase Utility
  */

@@ -16,8 +16,16 @@ export interface AccordionProps {
  * A vertical stack of collapsible panels or that allows customers to expand or collapse each panel individually to
  * reveal or hide their content.
  *
- * @example
- *     <ui-accordion [singleOpen]="false" [items]="[{title: 'Foo', children: 'Foo Children'}, {title: 'Bar', children: 'Bar Children'}, {title: 'Car', children: 'Car Children'}]"></ui-accordion>
+ * ```html
+ * <div style="width: 300px">
+ *     <ui-accordion [singleOpen]="false">
+ *         <ui-accordion-section title="Alpha"> Alpha Children </ui-accordion-section>
+ *         <ui-accordion-section title="Beta"> Beta Children </ui-accordion-section>
+ *         <ui-accordion-section title="Gamma"> Gamma Children </ui-accordion-section>
+ *     </ui-accordion>
+ *     <div></div>
+ * </div>
+ * ```
  *
  * @name Accordion
  * @phase Dev
