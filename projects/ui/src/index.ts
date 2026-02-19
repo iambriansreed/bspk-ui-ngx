@@ -53,6 +53,7 @@ export * from './lib/scrim';
 export * from './lib/segmented-control';
 export * from './lib/select';
 export * from './lib/select-field';
+export * from './lib/slider';
 export * from './lib/switch';
 export * from './lib/switch-option';
 export * from './lib/tab-group';
