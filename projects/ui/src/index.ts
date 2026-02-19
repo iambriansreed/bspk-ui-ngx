@@ -45,6 +45,7 @@ export * from './lib/modal';
 export * from './lib/outside-click';
 export * from './lib/pagination';
 export * from './lib/portal';
+export * from './lib/progress-bar';
 export * from './lib/radio';
 export * from './lib/radio-group';
 export * from './lib/radio-group-field';
