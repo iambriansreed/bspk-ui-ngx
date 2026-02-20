@@ -1,18 +1,52 @@
 import { NgComponentOutlet } from '@angular/common';
-import { Component, signal, computed, input, inject, effect } from '@angular/core';
+import { Component, signal, computed, input, inject, Type, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ComponentMeta } from '@shared/types';
+import { ComponentMeta, ComponentMetaContent } from '@shared/types';
 import { UITag } from '@ui/tag';
-import { UICard, UIFlexDirective } from '../../../ui/src';
+import { UIFlexDirective } from '../../../ui/src';
 import { COMPONENT_PHASE_COLORS } from '../utils';
-import { Markup } from './markup';
+import { AppExample } from './example';
+import { AppMarkup } from './markup';
 import { Syntax } from './syntax';
 import { TypeProps } from './type-props';
+
+interface ContentItemProps {
+    component: Type<any>;
+    description?: string;
+    inputs?: any;
+    title?: string;
+}
+
+@Component({
+    host: { style: 'display: contents;' },
+    selector: 'app-content-item',
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
+    imports: [AppExample, AppMarkup],
+    template: `<!-- -->
+        @if (content().title) {
+            <h3 style="margin-top: var(--spacing-sizing-08);">{{ content().title }}</h3>
+        }
+
+        @if (content().description) {
+            <app-markup [source]="content().description"></app-markup>
+        }
+
+        <app-example [component]="content().component" [inputs]="content().inputs" [selector]="selector()" />`,
+})
+export class AppContentItem {
+    contentItem = input<ContentItemProps>();
+
+    selector = input<string>('');
+
+    content = computed(() => this.contentItem() || ({} as ContentItemProps));
+}
 
 @Component({
     selector: 'app-component-doc',
     standalone: true,
-    imports: [UITag, TypeProps, UIFlexDirective, Markup, Syntax, NgComponentOutlet, UICard],
+    encapsulation: ViewEncapsulation.None,
+    imports: [UITag, TypeProps, UIFlexDirective, AppMarkup, Syntax, NgComponentOutlet, AppExample, AppContentItem],
     template: `
         <div
             [ui-flex]="{ direction: 'row', align: 'center', justify: 'start', gap: '16' }"
@@ -25,26 +59,20 @@ import { TypeProps } from './type-props';
 
         <app-markup [source]="component().description" />
 
-        @if (component().basicUsage) {
+        @for (contentItem of content('afterDescription'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
+        }
+
+        @if (basicUsage()) {
             <h3>Basic Usage</h3>
-            <ui-card variant="outlined">
-                <div
-                    style="display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    border-bottom: solid 1px var(--stroke-neutral-low-contrast);
-                    padding: var(--spacing-sizing-04);
-                    position: relative;
-                    background-color: var(--background-shade);">
-                    <ng-container [ngComponentOutlet]="component().basicUsage!.component"></ng-container>
-                </div>
-                <app-syntax
-                    [source]="component().basicUsage!.template"
-                    language="html"
-                    style="margin-top: 2rem;"
-                    [pretty]="true"></app-syntax>
-            </ui-card>
+            <app-example
+                [template]="basicUsage()!.template"
+                [component]="basicUsage()!.component"
+                [inputs]="basicUsage()!.inputs || {}" />
+        }
+
+        @for (contentItem of content('afterBasicUsage'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
         }
 
         @if (this.component().inputs && this.component().inputs.length) {
@@ -52,9 +80,17 @@ import { TypeProps } from './type-props';
             <app-type-props [props]="this.component().inputs" />
         }
 
+        @for (contentItem of content('afterInputs'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
+        }
+
         @if (this.component().outputs && this.component().outputs.length) {
             <h3>Outputs</h3>
             <app-type-props [props]="this.component().outputs" />
+        }
+
+        @for (contentItem of content('afterOutputs'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
         }
 
         @if (component().associatedTypes?.length) {
@@ -65,9 +101,17 @@ import { TypeProps } from './type-props';
             }
         }
 
-        @if (component().exampleComponent) {
+        @for (contentItem of content('afterAssociatedTypes'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
+        }
+
+        @if (exampleComponent()) {
             <h3>Examples</h3>
-            <ng-container [ngComponentOutlet]="component().exampleComponent!"></ng-container>
+            <ng-container [ngComponentOutlet]="exampleComponent()!"></ng-container>
+        }
+
+        @for (contentItem of content('afterExamples'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
         }
 
         <h3>Stylesheet</h3>
@@ -84,6 +128,10 @@ import { TypeProps } from './type-props';
                 style="margin-top: 2rem;"
                 [pretty]="true"></app-syntax>
         }
+
+        @for (contentItem of content('afterStylesheet'); track $index) {
+            <app-content-item [contentItem]="contentItem" [selector]="component().selector" />
+        }
     `,
 })
 export class ComponentDoc {
@@ -93,6 +141,36 @@ export class ComponentDoc {
         const phase = this.component().phase;
         return phase ? COMPONENT_PHASE_COLORS[phase] : 'grey';
     });
+
+    basicUsage = computed(() => {
+        return this.component().basicUsage || this.component().settings?.basicUsage;
+    });
+
+    /**
+     * @deprecated This will be removed when static example components are removed. Use `content` with `position:
+     *   'afterExamples'` instead for adding custom example components.
+     */
+    exampleComponent = computed(() => {
+        return this.component().settings?.hideExamples ? null : this.component().exampleComponent;
+    });
+
+    content(position: ComponentMetaContent['position']): ContentItemProps[] {
+        return (
+            this.component()
+                .settings?.content?.filter((c) => c.position === position)
+                ?.map((c) => {
+                    if ('inputs' in c.component)
+                        return {
+                            ...c.component,
+                            component: this.component().class,
+                        };
+
+                    return {
+                        component: c.component as Type<any>,
+                    };
+                }) || []
+        );
+    }
 }
 
 @Component({
@@ -115,14 +193,6 @@ export class ComponentPage {
     timeoutHandle?: number;
 
     constructor() {
-        effect(() => {
-            if (this.component()) return;
-            clearTimeout(this.timeoutHandle);
-            this.timeoutHandle = setTimeout(() => {
-                this.errorLoading.set(true);
-            }, 1000);
-        });
-
         this.activatedRoute.data.subscribe((data) => {
             this.component.set(data['meta']);
             this.errorLoading.set(false);

@@ -13,14 +13,16 @@ import { UICard, UIFab } from '../../../ui/src';
     imports: [UIFab, UICard],
     template: `
         <ui-card variant="outlined">
-            <ui-fab
-                data-copy-code
-                [label]="copyLabel()"
-                (onClick)="copyCode()"
-                placement="top-right"
-                size="medium"
-                style="margin-top: -10px; margin-right: -10px"
-                variant="neutral" />
+            @if (!hideCopy()) {
+                <ui-fab
+                    data-copy-code
+                    [label]="copyLabel()"
+                    (onClick)="copyCode()"
+                    placement="top-right"
+                    size="medium"
+                    style="margin-top: -10px; margin-right: -10px"
+                    variant="neutral" />
+            }
             <pre><code [attr.class]="'language-' + language()">{{source()}}</code></pre>
         </ui-card>
     `,
@@ -36,6 +38,8 @@ export class Syntax implements AfterViewInit {
     language = input.required<PrettyParser>();
 
     pretty = input<boolean>(false);
+
+    hideCopy = input<boolean>(false);
 
     DEFAULT_COPY_LABEL = 'Copy';
 

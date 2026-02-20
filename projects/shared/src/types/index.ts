@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 import { Route } from '@angular/router';
-import { MetaComponent } from './meta';
+import { ComponentMeta, MetaComponent } from './meta';
 
 export * from './meta';
 
@@ -81,10 +81,42 @@ export interface ComponentSettings<P extends Record<string, any> = Record<string
      * Will be expanded in the future to support additional content types such as markdown, and to allow for more
      * flexible positioning.
      */
-    content?: {
-        component: () => Promise<Type<any>>;
-        position: 'afterDescription';
-    }[];
+    content?: ComponentMetaContent<P>[];
+
+    /**
+     * Replaces the default generated example with a custom example component. This is useful for components with more
+     * complex usage that cannot be easily captured in the default example format, or for components that require
+     * additional setup or context to demonstrate effectively. If this field is provided, the default example will be
+     * ignored and the provided component will be used instead.
+     */
+    basicUsage?: ComponentMeta['basicUsage'];
+
+    /**
+     * Hides the examples section entirely.
+     *
+     * @deprecated This will be removed when static example components are removed.
+     */
+    hideExamples?: boolean;
+}
+
+export interface ComponentMetaContent<P = any> {
+    component:
+        | Type<any>
+        // This only works for components without ng-content.
+        | {
+              description?: string;
+              inputs: P;
+              title?: string;
+          };
+    position:
+        | 'afterAssociatedTypes'
+        | 'afterBasicUsage'
+        | 'afterDescription'
+        | 'afterExamples'
+        | 'afterInputs'
+        | 'afterOutputs'
+        | 'afterStylesheet';
+    code?: string;
 }
 
 /** Precursor to ComponentExamples used for generating example components and code snippets */

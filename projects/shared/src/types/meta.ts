@@ -13,9 +13,11 @@ export type MetaComponent = Pick<ComponentMeta, 'name' | 'phase' | 'slug'> & {
 
 export interface ComponentMeta {
     name: string;
+    selector: string;
     className: string;
     description: string;
     phase?: ComponentPhase;
+    class: Type<any>;
     slug: string;
     directive: boolean;
     inputs: ComponentMetaInput[];
@@ -32,6 +34,7 @@ export interface ComponentMeta {
         template: string;
         classCode?: string;
         component: Type<any>;
+        inputs?: Record<string, any>;
     };
     variants?: {
         name: string;

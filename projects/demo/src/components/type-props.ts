@@ -4,7 +4,7 @@ import { ComponentMetaInput } from '@shared/types';
 import { TableColumn, TableRow, UITable, UITableCell } from '@ui/table';
 import { UITag } from '@ui/tag';
 import { UITxtDirective } from '@ui/txt';
-import { Markup } from './markup';
+import { AppMarkup } from './markup';
 
 interface PropRow extends ComponentMetaInput, TableRow {}
 
@@ -80,7 +80,7 @@ todo: add
 */
 @Component({
     selector: 'app-description-type-cell',
-    imports: [UITag, Markup],
+    imports: [UITag, AppMarkup],
     template: `
         <app-markup data-description [source]="row().description" />
         <div data-type-options>

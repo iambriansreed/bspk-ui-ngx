@@ -12,8 +12,8 @@ export interface SliderProps {
      * @required
      */
     label: string;
-    disabled: CommonProps['disabled'];
-    readOnly: CommonProps['readOnly'];
+    disabled?: CommonProps['disabled'];
+    readOnly?: CommonProps['readOnly'];
     /**
      * The numerical value of the slider.
      *

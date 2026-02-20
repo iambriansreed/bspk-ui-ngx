@@ -9,7 +9,7 @@ import { marked } from 'marked';
         '[innerHTML]': 'source() ? marked(source()!) : ""',
     },
 })
-export class Markup {
+export class AppMarkup {
     source = input<string>();
 
     marked = marked;
